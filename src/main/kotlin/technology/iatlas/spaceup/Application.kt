@@ -20,9 +20,3 @@ fun main(args: Array<String>) {
 		.start()
 }
 
-/*object Application {
-	@JvmStatic
-	fun main(args: Array<String>) {
-		Micronaut.run(Application.javaClass)
-	}
-}*/

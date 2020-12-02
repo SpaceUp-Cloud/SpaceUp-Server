@@ -50,6 +50,7 @@ dependencies {
     implementation("io.micronaut.cache:micronaut-cache-ehcache")
     implementation("io.micronaut.views:micronaut-views-rocker")
     implementation("org.apache.logging.log4j:log4j-core:2.12.1")
+    implementation('com.google.code.gson:gson:2.8.6')
     runtimeOnly("org.apache.logging.log4j:log4j-api:2.12.1")
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.12.1")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -72,7 +73,7 @@ test {
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion('11')
+    sourceCompatibility = JavaVersion.toVersion('8')
 }
 
 allOpen {
@@ -87,7 +88,7 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget = '8'
+        jvmTarget = '1.8'
         javaParameters = true
     }
 }
