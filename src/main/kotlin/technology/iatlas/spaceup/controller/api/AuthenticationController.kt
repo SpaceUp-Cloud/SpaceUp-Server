@@ -1,4 +1,4 @@
-package technology.iatlas.spaceup.controller
+package technology.iatlas.spaceup.controller.api
 
 import com.google.gson.Gson
 import io.micronaut.http.MediaType
