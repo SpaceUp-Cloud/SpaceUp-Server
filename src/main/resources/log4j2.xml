@@ -6,10 +6,10 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="technology.iatlas.spaceup" level="info" additivity="false">
+        <Logger name="technology.iatlas.spaceup" level="debug" additivity="false">
             <AppenderRef ref="LogToConsole"/>
         </Logger>
-        <Root level="debug">
+        <Root level="info">
             <AppenderRef ref="LogToConsole"/>
         </Root>
     </Loggers>
