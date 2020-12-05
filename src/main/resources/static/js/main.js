@@ -27,6 +27,8 @@ function init() {
                     break;
                 }
               };
+
+        window.onunload = sse.close();
     } else {
         result.innerHTML = "Your browser doesn't support server-sent events.";
     }
