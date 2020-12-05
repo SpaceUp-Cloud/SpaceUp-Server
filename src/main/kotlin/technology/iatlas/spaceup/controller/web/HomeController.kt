@@ -13,7 +13,7 @@ class HomeController {
 
     @Get(produces = [MediaType.TEXT_HTML])
     @Secured("isAnonymous()")
-    fun getHome(): String {
+    fun home(): String {
 
         // Funktioniert irgendwie nicht
         /*return base.template("World")
