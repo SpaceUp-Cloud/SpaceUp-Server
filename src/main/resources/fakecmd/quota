@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# quota -lgs
+cat $(dirname "$0")/output_quota.txt

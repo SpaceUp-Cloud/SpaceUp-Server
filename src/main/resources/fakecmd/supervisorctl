@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# fake uberspace commands for testing
+
+subCat=$1           # status
+
+if [[ "$subCat" = "status" ]]
+then
+    cat "$(dirname "$0")/output_supervisorctl_status.txt"
+fi

@@ -1,0 +1,5 @@
+my.great.domain/ http:60001 => NOT OK, no service
+domain.great.domain/ http:60000 => OK, listening: PID 10012, python3 /home/user/path/to/web/app.py
+extra.great.domain/ http:60002 => OK, listening: PID 11851, /home/user/path/to/webservices/MyApp/venv/bin/python3 /home/user/bin/server --bind=0.0.0.0:666 -w 4 my:app
+/ apache (default)
+

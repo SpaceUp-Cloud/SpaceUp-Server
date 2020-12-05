@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# php fake command
+
+subPhp=$1           # status
+
+if [[ "$subPhp" = "./occ" || "$subPhp" = "occ" ]]
+then
+    cat "$(dirname "$0")/output_nextcloud_apps_update.txt"
+fi

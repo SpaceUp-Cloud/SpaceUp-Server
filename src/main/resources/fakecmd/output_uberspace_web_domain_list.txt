@@ -1,0 +1,7 @@
+mydomain.example
+sub.mydomain.example
+another-great.domain
+myfurthersubdomain.another-great.domain
+i.like.it
+dont.like.it
+great.feature.domain
