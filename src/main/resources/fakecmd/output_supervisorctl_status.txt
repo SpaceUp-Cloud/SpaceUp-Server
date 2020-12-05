@@ -1,0 +1,3 @@
+gitbucket-daemon                 RUNNING   pid 20580, uptime 22 days, 16:34:39
+searx-daemon                     RUNNING   pid 19411, uptime 1:17:35
+urc                              FATAL     can't find command 'source'

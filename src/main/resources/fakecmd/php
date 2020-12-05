@@ -1,0 +1,10 @@
+***REMOVED***!/usr/bin/env bash
+
+***REMOVED*** php fake command
+
+subPhp=$1           ***REMOVED*** status
+
+if [[ "$subPhp" = "./occ" || "$subPhp" = "occ" ]]
+then
+    cat "$(dirname "$0")/output_nextcloud_apps_update.txt"
+fi

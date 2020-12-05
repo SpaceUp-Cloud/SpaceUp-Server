@@ -1,0 +1,4 @@
+***REMOVED***!/usr/bin/env bash
+
+***REMOVED*** quota -lgs
+cat $(dirname "$0")/output_quota.txt
