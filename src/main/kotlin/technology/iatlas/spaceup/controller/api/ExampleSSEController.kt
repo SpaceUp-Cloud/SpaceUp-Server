@@ -1,4 +1,4 @@
-package technology.iatlas.spaceup.controller.web
+package technology.iatlas.spaceup.controller.api
 
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Body
@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.services.SseServiceImpl
 
 @Controller("/time")
-class TimeController {
-    private val log = LoggerFactory.getLogger(TimeController::class.java)
+class ExampleSSEController {
+    private val log = LoggerFactory.getLogger(ExampleSSEController::class.java)
 
     private var sseService: SseServiceImpl<String>
         = SseServiceImpl("update")
