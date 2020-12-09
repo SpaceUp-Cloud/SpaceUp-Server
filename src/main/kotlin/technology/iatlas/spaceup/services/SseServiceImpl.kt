@@ -14,7 +14,7 @@ class SseServiceImpl<T>(private val eventName: String): BaseSseService<T>() {
         val res = subject.hide()
             .toFlowable(BackpressureStrategy.LATEST).map(this::createEvent)
 
-        res.map {
+        res.forEach {
             log.debug(it.data.toString())
         }
 

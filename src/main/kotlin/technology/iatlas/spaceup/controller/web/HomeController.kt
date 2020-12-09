@@ -5,7 +5,6 @@ import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.security.annotation.Secured
-import org.slf4j.LoggerFactory
 
 
 @Controller("/")
@@ -15,13 +14,8 @@ class HomeController {
     @Secured("isAnonymous()")
     fun home(): String {
 
-        // Funktioniert irgendwie nicht
-        /*return base.template("World")
-            .render()
-            .toString();*/
-
-        return Rocker.template("views/home.rocker.html")
-            .bind("message", "Gino")
+        return Rocker.template("views/dashboard.rocker.html")
+            .bind("mapLinks", mapOf("Home" to "/"))
             .render()
             .toString()
     }

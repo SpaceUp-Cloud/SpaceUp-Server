@@ -1,12 +1,28 @@
-@args (String title, RockerBody content)
+@import java.util.Map
+@args (String title, Map<String, String> mapLinks, RockerBody content)
 
 <html>
-<head>
-    <title>@title</title>
-    <script type="module" src="/js/main.js"></script>
-</head>
-<body>
-@content
-<span id="result"></span>
-</body>
+    <head>
+        <title>@title</title>
+        <script type="module" src="/js/main.js"></script>
+
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </head>
+    <body>
+        <nav>
+            <div class="nav-wrapper">
+                <!--a href="***REMOVED***" class="brand-logo">Logo</a-->
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    @for ((name, link) : mapLinks) {
+                        <li><a href="@link">@name</a></li>
+                    }
+                </ul>
+            </div>
+        </nav>
+        @content
+    </body>
 </html>
