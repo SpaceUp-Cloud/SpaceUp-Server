@@ -6,21 +6,18 @@ import io.micronaut.http.sse.Event
 import org.reactivestreams.Publisher
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.services.SseServiceImpl
+import javax.inject.Inject
 
 @Controller("/sse")
-class ExampleSSEController {
+class ExampleSSEController(private val sseService: SseServiceImpl<String>) {
     private val log = LoggerFactory.getLogger(ExampleSSEController::class.java)
-    private var sseService: SseServiceImpl<String> = SseServiceImpl("update")
+
+    init {
+        sseService.eventName = "update"
+    }
 
     @Get("/events", produces = [MediaType.TEXT_EVENT_STREAM])
     fun events(): Publisher<Event<String>> {
         return sseService.events()
     }
-
-    @Post("/publish")
-    fun publish(@Body data: String) {
-        log.debug("Received data: {}", data)
-        sseService.publish(data)
-    }
-
 }
