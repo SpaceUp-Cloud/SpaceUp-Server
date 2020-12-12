@@ -7,11 +7,11 @@ import javax.inject.Singleton
 
 @Singleton
 class UpdateServiceImpl : UpdateServiceInf {
-    override fun checkFor(pck: UpdatePackage): Boolean {
+    override fun checkFor(updatePackage: UpdatePackage): Boolean {
         TODO("Not yet implemented")
     }
 
-    override fun executeFor(pck: UpdatePackage): FeedbackObj {
+    override fun executeFor(updatePackage: UpdatePackage): FeedbackObj {
         TODO("Not yet implemented")
     }
 }

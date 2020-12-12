@@ -19,10 +19,10 @@ open class RouterService {
      * Linking between controller path and navigation name
      */
     @Cacheable("client-controller-link")
-    open fun getClientControllerLinking(packageName: String = "technology.iatlas.spaceup"): Map<String, String> {
+    open fun createControllerNameLink(): Map<String, String> {
         val mapping = mutableMapOf<String, String>()
 
-        getRoutes(packageName).filter {
+        getClasses().filter {
             it.getAnnotation(Controller::class.java) != null &&
                     it.getAnnotation(ClientLink::class.java) != null
         }.forEach {
@@ -32,11 +32,10 @@ open class RouterService {
 
             log.trace("Found Route: {} to {}", name, uri)
         }
-
         return mapping
     }
 
-    private fun getRoutes(givenPackage: String): List<Class<*>> {
+    private fun getClasses(givenPackage: String = "technology.iatlas.spaceup"): List<Class<*>> {
         /*
         TODO: put all in cache as this is only necessary after init
          */
