@@ -7,17 +7,14 @@ import org.slf4j.LoggerFactory
 import javax.inject.Singleton
 
 @Singleton
-class SseServiceImpl<T>(private val eventName: String): BaseSseService<T>() {
+class SseServiceImpl<T>: BaseSseService<T>() {
     private val log = LoggerFactory.getLogger(SseServiceImpl::class.java)
+
+    var eventName: String = "defaultEvent"
 
     override fun events(): Publisher<Event<T>> {
         val res = subject.hide()
             .toFlowable(BackpressureStrategy.LATEST).map(this::createEvent)
-
-        res.map {
-            log.debug(it.data.toString())
-        }
-
         return res
     }
 
