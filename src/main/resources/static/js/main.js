@@ -4,11 +4,11 @@ function init() {
     let esSupport = (window.EventSource !== undefined);
     let result = document.getElementById("result");
     if(esSupport) {
-        let sse = new ReconnectingEventSource("/time/events", { withCredentials: false });
+        let sse = new ReconnectingEventSource("/sse/events", { withCredentials: false });
 
               sse.addEventListener("update", function(e) {
                   console.log(e);
-                  document.getElementById("time").innerHTML = event.data;
+                  document.getElementById("time").innerHTML = e.data;
               });
 
               sse.onerror = function(e) {
@@ -28,7 +28,6 @@ function init() {
                 }
               };
 
-        window.onunload = sse.close();
     } else {
         result.innerHTML = "Your browser doesn't support server-sent events.";
     }

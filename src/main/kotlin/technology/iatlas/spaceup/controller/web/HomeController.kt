@@ -5,25 +5,20 @@ import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.security.annotation.Secured
-import org.slf4j.LoggerFactory
+import technology.iatlas.spaceup.core.annotations.ClientLink
+import technology.iatlas.spaceup.services.RouterService
 
 
 @Controller("/")
-class HomeController {
+@ClientLink("Dashboard")
+class HomeController(routerService: RouterService) : BaseController(routerService) {
+    // private val log = LoggerFactory.getLogger(HomeController::class.java)
 
     @Get(produces = [MediaType.TEXT_HTML])
-    @Secured("isAnonymous()")
     fun home(): String {
-
-        // Funktioniert irgendwie nicht
-        /*return base.template("World")
-            .render()
-            .toString();*/
-
-        return Rocker.template("views/home.rocker.html")
-            .bind("message", "Gino")
+        return Rocker.template("views/dashboard.rocker.html")
+            .bind("mapLinks", mapLinks)
             .render()
             .toString()
     }
-
 }

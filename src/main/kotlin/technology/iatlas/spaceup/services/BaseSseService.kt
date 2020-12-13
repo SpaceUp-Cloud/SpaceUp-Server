@@ -23,7 +23,7 @@ abstract class BaseSseService<T> : BaseSseServiceInf<T> {
      * Publish a new object to sse
      */
     override fun publish(t: T) {
-        log.debug("Publish: {}", t.toString())
+        log.trace("Publish: {}", t.toString())
         subject.onNext(t)
     }
 

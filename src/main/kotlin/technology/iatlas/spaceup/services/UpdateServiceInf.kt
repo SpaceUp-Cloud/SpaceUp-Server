@@ -7,10 +7,10 @@ interface UpdateServiceInf {
     /**
      * Check if an update is available for give package name
      */
-    fun checkFor(pck: UpdatePackage): Boolean
+    fun checkFor(updatePackage: UpdatePackage): Boolean
 
     /**
      * Execute update for named package
      */
-    fun executeFor(pck: UpdatePackage): FeedbackObj
+    fun executeFor(updatePackage: UpdatePackage): FeedbackObj
 }
