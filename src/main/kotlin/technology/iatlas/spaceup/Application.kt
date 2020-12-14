@@ -16,6 +16,7 @@ fun main(args: Array<String>) {
 	build()
 	    .args(*args)
 		.packages("technology.iatlas.spaceup")
+        .defaultEnvironments("prod")
 		.start()
 }
 
