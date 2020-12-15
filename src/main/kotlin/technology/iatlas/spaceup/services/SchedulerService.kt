@@ -59,7 +59,7 @@ class SchedulerService(
             }
         }
 
-        val cmd: MutableList<String> = mutableListOf("ls")
+        val cmd: MutableList<String> = mutableListOf("uberspace", "web", "domain", "list")
         val result: String? = Runner<String>(env).execute(Command(cmd), EchoParser())
         log.info(result)
     }
