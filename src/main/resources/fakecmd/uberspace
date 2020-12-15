@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/bash -x
+trap 'echo "$BASH_COMMAND" failed with error code $?' ERR
 
 # fake uberspace commands for testing
 
@@ -6,19 +7,4 @@ subCat=$1           # web
 subSubCat=$2        # domain / backend
 subSubSubCat=$3     # list
 
-if [[ "$subCat" = "web" ]]
-then
-    if [[ "$subSubCat" = "domain" ]]
-    then
-        if [[ "$subSubSubCat" = "list" ]]
-        then
-            cat "$(dirname "$0")/output_uberspace_web_domain_list.txt"
-        fi
-    elif [[ $subSubCat = "backend" ]]
-    then
-        if [[ "$subSubSubCat" = "list" ]]
-        then
-            cat "$(dirname "$0")/output_uberspace_web_backend_list.txt"
-        fi
-    fi
-fi
+cat "output_$0_$1_$2_$3.txt"
