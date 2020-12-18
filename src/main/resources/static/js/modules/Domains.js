@@ -64,16 +64,16 @@ function deleteDomain(domain) {
 
 function popup(response) {
     if(response["error"] != null) {
-        M.toast({html: response, classes: "red"});
+        M.toast({html: response["error"] , classes: "red"});
     }
     if(response["info"] != null) {
-        M.toast({html: response, classes: "blue"});
+        M.toast({html: response["info"], classes: "blue"});
     }
 }
 
 function info(data) {
     if(data != null) {
-        M.toast({html: data});
+        M.toast({html: data, classes: "blue"});
     }
 }
 
