@@ -10,7 +10,7 @@ export default class ReconnectingEventSource {
 
         this.url = url;
         this.readyState = 0;
-        this.max_retry_time = 3000;
+        this.max_retry_time = 10000;
 
         if (this._configuration != null) {
             if (this._configuration.lastEventId) {
@@ -27,6 +27,7 @@ export default class ReconnectingEventSource {
         this._onevent_wrapped = event => { this._onevent(event); };
 
         this._start();
+        console.log("Connected.")
     }
 
     _start() {

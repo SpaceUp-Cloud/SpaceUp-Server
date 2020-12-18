@@ -1,14 +1,18 @@
 package technology.iatlas.spaceup.core.cmd
 
 import io.micronaut.context.env.Environment
+import io.micronaut.tracing.annotation.ContinueSpan
+import io.micronaut.tracing.annotation.SpanTag
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.io.File
+import java.io.*
+import java.net.URL
 
 class Runner<T>(private val env: Environment) : RunnerInf<T> {
     private val log: Logger = LoggerFactory.getLogger(Runner::class.java)
 
-    override fun execute(cmd: CommandInf, parser: ParserInf<T>): T? {
+    @ContinueSpan
+    override fun execute(@SpanTag("runner.cmd") cmd: CommandInf, parser: ParserInf<T>): T? {
 
         val preCommand: MutableList<String> = if (env.activeNames.contains("dev"))
             mutableListOf("bash") else mutableListOf()
@@ -20,11 +24,15 @@ class Runner<T>(private val env: Environment) : RunnerInf<T> {
                 fileNameToRetrieve += "_$it"
             }
 
-            val file = this::class.java.getResource("/fakecmd/$fileNameToRetrieve.txt").path
-            val outputFile = File(file)
+            // dummy file if resource does not exist
+            val url =
+                this::class.java.getResource("/fakecmd/$fileNameToRetrieve.txt") ?:
+                this::class.java.getResource("/fakecmd/dummy.txt")
+
+            val outputFile = File(url.path)
             log.debug("File to get: {}", outputFile)
 
-            return parser.parse(outputFile.readText())
+            return parser.parse(outputFile.bufferedReader())
         }
 
         val actualCmd = preCommand + cmd.parameters
@@ -38,9 +46,7 @@ class Runner<T>(private val env: Environment) : RunnerInf<T> {
         val proc = processBuilder.start()
         proc.waitFor()
 
-        val output = proc.inputStream.bufferedReader().readText()
-        log.debug(output)
-
+        val output = proc.inputStream.bufferedReader()
         return parser.parse(output)
 
     }

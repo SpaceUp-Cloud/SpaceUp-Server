@@ -5,7 +5,7 @@ plugins {
     id "org.jetbrains.kotlin.plugin.allopen" version "1.4.20"
     id "com.github.johnrengelman.shadow" version "6.0.0"
     id "application"
-    id "com.fizzed.rocker" version "1.2.3"
+    id "com.fizzed.rocker" version "1.3.0"
 }
 
 version "0.1"
@@ -58,6 +58,7 @@ dependencies {
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
     runtimeOnly("io.netty:netty-tcnative:2.0.35.Final")
     runtimeOnly("io.netty:netty-tcnative-boringssl-static:2.0.35.Final")
+    runtimeOnly("com.fizzed:rocker-compiler:1.3.0")
     kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     kaptTest("io.micronaut:micronaut-inject-java")
     testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
@@ -102,6 +103,9 @@ kapt {
         arg("micronaut.processing.annotations", "technology.iatlas.spaceup.*")
         arg("micronaut.processing.group", "technology.iatlas.spaceup")
         arg("micronaut.processing.module", "spaceUp")
+        arg("micronaut.openapi.views.spec",
+                "***REMOVED***,rapidoc.enabled=true," +
+                        "***REMOVED***,swagger-ui.theme=flattop")
     }
 }
 

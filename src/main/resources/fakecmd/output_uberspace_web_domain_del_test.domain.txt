@@ -1,0 +1,1 @@
+uberspace-web-domain-del: error: argument domain: invalid domain value: 'nicht.meine.domain'

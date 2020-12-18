@@ -1,0 +1,49 @@
+@import java.util.Map
+@import technology.iatlas.spaceup.dto.Domains;
+
+@args (Map<String, String> mapLinks, Domains domains)
+
+@extrajs => {
+    <script src="/js/modules/Domains.js"></script>
+}
+
+@views.base.template("Domänen", mapLinks, extrajs) -> {
+    <div>
+        <h4>Deine Domänen</h4>
+    </div>
+    <div class="row">
+        @for (domain : domains.getDomains()) {
+            <div class="col s12 m4">
+                <div class="card">
+                    <div class="card-content teal">
+                        <span class="white-text">
+                            <a href="https://@domain">@domain</a>
+                        </span>
+                    </div>
+                    <div class="card-action">
+                        <a onclick="deleteDomain('@domain')">Löschen</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <a id="add-domain" href="***REMOVED***addDomainModal"
+       class="btn-floating btn-large scale-transition waves-effect waves-light modal-trigger">
+        <i class="material-icons">add</i>
+    </a>
+
+    <!-- Modal Structure -->
+    <div id="addDomainModal" class="modal">
+        <div class="modal-content">
+            <label for="domain-list">Füge hier alle Domains mit Semikolon getrennt hinzu!</label>
+            <textarea autofocus placeholder="my.example.domain; another.example.domain"
+                      id="domain-list"></textarea>
+        </div>
+        <div class="modal-footer">
+            <a onclick="add()" class="btn-floating scale-transition waves-effect waves-light teal">
+                <i class="material-icons">add</i></a>
+        </div>
+    </div>
+
+
+    }

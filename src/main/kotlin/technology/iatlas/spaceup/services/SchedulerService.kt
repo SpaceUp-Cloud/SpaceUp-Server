@@ -2,12 +2,14 @@ package technology.iatlas.spaceup.services
 
 import io.micronaut.context.env.Environment
 import io.micronaut.scheduling.annotation.Scheduled
+import io.micronaut.tracing.annotation.ContinueSpan
 import kotlinx.coroutines.GlobalScope
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.cmd.Command
 import technology.iatlas.spaceup.core.cmd.CommandInf
 import technology.iatlas.spaceup.core.cmd.ParserInf
 import technology.iatlas.spaceup.core.cmd.Runner
+import technology.iatlas.spaceup.core.parser.EchoParser
 import technology.iatlas.spaceup.dto.UpdatePackage
 import java.time.LocalDateTime
 import java.util.*
@@ -37,27 +39,9 @@ class SchedulerService(
         sseService.publish(updatePackage)
     }
 
-    //@Scheduled(fixedRate = "30s", initialDelay = "1s")
-    internal fun checkConsoleOutputTest() {
-        val processBuilder = ProcessBuilder()
-        processBuilder.command("bash.exe", "-c", "ls -la")
-
-        val proc = processBuilder.start()
-        proc.waitFor(30, TimeUnit.SECONDS)
-
-        val output = proc.inputStream.bufferedReader().readText()
-        log.info(output)
-    }
-
-    @Scheduled(fixedRate = "5s", initialDelay = "1s")
+    //@Scheduled(fixedRate = "2m", initialDelay = "1s")
     internal fun checkServices() {
         log.debug("checkServices")
-
-        class EchoParser : ParserInf<String> {
-            override fun parse(input: String): String {
-                return input
-            }
-        }
 
         val cmd: MutableList<String> = mutableListOf("uberspace", "web", "domain", "list")
         val result: String? = Runner<String>(env).execute(Command(cmd), EchoParser())
