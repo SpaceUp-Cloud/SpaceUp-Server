@@ -1,6 +1,6 @@
 package technology.iatlas.spaceup.services
 
-import technology.iatlas.spaceup.dto.FeedbackObj
+import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.dto.UpdatePackage
 
 interface UpdateServiceInf {
@@ -12,5 +12,5 @@ interface UpdateServiceInf {
     /**
      * Execute update for named package
      */
-    fun executeFor(updatePackage: UpdatePackage): FeedbackObj
+    fun executeFor(updatePackage: UpdatePackage): Feedback
 }

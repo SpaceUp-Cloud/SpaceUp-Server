@@ -1,5 +1,6 @@
 package technology.iatlas.spaceup
 
+import com.fizzed.rocker.runtime.RockerRuntime
 import io.micronaut.runtime.Micronaut.build
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.info.Info

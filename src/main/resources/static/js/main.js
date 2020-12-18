@@ -1,6 +1,12 @@
 import ReconnectingEventSource from "./modules/ReconnectingSSE.js";
 
+function initMaterialize() {
+    M.AutoInit(undefined);
+}
+
 function init() {
+    initMaterialize();
+
     let esSupport = (window.EventSource !== undefined);
     let result = document.getElementById("result");
     if(esSupport) {

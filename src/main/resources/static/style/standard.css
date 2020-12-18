@@ -1,0 +1,11 @@
+a, a:link, a:visited {
+    text-decoration: none;
+    color: white;
+    cursor: default;
+}
+
+#add-domain {
+    bottom: 1%;
+    right: 1%;
+    position: fixed;
+}

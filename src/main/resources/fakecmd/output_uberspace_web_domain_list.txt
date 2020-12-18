@@ -1,7 +1,13 @@
-mydomain.example
+test.domain
 sub.mydomain.example
 another-great.domain
-myfurthersubdomain.another-great.domain
+mysuperlongandspecial.extra.domain
 i.like.it
 dont.like.it
 great.feature.domain
+noch.eine.domain
+viele.weitere.domains
+und.noch.eine
+hier.ist.eineweitere
+super.great.domain
+woah.soviele.domains

@@ -1,0 +1,2 @@
+usage: uberspace-web-domain-add [-h] [-v] domain
+uberspace-web-domain-add: error: argument domain: invalid domain value: 'nicht.meine.domain'
