@@ -16,7 +16,7 @@ import technology.iatlas.spaceup.dto.Domains
 import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.services.ClassService
 
-@Controller("/domains")
+@Controller("/Domains")
 open class DomainController(private val env: Environment, classService: ClassService) :
     BaseController(classService) {
 
@@ -64,8 +64,7 @@ open class DomainController(private val env: Environment, classService: ClassSer
         log.warn("Delete domain $domain")
 
         val cmd = mutableListOf("uberspace", "web", "domain", "del", domain)
-
-            val response: Feedback? = Runner<Feedback>(env)
+        val response: Feedback? = Runner<Feedback>(env)
                 .execute(Command(cmd), DeleteDomainParser())
 
         return HttpResponse.ok(response)

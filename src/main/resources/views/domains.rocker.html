@@ -4,7 +4,7 @@
 @args (Map<String, String> mapLinks, Domains domains)
 
 @extrajs => {
-    <script src="/js/modules/Domains.js"></script>
+    <script src="/js/modules/Domain.js"></script>
 }
 
 @views.base.template("Domänen", mapLinks, extrajs) -> {
@@ -14,7 +14,7 @@
     <div class="row">
         @for (domain : domains.getDomains()) {
             <div class="col s12 m4">
-                <div class="card">
+                <div class="card hoverable">
                     <div class="card-content teal">
                         <span class="white-text">
                             <a href="https://@domain" target="_blank">@domain</a>
@@ -45,5 +45,4 @@
         </div>
     </div>
 
-
-    }
+}

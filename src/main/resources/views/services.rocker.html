@@ -1,0 +1,55 @@
+@import java.util.Map
+@import java.util.List
+@import technology.iatlas.spaceup.dto.Service
+
+@args (Map
+<String, String> mapLinks, List
+<Service> services)
+
+    @extrajs => {
+    <script src="/js/modules/Service.js"></script>
+    }
+
+@views.base.template("Services", mapLinks, extrajs) -> {
+    <div>
+        <h4>Deine Services</h4>
+    </div>
+    <div class="row">
+        @for (service : services) {
+        <div class="col s12 m4">
+            <div class="card hoverable">
+                <div id="card_@service.getName()" class="card-content">
+                    <h5>@service.getName()</h5>
+                    <hr class="white">
+                    <span class="white-text">
+                        <p>
+                            Status: @service.getStatus()<br/>
+                            @service.getInfo()
+                        </p>
+                    </span>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            let serviceList = [];
+            @for(service: services) {
+                serviceList.push({
+                    name: "@service.getName()",
+                    status: "@service.getStatus()",
+                    info: "@service.getInfo()"
+                });
+            }
+            serviceList.forEach(s => {
+                if(s.status === "FATAL") {
+                    $("***REMOVED***card_" + s.name).addClass("red");
+                } else {
+                    $("***REMOVED***card_" + s.name).addClass("teal");
+                }
+            })
+        });
+    </script>
+    }
