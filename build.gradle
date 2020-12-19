@@ -59,6 +59,7 @@ dependencies {
     runtimeOnly("io.netty:netty-tcnative:2.0.35.Final")
     runtimeOnly("io.netty:netty-tcnative-boringssl-static:2.0.35.Final")
     runtimeOnly("com.fizzed:rocker-compiler:1.3.0")
+    implementation("org.reflections:reflections:0.9.12")
     kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     kaptTest("io.micronaut:micronaut-inject-java")
     testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
