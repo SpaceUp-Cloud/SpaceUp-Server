@@ -13,7 +13,6 @@ class ServiceParser : ParserInf<List<Service>> {
 
         cmdOutput.lines().forEach { line ->
             val splitted = line.replace("\\s+".toRegex(), " ").split(" ")
-            log.debug("Splitted Service line: {}", splitted)
 
             val name = splitted[0]
             val status = splitted[1]
@@ -25,9 +24,6 @@ class ServiceParser : ParserInf<List<Service>> {
                     info = "$info ${it.replace(",", "")}"
                 }
             }
-
-                //.joinToString(" ").replace(",", "")
-            log.debug("Parsed info: $info")
 
             val service = Service(name, status, info)
             serviceList.add(service)
