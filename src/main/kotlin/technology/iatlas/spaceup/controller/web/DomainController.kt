@@ -12,14 +12,13 @@ import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.CreateDomainParser
 import technology.iatlas.spaceup.core.parser.DeleteDomainParser
 import technology.iatlas.spaceup.core.parser.DomainParser
-import technology.iatlas.spaceup.core.parser.EchoParser
 import technology.iatlas.spaceup.dto.Domains
 import technology.iatlas.spaceup.dto.Feedback
-import technology.iatlas.spaceup.services.RouterService
+import technology.iatlas.spaceup.services.ClassService
 
 @Controller("/domains")
-open class DomainController(private val env: Environment, routerService: RouterService) :
-    BaseController(routerService) {
+open class DomainController(private val env: Environment, classService: ClassService) :
+    BaseController(classService) {
 
     private val log = LoggerFactory.getLogger(DomainController::class.java)
 
