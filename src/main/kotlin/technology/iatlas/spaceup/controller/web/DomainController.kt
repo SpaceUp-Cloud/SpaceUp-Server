@@ -6,6 +6,7 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 import org.slf4j.LoggerFactory
+import technology.iatlas.spaceup.config.DevUrlConfig
 import technology.iatlas.spaceup.core.annotations.ClientLink
 import technology.iatlas.spaceup.core.cmd.Command
 import technology.iatlas.spaceup.core.cmd.Runner
@@ -17,8 +18,8 @@ import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.services.ClassService
 
 @Controller("/Domains")
-open class DomainController(private val env: Environment, classService: ClassService) :
-    BaseController(classService) {
+open class DomainController(config: DevUrlConfig, private val env: Environment, classService: ClassService) :
+    BaseController(config, env, classService) {
 
     private val log = LoggerFactory.getLogger(DomainController::class.java)
 

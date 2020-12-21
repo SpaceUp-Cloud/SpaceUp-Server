@@ -5,6 +5,7 @@ import io.micronaut.context.env.Environment
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
+import technology.iatlas.spaceup.config.DevUrlConfig
 import technology.iatlas.spaceup.core.annotations.ClientLink
 import technology.iatlas.spaceup.core.cmd.Command
 import technology.iatlas.spaceup.core.cmd.Runner
@@ -13,7 +14,8 @@ import technology.iatlas.spaceup.dto.Service
 import technology.iatlas.spaceup.services.ClassService
 
 @Controller("/Services")
-open class ServiceController(private val env: Environment, classService: ClassService) : BaseController(classService) {
+open class ServiceController(config: DevUrlConfig, private val env: Environment, classService: ClassService) :
+    BaseController(config, env, classService) {
 
     @ClientLink("Services")
     @Get(produces = [MediaType.TEXT_HTML])
