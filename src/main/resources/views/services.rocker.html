@@ -1,16 +1,15 @@
 @import java.util.Map
 @import java.util.List
 @import technology.iatlas.spaceup.dto.Service
+@import technology.iatlas.spaceup.dto.Navigation
 
-@args (Map
-<String, String> mapLinks, List
-<Service> services)
+@args (List<Navigation> navigations, List<Service> services)
 
     @extrajs => {
     <script src="/js/modules/Service.js"></script>
     }
 
-@views.base.template("Services", mapLinks, extrajs) -> {
+@views.base.template("Services", navigations, extrajs) -> {
     <div>
         <h4>Deine Services</h4>
     </div>

@@ -1,8 +1,9 @@
 @option discardLogicWhitespace=true
 @option targetCharset=UTF-8
 
-@import java.util.Map
-@args (String title, Map<String, String> mapLinks, RockerContent extrajs, RockerBody content)
+@import java.util.List
+@import technology.iatlas.spaceup.dto.Navigation
+@args (String title, List<Navigation> navigations, RockerContent extrajs, RockerBody content)
 
 <html>
     <head>
@@ -26,8 +27,12 @@
             <div class="nav-wrapper teal">
                 <!--a href="***REMOVED***" class="brand-logo">Logo</a-->
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    @for ((name, link) : mapLinks) {
-                        <li><a href="@link">@name</a></li>
+                    @for (nav : navigations) {
+                        @if(nav.getNewTab()) {
+                            <li><a href="@nav.getMapping()" target="_blank">@nav.getLinkname()</a></li>
+                        } else {
+                            <li><a href="@nav.getMapping()">@nav.getLinkname()</a></li>
+                        }
                     }
                 </ul>
             </div>

@@ -1,13 +1,14 @@
-@import java.util.Map
+@import java.util.List
+@import technology.iatlas.spaceup.dto.Navigation
 @import technology.iatlas.spaceup.dto.Domains;
 
-@args (Map<String, String> mapLinks, Domains domains)
+@args (List<Navigation> navigations, Domains domains)
 
 @extrajs => {
     <script src="/js/modules/Domain.js"></script>
 }
 
-@views.base.template("Domänen", mapLinks, extrajs) -> {
+@views.base.template("Domänen", navigations, extrajs) -> {
     <div>
         <h4>Deine Domänen</h4>
     </div>
