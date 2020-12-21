@@ -2,8 +2,9 @@
 @import java.util.List
 @import technology.iatlas.spaceup.dto.Service
 @import technology.iatlas.spaceup.dto.Navigation
+@import technology.iatlas.spaceup.dto.ServiceOptions
 
-@args (List<Navigation> navigations, List<Service> services)
+@args (List<Navigation> navigations, List<Service> services, List<ServiceOptions> options)
 
     @extrajs => {
     <script src="/js/modules/Service.js"></script>
@@ -26,6 +27,11 @@
                             @service.getInfo()
                         </p>
                     </span>
+                </div>
+                <div class="card-action">
+                    @for(option: options) {
+                        <a onclick="serviceExecute('@service.getName()','@option')">@option.name()</a>
+                    }
                 </div>
             </div>
         </div>
