@@ -21,14 +21,8 @@ open class ClassService(private val env: Environment) {
      */
     @Cacheable("client-controller-link")
     @ContinueSpan
-    open fun createControllerNameLink(): Map<String, String> {
+    open fun createControllerNameLink(): MutableMap<String, String> {
         val mapping = mutableMapOf<String, String>()
-
-        if (env.activeNames.contains("dev")) {
-            mapping["Swagger"] = "/swagger-ui"
-
-            log.warn("Added developer links to navigation")
-        }
 
         getControllerClasses(Controller::class.java).filter {
             it.isAnnotationPresent(Controller::class.java) &&
