@@ -7,9 +7,20 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.*
 import java.net.URL
+import javax.inject.Singleton
 
-class Runner<T>(private val env: Environment) : RunnerInf<T> {
+@Singleton
+open class Runner<T>(private val env: Environment) : RunnerInf<T> {
     private val log: Logger = LoggerFactory.getLogger(Runner::class.java)
+
+    private var devMode = false
+
+    init {
+        devMode = env.activeNames.contains("dev")
+        if(devMode) {
+            log.warn("Get fake file in dev mode!")
+        }
+    }
 
     @ContinueSpan
     override fun execute(@SpanTag("runner.cmd") cmd: CommandInf, parser: ParserInf<T>): T? {
@@ -17,8 +28,7 @@ class Runner<T>(private val env: Environment) : RunnerInf<T> {
         val preCommand: MutableList<String> = if (env.activeNames.contains("dev"))
             mutableListOf("bash") else mutableListOf()
 
-        if(env.activeNames.contains("dev")) {
-            log.warn("Get fake file in dev mode!")
+        if(devMode) {
             var fileNameToRetrieve = "output"
             cmd.parameters.forEach {
                 fileNameToRetrieve += "_$it"

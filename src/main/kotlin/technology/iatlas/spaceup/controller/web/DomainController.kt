@@ -15,12 +15,12 @@ import technology.iatlas.spaceup.core.parser.DomainParser
 import technology.iatlas.spaceup.dto.Domains
 import technology.iatlas.spaceup.dto.Feedback
 
-@Controller("/Domains")
+@Controller("/domains")
 open class DomainController(private val env: Environment) : BaseController() {
 
     private val log = LoggerFactory.getLogger(DomainController::class.java)
 
-    @WebNavigation("Domänen", "/Domains", prio = 1)
+    @WebNavigation("Domänen", "/domains", prio = 1)
     @Get(produces = [MediaType.TEXT_HTML])
     @Cacheable("cache-domain-list")
     open fun list(): String {
