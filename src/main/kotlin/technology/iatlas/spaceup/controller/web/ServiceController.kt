@@ -1,7 +1,6 @@
 package technology.iatlas.spaceup.controller.web
 
 import io.micronaut.cache.annotation.Cacheable
-import io.micronaut.context.env.Environment
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
@@ -9,44 +8,37 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.annotations.WebNavigation
-import technology.iatlas.spaceup.core.cmd.Command
-import technology.iatlas.spaceup.core.cmd.Runner
-import technology.iatlas.spaceup.core.parser.EchoParser
-import technology.iatlas.spaceup.core.parser.ServiceParser
+import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.dto.Service
-import technology.iatlas.spaceup.dto.ServiceOptions
+import technology.iatlas.spaceup.dto.ServiceOption
+import technology.iatlas.spaceup.services.ServiceService
 
 @Controller("/services")
-open class ServiceController(private val env: Environment) : BaseController() {
+open class ServiceController(private val serviceService: ServiceService) : BaseController() {
     private val log = LoggerFactory.getLogger(ServiceController::class.java)
 
     @WebNavigation("Services", "/services", prio = 2)
     @Get(produces = [MediaType.TEXT_HTML])
     @Cacheable("cache-service-list")
     open fun list(): String {
-        val serviceOptions =
-            listOf(ServiceOptions.START, ServiceOptions.STOP, ServiceOptions.RESTART)
 
-        val cmd: MutableList<String> = mutableListOf("supervisorctl", "status")
-        val services: List<Service>? = Runner<List<Service>>(env)
-            .execute(Command(cmd), ServiceParser())
+        val services = serviceService.list()
+        val options = serviceService.options()
 
         return getRockerTemplate("views/services.rocker.html")
             .bind("services", services)
-            .bind("options", serviceOptions)
+            .bind("options", options)
             .render()
             .toString()
     }
 
-    @Post("/execute/{servicename}/{option}", produces = [MediaType.TEXT_PLAIN])
-    fun execute(servicename: String, option: ServiceOptions): HttpResponse<String> {
-        log.debug("Execute $servicename: $option")
+    @Post("/execute/{name}/{option}")
+    fun execute(name: String, option: String): Feedback? {
+        log.debug("Execute $name: $option")
 
-        val cmd: MutableList<String> = mutableListOf("supervisorctl",
-            option.name, servicename)
-        val response: String? = Runner<String>(env)
-            .execute(Command(cmd), EchoParser())
+        val serviceName = Service(name, null, null)
+        val serviceOption = ServiceOption.valueOf(option)
 
-        return HttpResponse.ok(response)
+        return serviceService.execute(serviceName, serviceOption)
     }
 }
