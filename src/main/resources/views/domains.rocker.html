@@ -1,9 +1,8 @@
 @import java.util.List
 @import technology.iatlas.spaceup.dto.Navigation
-@import technology.iatlas.spaceup.dto.Domains;
+@import technology.iatlas.spaceup.dto.Domain;
 
-@args (List
-<Navigation> navigations, Domains domains)
+@args (List<Navigation> navigations, List<Domain> domains)
 
     @extrajs => {
     <script src="/js/modules/Domain.js"></script>
@@ -14,18 +13,18 @@
         <h4>Deine Domänen</h4>
     </div>
     <div class="row">
-        @for (domain : domains.getDomains()) {
-        <div id="card_@domain.replace('.','_')" class="col s12 m4">
+        @for (domain : domains) {
+        <div id="card_@domain.htmlFriendly()" class="col s12 m4">
             <!-- *content id* is import to replace it with loader and back -->
-            <span id="content_@domain.replace('.','_')">
+            <span id="content_@domain.htmlFriendly()">
                 <div class="card hoverable">
                     <div class="card-content teal">
                         <span class="white-text">
-                            <a href="https://@domain" target="_blank">@domain</a>
+                            <a href="https://@domain.getUrl()" target="_blank">@domain.getUrl()</a>
                         </span>
                     </div>
                     <div class="card-action">
-                        <a onclick="deleteDomain('@domain')">Löschen</a>
+                        <a onclick="deleteDomain('@domain.getUrl()')">Löschen</a>
                     </div>
                 </div>
             </span>

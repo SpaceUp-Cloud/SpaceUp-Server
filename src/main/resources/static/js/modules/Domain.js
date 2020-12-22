@@ -51,6 +51,7 @@ function add() {
 function deleteDomain(domain) {
     let c = confirm("Bist du dir sicher?");
     let domainId = domain.replaceAll(".", "_");
+
     if(c === true) {
         console.warn("Delete domain " + domain);
         $.ajax({
