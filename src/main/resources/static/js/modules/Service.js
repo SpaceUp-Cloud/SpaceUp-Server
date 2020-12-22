@@ -10,6 +10,7 @@ function serviceExecute(name, option) {
             disableLoader(name)
         }
     }).done(function (response) {
-        M.toast({html: response, classes: 'blue'})
+        console.debug(response);
+        popup(response);
     })
 }
