@@ -1,22 +1,16 @@
 package technology.iatlas.spaceup.controller.web
 
 import io.micronaut.cache.annotation.Cacheable
-import io.micronaut.context.env.Environment
-import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.annotations.WebNavigation
-import technology.iatlas.spaceup.core.cmd.Command
-import technology.iatlas.spaceup.core.cmd.Runner
-import technology.iatlas.spaceup.core.parser.CreateDomainParser
-import technology.iatlas.spaceup.core.parser.DeleteDomainParser
-import technology.iatlas.spaceup.core.parser.DomainParser
-import technology.iatlas.spaceup.dto.Domains
+import technology.iatlas.spaceup.dto.Domain
 import technology.iatlas.spaceup.dto.Feedback
+import technology.iatlas.spaceup.services.DomainService
 
 @Controller("/domains")
-open class DomainController(private val env: Environment) : BaseController() {
+open class DomainController(private val domainService: DomainService) : BaseController() {
 
     private val log = LoggerFactory.getLogger(DomainController::class.java)
 
@@ -25,8 +19,7 @@ open class DomainController(private val env: Environment) : BaseController() {
     @Cacheable("cache-domain-list")
     open fun list(): String {
 
-        val cmd: MutableList<String> = mutableListOf("uberspace", "web", "domain", "list")
-        val domains: Domains? = Runner<Domains>(env).execute(Command(cmd), DomainParser())
+        val domains = domainService.list()
 
         return getRockerTemplate("views/domains.rocker.html")
             .bind("domains", domains)
@@ -35,36 +28,17 @@ open class DomainController(private val env: Environment) : BaseController() {
     }
 
     @Post(uri = "/add", produces = [MediaType.APPLICATION_JSON])
-    fun add(@Body data: Domains): Map<String, Feedback> {
+    fun add(@Body data: List<Domain>): Map<String, Feedback> {
         log.info("Received list to add: $data")
 
-        val cmd: MutableList<String> = mutableListOf("uberspace", "web", "domain", "add")
-        val feedbacks: MutableMap<String, Feedback> = mutableMapOf()
-
-        data.domains.forEach { domain ->
-            // Add domain to cmd
-            cmd.add(domain)
-            val response: Feedback? = Runner<Feedback>(env)
-                .execute(Command(cmd), CreateDomainParser())
-
-            feedbacks[domain] = response!!
-
-            // Remove domain from cmd
-            cmd.remove(domain)
-        }
-
-        log.debug("Response: $feedbacks")
-        return feedbacks
+        return domainService.add(data)
     }
 
-    @Delete("/delete/{domain}")
-    fun delete(domain: String): HttpResponse<Feedback> {
+    @Delete("/delete/{url}")
+    fun delete(url: String): Feedback? {
+        val domain = Domain(url)
         log.warn("Delete domain $domain")
 
-        val cmd = mutableListOf("uberspace", "web", "domain", "del", domain)
-        val response: Feedback? = Runner<Feedback>(env)
-            .execute(Command(cmd), DeleteDomainParser())
-
-        return HttpResponse.ok(response)
+        return domainService.delete(domain)
     }
 }

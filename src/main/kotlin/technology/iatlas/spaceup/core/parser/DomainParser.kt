@@ -1,18 +1,20 @@
 package technology.iatlas.spaceup.core.parser
 
 import technology.iatlas.spaceup.core.cmd.ParserInf
-import technology.iatlas.spaceup.dto.Domains
+import technology.iatlas.spaceup.dto.Domain
 import java.io.BufferedReader
 
-class DomainParser : ParserInf<Domains> {
-    private val domainList = mutableListOf<String>()
-    override fun parse(cmdOutput: BufferedReader): Domains{
+class DomainParser : ParserInf<List<Domain>> {
+    private val domainList = mutableListOf<Domain>()
+
+    override fun parse(cmdOutput: BufferedReader): List<Domain>{
         cmdOutput.lines().forEach {
             if (it.isNotBlank()) {
-                domainList.add(it)
+                val domain = Domain(it)
+                domainList.add(domain)
             }
         }
 
-        return Domains(domainList)
+        return domainList
     }
 }
