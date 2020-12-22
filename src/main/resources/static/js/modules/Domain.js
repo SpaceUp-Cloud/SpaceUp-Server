@@ -7,13 +7,20 @@ function add() {
         return;
     }
 
-    let listOfDomains = rawDomains.split(";").map((val) => {
+    let urlList = rawDomains.split(";").map((val) => {
         return val.trim();
     });
 
-    const json = JSON.stringify({
-        domains: listOfDomains
+    const domainList = [];
+    urlList.forEach(d => {
+        let domain = {
+            url: d
+        }
+
+        domainList.push(domain);
     });
+
+    const json = JSON.stringify(domainList);
     console.debug(json);
 
     $.ajax({

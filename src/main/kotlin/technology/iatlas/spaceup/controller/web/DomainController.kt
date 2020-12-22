@@ -28,10 +28,10 @@ open class DomainController(private val domainService: DomainService) : BaseCont
     }
 
     @Post(uri = "/add", produces = [MediaType.APPLICATION_JSON])
-    fun add(@Body data: List<Domain>): Map<String, Feedback> {
-        log.info("Received list to add: $data")
+    fun add(@Body domains: List<Domain>): Map<String, Feedback> {
+        log.info("Received list to add: $domains")
 
-        return domainService.add(data)
+        return domainService.add(domains)
     }
 
     @Delete("/delete/{url}")
