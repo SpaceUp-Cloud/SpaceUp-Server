@@ -50,14 +50,28 @@ function add() {
 
 function deleteDomain(domain) {
     let c = confirm("Bist du dir sicher?");
+    let domainId = domain.replaceAll(".", "_");
     if(c === true) {
         console.warn("Delete domain " + domain);
         $.ajax({
             url: "/domains/delete/" + domain,
-            method: "Delete"
+            method: "Delete",
+            beforeSend: function () {
+                enableLoader(domainId)
+            },
+            complete: function () {
+                disableLoader(domainId)
+            }
         }).done(function(response) {
-            console.log(response);
+            console.debug(response);
             popup(response);
+
+            let info = response["info"];
+            if(response != null && info != null) {
+                if(info.toLowerCase().includes("success"))
+                // Card can be removed on client
+                $("***REMOVED***card_" + domainId).remove();
+            }
         });
     }
 }
