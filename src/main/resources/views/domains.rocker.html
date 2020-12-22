@@ -2,19 +2,22 @@
 @import technology.iatlas.spaceup.dto.Navigation
 @import technology.iatlas.spaceup.dto.Domains;
 
-@args (List<Navigation> navigations, Domains domains)
+@args (List
+<Navigation> navigations, Domains domains)
 
-@extrajs => {
+    @extrajs => {
     <script src="/js/modules/Domain.js"></script>
-}
+    }
 
-@views.base.template("Domänen", navigations, extrajs) -> {
+    @views.base.template("Domänen", navigations, extrajs) -> {
     <div>
         <h4>Deine Domänen</h4>
     </div>
     <div class="row">
         @for (domain : domains.getDomains()) {
-            <div class="col s12 m4">
+        <div id="card_@domain.replace('.','_')" class="col s12 m4">
+            <!-- *content id* is import to replace it with loader and back -->
+            <span id="content_@domain.replace('.','_')">
                 <div class="card hoverable">
                     <div class="card-content teal">
                         <span class="white-text">
@@ -25,7 +28,8 @@
                         <a onclick="deleteDomain('@domain')">Löschen</a>
                     </div>
                 </div>
-            </div>
+            </span>
+        </div>
         }
     </div>
     <a id="add-domain" href="#addDomainModal"
@@ -46,4 +50,4 @@
         </div>
     </div>
 
-}
+    }

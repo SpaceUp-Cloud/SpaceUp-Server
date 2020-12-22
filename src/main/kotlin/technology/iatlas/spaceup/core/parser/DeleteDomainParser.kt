@@ -11,7 +11,7 @@ class DeleteDomainParser : ParserInf<Feedback> {
         return if(responseText.toLowerCase().contains("error")) {
             Feedback("", responseText)
         } else {
-            Feedback("Succesful deleted!", "")
+            Feedback("Successful deleted!", "")
         }
     }
 

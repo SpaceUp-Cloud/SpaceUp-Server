@@ -17,8 +17,9 @@
     <div class="row">
         @for (service : services) {
         <div class="col s12 m4">
-            <div class="card hoverable">
-                <div id="card_@service.getName()" class="card-content">
+            <span id="content_@service.getName()">
+                <div class="card hoverable">
+                    <div id="card_@service.getName()" class="card-content">
                     <h5>@service.getName()</h5>
                     <hr class="white">
                     <span class="white-text">
@@ -27,13 +28,14 @@
                             @service.getInfo()
                         </p>
                     </span>
+                    </div>
+                    <div class="card-action">
+                        @for(option: options) {
+                            <a onclick="serviceExecute('@service.getName()','@option')">@option.name()</a>
+                        }
+                    </div>
                 </div>
-                <div class="card-action">
-                    @for(option: options) {
-                        <a onclick="serviceExecute('@service.getName()','@option')">@option.name()</a>
-                    }
-                </div>
-            </div>
+            </span>
         </div>
         }
     </div>
