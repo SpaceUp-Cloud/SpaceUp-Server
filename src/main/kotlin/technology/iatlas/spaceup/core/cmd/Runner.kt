@@ -17,7 +17,7 @@ open class Runner<T>(private val env: Environment) : RunnerInf<T> {
 
     init {
         devMode = env.activeNames.contains("dev")
-        if(devMode) {
+        if (devMode) {
             log.warn("Get fake file in dev mode!")
         }
     }
@@ -28,7 +28,11 @@ open class Runner<T>(private val env: Environment) : RunnerInf<T> {
         val preCommand: MutableList<String> = if (env.activeNames.contains("dev"))
             mutableListOf("bash") else mutableListOf()
 
-        if(devMode) {
+        if (devMode) {
+
+            // simulate some long running
+            Thread.sleep(10000)
+
             var fileNameToRetrieve = "output"
             cmd.parameters.forEach {
                 fileNameToRetrieve += "_$it"
@@ -36,8 +40,8 @@ open class Runner<T>(private val env: Environment) : RunnerInf<T> {
 
             // dummy file if resource does not exist
             val url =
-                this::class.java.getResource("/fakecmd/$fileNameToRetrieve.txt") ?:
-                this::class.java.getResource("/fakecmd/dummy.txt")
+                this::class.java.getResource("/fakecmd/$fileNameToRetrieve.txt")
+                    ?: this::class.java.getResource("/fakecmd/dummy.txt")
 
             val outputFile = File(url.path)
             log.debug("File to get: {}", outputFile)
