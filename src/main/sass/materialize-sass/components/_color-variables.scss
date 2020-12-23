@@ -1,0 +1,370 @@
+// Google Color Palette defined: http://www.google.com/design/spec/style/color.html
+
+$materialize-red: (
+  "base":       ***REMOVED***e51c23,
+  "lighten-5":  ***REMOVED***fdeaeb,
+  "lighten-4":  ***REMOVED***f8c1c3,
+  "lighten-3":  ***REMOVED***f3989b,
+  "lighten-2":  ***REMOVED***ee6e73,
+  "lighten-1":  ***REMOVED***ea454b,
+  "darken-1":   ***REMOVED***d0181e,
+  "darken-2":   ***REMOVED***b9151b,
+  "darken-3":   ***REMOVED***a21318,
+  "darken-4":   ***REMOVED***8b1014,
+);
+
+$red: (
+  "base":       ***REMOVED***F44336,
+  "lighten-5":  ***REMOVED***FFEBEE,
+  "lighten-4":  ***REMOVED***FFCDD2,
+  "lighten-3":  ***REMOVED***EF9A9A,
+  "lighten-2":  ***REMOVED***E57373,
+  "lighten-1":  ***REMOVED***EF5350,
+  "darken-1":   ***REMOVED***E53935,
+  "darken-2":   ***REMOVED***D32F2F,
+  "darken-3":   ***REMOVED***C62828,
+  "darken-4":   ***REMOVED***B71C1C,
+  "accent-1":    ***REMOVED***FF8A80,
+  "accent-2":    ***REMOVED***FF5252,
+  "accent-3":    ***REMOVED***FF1744,
+  "accent-4":    ***REMOVED***D50000
+);
+
+$pink: (
+  "base":       ***REMOVED***e91e63,
+  "lighten-5":  ***REMOVED***fce4ec,
+  "lighten-4":  ***REMOVED***f8bbd0,
+  "lighten-3":  ***REMOVED***f48fb1,
+  "lighten-2":  ***REMOVED***f06292,
+  "lighten-1":  ***REMOVED***ec407a,
+  "darken-1":   ***REMOVED***d81b60,
+  "darken-2":   ***REMOVED***c2185b,
+  "darken-3":   ***REMOVED***ad1457,
+  "darken-4":   ***REMOVED***880e4f,
+  "accent-1":    ***REMOVED***ff80ab,
+  "accent-2":    ***REMOVED***ff4081,
+  "accent-3":    ***REMOVED***f50057,
+  "accent-4":    ***REMOVED***c51162
+);
+
+$purple: (
+  "base":       ***REMOVED***9c27b0,
+  "lighten-5":  ***REMOVED***f3e5f5,
+  "lighten-4":  ***REMOVED***e1bee7,
+  "lighten-3":  ***REMOVED***ce93d8,
+  "lighten-2":  ***REMOVED***ba68c8,
+  "lighten-1":  ***REMOVED***ab47bc,
+  "darken-1":   ***REMOVED***8e24aa,
+  "darken-2":   ***REMOVED***7b1fa2,
+  "darken-3":   ***REMOVED***6a1b9a,
+  "darken-4":   ***REMOVED***4a148c,
+  "accent-1":    ***REMOVED***ea80fc,
+  "accent-2":    ***REMOVED***e040fb,
+  "accent-3":    ***REMOVED***d500f9,
+  "accent-4":    ***REMOVED***aa00ff
+);
+
+$deep-purple: (
+  "base":       ***REMOVED***673ab7,
+  "lighten-5":  ***REMOVED***ede7f6,
+  "lighten-4":  ***REMOVED***d1c4e9,
+  "lighten-3":  ***REMOVED***b39ddb,
+  "lighten-2":  ***REMOVED***9575cd,
+  "lighten-1":  ***REMOVED***7e57c2,
+  "darken-1":   ***REMOVED***5e35b1,
+  "darken-2":   ***REMOVED***512da8,
+  "darken-3":   ***REMOVED***4527a0,
+  "darken-4":   ***REMOVED***311b92,
+  "accent-1":    ***REMOVED***b388ff,
+  "accent-2":    ***REMOVED***7c4dff,
+  "accent-3":    ***REMOVED***651fff,
+  "accent-4":    ***REMOVED***6200ea
+);
+
+$indigo: (
+  "base":       ***REMOVED***3f51b5,
+  "lighten-5":  ***REMOVED***e8eaf6,
+  "lighten-4":  ***REMOVED***c5cae9,
+  "lighten-3":  ***REMOVED***9fa8da,
+  "lighten-2":  ***REMOVED***7986cb,
+  "lighten-1":  ***REMOVED***5c6bc0,
+  "darken-1":   ***REMOVED***3949ab,
+  "darken-2":   ***REMOVED***303f9f,
+  "darken-3":   ***REMOVED***283593,
+  "darken-4":   ***REMOVED***1a237e,
+  "accent-1":    ***REMOVED***8c9eff,
+  "accent-2":    ***REMOVED***536dfe,
+  "accent-3":    ***REMOVED***3d5afe,
+  "accent-4":    ***REMOVED***304ffe
+);
+
+$blue: (
+  "base":       ***REMOVED***2196F3,
+  "lighten-5":  ***REMOVED***E3F2FD,
+  "lighten-4":  ***REMOVED***BBDEFB,
+  "lighten-3":  ***REMOVED***90CAF9,
+  "lighten-2":  ***REMOVED***64B5F6,
+  "lighten-1":  ***REMOVED***42A5F5,
+  "darken-1":   ***REMOVED***1E88E5,
+  "darken-2":   ***REMOVED***1976D2,
+  "darken-3":   ***REMOVED***1565C0,
+  "darken-4":   ***REMOVED***0D47A1,
+  "accent-1":    ***REMOVED***82B1FF,
+  "accent-2":    ***REMOVED***448AFF,
+  "accent-3":    ***REMOVED***2979FF,
+  "accent-4":    ***REMOVED***2962FF
+);
+
+$light-blue: (
+  "base":       ***REMOVED***03a9f4,
+  "lighten-5":  ***REMOVED***e1f5fe,
+  "lighten-4":  ***REMOVED***b3e5fc,
+  "lighten-3":  ***REMOVED***81d4fa,
+  "lighten-2":  ***REMOVED***4fc3f7,
+  "lighten-1":  ***REMOVED***29b6f6,
+  "darken-1":   ***REMOVED***039be5,
+  "darken-2":   ***REMOVED***0288d1,
+  "darken-3":   ***REMOVED***0277bd,
+  "darken-4":   ***REMOVED***01579b,
+  "accent-1":    ***REMOVED***80d8ff,
+  "accent-2":    ***REMOVED***40c4ff,
+  "accent-3":    ***REMOVED***00b0ff,
+  "accent-4":    ***REMOVED***0091ea
+);
+
+$cyan: (
+  "base":       ***REMOVED***00bcd4,
+  "lighten-5":  ***REMOVED***e0f7fa,
+  "lighten-4":  ***REMOVED***b2ebf2,
+  "lighten-3":  ***REMOVED***80deea,
+  "lighten-2":  ***REMOVED***4dd0e1,
+  "lighten-1":  ***REMOVED***26c6da,
+  "darken-1":   ***REMOVED***00acc1,
+  "darken-2":   ***REMOVED***0097a7,
+  "darken-3":   ***REMOVED***00838f,
+  "darken-4":   ***REMOVED***006064,
+  "accent-1":    ***REMOVED***84ffff,
+  "accent-2":    ***REMOVED***18ffff,
+  "accent-3":    ***REMOVED***00e5ff,
+  "accent-4":    ***REMOVED***00b8d4
+);
+
+$teal: (
+  "base":       ***REMOVED***009688,
+  "lighten-5":  ***REMOVED***e0f2f1,
+  "lighten-4":  ***REMOVED***b2dfdb,
+  "lighten-3":  ***REMOVED***80cbc4,
+  "lighten-2":  ***REMOVED***4db6ac,
+  "lighten-1":  ***REMOVED***26a69a,
+  "darken-1":   ***REMOVED***00897b,
+  "darken-2":   ***REMOVED***00796b,
+  "darken-3":   ***REMOVED***00695c,
+  "darken-4":   ***REMOVED***004d40,
+  "accent-1":    ***REMOVED***a7ffeb,
+  "accent-2":    ***REMOVED***64ffda,
+  "accent-3":    ***REMOVED***1de9b6,
+  "accent-4":    ***REMOVED***00bfa5
+);
+
+$green: (
+  "base":       ***REMOVED***4CAF50,
+  "lighten-5":  ***REMOVED***E8F5E9,
+  "lighten-4":  ***REMOVED***C8E6C9,
+  "lighten-3":  ***REMOVED***A5D6A7,
+  "lighten-2":  ***REMOVED***81C784,
+  "lighten-1":  ***REMOVED***66BB6A,
+  "darken-1":   ***REMOVED***43A047,
+  "darken-2":   ***REMOVED***388E3C,
+  "darken-3":   ***REMOVED***2E7D32,
+  "darken-4":   ***REMOVED***1B5E20,
+  "accent-1":    ***REMOVED***B9F6CA,
+  "accent-2":    ***REMOVED***69F0AE,
+  "accent-3":    ***REMOVED***00E676,
+  "accent-4":    ***REMOVED***00C853
+);
+
+$light-green: (
+  "base":       ***REMOVED***8bc34a,
+  "lighten-5":  ***REMOVED***f1f8e9,
+  "lighten-4":  ***REMOVED***dcedc8,
+  "lighten-3":  ***REMOVED***c5e1a5,
+  "lighten-2":  ***REMOVED***aed581,
+  "lighten-1":  ***REMOVED***9ccc65,
+  "darken-1":   ***REMOVED***7cb342,
+  "darken-2":   ***REMOVED***689f38,
+  "darken-3":   ***REMOVED***558b2f,
+  "darken-4":   ***REMOVED***33691e,
+  "accent-1":    ***REMOVED***ccff90,
+  "accent-2":    ***REMOVED***b2ff59,
+  "accent-3":    ***REMOVED***76ff03,
+  "accent-4":    ***REMOVED***64dd17
+);
+
+$lime: (
+  "base":       ***REMOVED***cddc39,
+  "lighten-5":  ***REMOVED***f9fbe7,
+  "lighten-4":  ***REMOVED***f0f4c3,
+  "lighten-3":  ***REMOVED***e6ee9c,
+  "lighten-2":  ***REMOVED***dce775,
+  "lighten-1":  ***REMOVED***d4e157,
+  "darken-1":   ***REMOVED***c0ca33,
+  "darken-2":   ***REMOVED***afb42b,
+  "darken-3":   ***REMOVED***9e9d24,
+  "darken-4":   ***REMOVED***827717,
+  "accent-1":    ***REMOVED***f4ff81,
+  "accent-2":    ***REMOVED***eeff41,
+  "accent-3":    ***REMOVED***c6ff00,
+  "accent-4":    ***REMOVED***aeea00
+);
+
+$yellow: (
+  "base":       ***REMOVED***ffeb3b,
+  "lighten-5":  ***REMOVED***fffde7,
+  "lighten-4":  ***REMOVED***fff9c4,
+  "lighten-3":  ***REMOVED***fff59d,
+  "lighten-2":  ***REMOVED***fff176,
+  "lighten-1":  ***REMOVED***ffee58,
+  "darken-1":   ***REMOVED***fdd835,
+  "darken-2":   ***REMOVED***fbc02d,
+  "darken-3":   ***REMOVED***f9a825,
+  "darken-4":   ***REMOVED***f57f17,
+  "accent-1":    ***REMOVED***ffff8d,
+  "accent-2":    ***REMOVED***ffff00,
+  "accent-3":    ***REMOVED***ffea00,
+  "accent-4":    ***REMOVED***ffd600
+);
+
+$amber: (
+  "base":       ***REMOVED***ffc107,
+  "lighten-5":  ***REMOVED***fff8e1,
+  "lighten-4":  ***REMOVED***ffecb3,
+  "lighten-3":  ***REMOVED***ffe082,
+  "lighten-2":  ***REMOVED***ffd54f,
+  "lighten-1":  ***REMOVED***ffca28,
+  "darken-1":   ***REMOVED***ffb300,
+  "darken-2":   ***REMOVED***ffa000,
+  "darken-3":   ***REMOVED***ff8f00,
+  "darken-4":   ***REMOVED***ff6f00,
+  "accent-1":    ***REMOVED***ffe57f,
+  "accent-2":    ***REMOVED***ffd740,
+  "accent-3":    ***REMOVED***ffc400,
+  "accent-4":    ***REMOVED***ffab00
+);
+
+$orange: (
+  "base":       ***REMOVED***ff9800,
+  "lighten-5":  ***REMOVED***fff3e0,
+  "lighten-4":  ***REMOVED***ffe0b2,
+  "lighten-3":  ***REMOVED***ffcc80,
+  "lighten-2":  ***REMOVED***ffb74d,
+  "lighten-1":  ***REMOVED***ffa726,
+  "darken-1":   ***REMOVED***fb8c00,
+  "darken-2":   ***REMOVED***f57c00,
+  "darken-3":   ***REMOVED***ef6c00,
+  "darken-4":   ***REMOVED***e65100,
+  "accent-1":    ***REMOVED***ffd180,
+  "accent-2":    ***REMOVED***ffab40,
+  "accent-3":    ***REMOVED***ff9100,
+  "accent-4":    ***REMOVED***ff6d00
+);
+
+$deep-orange: (
+  "base":       ***REMOVED***ff5722,
+  "lighten-5":  ***REMOVED***fbe9e7,
+  "lighten-4":  ***REMOVED***ffccbc,
+  "lighten-3":  ***REMOVED***ffab91,
+  "lighten-2":  ***REMOVED***ff8a65,
+  "lighten-1":  ***REMOVED***ff7043,
+  "darken-1":   ***REMOVED***f4511e,
+  "darken-2":   ***REMOVED***e64a19,
+  "darken-3":   ***REMOVED***d84315,
+  "darken-4":   ***REMOVED***bf360c,
+  "accent-1":    ***REMOVED***ff9e80,
+  "accent-2":    ***REMOVED***ff6e40,
+  "accent-3":    ***REMOVED***ff3d00,
+  "accent-4":    ***REMOVED***dd2c00
+);
+
+$brown: (
+  "base":       ***REMOVED***795548,
+  "lighten-5":  ***REMOVED***efebe9,
+  "lighten-4":  ***REMOVED***d7ccc8,
+  "lighten-3":  ***REMOVED***bcaaa4,
+  "lighten-2":  ***REMOVED***a1887f,
+  "lighten-1":  ***REMOVED***8d6e63,
+  "darken-1":   ***REMOVED***6d4c41,
+  "darken-2":   ***REMOVED***5d4037,
+  "darken-3":   ***REMOVED***4e342e,
+  "darken-4":   ***REMOVED***3e2723
+);
+
+$blue-grey: (
+  "base":       ***REMOVED***607d8b,
+  "lighten-5":  ***REMOVED***eceff1,
+  "lighten-4":  ***REMOVED***cfd8dc,
+  "lighten-3":  ***REMOVED***b0bec5,
+  "lighten-2":  ***REMOVED***90a4ae,
+  "lighten-1":  ***REMOVED***78909c,
+  "darken-1":   ***REMOVED***546e7a,
+  "darken-2":   ***REMOVED***455a64,
+  "darken-3":   ***REMOVED***37474f,
+  "darken-4":   ***REMOVED***263238
+);
+
+$grey: (
+  "base":       ***REMOVED***9e9e9e,
+  "lighten-5":  ***REMOVED***fafafa,
+  "lighten-4":  ***REMOVED***f5f5f5,
+  "lighten-3":  ***REMOVED***eeeeee,
+  "lighten-2":  ***REMOVED***e0e0e0,
+  "lighten-1":  ***REMOVED***bdbdbd,
+  "darken-1":   ***REMOVED***757575,
+  "darken-2":   ***REMOVED***616161,
+  "darken-3":   ***REMOVED***424242,
+  "darken-4":   ***REMOVED***212121
+);
+
+$shades: (
+  "black":        ***REMOVED***000000,
+  "white":        ***REMOVED***FFFFFF,
+  "transparent":  transparent
+);
+
+$colors: (
+  "materialize-red": $materialize-red,
+  "red": $red,
+  "pink": $pink,
+  "purple": $purple,
+  "deep-purple": $deep-purple,
+  "indigo": $indigo,
+  "blue": $blue,
+  "light-blue": $light-blue,
+  "cyan": $cyan,
+  "teal": $teal,
+  "green": $green,
+  "light-green": $light-green,
+  "lime": $lime,
+  "yellow": $yellow,
+  "amber": $amber,
+  "orange": $orange,
+  "deep-orange": $deep-orange,
+  "brown": $brown,
+  "blue-grey": $blue-grey,
+  "grey": $grey,
+  "shades": $shades
+) !default;
+
+
+// usage: color("name_of_color", "type_of_color")
+// to avoid to repeating map-get($colors, ...)
+
+@function color($color, $type) {
+  @if map-has-key($colors, $color) {
+    $curr_color: map-get($colors, $color);
+    @if map-has-key($curr_color, $type) {
+      @return map-get($curr_color, $type);
+    }
+  }
+  @warn "Unknown `***REMOVED***{$color}` - `***REMOVED***{$type}` in $colors.";
+  @return null;
+}
