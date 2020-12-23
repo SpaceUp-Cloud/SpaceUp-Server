@@ -1,0 +1,12 @@
+@import "materialize-sass/components/color-variables";
+@import "base_dark";
+
+body, html {
+  background-color: color("blue-grey", "darken-3");
+  color: $text-color;
+}
+// Elements
+$card-bg-color: $secondary-color-dark;
+
+
+@import "materialize-sass/materialize";

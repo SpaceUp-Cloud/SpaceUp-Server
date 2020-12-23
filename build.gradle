@@ -6,6 +6,7 @@ plugins {
     id "com.github.johnrengelman.shadow" version "6.0.0"
     id "application"
     id "com.fizzed.rocker" version "1.3.0"
+    id "io.miret.etienne.sass" version "1.1.1"
 }
 
 version "0.1"
@@ -135,4 +136,46 @@ sourceSets {
             srcDir('src/main/resources')
         }
     }
+}
+compileSass {
+    // Directory where to output generated CSS:
+    outputDir = project.file ("${buildDir}/resources/main/static/style")
+
+    // Source directory containing sass to compile:
+    sourceDir = project.file ("${projectDir}/src/main/sass")
+
+    // Adds a directory to sass load path (default is empty):
+    loadPath project.file ('sass-lib')
+    loadPath project.file ('/var/lib/compass')
+
+    // Set the output style:
+    // Possible values are “expanded” and “compressed”, default is “expanded”.
+    style = expanded
+
+    // Don’t emit a @charset for CSS with non-ASCII chars (default to emit):
+    noCharset ()
+
+    // When an error occurs, do not emit a stylesheet describing it:
+    // (Default to emit)
+    noErrorCss ()
+
+    // Watch sass files in sourceDir for changes
+    //watch ()
+
+    // Source map style:
+    //  - file: output source map in a separate file (default)
+    //  - embed: embed source map in CSS
+    //  - none: do not emit source map.
+    sourceMap = file
+
+    // How to link source maps to source files [relative (default) or absolute]:
+    sourceMapUrls = relative
+}
+
+run.dependsOn {
+    compileSass
+}
+
+shadowJar.dependsOn {
+    compileSass
 }

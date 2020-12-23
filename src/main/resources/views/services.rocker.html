@@ -52,9 +52,7 @@
             }
             serviceList.forEach(s => {
                 if(s.status === "FATAL") {
-                    $("#card_" + s.name).addClass("red");
-                } else {
-                    $("#card_" + s.name).addClass("teal");
+                    $("#card_" + s.name).addClass("red darken-1");
                 }
             })
         });
