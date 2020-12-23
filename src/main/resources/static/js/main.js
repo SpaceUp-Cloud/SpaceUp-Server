@@ -48,7 +48,7 @@ function init() {
     let esSupport = (window.EventSource !== undefined);
     let result = document.getElementById("result");
     if(esSupport) {
-        let sse = new ReconnectingEventSource("/sse/events", { withCredentials: false });
+        let sse = new ReconnectingEventSource("/api/sse/events", { withCredentials: false });
 
               sse.addEventListener("update", function(e) {
                   console.log(e);
@@ -68,6 +68,7 @@ function init() {
                     console.error('Connection failed. Will not retry.');
                     break;
                    case EventSource.OPEN:
+                       console.log("SSE Connected")
                     break;
                 }
               };

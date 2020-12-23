@@ -24,7 +24,7 @@ function add() {
     console.debug(json);
 
     $.ajax({
-        url: "/domains/add",
+        url: "/api/domain/add",
         method: "POST",
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -62,7 +62,7 @@ function deleteDomain(domain) {
     if(c === true) {
         console.warn("Delete domain " + domain);
         $.ajax({
-            url: "/domains/delete/" + domain,
+            url: "/api/domain/delete/" + domain,
             method: "Delete",
             beforeSend: function () {
                 enableLoader(domainId)
