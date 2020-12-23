@@ -14,7 +14,7 @@ open class DomainController(private val domainService: DomainService) : BaseCont
 
     private val log = LoggerFactory.getLogger(DomainController::class.java)
 
-    @WebNavigation("Domänen", "/domains", prio = 1)
+    @WebNavigation("Domänen", "/domains", prio = 2)
     @Get(produces = [MediaType.TEXT_HTML])
     @Cacheable("cache-domain-list")
     open fun list(): String {

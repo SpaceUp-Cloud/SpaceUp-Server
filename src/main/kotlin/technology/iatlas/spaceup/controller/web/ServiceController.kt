@@ -17,7 +17,7 @@ import technology.iatlas.spaceup.services.ServiceService
 open class ServiceController(private val serviceService: ServiceService) : BaseController() {
     private val log = LoggerFactory.getLogger(ServiceController::class.java)
 
-    @WebNavigation("Services", "/services", prio = 2)
+    @WebNavigation("Services", "/services", prio = 1)
     @Get(produces = [MediaType.TEXT_HTML])
     @Cacheable("cache-service-list")
     open fun list(): String {
