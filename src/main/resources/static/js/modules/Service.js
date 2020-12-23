@@ -1,5 +1,5 @@
 function serviceExecute(name, option) {
-    let url = '/services/execute/' + name + '/' + option;
+    let url = '/api/service/execute/' + name + '/' + option;
     $.ajax({
         url: url,
         method: 'post',
