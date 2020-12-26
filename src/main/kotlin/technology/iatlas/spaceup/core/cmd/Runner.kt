@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory
 import java.io.*
 import java.net.URL
 import javax.inject.Singleton
+import kotlin.random.Random
 
 @Singleton
 open class Runner<T>(private val env: Environment) : RunnerInf<T> {
@@ -31,12 +32,17 @@ open class Runner<T>(private val env: Environment) : RunnerInf<T> {
         if (devMode) {
 
             // simulate some long running
-            Thread.sleep(10000)
+            val rand = Random(1000)
+            val workTime = (2000..5000).random(rand).toLong()
+            Thread.sleep(workTime)
+            log.debug("Sleep for $workTime")
 
             var fileNameToRetrieve = "output"
             cmd.parameters.forEach {
                 fileNameToRetrieve += "_$it"
             }
+
+            log.debug("File to retrieve: $fileNameToRetrieve")
 
             // dummy file if resource does not exist
             val url =
