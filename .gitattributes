@@ -1,1 +1,4 @@
-materialize** linguist-vendored
+* text=auto eol=lf
+
+src/main/sass/materialize-sass/* -text -eol linguist-vendored
+src/main/resources/static/js/materialize/* -text -eol linguist-vendored
