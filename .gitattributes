@@ -1,0 +1,6 @@
+* text=auto eol=lf
+/vendor/** -text -eol
+/public/vendor/** -text -eol
+
+src/main/sass/* linguist-vendored
+src/main/resources/static/js/materialize/* linguist-vendored
