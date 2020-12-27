@@ -1,25 +1,16 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.env.Environment
-import io.micronaut.scheduling.annotation.Scheduled
-import io.micronaut.tracing.annotation.ContinueSpan
-import kotlinx.coroutines.GlobalScope
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.cmd.Command
-import technology.iatlas.spaceup.core.cmd.CommandInf
-import technology.iatlas.spaceup.core.cmd.ParserInf
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.EchoParser
 import technology.iatlas.spaceup.dto.UpdatePackage
-import java.time.LocalDateTime
-import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-import kotlin.collections.ArrayList
 
 @Singleton
 class SchedulerService(
-    private val sseService: SseServiceImpl<UpdatePackage>,
+    private val sseService: SseService<UpdatePackage>,
     private val env: Environment) {
     private val log = LoggerFactory.getLogger(SchedulerService::class.java)
 
