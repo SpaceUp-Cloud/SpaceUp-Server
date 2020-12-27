@@ -2,5 +2,5 @@
 /vendor/** -text -eol
 /public/vendor/** -text -eol
 
-src/main/sass/* linguist-vendored
+src/main/sass/materialize-sass/* linguist-vendored
 src/main/resources/static/js/materialize/* linguist-vendored
