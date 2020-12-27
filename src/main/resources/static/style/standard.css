@@ -1,16 +1,7 @@
-a, a:link, a:visited {
-    text-decoration: none;
-    cursor: default;
-}
-
 #add-domain {
     bottom: 1%;
     right: 1%;
     position: fixed;
-}
-
-hr {
-    border: 0.5px solid white;
 }
 
 .sk-folding-cube {

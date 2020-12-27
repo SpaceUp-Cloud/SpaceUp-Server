@@ -1,12 +1,17 @@
 @import "materialize-sass/components/color-variables";
 
-$text-color: color("grey", "darken-4") !default;
+$bg-color: linear-gradient(to right, #8e9eab, #eef2f3);
 
-$primary-color: color("teal", "lighten-2") !default;
+$text-color: color("grey", "darken-3") !default;
+$primary-color: color("teal", "lighten-1") !default;
 $primary-color-light: lighten($primary-color, 15%);
-$secondary-color-light: color("teal", "lighten-1") !default;
+$secondary-color-light: color("teal", "lighten-3") !default;
 
 $success-color: color("green", "base") !default;
 $error-color: color("red", "base") !default;
 
-$link-color: $text-color !default;;
+$link-color: $text-color;
+
+// Materialize Elements
+$card-bg-color: $secondary-color-light;
+$card-link-color: $text-color;
