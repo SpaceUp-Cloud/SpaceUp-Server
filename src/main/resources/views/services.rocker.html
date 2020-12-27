@@ -21,13 +21,11 @@
                 <div class="card hoverable">
                     <div id="card_@service.getName()" class="card-content">
                     <h5>@service.getName()</h5>
-                    <hr class="white">
-                    <span class="white-text">
-                        <p>
-                            Status: @service.getStatus()<br/>
-                            @service.getInfo()
-                        </p>
-                    </span>
+                    <hr>
+                    <p>
+                        Status: @service.getStatus()<br/>
+                        @service.getInfo()
+                    </p>
                     </div>
                     <div class="card-action">
                         @for(option: options) {
@@ -52,7 +50,7 @@
             }
             serviceList.forEach(s => {
                 if(s.status === "FATAL") {
-                    $("***REMOVED***card_" + s.name).addClass("red darken-1");
+                    $("***REMOVED***card_" + s.name).addClass("error");
                 }
             })
         });

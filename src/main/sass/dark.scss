@@ -1,12 +1,26 @@
 @import "materialize-sass/components/color-variables";
 @import "base_dark";
 
+// My Elements
+
 body, html {
-  background-color: color("blue-grey", "darken-3");
+  background: $bg-color;
   color: $text-color;
 }
-// Elements
-$card-bg-color: $secondary-color-dark;
 
+a, a:link, a:visited {
+  text-decoration: none;
+  cursor: default;
+  color: $link-color;
+}
+
+hr {
+  border: 0.5px solid $primary-color-dark;
+}
+
+.error {
+  background: linear-gradient(to right,
+          color("red", "base"), color("red", "darken-3"));
+}
 
 @import "materialize-sass/materialize";
