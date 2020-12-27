@@ -1,6 +1,3 @@
 * text=auto eol=lf
-/materialize-sass/** -text -eol
-/materialize/** -text -eol
-
-src/main/sass/materialize-sass/* linguist-vendored
-src/main/resources/static/js/materialize/* linguist-vendored
+src/main/sass/materialize-sass/* -text -eol linguist-vendored
+src/main/resources/static/js/materialize/* -text -eol linguist-vendored
