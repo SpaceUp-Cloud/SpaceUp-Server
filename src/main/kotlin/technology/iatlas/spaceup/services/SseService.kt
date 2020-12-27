@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory
 import javax.inject.Singleton
 
 @Singleton
-class SseServiceImpl<T>: BaseSseService<T>() {
-    private val log = LoggerFactory.getLogger(SseServiceImpl::class.java)
+class SseService<T>: BaseSseService<T>() {
+    private val log = LoggerFactory.getLogger(SseService::class.java)
 
     var eventName: String = "defaultEvent"
 

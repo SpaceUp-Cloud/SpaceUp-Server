@@ -5,10 +5,10 @@ import io.micronaut.http.annotation.*
 import io.micronaut.http.sse.Event
 import org.reactivestreams.Publisher
 import org.slf4j.LoggerFactory
-import technology.iatlas.spaceup.services.SseServiceImpl
+import technology.iatlas.spaceup.services.SseService
 
 @Controller("/api/sse")
-class SSEController(private val sseService: SseServiceImpl<String>) {
+class SSEController(private val sseService: SseService<String>) {
     private val log = LoggerFactory.getLogger(SSEController::class.java)
 
     init {
