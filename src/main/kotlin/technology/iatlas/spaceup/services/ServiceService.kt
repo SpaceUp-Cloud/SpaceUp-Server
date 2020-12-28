@@ -11,7 +11,10 @@ import technology.iatlas.spaceup.dto.ServiceOption
 import javax.inject.Singleton
 
 @Singleton
-class ServiceService(private val env: Environment) {
+class ServiceService(
+    private val env: Environment,
+    private val sshService: SshService
+    ) {
 
     /**
      * Get all service execution options
@@ -23,7 +26,7 @@ class ServiceService(private val env: Environment) {
      */
     fun list(): List<Service>? {
         val cmd: MutableList<String> = mutableListOf("supervisorctl", "status")
-        return Runner<List<Service>>(env)
+        return Runner<List<Service>>(env, sshService)
             .execute(Command(cmd), ServiceParser())
     }
 
@@ -34,14 +37,16 @@ class ServiceService(private val env: Environment) {
      * @see {Feedback}
      */
     fun execute(serivce: Service, option: ServiceOption): Feedback? {
-        val cmd: MutableList<String> = mutableListOf("supervisorctl", option.name, serivce.name)
-        val result: String? = Runner<String>(env)
+        val cmd: MutableList<String> = mutableListOf("supervisorctl",
+            option.name.toLowerCase(), serivce.name)
+
+        val result: String? = Runner<String>(env, sshService)
             .execute(Command(cmd), EchoParser())
 
         return if(result?.toLowerCase()!!.contains("(started|stopped)".toRegex())) {
             Feedback(result, "")
         } else {
-            Feedback("", "Could not ${option.name.toLowerCase()} ${serivce.name}")
+            Feedback("", result)
         }
     }
 }

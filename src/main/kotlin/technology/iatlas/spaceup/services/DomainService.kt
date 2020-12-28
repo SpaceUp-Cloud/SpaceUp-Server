@@ -12,13 +12,14 @@ import technology.iatlas.spaceup.dto.Feedback
 import javax.inject.Singleton
 
 @Singleton
-class DomainService(private val env: Environment) {
+class DomainService(private val env: Environment,
+                    private val sshService: SshService) {
 
     private val log = LoggerFactory.getLogger(DomainService::class.java)
 
     fun list(): List<Domain>? {
         val cmd: MutableList<String> = mutableListOf("uberspace", "web", "domain", "list")
-        return Runner<List<Domain>>(env).execute(Command(cmd), DomainParser())
+        return Runner<List<Domain>>(env, sshService).execute(Command(cmd), DomainParser())
     }
 
     fun add(domains: List<Domain>): Map<String, Feedback> {
@@ -28,7 +29,7 @@ class DomainService(private val env: Environment) {
         domains.forEach { domain ->
             // Add domain to cmd
             cmd.add(domain.url)
-            val response: Feedback? = Runner<Feedback>(env)
+            val response: Feedback? = Runner<Feedback>(env, sshService)
                 .execute(Command(cmd), CreateDomainParser())
 
             feedbacks[domain.url] = response!!
@@ -44,7 +45,7 @@ class DomainService(private val env: Environment) {
     fun delete(domain: Domain): Feedback? {
         val cmd = mutableListOf("uberspace", "web", "domain", "del", domain.url)
 
-        return Runner<Feedback>(env)
+        return Runner<Feedback>(env, sshService)
             .execute(Command(cmd), DeleteDomainParser())
     }
 }
