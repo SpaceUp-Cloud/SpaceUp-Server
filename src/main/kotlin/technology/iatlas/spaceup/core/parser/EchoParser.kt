@@ -5,6 +5,10 @@ import java.io.BufferedReader
 
 class EchoParser : ParserInf<String> {
     override fun parse(cmdOutput: BufferedReader): String {
-        return cmdOutput.readText()
+        return parseText(cmdOutput.readText())
+    }
+
+    override fun parseText(cmdOutput: String): String {
+        return cmdOutput
     }
 }

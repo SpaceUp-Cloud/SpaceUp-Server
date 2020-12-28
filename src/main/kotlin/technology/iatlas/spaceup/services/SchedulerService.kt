@@ -11,6 +11,7 @@ import javax.inject.Singleton
 @Singleton
 class SchedulerService(
     private val sseService: SseService<UpdatePackage>,
+    private val sshService: SshService,
     private val env: Environment) {
     private val log = LoggerFactory.getLogger(SchedulerService::class.java)
 
@@ -35,7 +36,7 @@ class SchedulerService(
         log.debug("checkServices")
 
         val cmd: MutableList<String> = mutableListOf("uberspace", "web", "domain", "list")
-        val result: String? = Runner<String>(env).execute(Command(cmd), EchoParser())
+        val result: String? = Runner<String>(env, sshService).execute(Command(cmd), EchoParser())
         log.info(result)
     }
 
