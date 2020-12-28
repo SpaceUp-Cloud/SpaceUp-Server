@@ -4,6 +4,8 @@ import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.cmd.ParserInf
 import technology.iatlas.spaceup.dto.Disk
 import java.io.BufferedReader
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.util.*
 
 class QuotaParser: ParserInf<Disk?> {
@@ -14,33 +16,11 @@ class QuotaParser: ParserInf<Disk?> {
             it.contains("/dev")
         }.findFirst()
 
-        val diskQuota: Disk
-        if(neededLine.isPresent) {
-            val splitted: List<String> = neededLine.get()
-                .replace("\\s+".toRegex(), " ")
-                .split(" ")
-
-            val spaceWithUnit = splitted[2]
-            val space = spaceWithUnit.filter {
-                it.isDigit()
-            }
-
-            val quotaWithUnit = splitted[3]
-            val quota = quotaWithUnit.filter {
-                it.isDigit()
-            }
-
-            log.debug("Space as string: $spaceWithUnit")
-            log.debug("Quota as string: $quotaWithUnit")
-
-            val inPercent = ((100f / Integer.valueOf(quota)) * Integer.valueOf(space))
-
-            diskQuota = Disk(spaceWithUnit, quotaWithUnit, inPercent)
+        return if(neededLine.isPresent) {
+            parseDisk(neededLine.get())
         } else {
-            diskQuota = Disk("", "",0f)
+            Disk("", "","0")
         }
-
-        return diskQuota
     }
 
     override fun parseText(cmdOutput: String): Disk {
@@ -48,32 +28,34 @@ class QuotaParser: ParserInf<Disk?> {
             it.contains("/dev")
         }
 
-        val diskQuota: Disk
-        if(neededLine.size == 1) {
-            val splitted: List<String> = neededLine.get(0)
-                .replace("\\s+".toRegex(), " ")
-                .split(" ")
-
-            val spaceWithUnit = splitted[2]
-            val space = spaceWithUnit.filter {
-                it.isDigit()
-            }
-
-            val quotaWithUnit = splitted[3]
-            val quota = quotaWithUnit.filter {
-                it.isDigit()
-            }
-
-            log.debug("Space as string: $spaceWithUnit")
-            log.debug("Quota as string: $quotaWithUnit")
-
-            val inPercent = ((100f / Integer.valueOf(quota)) * Integer.valueOf(space))
-
-            diskQuota = Disk(spaceWithUnit, quotaWithUnit, inPercent)
+        return if(neededLine.size == 1) {
+            parseDisk(neededLine[0])
         } else {
-            diskQuota = Disk("", "",0f)
+            Disk("", "","0")
+        }
+    }
+
+    private fun parseDisk(line: String): Disk {
+        val splitted = line.replace("\\s+".toRegex(), " ")
+            .split(" ")
+
+        val spaceWithUnit = splitted[2]
+        val space = spaceWithUnit.filter {
+            it.isDigit()
         }
 
-        return diskQuota
+        val quotaWithUnit = splitted[3]
+        val quota = quotaWithUnit.filter {
+            it.isDigit()
+        }
+
+        // German decimal format
+        val percentage = ((100f / Integer.valueOf(quota)) * Integer.valueOf(space))
+        val inPercent = DecimalFormat("#,##00.00").format(percentage).toString()
+
+        val disk = Disk(spaceWithUnit, quotaWithUnit, inPercent)
+        log.debug("Disk: $disk")
+
+        return disk
     }
 }
