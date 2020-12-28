@@ -46,6 +46,8 @@ class ServiceParser : ParserInf<List<Service>> {
         }
 
         val service = Service(name, status, info)
+        log.trace("Service: $service")
+
         serviceList.add(service)
     }
 }

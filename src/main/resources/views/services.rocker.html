@@ -49,7 +49,7 @@
                 });
             }
             serviceList.forEach(s => {
-                if(s.status === "FATAL") {
+                if(s.status === "FATAL" || s.status.includes("STOP")) {
                     $("***REMOVED***card_" + s.name).addClass("error");
                 }
             })

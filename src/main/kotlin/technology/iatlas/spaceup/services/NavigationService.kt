@@ -55,7 +55,7 @@ open class NavigationService(
         listOfWebNavigation.sortBy {
             it.prio
         }
-        log.debug("Navigations found: {}", listOfWebNavigation)
+        log.trace("Navigations found: {}", listOfWebNavigation)
 
         return listOfWebNavigation
     }

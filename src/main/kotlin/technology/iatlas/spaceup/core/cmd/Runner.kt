@@ -17,12 +17,11 @@ open class Runner<T>(private val env: Environment,
 
     @ContinueSpan
     override fun execute(@SpanTag("runner.cmd") cmd: CommandInf, parser: ParserInf<T>): T? {
+        log.trace("Actual cmd: {} ", cmd.parameters)
 
-        log.debug("Actual cmd: {} ", cmd.parameters)
-
-        if (devMode) {
+        return if (devMode) {
             val response = sshService.execute(cmd)
-            return parser.parseText(response)
+            parser.parseText(response)
         } else {
             val processBuilder = ProcessBuilder()
             processBuilder.command(cmd.parameters)
@@ -33,7 +32,7 @@ open class Runner<T>(private val env: Environment,
             proc.waitFor()
 
             val output = proc.inputStream.bufferedReader()
-            return parser.parse(output)
+            parser.parse(output)
         }
     }
 }
