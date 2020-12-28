@@ -61,7 +61,7 @@ class SshService(private val sshConfig: SpaceUpSshConfig) {
             }
 
             val response = String(responseStream.toByteArray())
-            log.debug("Response:\n$response")
+            log.trace("Response:\n$response")
 
             return response
         } finally {
