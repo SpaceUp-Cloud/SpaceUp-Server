@@ -13,9 +13,8 @@ class SseService<T>: BaseSseService<T>() {
     var eventName: String = "defaultEvent"
 
     override fun events(): Publisher<Event<T>> {
-        val res = subject.hide()
+        return subject.hide()
             .toFlowable(BackpressureStrategy.LATEST).map(this::createEvent)
-        return res
     }
 
     /**

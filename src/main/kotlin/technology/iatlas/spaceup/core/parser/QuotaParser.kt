@@ -54,7 +54,7 @@ class QuotaParser: ParserInf<Disk?> {
         val inPercent = DecimalFormat("#,##00.00").format(percentage).toString()
 
         val disk = Disk(spaceWithUnit, quotaWithUnit, inPercent)
-        log.debug("Disk: $disk")
+        log.trace("Disk: $disk")
 
         return disk
     }

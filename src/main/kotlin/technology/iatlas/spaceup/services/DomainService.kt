@@ -1,8 +1,9 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.env.Environment
+import io.reactivex.rxjava3.subjects.PublishSubject
 import org.slf4j.LoggerFactory
-import technology.iatlas.spaceup.core.cmd.Command
+import technology.iatlas.spaceup.dto.Command
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.CreateDomainParser
 import technology.iatlas.spaceup.core.parser.DeleteDomainParser
@@ -16,8 +17,16 @@ class DomainService(private val env: Environment,
                     private val sshService: SshService) {
 
     private val log = LoggerFactory.getLogger(DomainService::class.java)
+    private val myDomains: PublishSubject<List<Domain>> = PublishSubject.create()
+    private var domains = listOf<Domain>()
 
-    fun list(): List<Domain>? {
+    init {
+        myDomains.subscribe {
+            domains = it
+        }
+    }
+
+    private fun list(): List<Domain>? {
         val cmd: MutableList<String> = mutableListOf("uberspace", "web", "domain", "list")
         return Runner<List<Domain>>(env, sshService).execute(Command(cmd), DomainParser())
     }
@@ -47,5 +56,16 @@ class DomainService(private val env: Environment,
 
         return Runner<Feedback>(env, sshService)
             .execute(Command(cmd), DeleteDomainParser())
+    }
+
+    /**
+     * Update an observable list of domains
+     */
+    fun updateDomainList() {
+        myDomains.onNext(list())
+    }
+
+    fun getDomainList(): List<Domain> {
+        return domains
     }
 }

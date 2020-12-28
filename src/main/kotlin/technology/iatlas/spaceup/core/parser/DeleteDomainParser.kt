@@ -17,5 +17,4 @@ class DeleteDomainParser : ParserInf<Feedback> {
             Feedback("Successful deleted!", "")
         }
     }
-
 }
