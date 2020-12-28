@@ -9,15 +9,18 @@ import technology.iatlas.spaceup.dto.Disk
 import javax.inject.Singleton
 
 @Singleton
-class ServerService(private val env: Environment) {
+class ServerService(
+    private val env: Environment,
+    private val sshService: SshService
+    ) {
 
     fun getDiskQuota(): Disk? {
         val cmd = mutableListOf("quota", "-gsl")
-        return Runner<Disk?>(env).execute(Command(cmd), QuotaParser())
+        return Runner<Disk?>(env, sshService).execute(Command(cmd), QuotaParser())
     }
 
     fun getHostname(): String? {
         val cmd = mutableListOf("hostname")
-        return Runner<String>(env).execute(Command(cmd), EchoParser())
+        return Runner<String>(env, sshService).execute(Command(cmd), EchoParser())
     }
 }

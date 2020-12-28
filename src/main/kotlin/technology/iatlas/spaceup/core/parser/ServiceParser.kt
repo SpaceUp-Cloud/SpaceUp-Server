@@ -12,23 +12,40 @@ class ServiceParser : ParserInf<List<Service>> {
         val serviceList = mutableListOf<Service>()
 
         cmdOutput.lines().forEach { line ->
-            val splitted = line.replace("\\s+".toRegex(), " ").split(" ")
-
-            val name = splitted[0]
-            val status = splitted[1]
-            var info = ""
-                splitted.toList().filter {
-                    it != name && it != status
-                }.forEach {
-                if(it.isNotBlank()) {
-                    info = "$info ${it.replace(",", "")}"
-                }
-            }
-
-            val service = Service(name, status, info)
-            serviceList.add(service)
+            parse(line, serviceList)
         }
 
         return serviceList
+    }
+
+    override fun parseText(cmdOutput: String): List<Service> {
+        val serviceList = mutableListOf<Service>()
+
+        cmdOutput.split("\n").toList().filter {
+            it != ""
+        }.forEach{ line ->
+            parse(line, serviceList)
+        }
+
+        return serviceList
+    }
+
+    private fun parse(line: String, serviceList: MutableList<Service>) {
+        val splitted = line.replace("\\s+".toRegex(), " ").split(" ")
+
+        val name = splitted[0]
+        val status = splitted[1]
+        var info = ""
+
+        splitted.filter {
+            it != name && it != status
+        }.forEach {
+            if(it.isNotBlank()) {
+                info = "$info ${it.replace(",", "")}"
+            }
+        }
+
+        val service = Service(name, status, info)
+        serviceList.add(service)
     }
 }

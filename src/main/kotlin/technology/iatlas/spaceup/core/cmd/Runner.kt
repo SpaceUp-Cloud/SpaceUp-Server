@@ -5,70 +5,35 @@ import io.micronaut.tracing.annotation.ContinueSpan
 import io.micronaut.tracing.annotation.SpanTag
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.io.*
-import java.net.URL
+import technology.iatlas.spaceup.services.SshService
 import javax.inject.Singleton
-import kotlin.random.Random
 
 @Singleton
-open class Runner<T>(private val env: Environment) : RunnerInf<T> {
+open class Runner<T>(private val env: Environment,
+                     private val sshService: SshService) : RunnerInf<T> {
     private val log: Logger = LoggerFactory.getLogger(Runner::class.java)
 
-    private var devMode = false
-
-    init {
-        devMode = env.activeNames.contains("dev")
-        if (devMode) {
-            log.warn("Get fake file in dev mode!")
-        }
-    }
+    private var devMode = env.activeNames.contains("dev")
 
     @ContinueSpan
     override fun execute(@SpanTag("runner.cmd") cmd: CommandInf, parser: ParserInf<T>): T? {
 
-        val preCommand: MutableList<String> = if (env.activeNames.contains("dev"))
-            mutableListOf("bash") else mutableListOf()
+        log.debug("Actual cmd: {} ", cmd.parameters)
 
         if (devMode) {
+            val response = sshService.execute(cmd)
+            return parser.parseText(response)
+        } else {
+            val processBuilder = ProcessBuilder()
+            processBuilder.command(cmd.parameters)
+            processBuilder.redirectOutput(ProcessBuilder.Redirect.PIPE)
+                .redirectError(ProcessBuilder.Redirect.PIPE)
 
-            // simulate some long running
-            val rand = Random(1000)
-            val workTime = (2000..5000).random(rand).toLong()
-            Thread.sleep(workTime)
-            log.debug("Sleep for $workTime")
+            val proc = processBuilder.start()
+            proc.waitFor()
 
-            var fileNameToRetrieve = "output"
-            cmd.parameters.forEach {
-                fileNameToRetrieve += "_$it"
-            }
-
-            log.debug("File to retrieve: $fileNameToRetrieve")
-
-            // dummy file if resource does not exist
-            val url =
-                this::class.java.getResource("/fakecmd/$fileNameToRetrieve.txt")
-                    ?: this::class.java.getResource("/fakecmd/dummy.txt")
-
-            val outputFile = File(url.path)
-            log.debug("File to get: {}", outputFile)
-
-            return parser.parse(outputFile.bufferedReader())
+            val output = proc.inputStream.bufferedReader()
+            return parser.parse(output)
         }
-
-        val actualCmd = preCommand + cmd.parameters
-        log.debug("Actual cmd: {} ", actualCmd)
-
-        val processBuilder = ProcessBuilder()
-        processBuilder.command(actualCmd)
-        processBuilder.redirectOutput(ProcessBuilder.Redirect.PIPE)
-            .redirectError(ProcessBuilder.Redirect.PIPE)
-
-        val proc = processBuilder.start()
-        proc.waitFor()
-
-        val output = proc.inputStream.bufferedReader()
-        return parser.parse(output)
-
     }
-
 }

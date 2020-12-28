@@ -6,9 +6,12 @@ import java.io.BufferedReader
 
 class CreateDomainParser : ParserInf<Feedback> {
     override fun parse(cmdOutput: BufferedReader): Feedback {
-        val textOutput = cmdOutput.readText()
-        return if(textOutput.toLowerCase().contains("error")) {
-            Feedback("", textOutput)
+        return parseText(cmdOutput.readText())
+    }
+
+    override fun parseText(cmdOutput: String): Feedback {
+        return if(cmdOutput.toLowerCase().contains("error")) {
+            Feedback("", cmdOutput)
         } else {
             Feedback("Domain was successfully created", "")
         }

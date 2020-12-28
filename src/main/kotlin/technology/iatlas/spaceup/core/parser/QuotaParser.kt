@@ -9,7 +9,7 @@ import java.util.*
 class QuotaParser: ParserInf<Disk?> {
     private val log = LoggerFactory.getLogger(QuotaParser::class.java)
 
-    override fun parse(cmdOutput: BufferedReader): Disk? {
+    override fun parse(cmdOutput: BufferedReader): Disk {
         val neededLine: Optional<String> = cmdOutput.lines().filter {
             it.contains("/dev")
         }.findFirst()
@@ -17,6 +17,40 @@ class QuotaParser: ParserInf<Disk?> {
         val diskQuota: Disk
         if(neededLine.isPresent) {
             val splitted: List<String> = neededLine.get()
+                .replace("\\s+".toRegex(), " ")
+                .split(" ")
+
+            val spaceWithUnit = splitted[2]
+            val space = spaceWithUnit.filter {
+                it.isDigit()
+            }
+
+            val quotaWithUnit = splitted[3]
+            val quota = quotaWithUnit.filter {
+                it.isDigit()
+            }
+
+            log.debug("Space as string: $spaceWithUnit")
+            log.debug("Quota as string: $quotaWithUnit")
+
+            val inPercent = ((100f / Integer.valueOf(quota)) * Integer.valueOf(space))
+
+            diskQuota = Disk(spaceWithUnit, quotaWithUnit, inPercent)
+        } else {
+            diskQuota = Disk("", "",0f)
+        }
+
+        return diskQuota
+    }
+
+    override fun parseText(cmdOutput: String): Disk {
+        val neededLine: List<String> = cmdOutput.lines().filter {
+            it.contains("/dev")
+        }
+
+        val diskQuota: Disk
+        if(neededLine.size == 1) {
+            val splitted: List<String> = neededLine.get(0)
                 .replace("\\s+".toRegex(), " ")
                 .split(" ")
 

@@ -17,4 +17,18 @@ class DomainParser : ParserInf<List<Domain>> {
 
         return domainList
     }
+
+    override fun parseText(cmdOutput: String): List<Domain> {
+        cmdOutput.split("\n")
+            .filter {
+                it != ""
+            }.forEach {
+            if (it.isNotBlank()) {
+                val domain = Domain(it)
+                domainList.add(domain)
+            }
+        }
+
+        return domainList
+    }
 }
