@@ -29,11 +29,11 @@ function disableLoader(name) {
 }
 
 function popup(response) {
-    if(response["error"] != null) {
-        M.toast({html: response["error"] , classes: "red"});
-    }
-    if(response["info"] != null) {
-        M.toast({html: response["info"], classes: "blue"});
+    if(response["info"] == null && response["error"] == null) {
+        unknownmsg(response)
+    } else {
+        info(response["info"])
+        error(response["error"])
     }
 }
 
@@ -47,4 +47,8 @@ function error(data) {
     if(data != null) {
         M.toast({html: data, classes: "red"})
     }
+}
+
+function unknownmsg(data) {
+    M.toast({html: data, classes: "grey"})
 }

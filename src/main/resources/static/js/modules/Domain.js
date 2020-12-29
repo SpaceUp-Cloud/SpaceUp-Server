@@ -1,4 +1,27 @@
-function add() {
+export default class SseDomainHandler {
+
+    constructor() {}
+
+    /**
+     * Get a response from SSE and handle it
+     * @param feedbacks - list
+     */
+    handleDomainAdd(feedback) {
+        console.debug("SSE add domain: " + feedback)
+        popup(JSON.parse(feedback))
+    }
+
+    /**
+     * Handle the response from SSE when a domain will be deleted
+     * @param feedback - object
+     */
+    handleDomainDelete(feedback) {
+        console.debug("SSE delete domain: " + feedback)
+        popup(JSON.parse(feedback));
+    }
+}
+
+export function add() {
     let rawDomains = $("***REMOVED***domain-list").val()
 
     // Validation
@@ -29,33 +52,10 @@ function add() {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         data: json
-    }).done(function(response) {
-        console.debug(response);
-
-        let tempRes = {};
-
-        for (let domain in response) {
-            if(domain == null) break;
-
-            let err_info = response[domain];
-            for(let i in err_info) {
-                if(i != null && err_info[i] != null) {
-                    err_info[i] = domain + ": " + err_info[i];
-                }
-
-                if(i === "info") {
-                    info(err_info[i]);
-                }
-
-                if(i === "error") {
-                    error(err_info[i]);
-                }
-            }
-        }
     });
 }
 
-function deleteDomain(domain) {
+export function deleteDomain(domain) {
     let c = confirm("Bist du dir sicher?");
     let domainId = domain.replaceAll(".", "_");
 
@@ -70,16 +70,7 @@ function deleteDomain(domain) {
             complete: function () {
                 disableLoader(domainId)
             }
-        }).done(function(response) {
-            console.debug(response);
-            popup(response);
-
-            let info = response["info"];
-            if(response != null && info != null) {
-                if(info.toLowerCase().includes("success"))
-                // Card can be removed on client
-                $("***REMOVED***card_" + domainId).remove();
-            }
         });
     }
 }
+
