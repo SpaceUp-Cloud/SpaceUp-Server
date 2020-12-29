@@ -7,7 +7,17 @@
 @args (List<Navigation> navigations, List<Service> services, List<ServiceOption> options)
 
     @extrajs => {
-    <script src="/js/modules/Service.js"></script>
+    <script type="module">
+        import {serviceExecute} from "/js/modules/Service.js"
+        @for(service: services) {
+            @for(option: options) {
+                $(document).on("click", "#execute_@service.getName()_@option.name()", function(e) {
+                    serviceExecute("@service.getName()", "@option.name()");
+                    e.preventDefault();
+                });
+            }
+        }
+    </script>
     }
 
 @views.base.template("Services", navigations, extrajs) -> {
@@ -29,7 +39,7 @@
                     </div>
                     <div class="card-action">
                         @for(option: options) {
-                            <a onclick="serviceExecute('@service.getName()','@option')">@option.name()</a>
+                            <a id="execute_@service.getName()_@option.name()">@option.name()</a>
                         }
                     </div>
                 </div>

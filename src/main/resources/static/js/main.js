@@ -1,5 +1,6 @@
 import ReconnectingEventSource from "./modules/ReconnectingSSE.js";
 import SseDomainHandler from "./modules/Domain.js"
+import SseServiceHandler from "./modules/Service.js";
 
 $(document).ready(function() {
     window.matchMedia('(prefers-color-scheme: dark)')
@@ -54,6 +55,9 @@ function init() {
               const sseDomainHandler = new SseDomainHandler();
               sse.addEventListener("domain add", (e) => sseDomainHandler.handleDomainAdd(e.data));
               sse.addEventListener("domain delete", (e) => sseDomainHandler.handleDomainDelete(e.data));
+
+              const sseServiceHandler = new SseServiceHandler()
+              sse.addEventListener("service exec", (e) => sseServiceHandler.serviceExecution(e.data))
 
               sse.onerror = function(e) {
                 e = e || event;
