@@ -1,4 +1,13 @@
-function serviceExecute(name, option) {
+export default class SseServiceHandler {
+
+    constructor() {}
+
+    serviceExecution(feedback) {
+        popup(JSON.parse(feedback))
+    }
+}
+
+export function serviceExecute(name, option) {
     let url = '/api/service/execute/' + name + '/' + option;
     $.ajax({
         url: url,
@@ -9,8 +18,5 @@ function serviceExecute(name, option) {
         complete: function () {
             disableLoader(name)
         }
-    }).done(function (response) {
-        console.debug(response);
-        popup(response);
-    })
+    });
 }
