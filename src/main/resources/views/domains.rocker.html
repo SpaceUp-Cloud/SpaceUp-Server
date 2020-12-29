@@ -5,7 +5,14 @@
 @args (List<Navigation> navigations, List<Domain> domains)
 
     @extrajs => {
-    <script src="/js/modules/Domain.js"></script>
+    <script type="module">
+        import {add, deleteDomain} from "/js/modules/Domain.js";
+        document.querySelector("#add_domain").addEventListener('click', add);
+        @for(domain: domains) {
+            document.querySelector("#delete_@domain.htmlFriendly()")
+                .addEventListener('click', () => deleteDomain('@domain.getUrl()'));
+        }
+    </script>
     }
 
     @views.base.template("Domänen", navigations, extrajs) -> {
@@ -24,7 +31,7 @@
                         </span>
                     </div>
                     <div class="card-action">
-                        <a onclick="deleteDomain('@domain.getUrl()')">Löschen</a>
+                        <a id="delete_@domain.htmlFriendly()">Löschen</a>
                     </div>
                 </div>
             </span>
@@ -44,7 +51,7 @@
                       id="domain-list"></textarea>
         </div>
         <div class="modal-footer">
-            <a onclick="add()" class="btn-floating scale-transition waves-effect waves-light teal">
+            <a id="add_domain" class="btn-floating scale-transition waves-effect waves-light teal">
                 <i class="material-icons">add</i></a>
         </div>
     </div>

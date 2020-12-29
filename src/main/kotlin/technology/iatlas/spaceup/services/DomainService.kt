@@ -13,9 +13,11 @@ import technology.iatlas.spaceup.dto.Feedback
 import javax.inject.Singleton
 
 @Singleton
-class DomainService(private val env: Environment,
-                    private val sshService: SshService) {
-
+class DomainService(
+    private val env: Environment,
+    private val sshService: SshService,
+    private val sseService: SseService<Feedback>
+) {
     private val log = LoggerFactory.getLogger(DomainService::class.java)
     private val myDomains: PublishSubject<List<Domain>> = PublishSubject.create()
     private var domains = listOf<Domain>()
@@ -32,6 +34,7 @@ class DomainService(private val env: Environment,
     }
 
     fun add(domains: List<Domain>): Map<String, Feedback> {
+        sseService.eventName = "domain add"
         val cmd: MutableList<String> = mutableListOf("uberspace", "web", "domain", "add")
         val feedbacks: MutableMap<String, Feedback> = mutableMapOf()
 
@@ -41,7 +44,15 @@ class DomainService(private val env: Environment,
             val response: Feedback? = Runner<Feedback>(env, sshService)
                 .execute(Command(cmd), CreateDomainParser())
 
-            feedbacks[domain.url] = response!!
+            if (response?.info!!.isNotEmpty()) {
+                val infoResponse = Feedback(info = "${domain.url}: ${response.info}", "")
+                feedbacks[domain.url] = infoResponse
+
+                sseService.publish(infoResponse)
+            } else {
+                feedbacks[domain.url] = response
+                sseService.publish(response)
+            }
 
             // Remove domain from cmd
             cmd.remove(domain.url)
@@ -51,11 +62,15 @@ class DomainService(private val env: Environment,
         return feedbacks
     }
 
-    fun delete(domain: Domain): Feedback? {
+    fun delete(domain: Domain): Feedback {
+        sseService.eventName="domain delete"
         val cmd = mutableListOf("uberspace", "web", "domain", "del", domain.url)
 
-        return Runner<Feedback>(env, sshService)
+        val feedback = Runner<Feedback>(env, sshService)
             .execute(Command(cmd), DeleteDomainParser())
+        sseService.publish(feedback!!)
+
+        return feedback
     }
 
     /**
