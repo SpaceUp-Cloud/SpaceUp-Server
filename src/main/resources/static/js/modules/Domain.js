@@ -4,7 +4,7 @@ export default class SseDomainHandler {
 
     /**
      * Get a response from SSE and handle it
-     * @param feedbacks - list
+     * @param feedback - object
      */
     handleDomainAdd(feedback) {
         console.debug("SSE add domain: " + feedback)
@@ -69,7 +69,10 @@ export function deleteDomain(domain) {
             },
             complete: function () {
                 disableLoader(domainId)
+                markAsDelete("#content_" + domainId)
             }
+        }).done(function(response) {
+
         });
     }
 }

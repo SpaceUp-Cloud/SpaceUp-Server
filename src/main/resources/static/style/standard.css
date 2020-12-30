@@ -91,3 +91,9 @@
             opacity: 0;
         }
 }
+
+/* An overlay to disable content, when it is marked as delete */
+.content, .deleted-overlay {
+    grid-area: 1 / 1;
+    opacity: 0.4;
+}
