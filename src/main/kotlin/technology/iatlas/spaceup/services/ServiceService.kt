@@ -25,10 +25,12 @@ class ServiceService(
     /**
      * Returns a list of all existing services with their statuses
      */
-    fun list(): List<Service>? {
+    suspend fun list(): List<Service>? {
         val cmd: MutableList<String> = mutableListOf("supervisorctl", "status")
-        return Runner<List<Service>>(env, sshService)
-            .execute(Command(cmd), ServiceParser())
+        val runner = Runner<List<Service>>(env, sshService)
+        runner.execute(Command(cmd), ServiceParser())
+
+        return runner.getBehaviourSubject().value
     }
 
     /**
@@ -37,22 +39,28 @@ class ServiceService(
      * @return Feedback
      * @see {Feedback}
      */
-    fun execute(serivce: Service, option: ServiceOption): Feedback {
+    suspend fun execute(serivce: Service, option: ServiceOption): Feedback {
         sseService.eventName="service exec"
 
         val cmd: MutableList<String> = mutableListOf("supervisorctl",
             option.name.toLowerCase(), serivce.name)
 
-        val result: String? = Runner<String>(env, sshService)
-            .execute(Command(cmd), EchoParser())
+        val runner = Runner<String>(env, sshService)
+        runner.execute(Command(cmd), EchoParser())
 
-        val feedback = if(result?.toLowerCase()!!.contains("(started|stopped)".toRegex())) {
-            Feedback(result, "")
-        } else {
-            Feedback("", result)
+        var resultFeedback = Feedback("", "")
+
+        runner.getBehaviourSubject().subscribe {
+            val feedback = if(it?.toLowerCase()!!.contains("(started|stopped)".toRegex())) {
+                Feedback(it, "")
+            } else {
+                Feedback("", it)
+            }
+
+            sseService.publish(feedback)
+            resultFeedback = feedback
         }
 
-        sseService.publish(feedback)
-        return feedback
+        return resultFeedback
     }
 }

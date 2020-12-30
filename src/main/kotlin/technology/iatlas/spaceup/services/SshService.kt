@@ -6,6 +6,7 @@ import com.jcraft.jsch.Session
 import io.micronaut.context.annotation.Property
 import io.micronaut.context.annotation.Value
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceUpSshConfig
 import technology.iatlas.spaceup.core.cmd.CommandInf
@@ -22,6 +23,7 @@ class SshService(private val sshConfig: SpaceUpSshConfig) {
 
     private var session: Session
 
+    // Configure SSH
     init {
         val jsch = JSch()
 
@@ -43,7 +45,7 @@ class SshService(private val sshConfig: SpaceUpSshConfig) {
         session.connect()
     }
 
-    fun execute(command: CommandInf): String {
+    suspend fun execute(command: CommandInf): String {
         log.debug("Execute $command")
         val channel: ChannelExec = session.openChannel("exec") as ChannelExec
 
@@ -51,17 +53,15 @@ class SshService(private val sshConfig: SpaceUpSshConfig) {
             channel.setCommand(command.parameters.joinToString(" "))
             val responseStream = ByteArrayOutputStream()
             channel.outputStream = responseStream
-            channel.connect(10000)
+            channel.connect()
 
             // When then channel close itself, we retrieved the data
             while (channel.isConnected) {
-                GlobalScope.run {
-                    Thread.sleep(100)
-                }
+                delay(50)
             }
 
             val response = String(responseStream.toByteArray())
-            log.trace("Response:\n$response")
+            log.debug(response)
 
             return response
         } finally {
