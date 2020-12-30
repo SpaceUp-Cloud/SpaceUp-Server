@@ -30,7 +30,7 @@ function disableLoader(name) {
 
 function popup(response) {
     if(response["info"] == null && response["error"] == null) {
-        unknownmsg(response)
+        defaultMsg(response)
     } else {
         info(response["info"])
         error(response["error"])
@@ -49,6 +49,15 @@ function error(data) {
     }
 }
 
-function unknownmsg(data) {
+function defaultMsg(data) {
     M.toast({html: data, classes: "grey"})
+}
+
+function markAsDelete(querySelector) {
+    console.info("Mark "+ querySelector + " as deleted.")
+    if(querySelector != null) {
+        $(querySelector).addClass("deleted-overlay")
+    } else {
+        console.error("Query selector is null(..). Could not mark as delete.")
+    }
 }
