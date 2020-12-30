@@ -1,3 +1,6 @@
+/**
+ * Helper class to handle SSE for domain specific messages
+ */
 export default class SseDomainHandler {
 
     constructor() {}
@@ -21,6 +24,9 @@ export default class SseDomainHandler {
     }
 }
 
+/**
+ * Add a new domain (if it belongs to you) to your uberspace
+ */
 export function add() {
     let rawDomains = $("***REMOVED***domain-list").val()
 
@@ -55,12 +61,16 @@ export function add() {
     });
 }
 
+/**
+ * Delete a specific domain from uberspace
+ * @param domain - domain name
+ */
 export function deleteDomain(domain) {
-    let c = confirm("Bist du dir sicher?");
-    let domainId = domain.replaceAll(".", "_");
-
+    let c = confirm("Sicher das du die Domain '" + domain + "' löschen magst?");
     if(c === true) {
+        let domainId = domain.replaceAll(".", "_");
         console.warn("Delete domain " + domain);
+
         $.ajax({
             url: "/api/domain/delete/" + domain,
             method: "Delete",
