@@ -13,7 +13,7 @@ class ServiceController(private val serviceService: ServiceService) {
     private val log = LoggerFactory.getLogger(ServiceController::class.java)
 
     @Post("/execute/{name}/{option}")
-    fun execute(name: String, option: String): Feedback? {
+    suspend fun execute(name: String, option: String): Feedback? {
         log.debug("Execute $name: $option")
 
         val serviceName = Service(name, null, null)

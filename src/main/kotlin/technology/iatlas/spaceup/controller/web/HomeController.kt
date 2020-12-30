@@ -15,7 +15,7 @@ class HomeController(private val serverService: ServerService) : BaseController(
 
     @WebNavigation("Home", mapping = "/", prio = 0)
     @Get(produces = [MediaType.TEXT_HTML])
-    fun home(): String {
+    suspend fun home(): String {
         val hostname = serverService.getHostname()
 
         // if quota is null, there was probably something wrong with parsing
