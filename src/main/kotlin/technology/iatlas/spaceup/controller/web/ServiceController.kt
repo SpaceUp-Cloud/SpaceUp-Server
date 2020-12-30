@@ -14,7 +14,7 @@ class ServiceController(private val serviceService: ServiceService) : BaseContro
 
     @WebNavigation("Services", "/services", prio = 1)
     @Get(produces = [MediaType.TEXT_HTML])
-    fun list(): String {
+    suspend fun list(): String {
 
         val services = serviceService.list()
         val options = serviceService.options()

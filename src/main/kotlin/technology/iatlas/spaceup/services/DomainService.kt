@@ -1,7 +1,6 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.env.Environment
-import io.reactivex.rxjava3.subjects.PublishSubject
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.dto.Command
 import technology.iatlas.spaceup.core.cmd.Runner
@@ -19,21 +18,26 @@ class DomainService(
     private val sseService: SseService<Feedback>
 ) {
     private val log = LoggerFactory.getLogger(DomainService::class.java)
-    private val myDomains: PublishSubject<List<Domain>> = PublishSubject.create()
+
+    private val domainListRunner = Runner<List<Domain>>(env, sshService)
     private var domains = listOf<Domain>()
 
+    private val addDomainRunner =  Runner<Feedback>(env, sshService)
+
     init {
-        myDomains.subscribe {
+        domainListRunner.getBehaviourSubject().subscribe {
             domains = it
         }
+
+
     }
 
-    private fun list(): List<Domain>? {
+    suspend fun updateDomainList() {
         val cmd: MutableList<String> = mutableListOf("uberspace", "web", "domain", "list")
-        return Runner<List<Domain>>(env, sshService).execute(Command(cmd), DomainParser())
+        domainListRunner.execute(Command(cmd), DomainParser())
     }
 
-    fun add(domains: List<Domain>): Map<String, Feedback> {
+    suspend fun add(domains: List<Domain>): Map<String, Feedback> {
         sseService.eventName = "domain add"
         val cmd: MutableList<String> = mutableListOf("uberspace", "web", "domain", "add")
         val feedbacks: MutableMap<String, Feedback> = mutableMapOf()
@@ -41,45 +45,60 @@ class DomainService(
         domains.forEach { domain ->
             // Add domain to cmd
             cmd.add(domain.url)
-            val response: Feedback? = Runner<Feedback>(env, sshService)
-                .execute(Command(cmd), CreateDomainParser())
 
-            if (response?.info!!.isNotEmpty()) {
-                val infoResponse = Feedback(info = "${domain.url}: ${response.info}", "")
-                feedbacks[domain.url] = infoResponse
 
-                sseService.publish(infoResponse)
-            } else {
-                feedbacks[domain.url] = response
-                sseService.publish(response)
+            addDomainRunner.execute(Command(cmd), CreateDomainParser())
+
+            addDomainRunner.getBehaviourSubject().subscribe {
+                when {
+                    it?.info!!.isNotEmpty() -> {
+                        val infoResponse = Feedback(info = "${domain.url}: ${it.info}", "")
+                        feedbacks[domain.url] = infoResponse
+
+                        sseService.publish(infoResponse)
+                    }
+                    it.error.isNotEmpty() -> {
+                        val errorResponse = Feedback(info = "", error = "${domain.url}: ${it.error}")
+                        feedbacks[domain.url] = errorResponse
+
+                        sseService.publish(errorResponse)
+                    }
+                    // Should never happened actually
+                    else -> {
+                        feedbacks[domain.url] = it
+                        sseService.publish(it)
+                    }
+                }
+
+                // Remove domain from cmd
+                cmd.remove(domain.url)
             }
-
-            // Remove domain from cmd
-            cmd.remove(domain.url)
         }
 
         log.debug("Response: $feedbacks")
         return feedbacks
     }
 
-    fun delete(domain: Domain): Feedback {
-        sseService.eventName="domain delete"
+    suspend fun delete(domain: Domain): Feedback {
+        sseService.eventName = "domain delete"
         val cmd = mutableListOf("uberspace", "web", "domain", "del", domain.url)
 
-        val feedback = Runner<Feedback>(env, sshService)
-            .execute(Command(cmd), DeleteDomainParser())
-        sseService.publish(feedback!!)
+        val runner = Runner<Feedback>(env, sshService)
+
+        runner.execute(Command(cmd), DeleteDomainParser())
+        var feedback = Feedback("", "")
+
+        runner.getBehaviourSubject().subscribe {
+            sseService.publish(it)
+            feedback = it
+        }
 
         return feedback
     }
 
     /**
-     * Update an observable list of domains
+     * Get all domains
      */
-    fun updateDomainList() {
-        myDomains.onNext(list())
-    }
-
     fun getDomainList(): List<Domain> {
         return domains
     }

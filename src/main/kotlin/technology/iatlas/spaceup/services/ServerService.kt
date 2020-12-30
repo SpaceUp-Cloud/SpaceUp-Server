@@ -14,13 +14,29 @@ class ServerService(
     private val sshService: SshService
     ) {
 
-    fun getDiskQuota(): Disk? {
+    suspend fun getDiskQuota(): Disk? {
         val cmd = mutableListOf("quota", "-gsl")
-        return Runner<Disk?>(env, sshService).execute(Command(cmd), QuotaParser())
+        val runner = Runner<Disk?>(env, sshService)
+        runner.execute(Command(cmd), QuotaParser())
+
+        var disk: Disk? = Disk("", "", "")
+        runner.getBehaviourSubject().subscribe {
+            disk = it
+        }
+
+        return disk
     }
 
-    fun getHostname(): String? {
+    suspend fun getHostname(): String? {
         val cmd = mutableListOf("hostname")
-        return Runner<String>(env, sshService).execute(Command(cmd), EchoParser())
+        val runner = Runner<String>(env, sshService)
+        runner.execute(Command(cmd), EchoParser())
+
+        var hostname = ""
+        runner.getBehaviourSubject().subscribe {
+            hostname = it
+        }
+
+        return hostname
     }
 }

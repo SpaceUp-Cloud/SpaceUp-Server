@@ -13,12 +13,17 @@ class CreateDomainParser : ParserInf<Feedback> {
     }
 
     override fun parseText(cmdOutput: String): Feedback {
-        log.trace("Output: $cmdOutput")
+        log.debug(cmdOutput)
 
-        return if(cmdOutput.toLowerCase().contains("error")) {
-            Feedback("", cmdOutput)
-        } else {
+        return if(!cmdOutput.toLowerCase().contains("error")
+            && cmdOutput.isNotBlank() && !cmdOutput.isNullOrEmpty()) {
             Feedback("Domain was successfully created", "")
+        } else {
+            return if(cmdOutput.isNotBlank() || cmdOutput.isNotEmpty()) {
+                Feedback("", cmdOutput)
+            } else {
+                Feedback("", "Unexpected error happened!")
+            }
         }
     }
 }
