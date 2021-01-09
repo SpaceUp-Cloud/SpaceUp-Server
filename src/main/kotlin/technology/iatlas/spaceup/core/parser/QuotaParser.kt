@@ -5,7 +5,6 @@ import technology.iatlas.spaceup.core.cmd.ParserInf
 import technology.iatlas.spaceup.dto.Disk
 import java.io.BufferedReader
 import java.text.DecimalFormat
-import java.text.NumberFormat
 import java.util.*
 
 class QuotaParser: ParserInf<Disk?> {
@@ -19,7 +18,7 @@ class QuotaParser: ParserInf<Disk?> {
         return if(neededLine.isPresent) {
             parseDisk(neededLine.get())
         } else {
-            Disk("", "","0")
+            Disk("", 0f, "", 0f)
         }
     }
 
@@ -31,7 +30,7 @@ class QuotaParser: ParserInf<Disk?> {
         return if(neededLine.size == 1) {
             parseDisk(neededLine[0])
         } else {
-            Disk("", "","0")
+            Disk("", 0f, "", 0f)
         }
     }
 
@@ -51,9 +50,10 @@ class QuotaParser: ParserInf<Disk?> {
 
         // German decimal format
         val percentage = ((100f / Integer.valueOf(quota)) * Integer.valueOf(space))
-        val inPercent = DecimalFormat("***REMOVED***,***REMOVED******REMOVED***00.00").format(percentage).toString()
+        //val diffPercentage = DecimalFormat("***REMOVED***,***REMOVED******REMOVED***00.00").format((100f - percentage)).toString()
+        //val usedPercentage = DecimalFormat("***REMOVED***,***REMOVED******REMOVED***00.00").format(percentage).toString()
 
-        val disk = Disk(spaceWithUnit, quotaWithUnit, inPercent)
+        val disk = Disk(spaceWithUnit, percentage, quotaWithUnit, (100f - percentage))
         log.trace("Disk: $disk")
 
         return disk

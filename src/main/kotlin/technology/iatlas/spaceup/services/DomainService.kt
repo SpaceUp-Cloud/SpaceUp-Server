@@ -37,35 +37,33 @@ class DomainService(
         domainListRunner.execute(Command(cmd), DomainParser())
     }
 
-    suspend fun add(domains: List<Domain>): Map<String, Feedback> {
+    suspend fun add(domains: List<Domain>): List<Feedback> {
         sseService.eventName = "domain add"
         val cmd: MutableList<String> = mutableListOf("uberspace", "web", "domain", "add")
-        val feedbacks: MutableMap<String, Feedback> = mutableMapOf()
+        val feedbacks = mutableListOf<Feedback>()
 
         domains.forEach { domain ->
             // Add domain to cmd
             cmd.add(domain.url)
-
-
             addDomainRunner.execute(Command(cmd), CreateDomainParser())
 
             addDomainRunner.getBehaviourSubject().subscribe {
                 when {
                     it?.info!!.isNotEmpty() -> {
                         val infoResponse = Feedback(info = "${domain.url}: ${it.info}", "")
-                        feedbacks[domain.url] = infoResponse
+                        feedbacks.add(infoResponse)
 
                         sseService.publish(infoResponse)
                     }
                     it.error.isNotEmpty() -> {
                         val errorResponse = Feedback(info = "", error = "${domain.url}: ${it.error}")
-                        feedbacks[domain.url] = errorResponse
+                        feedbacks.add(errorResponse)
 
                         sseService.publish(errorResponse)
                     }
                     // Should never happened actually
                     else -> {
-                        feedbacks[domain.url] = it
+                        feedbacks.add(it)
                         sseService.publish(it)
                     }
                 }
