@@ -9,6 +9,7 @@ import technology.iatlas.spaceup.dto.Domain
 import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.services.DomainService
 import technology.iatlas.spaceup.services.SseService
+import javax.annotation.Nullable
 
 @Controller("/api/domain")
 class DomainController(private val domainService: DomainService) {
@@ -42,10 +43,15 @@ class DomainController(private val domainService: DomainService) {
      * Get a list of domains
      * @return List<Domain> - list of domains
      */
-    @Get(uri = "/list", produces = [MediaType.APPLICATION_JSON])
-    fun list(): HttpResponse<List<Domain>> {
+    @Get(uri = "/list{?cached}", produces = [MediaType.APPLICATION_JSON])
+    suspend fun list(@Nullable cached: Boolean = false): HttpResponse<List<Domain>> {
         log.debug("Get domain list.")
 
+        if(!cached) {
+            log.info("Get updated domain list.")
+            domainService.updateDomainList()
+        }
         return HttpResponse.ok(domainService.getDomainList())
     }
+
 }
