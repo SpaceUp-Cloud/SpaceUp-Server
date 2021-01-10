@@ -25,11 +25,10 @@ class DomainService(
     private val addDomainRunner =  Runner<Feedback>(env, sshService)
 
     init {
+        // Cache domain list for faster access but delay on fresh data
         domainListRunner.getBehaviourSubject().subscribe {
             domains = it
         }
-
-
     }
 
     suspend fun updateDomainList() {

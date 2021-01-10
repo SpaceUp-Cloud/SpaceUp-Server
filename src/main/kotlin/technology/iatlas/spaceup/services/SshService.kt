@@ -10,9 +10,7 @@ import kotlinx.coroutines.delay
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceUpSshConfig
 import technology.iatlas.spaceup.core.cmd.CommandInf
-import java.io.BufferedReader
-import java.io.ByteArrayOutputStream
-import java.io.File
+import java.io.*
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.properties.Delegates
@@ -52,7 +50,10 @@ class SshService(private val sshConfig: SpaceUpSshConfig) {
         try {
             channel.setCommand(command.parameters.joinToString(" "))
             val responseStream = ByteArrayOutputStream()
+            val errorResponseStream = ByteArrayOutputStream()
             channel.outputStream = responseStream
+            channel.setErrStream(responseStream)
+
             channel.connect()
 
             // When then channel close itself, we retrieved the data
