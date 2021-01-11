@@ -11,10 +11,12 @@ class DeleteDomainParser : ParserInf<Feedback> {
     }
 
     override fun parseText(cmdOutput: String): Feedback {
-        return if(cmdOutput.toLowerCase().contains("error")) {
+        return if(cmdOutput.toLowerCase().contains("error") ||
+            // ... is not one of your domains.
+            cmdOutput.toLowerCase().contains("is not")) {
             Feedback("", cmdOutput)
         } else {
-            Feedback("Successful deleted!", "")
+            Feedback("Successfully deleted!", "")
         }
     }
 }
