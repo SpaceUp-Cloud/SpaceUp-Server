@@ -1,6 +1,7 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.env.Environment
+import io.micronaut.context.event.ApplicationEventPublisher
 import technology.iatlas.spaceup.dto.Command
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.EchoParser
@@ -8,13 +9,15 @@ import technology.iatlas.spaceup.core.parser.ServiceParser
 import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.dto.Service
 import technology.iatlas.spaceup.dto.ServiceOption
+import technology.iatlas.spaceup.events.WebsocketResponseEvent
 import javax.inject.Singleton
 
 @Singleton
 class ServiceService(
     private val env: Environment,
     private val sshService: SshService,
-    private val sseService: SseService<Feedback>
+    private val sseService: SseService<Feedback>,
+    private val eventPublisher: ApplicationEventPublisher
     ) {
 
     /**
@@ -57,6 +60,7 @@ class ServiceService(
                 Feedback("", it)
             }
 
+            eventPublisher.publishEvent(WebsocketResponseEvent(feedback))
             sseService.publish(feedback)
             resultFeedback = feedback
         }
