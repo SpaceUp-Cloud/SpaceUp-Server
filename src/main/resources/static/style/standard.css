@@ -97,3 +97,7 @@
     grid-area: 1 / 1;
     opacity: 0.4;
 }
+
+.service_content {
+    margin-bottom: auto;
+}
