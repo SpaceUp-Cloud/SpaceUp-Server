@@ -9,7 +9,7 @@ import technology.iatlas.spaceup.core.parser.ServiceParser
 import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.dto.Service
 import technology.iatlas.spaceup.dto.ServiceOption
-import technology.iatlas.spaceup.events.WebsocketResponseEvent
+import technology.iatlas.spaceup.events.WebsocketFeedbackResponseEvent
 import javax.inject.Singleton
 
 @Singleton
@@ -33,7 +33,12 @@ class ServiceService(
         val runner = Runner<List<Service>>(env, sshService)
         runner.execute(Command(cmd), ServiceParser())
 
-        return runner.getBehaviourSubject().value
+        var services = emptyList<Service>()
+        runner.subject().subscribe {
+            services = it
+        }
+
+        return services
     }
 
     /**
@@ -53,14 +58,14 @@ class ServiceService(
 
         var resultFeedback = Feedback("", "")
 
-        runner.getBehaviourSubject().subscribe {
+        runner.subject().subscribe {
             val feedback = if(it?.toLowerCase()!!.contains("(started|stopped)".toRegex())) {
                 Feedback(it, "")
             } else {
                 Feedback("", it)
             }
 
-            eventPublisher.publishEvent(WebsocketResponseEvent(feedback))
+            eventPublisher.publishEvent(WebsocketFeedbackResponseEvent(feedback))
             sseService.publish(feedback)
             resultFeedback = feedback
         }

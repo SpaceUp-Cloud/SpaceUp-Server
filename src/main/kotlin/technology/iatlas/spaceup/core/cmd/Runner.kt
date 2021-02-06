@@ -1,6 +1,7 @@
 package technology.iatlas.spaceup.core.cmd
 
 import io.micronaut.context.env.Environment
+import io.micronaut.context.event.ApplicationEventPublisher
 import io.micronaut.tracing.annotation.ContinueSpan
 import io.micronaut.tracing.annotation.SpanTag
 import io.reactivex.rxjava3.core.Flowable
@@ -32,6 +33,8 @@ open class Runner<T>(
         if (devMode) {
             val res = sshService.execute(cmd)
             val output = parser.parseText(res)
+            log.debug("Parsed output: $output")
+
             subject.onNext(output)
 
         } else {
@@ -52,5 +55,4 @@ open class Runner<T>(
             subject.onNext(output)
         }
     }
-
 }
