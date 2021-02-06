@@ -7,7 +7,7 @@ import java.io.BufferedReader
 import java.text.DecimalFormat
 import java.util.*
 
-class QuotaParser: ParserInf<Disk?> {
+class QuotaParser: ParserInf<Disk> {
     private val log = LoggerFactory.getLogger(QuotaParser::class.java)
 
     override fun parse(cmdOutput: BufferedReader): Disk {

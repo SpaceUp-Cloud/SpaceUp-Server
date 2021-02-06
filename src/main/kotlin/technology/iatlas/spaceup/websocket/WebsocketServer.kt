@@ -6,10 +6,11 @@ import io.micronaut.websocket.CloseReason
 import io.micronaut.websocket.WebSocketSession
 import io.micronaut.websocket.annotation.*
 import org.slf4j.LoggerFactory
-import technology.iatlas.spaceup.events.WebsocketResponseEvent
+import technology.iatlas.spaceup.dto.Feedback
+import technology.iatlas.spaceup.events.WebsocketFeedbackResponseEvent
 
 @ServerWebSocket("/ws/{topic}")
-class WebsocketServer: ApplicationEventListener<WebsocketResponseEvent>{
+class WebsocketServer: ApplicationEventListener<WebsocketFeedbackResponseEvent>{
     private val log = LoggerFactory.getLogger(WebsocketServer::class.java)
     private val sessions = hashMapOf<String, WebSocketSession>()
 
@@ -38,16 +39,23 @@ class WebsocketServer: ApplicationEventListener<WebsocketResponseEvent>{
     /**
      * Will be used to send messages to the client
      */
-    private fun publish(message: WebsocketResponseEvent?, session: WebSocketSession) {
+    private fun publish(message: Feedback?, session: WebSocketSession) {
         if(session.isOpen) {
             session.sendAsync(message)
         }
     }
 
-    override fun onApplicationEvent(event: WebsocketResponseEvent?) {
-        log.debug("Broadcast message: $event")
+    override fun onApplicationEvent(eventFeedback: WebsocketFeedbackResponseEvent?) {
+        log.debug("Broadcast message: $eventFeedback")
+
+        var feedback = Feedback("", "")
+        if(eventFeedback?.source is Feedback) {
+            feedback = eventFeedback.source as Feedback
+            log.debug("Send Feedback: $feedback")
+        }
+
         sessions.forEach { (_, session) ->
-            sessions[session.id]?.let { publish(event, it) }
+            sessions[session.id]?.let { publish(feedback, it) }
         }
     }
 }
