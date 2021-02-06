@@ -1,3 +1,3 @@
 package technology.iatlas.spaceup.dto
 
-data class Feedback(val info: String, val error: String)
+data class Feedback(var info: String, var error: String)
