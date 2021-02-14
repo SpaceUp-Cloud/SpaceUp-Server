@@ -3,17 +3,14 @@ package technology.iatlas.spaceup.services
 import com.jcraft.jsch.ChannelExec
 import com.jcraft.jsch.JSch
 import com.jcraft.jsch.Session
-import io.micronaut.context.annotation.Property
-import io.micronaut.context.annotation.Value
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceUpSshConfig
 import technology.iatlas.spaceup.core.cmd.CommandInf
-import java.io.*
-import javax.inject.Inject
+import technology.iatlas.spaceup.core.cmd.SshResponse
+import java.io.ByteArrayOutputStream
+import java.io.File
 import javax.inject.Singleton
-import kotlin.properties.Delegates
 
 @Singleton
 class SshService(private val sshConfig: SpaceUpSshConfig) {
@@ -43,7 +40,7 @@ class SshService(private val sshConfig: SpaceUpSshConfig) {
         session.connect()
     }
 
-    suspend fun execute(command: CommandInf): String {
+    suspend fun execute(command: CommandInf): SshResponse {
         log.debug("Execute $command")
         val channel: ChannelExec = session.openChannel("exec") as ChannelExec
 
@@ -52,7 +49,7 @@ class SshService(private val sshConfig: SpaceUpSshConfig) {
             val responseStream = ByteArrayOutputStream()
             val errorResponseStream = ByteArrayOutputStream()
             channel.outputStream = responseStream
-            channel.setErrStream(responseStream)
+            channel.setErrStream(errorResponseStream)
 
             channel.connect()
 
@@ -62,9 +59,12 @@ class SshService(private val sshConfig: SpaceUpSshConfig) {
             }
 
             val response = String(responseStream.toByteArray())
-            log.debug(response)
+            val error = String(errorResponseStream.toByteArray())
+            val sshResponse = SshResponse(response, error)
+            // SshResponse
+            log.debug(sshResponse.toString())
 
-            return response
+            return sshResponse
         } finally {
             //session.disconnect()
             channel.disconnect()
