@@ -1,20 +1,14 @@
 package technology.iatlas.spaceup.core.cmd
 
 import io.micronaut.context.env.Environment
-import io.micronaut.context.event.ApplicationEventPublisher
 import io.micronaut.tracing.annotation.ContinueSpan
 import io.micronaut.tracing.annotation.SpanTag
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.BehaviorSubject
-import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.services.SshService
-import java.io.BufferedInputStream
 import java.io.BufferedReader
 import javax.inject.Singleton
 
@@ -32,7 +26,7 @@ open class Runner<T>(
 
         if (devMode) {
             val res = sshService.execute(cmd)
-            val output = parser.parseText(res)
+            val output = parser.parseSshOutput(res)
             log.debug("Parsed output: $output")
 
             subject.onNext(output)
@@ -51,7 +45,7 @@ open class Runner<T>(
                     res = proc.inputStream.bufferedReader()
                 }
             }
-            val output = parser.parse(res)
+            val output = parser.parseProcessOutput(res)
             subject.onNext(output)
         }
     }

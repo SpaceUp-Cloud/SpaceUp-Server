@@ -3,6 +3,13 @@ package technology.iatlas.spaceup.core.cmd
 import java.io.BufferedReader
 
 interface ParserInf<out T> {
-    fun parse(cmdOutput: BufferedReader): T
-    fun parseText(cmdOutput: String): T
+    /**
+     * Parse the output of the ProcessBuilder
+     */
+    fun parseProcessOutput(processResponse: BufferedReader): T
+
+    /**
+     * Parse the output from SSH execution
+     */
+    fun parseSshOutput(sshResponse: SshResponse): T
 }

@@ -2,16 +2,16 @@ package technology.iatlas.spaceup.core.parser
 
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.cmd.ParserInf
+import technology.iatlas.spaceup.core.cmd.SshResponse
 import technology.iatlas.spaceup.dto.Disk
 import java.io.BufferedReader
-import java.text.DecimalFormat
-import java.util.*
+import java.util.Optional
 
 class QuotaParser: ParserInf<Disk> {
     private val log = LoggerFactory.getLogger(QuotaParser::class.java)
 
-    override fun parse(cmdOutput: BufferedReader): Disk {
-        val neededLine: Optional<String> = cmdOutput.lines().filter {
+    override fun parseProcessOutput(processResponse: BufferedReader): Disk {
+        val neededLine: Optional<String> = processResponse.lines().filter {
             it.contains("/dev")
         }.findFirst()
 
@@ -22,8 +22,8 @@ class QuotaParser: ParserInf<Disk> {
         }
     }
 
-    override fun parseText(cmdOutput: String): Disk {
-        val neededLine: List<String> = cmdOutput.lines().filter {
+    override fun parseSshOutput(sshResponse: SshResponse): Disk {
+        val neededLine: List<String> = sshResponse.stdout.lines().filter {
             it.contains("/dev")
         }
 

@@ -2,17 +2,18 @@ package technology.iatlas.spaceup.core.parser
 
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.cmd.ParserInf
+import technology.iatlas.spaceup.core.cmd.SshResponse
 import java.io.BufferedReader
 
 class EchoParser : ParserInf<String> {
     private val log = LoggerFactory.getLogger(EchoParser::class.java)
 
-    override fun parse(cmdOutput: BufferedReader): String {
-        return parseText(cmdOutput.readText())
+    override fun parseProcessOutput(processResponse: BufferedReader): String {
+        return processResponse.readText()
     }
 
-    override fun parseText(cmdOutput: String): String {
-        log.trace("Echo output: $cmdOutput")
-        return cmdOutput
+    override fun parseSshOutput(sshResponse: SshResponse): String {
+        log.trace("Echo output: ${sshResponse.toString()}")
+        return sshResponse.toString()
     }
 }
