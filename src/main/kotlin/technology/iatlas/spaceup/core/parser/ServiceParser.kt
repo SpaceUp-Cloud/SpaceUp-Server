@@ -2,26 +2,27 @@ package technology.iatlas.spaceup.core.parser
 
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.cmd.ParserInf
+import technology.iatlas.spaceup.core.cmd.SshResponse
 import technology.iatlas.spaceup.dto.Service
 import java.io.BufferedReader
 
 class ServiceParser : ParserInf<List<Service>> {
     private val log = LoggerFactory.getLogger(ServiceParser::class.java)
 
-    override fun parse(cmdOutput: BufferedReader): List<Service> {
+    override fun parseProcessOutput(processResponse: BufferedReader): List<Service> {
         val serviceList = mutableListOf<Service>()
 
-        cmdOutput.lines().forEach { line ->
+        processResponse.lines().forEach { line ->
             parse(line, serviceList)
         }
 
         return serviceList
     }
 
-    override fun parseText(cmdOutput: String): List<Service> {
+    override fun parseSshOutput(sshResponse: SshResponse): List<Service> {
         val serviceList = mutableListOf<Service>()
 
-        cmdOutput.split("\n").toList().filter {
+        sshResponse.stdout.split("\n").toList().filter {
             it != ""
         }.forEach{ line ->
             parse(line, serviceList)
