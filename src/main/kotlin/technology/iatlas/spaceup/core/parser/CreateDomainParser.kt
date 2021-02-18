@@ -10,7 +10,18 @@ class CreateDomainParser(private val domain: String) : ParserInf<Feedback> {
     private val log = LoggerFactory.getLogger(CreateDomainParser::class.java)
 
     override fun parseProcessOutput(processResponse: BufferedReader): Feedback {
-        return parseSshOutput(processResponse.readText())
+        val errorList = listOf("error", "failure", "can't")
+        val processOut = processResponse.readText()
+
+        val error = errorList.filter {
+            processOut.toLowerCase().contains(it)
+        }
+
+        return if(error.isNotEmpty()) {
+            parseSshOutput(SshResponse("", processOut))
+        } else {
+            parseSshOutput(SshResponse(processOut, ""))
+        }
     }
 
     override fun parseSshOutput(sshResponse: SshResponse): Feedback {

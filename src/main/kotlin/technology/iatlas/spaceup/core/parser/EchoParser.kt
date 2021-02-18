@@ -13,7 +13,11 @@ class EchoParser : ParserInf<String> {
     }
 
     override fun parseSshOutput(sshResponse: SshResponse): String {
-        log.trace("Echo output: ${sshResponse.toString()}")
-        return sshResponse.toString()
+        log.trace("Echo output: $sshResponse")
+        return if(sshResponse.stderr.isNotEmpty()) {
+            sshResponse.stderr
+        } else {
+            sshResponse.stdout
+        }
     }
 }
