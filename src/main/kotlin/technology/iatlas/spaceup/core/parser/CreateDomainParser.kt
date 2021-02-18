@@ -27,10 +27,10 @@ class CreateDomainParser(private val domain: String) : ParserInf<Feedback> {
     override fun parseSshOutput(sshResponse: SshResponse): Feedback {
         log.debug(sshResponse.toString())
 
-        return if(sshResponse.stdout.isEmpty()) {
+        return if(sshResponse.stdout.isNotEmpty()) {
             Feedback("$domain was successfully created", "")
         } else {
-            return if(sshResponse.stderr.isNotBlank() || sshResponse.stderr.isNotEmpty()) {
+            return if(sshResponse.stderr.isNotEmpty()) {
                 Feedback("", "$domain: ${sshResponse.stderr}")
             } else {
                 Feedback("", "Unexpected error happened!")
