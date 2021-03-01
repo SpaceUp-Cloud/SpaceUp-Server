@@ -16,22 +16,26 @@ import javax.inject.Singleton
 class SshService(private val sshConfig: SpaceUpSshConfig) {
     private val log = LoggerFactory.getLogger(SshService::class.java)
 
-    private var session: Session
+    private lateinit var session: Session
 
     // Configure SSH
     init {
+        initSSH()
+    }
+
+    private fun initSSH() {
         val jsch = JSch()
 
         val privatekey: String? = sshConfig.privatekey
         if (privatekey != null && privatekey.isNotEmpty()) {
             jsch.addIdentity(File(privatekey).normalize().path)
             session = jsch.getSession(
-                sshConfig.username, sshConfig.host, Integer.valueOf(sshConfig.port!!))
+                    sshConfig.username, sshConfig.host, Integer.valueOf(sshConfig.port!!))
 
             log.info("Authenticate SSH via private key!")
         } else {
             session = jsch.getSession(
-                sshConfig.username, sshConfig.host, Integer.valueOf(sshConfig.port!!))
+                    sshConfig.username, sshConfig.host, Integer.valueOf(sshConfig.port!!))
             session.setPassword(sshConfig.password)
 
             log.info("Authenticate SSH via password!")
@@ -42,6 +46,10 @@ class SshService(private val sshConfig: SpaceUpSshConfig) {
 
     suspend fun execute(command: CommandInf): SshResponse {
         log.debug("Execute $command")
+        if(!session.isConnected) {
+            initSSH()
+        }
+
         val channel: ChannelExec = session.openChannel("exec") as ChannelExec
 
         try {
