@@ -5,10 +5,7 @@ import io.micronaut.context.event.ApplicationEventPublisher
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.EchoParser
 import technology.iatlas.spaceup.core.parser.ServiceParser
-import technology.iatlas.spaceup.dto.Command
-import technology.iatlas.spaceup.dto.Feedback
-import technology.iatlas.spaceup.dto.Service
-import technology.iatlas.spaceup.dto.ServiceOption
+import technology.iatlas.spaceup.dto.*
 import technology.iatlas.spaceup.events.WebsocketFeedbackResponseEvent
 import javax.inject.Singleton
 
@@ -21,10 +18,13 @@ class ServiceService(
     ) {
 
     private val services: MutableList<Service> = mutableListOf()
-    private var serviceExecutionFeedback: Feedback = Feedback("", "")
+    private var executeServiceFeedback: Feedback = Feedback("", "")
+    private lateinit var deleteServiceFeedback: Feedback
 
     private val serviceListRunner = Runner<List<Service>>(env, sshService)
     private val serviceExecRunner = Runner<String>(env, sshService)
+    private val serviceDeleteRunner = Runner<String>(env, sshService)
+
     init {
         serviceListRunner.subject().subscribe {
             services.clear()
@@ -39,8 +39,18 @@ class ServiceService(
             }
 
             eventPublisher.publishEvent(WebsocketFeedbackResponseEvent(feedback))
-            sseService.publish(feedback)
-            serviceExecutionFeedback = feedback
+            executeServiceFeedback = feedback
+        }
+
+        serviceDeleteRunner.subject().subscribe {
+            val feedback = if(it?.toLowerCase()!!.contains("error")) {
+                Feedback("", it)
+            } else {
+                Feedback(it, "")
+            }
+
+            eventPublisher.publishEvent(WebsocketFeedbackResponseEvent(feedback))
+            deleteServiceFeedback = feedback
         }
     }
 
@@ -72,6 +82,19 @@ class ServiceService(
             option.name.toLowerCase(), serivce.name)
 
         serviceExecRunner.execute(Command(cmd), EchoParser())
-        return serviceExecutionFeedback
+        return executeServiceFeedback
+    }
+
+    fun getLogs(servicename: String, limits: Int): Map<String, Logfile> {
+        TODO("Not implemented yet")
+    }
+
+    suspend fun deleteService(servicename: String, servicePath: String): Feedback {
+        val deleteScript = this.javaClass.getResource("/commands/deleteService.sh")
+        val cmd: MutableList<String> = mutableListOf("bash", deleteScript.file, servicePath, servicename)
+
+        serviceDeleteRunner.execute(Command(cmd), EchoParser())
+
+        return Feedback(cmd.toString(), "Not implemented yet")
     }
 }
