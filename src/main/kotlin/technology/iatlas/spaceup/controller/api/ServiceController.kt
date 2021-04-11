@@ -8,10 +8,7 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceupPathConfig
-import technology.iatlas.spaceup.dto.Feedback
-import technology.iatlas.spaceup.dto.Logfile
-import technology.iatlas.spaceup.dto.Service
-import technology.iatlas.spaceup.dto.ServiceOption
+import technology.iatlas.spaceup.dto.*
 import technology.iatlas.spaceup.services.ServiceService
 import javax.annotation.Nullable
 
@@ -49,7 +46,15 @@ class ServiceController(private val serviceService: ServiceService, private val 
      * Retrieve Stdout and Stderr logs
      */
     @Get(uri = "/logs/{servicename}/{?limits}", produces = [MediaType.APPLICATION_JSON])
-    fun getLogs(servicename: String, @Nullable limits: Int = 500): HttpResponse<Map<String, Logfile>> {
+    fun getLogs(servicename: String, @Nullable limits: Int = 500): HttpResponse<Map<Logtype, Logfile>> {
         return HttpResponse.ok(serviceService.getLogs(servicename, limits))
+    }
+
+    /**
+     * Retrieve one kind of log
+     */
+    @Get(uri = "/logs/{servicename}/{type}/{?limits}", produces = [MediaType.APPLICATION_JSON])
+    fun getLogs(servicename: String, type: Logtype, @Nullable limits: Int = 500): HttpResponse<Logfile> {
+        return HttpResponse.ok(serviceService.getLogs(servicename, type, limits))
     }
 }
