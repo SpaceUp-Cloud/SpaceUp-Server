@@ -85,7 +85,11 @@ class ServiceService(
         return executeServiceFeedback
     }
 
-    fun getLogs(servicename: String, limits: Int): Map<String, Logfile> {
+    fun getLogs(servicename: String, limits: Int): Map<Logtype, Logfile> {
+        TODO("Not implemented yet")
+    }
+
+    fun getLogs(servicename: String, type: Logtype, limits: Int): Logfile {
         TODO("Not implemented yet")
     }
 
