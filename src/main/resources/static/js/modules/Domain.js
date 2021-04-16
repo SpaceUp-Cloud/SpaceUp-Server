@@ -1,30 +1,4 @@
 /**
- * Helper class to handle SSE for domain specific messages
- */
-export default class SseDomainHandler {
-
-    constructor() {}
-
-    /**
-     * Get a response from SSE and handle it
-     * @param feedback - object
-     */
-    handleDomainAdd(feedback) {
-        console.debug("SSE add domain: " + feedback)
-        popup(JSON.parse(feedback))
-    }
-
-    /**
-     * Handle the response from SSE when a domain will be deleted
-     * @param feedback - object
-     */
-    handleDomainDelete(feedback) {
-        console.debug("SSE delete domain: " + feedback)
-        popup(JSON.parse(feedback));
-    }
-}
-
-/**
  * Add a new domain (if it belongs to you) to your uberspace
  */
 export function add() {

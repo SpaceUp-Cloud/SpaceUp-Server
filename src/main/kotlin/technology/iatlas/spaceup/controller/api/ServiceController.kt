@@ -13,7 +13,8 @@ import technology.iatlas.spaceup.services.ServiceService
 import javax.annotation.Nullable
 
 @Controller("/api/service")
-class ServiceController(private val serviceService: ServiceService, private val config: SpaceupPathConfig) {
+class ServiceController(private val serviceService: ServiceService,
+                        private val config: SpaceupPathConfig) {
     private val log = LoggerFactory.getLogger(ServiceController::class.java)
 
     /**

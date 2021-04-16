@@ -1,12 +1,28 @@
-/**
- * Helper class for Service messages, received via SSE
- */
-export default class SseServiceHandler {
+export class WsServiceHandler {
+    constructor() {
+        this.resource = "/services";
 
-    constructor() {}
+        let protocol = window.location.protocol === "http:" ? "ws:" : "wss:";
+        let port = window.location.port
 
-    serviceExecution(feedback) {
-        popup(JSON.parse(feedback))
+        let url = protocol + "//" + window.location.hostname + ":" + port  + "/ws" + this.resource;
+
+        this.ws = new WebSocket(url);
+        this.services = [{}]
+    }
+
+    init() {
+        this.ws.onmessage = event => this.handle(event);
+    }
+
+    handle(event) {
+        let services = JSON.parse(event.data);
+        console.debug(services);
+        this.services = services;
+    }
+
+    getServices() {
+        return this.services;
     }
 }
 

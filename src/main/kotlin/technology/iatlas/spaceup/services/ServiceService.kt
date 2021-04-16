@@ -1,23 +1,23 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.env.Environment
-import io.micronaut.context.event.ApplicationEventPublisher
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.EchoParser
 import technology.iatlas.spaceup.core.parser.ServiceParser
 import technology.iatlas.spaceup.dto.*
-import technology.iatlas.spaceup.events.WebsocketFeedbackResponseEvent
 import javax.inject.Singleton
 
 @Singleton
 class ServiceService(
     private val env: Environment,
     private val sshService: SshService,
-    private val sseService: SseService<Feedback>,
-    private val eventPublisher: ApplicationEventPublisher
-    ) {
+    private val wsBroadcaster: WsBroadcaster
+    ) : WsServiceInf {
+
+    override val topic = "services"
 
     private val services: MutableList<Service> = mutableListOf()
+
     private var executeServiceFeedback: Feedback = Feedback("", "")
     private lateinit var deleteServiceFeedback: Feedback
 
@@ -27,6 +27,9 @@ class ServiceService(
 
     init {
         serviceListRunner.subject().subscribe {
+            // Broadcast service list
+            wsBroadcaster.broadcast(it, topic)
+
             services.clear()
             services.addAll(it)
         }
@@ -38,7 +41,7 @@ class ServiceService(
                 Feedback("", it)
             }
 
-            eventPublisher.publishEvent(WebsocketFeedbackResponseEvent(feedback))
+            wsBroadcaster.broadcast(feedback, "feedback")
             executeServiceFeedback = feedback
         }
 
@@ -49,7 +52,7 @@ class ServiceService(
                 Feedback(it, "")
             }
 
-            eventPublisher.publishEvent(WebsocketFeedbackResponseEvent(feedback))
+            wsBroadcaster.broadcast(feedback, "feedback")
             deleteServiceFeedback = feedback
         }
     }
@@ -64,8 +67,8 @@ class ServiceService(
      */
     suspend fun list(): List<Service> {
         val cmd: MutableList<String> = mutableListOf("supervisorctl", "status")
-        serviceListRunner.execute(Command(cmd), ServiceParser())
 
+        serviceListRunner.execute(Command(cmd), ServiceParser())
         return services
     }
 
@@ -76,8 +79,6 @@ class ServiceService(
      * @see Feedback
      */
     suspend fun execute(serivce: Service, option: ServiceOption): Feedback {
-        sseService.eventName="service exec"
-
         val cmd: MutableList<String> = mutableListOf("supervisorctl",
             option.name.toLowerCase(), serivce.name)
 
@@ -93,6 +94,9 @@ class ServiceService(
         TODO("Not implemented yet")
     }
 
+    /**
+     * TODO: Finish implementation of deleting service
+     */
     suspend fun deleteService(servicename: String, servicePath: String): Feedback {
         val deleteScript = this.javaClass.getResource("/commands/deleteService.sh")
         val cmd: MutableList<String> = mutableListOf("bash", deleteScript.file, servicePath, servicename)

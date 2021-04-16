@@ -49,7 +49,7 @@ class DomainController(private val domainService: DomainService) {
             log.info("Get updated domain list.")
             domainService.updateDomainList()
         }
-        return HttpResponse.ok(domainService.getDomainList())
+        return HttpResponse.ok(domainService.list())
     }
 
 }

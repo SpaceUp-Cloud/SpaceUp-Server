@@ -17,6 +17,7 @@ class WebsocketServer: ApplicationEventListener<WebsocketFeedbackResponseEvent>{
     @OnOpen
     fun onOpen(session: WebSocketSession, @PathVariable topic: String) {
         log.info("Websocket open for ${session.id} on topic $topic")
+        session.attributes.put("topic", topic)
         sessions[session.id] = session
     }
 
@@ -27,7 +28,7 @@ class WebsocketServer: ApplicationEventListener<WebsocketFeedbackResponseEvent>{
 
     @OnClose
     fun onClose(closeReason: CloseReason, session: WebSocketSession, @PathVariable topic: String) {
-        log.warn("Websocket for $topic closed because ${closeReason.reason}")
+        log.warn("Websocket for $topic closed because: $closeReason")
         session.remove(session.id)
     }
 
@@ -45,6 +46,7 @@ class WebsocketServer: ApplicationEventListener<WebsocketFeedbackResponseEvent>{
         }
     }
 
+    // FIXME: We can use the broadcaster to send messages
     override fun onApplicationEvent(eventFeedback: WebsocketFeedbackResponseEvent?) {
         log.debug("Broadcast message: $eventFeedback")
 
