@@ -6,4 +6,6 @@ package technology.iatlas.spaceup.services
 interface WsServiceInf {
     // The topic is used as filter for the websocket endpoint!
     val topic: String
+    val feedbackTopic: String
+        get() = "feedback"
 }
