@@ -6,7 +6,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class UpdateServiceImpl : UpdateServiceInf {
+class UpdateService : UpdateServiceInf {
     override fun checkFor(updatePackage: UpdatePackage): Boolean {
         TODO("Not yet implemented")
     }

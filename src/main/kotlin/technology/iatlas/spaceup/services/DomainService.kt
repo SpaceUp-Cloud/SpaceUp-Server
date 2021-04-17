@@ -37,7 +37,7 @@ class DomainService(
             .distinct()
             .subscribeBy(
                 onNext = {
-                    wsBroadcaster.broadcast(it, topic)
+                    wsBroadcaster.broadcast(it, feedbackTopic)
                 },
                 onError = { t ->
                     val error = t.message
@@ -46,7 +46,7 @@ class DomainService(
                     if (error != null) {
                         errorFeedback.error += error
                     }
-                    wsBroadcaster.broadcast(errorFeedback, topic)
+                    wsBroadcaster.broadcast(errorFeedback, feedbackTopic)
                 },
                 onComplete = {
                     log.debug("Finished 'Add domain'")
@@ -57,13 +57,13 @@ class DomainService(
             .distinct()
             .subscribeBy(
                 onNext = {
-                    wsBroadcaster.broadcast(it, "feedback")
+                    wsBroadcaster.broadcast(it, feedbackTopic)
                 },
                 onError = { t ->
                     // Should not happened
                     log.error(t.message)
                     val feedback = t.message?.let { it -> Feedback("", it) }!!
-                    wsBroadcaster.broadcast(feedback, "feedback")
+                    wsBroadcaster.broadcast(feedback, feedbackTopic)
                 }
             )
     }
@@ -99,6 +99,7 @@ class DomainService(
      * Get all domains
      */
     fun list(): List<Domain> {
+        wsBroadcaster.broadcastSync(domains, topic)
         return domains
     }
 }
