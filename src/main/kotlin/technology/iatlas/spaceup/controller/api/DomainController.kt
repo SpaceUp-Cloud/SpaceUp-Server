@@ -3,10 +3,12 @@ package technology.iatlas.spaceup.controller.api
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
+import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.dto.Domain
 import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.services.DomainService
+import java.util.*
 import javax.annotation.Nullable
 
 @Controller("/api/domain")
@@ -42,14 +44,14 @@ class DomainController(private val domainService: DomainService) {
      * @return List<Domain> - list of domains
      */
     @Get(uri = "/list{?cached}", produces = [MediaType.APPLICATION_JSON])
-    suspend fun list(@Nullable cached: Boolean = false): HttpResponse<List<Domain>> {
+    suspend fun list(cached: Optional<Boolean>): List<Domain> {
         log.debug("Get domain list.")
 
-        if(!cached) {
+        if(!cached.isPresent || (cached.isPresent && !cached.get())) {
             log.info("Get updated domain list.")
             domainService.updateDomainList()
         }
-        return HttpResponse.ok(domainService.list())
+        return domainService.list()
     }
 
 }
