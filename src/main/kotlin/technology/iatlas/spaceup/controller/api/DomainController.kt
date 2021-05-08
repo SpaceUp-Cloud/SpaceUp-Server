@@ -47,11 +47,15 @@ class DomainController(private val domainService: DomainService) {
     suspend fun list(cached: Optional<Boolean>): List<Domain> {
         log.debug("Get domain list.")
 
-        if(!cached.isPresent || (cached.isPresent && !cached.get())) {
+        if(get(cached).equals(false)) {
             log.info("Get updated domain list.")
             domainService.updateDomainList()
         }
         return domainService.list()
+    }
+
+    private fun get(myOptional: Optional<Boolean>): Boolean {
+        return myOptional.orElse(false)
     }
 
 }
