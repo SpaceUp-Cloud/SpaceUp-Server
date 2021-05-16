@@ -31,7 +31,7 @@ class DomainController(private val domainService: DomainService) {
      * Delete a domain with the corresponded url
      * @return Feedback
      */
-    @Delete("/delete/{url}")
+    @Delete("/delete/{url}", produces = [MediaType.APPLICATION_JSON])
     suspend fun delete(url: String): HttpResponse<Feedback> {
         val domain = Domain(url)
         log.warn("Delete domain $domain")
