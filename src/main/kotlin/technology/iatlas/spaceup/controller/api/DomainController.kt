@@ -47,7 +47,7 @@ class DomainController(private val domainService: DomainService) {
     suspend fun list(cached: Optional<Boolean>): List<Domain> {
         log.debug("Get domain list.")
 
-        if(get(cached).equals(false)) {
+        if(!get(cached)) {
             log.info("Get updated domain list.")
             domainService.updateDomainList()
         }

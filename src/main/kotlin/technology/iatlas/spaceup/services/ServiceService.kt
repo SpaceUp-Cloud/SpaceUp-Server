@@ -5,6 +5,8 @@ import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.EchoParser
 import technology.iatlas.spaceup.core.parser.ServiceParser
 import technology.iatlas.spaceup.dto.*
+import java.io.File
+import java.net.URI
 import javax.inject.Singleton
 
 @Singleton
@@ -87,7 +89,20 @@ class ServiceService(
     }
 
     fun getLogs(servicename: String, limits: Int): Map<Logtype, Logfile> {
-        TODO("Not implemented yet")
+        val logMap = mutableMapOf<Logtype, Logfile>()
+        // /home/<user>/logs/<service>/<service>.log
+        //                        ... /<service>-error.log
+        val basePath = listOf(System.getProperty("user.home"), "logs", servicename).joinToString("/")
+
+        val logUri = URI("$basePath/$servicename.log").normalize()
+        val uriLog = File(logUri).readText()
+        logMap[Logtype.stdout] = Logfile(logUri.path, uriLog)
+
+        val errorUri = URI("$basePath/$servicename-error.log").normalize()
+        val uriErrorLog = File(errorUri).readText()
+        logMap[Logtype.stderr] = Logfile(errorUri.path, uriErrorLog)
+
+        return logMap
     }
 
     fun getLogs(servicename: String, type: Logtype, limits: Int): Logfile {
