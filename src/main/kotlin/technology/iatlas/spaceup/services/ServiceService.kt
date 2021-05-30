@@ -1,6 +1,8 @@
 package technology.iatlas.spaceup.services
 
+import io.micronaut.context.annotation.Property
 import io.micronaut.context.env.Environment
+import technology.iatlas.spaceup.config.SpaceUpSshConfig
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.EchoParser
 import technology.iatlas.spaceup.core.parser.ServiceParser
@@ -12,6 +14,7 @@ import javax.inject.Singleton
 @Singleton
 class ServiceService(
     private val env: Environment,
+    private val sshConfig: SpaceUpSshConfig,
     private val sshService: SshService,
     private val wsBroadcaster: WsBroadcaster
     ) : WsServiceInf {
@@ -92,15 +95,15 @@ class ServiceService(
         val logMap = mutableMapOf<Logtype, Logfile>()
         // /home/<user>/logs/<service>/<service>.log
         //                        ... /<service>-error.log
-        val basePath = listOf(System.getProperty("user.home"), "logs", servicename).joinToString("/")
+        val basePath = listOf(sshConfig.username, "logs", servicename).joinToString("/")
 
         val logUri = URI("$basePath/$servicename.log").normalize()
         val uriLog = File(logUri).readText()
-        logMap[Logtype.stdout] = Logfile(logUri.path, uriLog)
+        logMap[Logtype.INFO] = Logfile(logUri.path, uriLog)
 
         val errorUri = URI("$basePath/$servicename-error.log").normalize()
         val uriErrorLog = File(errorUri).readText()
-        logMap[Logtype.stderr] = Logfile(errorUri.path, uriErrorLog)
+        logMap[Logtype.ERROR] = Logfile(errorUri.path, uriErrorLog)
 
         return logMap
     }
