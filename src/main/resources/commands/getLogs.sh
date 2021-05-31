@@ -10,7 +10,7 @@ error() {
   echo "$@" 1>&2
 }
 
-checkparam() {
+check_param() {
   if [ -z "$2" ]; then
     error "$1 cannot be empty!"
     exit 2
@@ -38,18 +38,17 @@ isReversed=false
 while [ -n "$1" ]; do
   case "$1" in
   -u)
-    checkparam "$1" "$2"
+    check_param "$1" "$2"
     username=$2
     shift
     ;;
   -s)
-    checkparam "$1" "$2"
+    check_param "$1" "$2"
     servicename=$2
     shift
     ;;
   -t)
-    checkparam "$1" "$2"
-
+    check_param "$1" "$2"
     lower=$(echo "$2" | tr '[:upper:]' '[:lower:]')
     if [ "$lower" = "info" ] || [ "$lower" = "error" ]; then
       logtype=$lower
@@ -57,11 +56,10 @@ while [ -n "$1" ]; do
       error "Unknown log type! $2"
       exit 2
     fi
-
     shift
     ;;
   -l)
-    checkparam "$1" "$2"
+    check_param "$1" "$2"
     limit=$2
     shift
     ;;
@@ -85,4 +83,3 @@ errorLogPath="$logPath/$servicename-error.log"
 
 ***REMOVED*** https://stackoverflow.com/questions/6022384/bash-tool-to-get-nth-line-from-a-file
 ***REMOVED*** reversed https://unix.stackexchange.com/questions/9356/how-can-i-print-lines-from-file-backwards-without-using-tac
-
