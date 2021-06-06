@@ -9,7 +9,7 @@ plugins {
     id "io.miret.etienne.sass" version "1.1.1"
 }
 
-version "0.10"
+version "0.11-SNAPSHOT"
 group "technology.iatlas.spaceup"
 
 repositories {
@@ -180,4 +180,25 @@ run.dependsOn {
 
 shadowJar.dependsOn {
     compileSass
+}
+
+apply plugin: 'maven-publish'
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact("build/libs/SpaceUp-$version"+"-all.jar") {
+                extension 'jar'
+            }
+        }
+    }
+    repositories {
+        maven {
+            name "nexus"
+            url "https://artifactory.iatlas.dev/repository/technology.iatlas.spaceup/"
+            credentials {
+                username "${nexusUsername}"
+                password "${nexusPassword}"
+            }
+        }
+    }
 }
