@@ -1,10 +1,9 @@
 package technology.iatlas.spaceup.services
 
-import com.jcraft.jsch.ChannelExec
-import com.jcraft.jsch.JSch
-import com.jcraft.jsch.Session
+import com.jcraft.jsch.*
 import kotlinx.coroutines.delay
 import org.slf4j.LoggerFactory
+import technology.iatlas.spaceup.config.SpaceUpSftpConfig
 import technology.iatlas.spaceup.config.SpaceUpSshConfig
 import technology.iatlas.spaceup.core.cmd.CommandInf
 import technology.iatlas.spaceup.core.cmd.SshResponse
@@ -13,7 +12,10 @@ import java.io.File
 import javax.inject.Singleton
 
 @Singleton
-class SshService(private val sshConfig: SpaceUpSshConfig) {
+class SshService(
+    private val sshConfig: SpaceUpSshConfig,
+    private val sftpConfig: SpaceUpSftpConfig
+    ) {
     private val log = LoggerFactory.getLogger(SshService::class.java)
 
     private lateinit var session: Session
@@ -76,6 +78,58 @@ class SshService(private val sshConfig: SpaceUpSshConfig) {
         } finally {
             //session.disconnect()
             channel.disconnect()
+        }
+    }
+
+    /**
+     * Upload a shell script via SFTP and execute it optionally
+     *
+     */
+    suspend fun upload(cmd: CommandInf): SshResponse {
+        log.debug("Upload $cmd")
+        if(!session.isConnected) {
+            initSSH()
+        }
+        val file = cmd.shellScript
+        val remotefile = sftpConfig.remotedir + "/" + file.name
+
+        val writeScriptChannel: Channel = session.openChannel("sftp") as Channel
+
+        val executionChannel: ChannelExec = session.openChannel("exec") as ChannelExec
+        val executeCmd = cmd.parameters.joinToString(" ")
+        executionChannel.setCommand(executeCmd)
+
+        val responseExecution = ByteArrayOutputStream()
+        val errorExecution = ByteArrayOutputStream()
+        executionChannel.outputStream = responseExecution
+        executionChannel.setErrStream(errorExecution)
+
+        var sshResponse = SshResponse("", "")
+        try {
+            writeScriptChannel.connect()
+            val sftp = writeScriptChannel as ChannelSftp
+            sftp.put(file.scriptPath?.file, remotefile, ChannelSftp.OVERWRITE)
+
+            if(file.doExecute) {
+                log.debug("Execute $executeCmd")
+                executionChannel.connect()
+
+                // When then channel close itself, we retrieved the data
+                while (executionChannel.isConnected) {
+                    delay(50)
+                }
+
+                val responseExecution = String(responseExecution.toByteArray())
+                val errorExecution = String(errorExecution.toByteArray())
+                sshResponse = SshResponse(responseExecution, errorExecution)
+                // SshResponse
+                log.debug(sshResponse.toString())
+            }
+
+            return sshResponse
+        } finally {
+            writeScriptChannel.disconnect()
+            executionChannel.disconnect()
         }
     }
 }

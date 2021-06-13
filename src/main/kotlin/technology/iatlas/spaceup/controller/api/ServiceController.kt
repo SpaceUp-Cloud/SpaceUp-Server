@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceupPathConfig
 import technology.iatlas.spaceup.dto.*
 import technology.iatlas.spaceup.services.ServiceService
+import java.util.*
 import javax.annotation.Nullable
 
 @Controller("/api/service")
@@ -46,9 +47,9 @@ class ServiceController(private val serviceService: ServiceService,
     /**
      * Retrieve Stdout and Stderr logs
      */
-    @Get(uri = "/logs/{servicename}/{?limits}", produces = [MediaType.APPLICATION_JSON])
-    fun getLogs(servicename: String, @Nullable limits: Int = 500): HttpResponse<Map<Logtype, Logfile>> {
-        return HttpResponse.ok(serviceService.getLogs(servicename, limits))
+    @Get(uri = "/logs/{servicename}{?limits}", produces = [MediaType.APPLICATION_JSON])
+    suspend fun getLogs(servicename: String, limits: Optional<Int>): Map<Logtype, Logfile> {
+        return serviceService.getLogs(servicename, limits.orElse(-1))
     }
 
     /**
