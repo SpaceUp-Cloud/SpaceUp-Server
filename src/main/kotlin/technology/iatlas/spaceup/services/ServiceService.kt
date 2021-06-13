@@ -1,23 +1,27 @@
 package technology.iatlas.spaceup.services
 
-import io.micronaut.context.annotation.Property
 import io.micronaut.context.env.Environment
+import io.micronaut.core.io.ResourceLoader
+import org.slf4j.LoggerFactory
+import technology.iatlas.spaceup.config.SpaceUpSftpConfig
 import technology.iatlas.spaceup.config.SpaceUpSshConfig
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.EchoParser
 import technology.iatlas.spaceup.core.parser.ServiceParser
 import technology.iatlas.spaceup.dto.*
-import java.io.File
-import java.net.URI
 import javax.inject.Singleton
 
 @Singleton
 class ServiceService(
-    private val env: Environment,
+    env: Environment,
+    sshService: SshService,
     private val sshConfig: SpaceUpSshConfig,
-    private val sshService: SshService,
-    private val wsBroadcaster: WsBroadcaster
+    private val sftpConfig: SpaceUpSftpConfig,
+    private val wsBroadcaster: WsBroadcaster,
+    private val resourceLoader: ResourceLoader
     ) : WsServiceInf {
+
+    private val log = LoggerFactory.getLogger(ServiceService::class.java)
 
     override val topic = "services"
 
@@ -25,10 +29,12 @@ class ServiceService(
 
     private var executeServiceFeedback: Feedback = Feedback("", "")
     private lateinit var deleteServiceFeedback: Feedback
+    private lateinit var currentLogs: String
 
     private val serviceListRunner = Runner<List<Service>>(env, sshService)
     private val serviceExecRunner = Runner<String>(env, sshService)
     private val serviceDeleteRunner = Runner<String>(env, sshService)
+    private val serviceLogRunner = Runner<String>(env, sshService)
 
     init {
         serviceListRunner.subject().subscribe {
@@ -59,6 +65,11 @@ class ServiceService(
 
             wsBroadcaster.broadcast(feedback, "feedback")
             deleteServiceFeedback = feedback
+        }
+
+        serviceLogRunner.subject().subscribe {
+            wsBroadcaster.broadcast(it, topic)
+            currentLogs = it
         }
     }
 
@@ -91,20 +102,22 @@ class ServiceService(
         return executeServiceFeedback
     }
 
-    fun getLogs(servicename: String, limits: Int): Map<Logtype, Logfile> {
+    suspend fun getLogs(servicename: String, limits: Int): Map<Logtype, Logfile> {
         val logMap = mutableMapOf<Logtype, Logfile>()
-        // /home/<user>/logs/<service>/<service>.log
-        //                        ... /<service>-error.log
-        val basePath = listOf(sshConfig.username, "logs", servicename).joinToString("/")
+        val logsScript = resourceLoader.getResource("commands/getLogs.sh")
+        val remotefile = sftpConfig.remotedir + "/getLogs.sh"
 
-        val logUri = URI("$basePath/$servicename.log").normalize()
-        val uriLog = File(logUri).readText()
-        logMap[Logtype.INFO] = Logfile(logUri.path, uriLog)
+        val cmd: MutableList<String> = mutableListOf(
+            "bash", remotefile,
+            "-u", sshConfig.username ?: System.getProperty("user.home"),
+            "-s", servicename,
+            "-t", "both",
+            "-l", limits.toString()
+        )
+        val sftpFile = SftpFile("getLogs.sh", logsScript.get(), doExecute = true)
+        serviceLogRunner.execute(Command(cmd, sftpFile), EchoParser())
 
-        val errorUri = URI("$basePath/$servicename-error.log").normalize()
-        val uriErrorLog = File(errorUri).readText()
-        logMap[Logtype.ERROR] = Logfile(errorUri.path, uriErrorLog)
-
+        logMap[Logtype.INFO] = Logfile("dummyPath", currentLogs)
         return logMap
     }
 
@@ -116,8 +129,8 @@ class ServiceService(
      * TODO: Finish implementation of deleting service
      */
     suspend fun deleteService(servicename: String, servicePath: String): Feedback {
-        val deleteScript = this.javaClass.getResource("/commands/deleteService.sh")
-        val cmd: MutableList<String> = mutableListOf("bash", deleteScript.file, servicePath, servicename)
+        val deleteScript = resourceLoader.getResource("/commands/deleteService.sh")
+        val cmd: MutableList<String> = mutableListOf("bash", deleteScript.get().file, servicePath, servicename)
 
         serviceDeleteRunner.execute(Command(cmd), EchoParser())
 

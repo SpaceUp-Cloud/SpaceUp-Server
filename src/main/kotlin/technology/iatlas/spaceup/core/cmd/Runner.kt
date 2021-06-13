@@ -25,12 +25,20 @@ open class Runner<T>(
         log.trace("Actual cmd: {} ", cmd.parameters)
 
         if (devMode) {
-            val res = sshService.execute(cmd)
-            val output = parser.parseSshOutput(res)
-            log.debug("Parsed output: $output")
+            val script = cmd.shellScript
+            if(script.name == "") {
+                val res = sshService.execute(cmd)
+                val output = parser.parseSshOutput(res)
+                log.debug("Parsed output: $output")
 
-            subject.onNext(output)
+                subject.onNext(output)
+            } else {
+                val res = sshService.upload(cmd)
+                val output = parser.parseSshOutput(res)
+                log.debug("Parsed output: $output")
 
+                subject.onNext(output)
+            }
         } else {
             val processBuilder = ProcessBuilder()
             processBuilder.command(cmd.parameters)
