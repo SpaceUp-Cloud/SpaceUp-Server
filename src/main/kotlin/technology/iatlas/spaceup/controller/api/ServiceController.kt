@@ -48,7 +48,7 @@ class ServiceController(private val serviceService: ServiceService,
      * Retrieve Stdout and Stderr logs
      */
     @Get(uri = "/logs/{servicename}{?limits}", produces = [MediaType.APPLICATION_JSON])
-    suspend fun getLogs(servicename: String, limits: Optional<Int>): Map<Logtype, Logfile> {
+    suspend fun getLogs(servicename: String, limits: Optional<Int>): Logfile {
         return serviceService.getLogs(servicename, limits.orElse(-1))
     }
 
