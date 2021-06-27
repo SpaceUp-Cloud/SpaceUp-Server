@@ -123,7 +123,7 @@ class SshService(
                 val errorExecution = String(errorExecution.toByteArray())
                 sshResponse = SshResponse(responseExecution, errorExecution)
                 // SshResponse
-                log.debug(sshResponse.toString())
+                //log.debug(sshResponse.toString())
             }
 
             return sshResponse

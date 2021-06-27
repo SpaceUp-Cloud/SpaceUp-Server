@@ -75,24 +75,34 @@ while [ -n "$1" ]; do
   shift
 done
 
-echo "username: $username, servicename: $servicename, logtype: $logtype, limit: $limit, isReversed: $isReversed"
+#echo "username: $username, servicename: $servicename, logtype: $logtype, limit: $limit, isReversed: $isReversed"
 
 logPath="/home/$username/logs/$servicename"
 infoLog="$logPath/$servicename.log"
-errorLogPath="$logPath/$servicename-error.log"
+errorLog="$logPath/$servicename-Err.log"
 
 # https://stackoverflow.com/questions/6022384/bash-tool-to-get-nth-line-from-a-file
-if [ isReversed == "false" ]; then
-  if [ -eq "-1" ]; then
-    echo "infolog: $(cat $infoLog)"
+# reversed https://unix.stackexchange.com/questions/9356/how-can-i-print-lines-from-file-backwards-without-using-tac
+if [ "$logtype" == "both" ]; then
+  if [ $isReversed == "false" ]; then
+    if [ "$limit" -eq -1 ]; then
+      cat "$infoLog"
+      echo "---"
+      cat "$errorLog"
+    else
+      sed "1,${limit}p;d" "$infoLog"
+      echo "---"
+      sed "1,${limit}p;d" "$errorLog"
+    fi
   else
-    echo "infolog: $(sed "1,${limit}p;d" infoLog)"
-  fi
-else
-  if [ -eq "-1" ]; then
-    echo "infolog: $(tac $infoLog)"
-  else
-    echo "infolog: $(tac $infoLog | sed "1,${limit}p;d")"
+    if [ "$limit" -eq -1 ]; then
+      tac "$infoLog"
+      echo "---"
+      tac "$errorLog"
+    else
+      tac "$infoLog" | sed "1,${limit}p;d"
+      echo "---"
+      tac "$errorLog" | sed "1,${limit}p;d"
+    fi
   fi
 fi
-# reversed https://unix.stackexchange.com/questions/9356/how-can-i-print-lines-from-file-backwards-without-using-tac

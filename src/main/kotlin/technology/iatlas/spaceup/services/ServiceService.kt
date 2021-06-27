@@ -7,6 +7,7 @@ import technology.iatlas.spaceup.config.SpaceUpSftpConfig
 import technology.iatlas.spaceup.config.SpaceUpSshConfig
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.EchoParser
+import technology.iatlas.spaceup.core.parser.LogsParser
 import technology.iatlas.spaceup.core.parser.ServiceParser
 import technology.iatlas.spaceup.dto.*
 import javax.inject.Singleton
@@ -29,12 +30,12 @@ class ServiceService(
 
     private var executeServiceFeedback: Feedback = Feedback("", "")
     private lateinit var deleteServiceFeedback: Feedback
-    private lateinit var currentLogs: String
+    private lateinit var currentLogs: Log
 
     private val serviceListRunner = Runner<List<Service>>(env, sshService)
     private val serviceExecRunner = Runner<String>(env, sshService)
     private val serviceDeleteRunner = Runner<String>(env, sshService)
-    private val serviceLogRunner = Runner<String>(env, sshService)
+    private val serviceLogRunner = Runner<Log>(env, sshService)
 
     init {
         serviceListRunner.subject().subscribe {
@@ -102,8 +103,7 @@ class ServiceService(
         return executeServiceFeedback
     }
 
-    suspend fun getLogs(servicename: String, limits: Int): Map<Logtype, Logfile> {
-        val logMap = mutableMapOf<Logtype, Logfile>()
+    suspend fun getLogs(servicename: String, limits: Int): Logfile {
         val logsScript = resourceLoader.getResource("commands/getLogs.sh")
         val remotefile = sftpConfig.remotedir + "/getLogs.sh"
 
@@ -115,10 +115,9 @@ class ServiceService(
             "-l", limits.toString()
         )
         val sftpFile = SftpFile("getLogs.sh", logsScript.get(), doExecute = true)
-        serviceLogRunner.execute(Command(cmd, sftpFile), EchoParser())
+        serviceLogRunner.execute(Command(cmd, sftpFile), LogsParser())
 
-        logMap[Logtype.INFO] = Logfile("dummyPath", currentLogs)
-        return logMap
+        return Logfile(currentLogs)
     }
 
     fun getLogs(servicename: String, type: Logtype, limits: Int): Logfile {
