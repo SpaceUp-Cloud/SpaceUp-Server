@@ -12,7 +12,8 @@ import javax.inject.Singleton
 
 @Singleton
 open class NavigationService(
-    @Named("swagger") swaggerConfig: DevUrlConfig
+    @Named("swagger") swaggerConfig: DevUrlConfig,
+    @Named("redoc") redocConfig: DevUrlConfig
 ) {
     private val log = LoggerFactory.getLogger(NavigationService::class.java)
 
@@ -20,6 +21,7 @@ open class NavigationService(
 
     init {
         configList.add(swaggerConfig)
+        configList.add(redocConfig)
     }
 
     @Cacheable("webnavigation")

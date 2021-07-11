@@ -40,23 +40,15 @@ class ServiceController(private val serviceService: ServiceService,
     @Delete("/delete/{servicename}")
     suspend fun deleteService(servicename: String): Feedback {
         log.warn("Delete service: $servicename")
-
         return serviceService.deleteService(servicename, config.services)
     }
 
     /**
      * Retrieve Stdout and Stderr logs
      */
-    @Get(uri = "/logs/{servicename}{?limits}", produces = [MediaType.APPLICATION_JSON])
-    suspend fun getLogs(servicename: String, limits: Optional<Int>): Logfile {
-        return serviceService.getLogs(servicename, limits.orElse(-1))
+    @Get(uri = "/logs/{servicename}{?type}{?limit}{?reversed}", produces = [MediaType.APPLICATION_JSON])
+    suspend fun getLogs(servicename: String, type: Optional<Logtype>, limit: Optional<Int>, reversed: Optional<Boolean>): Logfile {
+        return serviceService.getLogs(servicename, type.orElse(Logtype.Both), limit.orElse(-1), reversed.orElse(true))
     }
 
-    /**
-     * Retrieve one kind of log
-     */
-    @Get(uri = "/logs/{servicename}/{type}/{?limits}", produces = [MediaType.APPLICATION_JSON])
-    fun getLogs(servicename: String, type: Logtype, @Nullable limits: Int = 500): HttpResponse<Logfile> {
-        return HttpResponse.ok(serviceService.getLogs(servicename, type, limits))
-    }
 }
