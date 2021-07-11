@@ -26,19 +26,15 @@ open class Runner<T>(
 
         if (devMode) {
             val script = cmd.shellScript
-            if(script.name == "") {
+            val output = if(script.name == "") {
                 val res = sshService.execute(cmd)
-                val output = parser.parseSshOutput(res)
-                log.debug("Parsed output: $output")
-
-                subject.onNext(output)
+                parser.parseSshOutput(res)
             } else {
                 val res = sshService.upload(cmd)
-                val output = parser.parseSshOutput(res)
-                log.debug("Parsed output: $output")
-
-                subject.onNext(output)
+                parser.parseSshOutput(res)
             }
+            //log.debug("Parsed output: $output")
+            subject.onNext(output)
         } else {
             val processBuilder = ProcessBuilder()
             processBuilder.command(cmd.parameters)
@@ -53,8 +49,7 @@ open class Runner<T>(
                     res = proc.inputStream.bufferedReader()
                 }
             }
-            val output = parser.parseProcessOutput(res)
-            subject.onNext(output)
+            subject.onNext(parser.parseProcessOutput(res))
         }
     }
 }

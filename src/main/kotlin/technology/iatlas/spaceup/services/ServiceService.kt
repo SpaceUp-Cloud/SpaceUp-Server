@@ -5,18 +5,22 @@ import io.micronaut.core.io.ResourceLoader
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceUpSftpConfig
 import technology.iatlas.spaceup.config.SpaceUpSshConfig
+import technology.iatlas.spaceup.config.SpaceupPathConfig
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.EchoParser
 import technology.iatlas.spaceup.core.parser.LogsParser
 import technology.iatlas.spaceup.core.parser.ServiceParser
 import technology.iatlas.spaceup.dto.*
+import java.io.File
+import java.net.URI
+import java.nio.file.Paths
 import javax.inject.Singleton
 
 @Singleton
 class ServiceService(
     env: Environment,
     sshService: SshService,
-    private val sshConfig: SpaceUpSshConfig,
+    private val config: SpaceupPathConfig,
     private val sftpConfig: SpaceUpSftpConfig,
     private val wsBroadcaster: WsBroadcaster,
     private val resourceLoader: ResourceLoader
@@ -103,27 +107,24 @@ class ServiceService(
         return executeServiceFeedback
     }
 
-    suspend fun getLogs(servicename: String, limits: Int): Logfile {
+    suspend fun getLogs(servicename: String, type: Logtype, limits: Int, isReversed: Boolean): Logfile {
         val logsScript = resourceLoader.getResource("commands/getLogs.sh")
         val remotefile = sftpConfig.remotedir + "/getLogs.sh"
 
+        val reversed = if (isReversed)  "--reversed" else ""
         val cmd: MutableList<String> = mutableListOf(
             "bash", remotefile,
-            "-u", sshConfig.username ?: System.getProperty("user.home"),
+            "-b", config.logs,
             "-s", servicename,
-            "-t", "both",
-            "-l", limits.toString()
+            "-t", type.name,
+            "-l", limits.toString(),
+            reversed,
         )
         val sftpFile = SftpFile("getLogs.sh", logsScript.get(), doExecute = true)
         serviceLogRunner.execute(Command(cmd, sftpFile), LogsParser())
 
         return Logfile(currentLogs)
     }
-
-    fun getLogs(servicename: String, type: Logtype, limits: Int): Logfile {
-        TODO("Not implemented yet")
-    }
-
     /**
      * TODO: Finish implementation of deleting service
      */

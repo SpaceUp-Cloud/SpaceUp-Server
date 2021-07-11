@@ -17,6 +17,27 @@ check_param() {
   fi
 }
 
+***REMOVED*** $1 isReversed
+***REMOVED*** $2 limit
+***REMOVED*** $3 log
+get_logs() {
+  ***REMOVED*** https://stackoverflow.com/questions/6022384/bash-tool-to-get-nth-line-from-a-file
+  ***REMOVED*** reversed https://unix.stackexchange.com/questions/9356/how-can-i-print-lines-from-file-backwards-without-using-tac
+  if [ "$1" == "false" ]; then
+    if [ "$2" -eq -1 ]; then
+      cat "$3"
+    else
+      sed "1,${2}p;d" "$3"
+    fi
+  else
+    if [ "$2" -eq -1 ]; then
+      tac "$3"
+    else
+      tac "$3" | sed "1,${2}p;d"
+    fi
+  fi
+}
+
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED***
 ***REMOVED*** Main
@@ -28,18 +49,18 @@ check_param() {
 ***REMOVED*** -t info | error
 ***REMOVED*** -l -1 | x > 0
 ***REMOVED*** --reversed
-
-username=""
+***REMOVED*** TODO: pass log base path which might more convenient
 servicename=""
 logtype=""
 limit=-1
 isReversed=false
+logBaseDir=""
 
 while [ -n "$1" ]; do
   case "$1" in
-    -u)
+    -b)
       check_param "$1" "$2"
-      username=$2
+      logBaseDir=$2
       shift
       ;;
     -s)
@@ -75,34 +96,20 @@ while [ -n "$1" ]; do
   shift
 done
 
-***REMOVED***echo "username: $username, servicename: $servicename, logtype: $logtype, limit: $limit, isReversed: $isReversed"
-
-logPath="/home/$username/logs/$servicename"
+logPath="$logBaseDir/$servicename"
 infoLog="$logPath/$servicename.log"
 errorLog="$logPath/$servicename-Err.log"
 
-***REMOVED*** https://stackoverflow.com/questions/6022384/bash-tool-to-get-nth-line-from-a-file
-***REMOVED*** reversed https://unix.stackexchange.com/questions/9356/how-can-i-print-lines-from-file-backwards-without-using-tac
 if [ "$logtype" == "both" ]; then
-  if [ $isReversed == "false" ]; then
-    if [ "$limit" -eq -1 ]; then
-      cat "$infoLog"
-      echo "---"
-      cat "$errorLog"
-    else
-      sed "1,${limit}p;d" "$infoLog"
-      echo "---"
-      sed "1,${limit}p;d" "$errorLog"
-    fi
-  else
-    if [ "$limit" -eq -1 ]; then
-      tac "$infoLog"
-      echo "---"
-      tac "$errorLog"
-    else
-      tac "$infoLog" | sed "1,${limit}p;d"
-      echo "---"
-      tac "$errorLog" | sed "1,${limit}p;d"
-    fi
+  get_logs "$isReversed" "$limit" "$infoLog"
+  echo "---"
+  get_logs "$isReversed" "$limit" "$errorLog"
+else
+  if [ "$logtype" == "info" ]; then
+    get_logs "$isReversed" "$limit" "$infoLog"
+  fi
+  echo "---"
+  if [ "$logtype" == "error" ]; then
+    get_logs "$isReversed" "$limit" "$errorLog"
   fi
 fi
