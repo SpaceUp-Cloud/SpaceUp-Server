@@ -33,39 +33,6 @@ class DomainService(
             domains = it
         }
 
-        addDomainRunner.subject()
-            .distinct()
-            .subscribeBy(
-                onNext = {
-                    wsBroadcaster.broadcast(it, feedbackTopic)
-                },
-                onError = { t ->
-                    val error = t.message
-
-                    val errorFeedback = Feedback("", "Could not add domain: ")
-                    if (error != null) {
-                        errorFeedback.error += error
-                    }
-                    wsBroadcaster.broadcast(errorFeedback, feedbackTopic)
-                },
-                onComplete = {
-                    log.debug("Finished 'Add domain'")
-                }
-            )
-
-        deleteDomainRunner.subject()
-            .distinct()
-            .subscribeBy(
-                onNext = {
-                    wsBroadcaster.broadcast(it, feedbackTopic)
-                },
-                onError = { t ->
-                    // Should not happened
-                    log.error(t.message)
-                    val feedback = t.message?.let { it -> Feedback("", it) }!!
-                    wsBroadcaster.broadcast(feedback, feedbackTopic)
-                }
-            )
     }
 
     suspend fun updateDomainList() {
@@ -75,6 +42,28 @@ class DomainService(
 
     suspend fun add(domains: List<Domain>): List<Feedback> {
         val feedbacks = linkedSetOf<Feedback>()
+
+        addDomainRunner.subject()
+            .distinct()
+            .subscribeBy(
+                onNext = {
+                    feedbacks.add(it)
+                    wsBroadcaster.broadcast(it, feedbackTopic)
+                },
+                onError = { t ->
+                    val error = t.message
+
+                    val errorFeedback = Feedback("", "Could not add domain: ")
+                    if (error != null) {
+                        errorFeedback.error += error
+                    }
+                    feedbacks.add(errorFeedback)
+                    wsBroadcaster.broadcast(errorFeedback, feedbackTopic)
+                },
+                onComplete = {
+                    log.debug("Finished 'Add domain'")
+                }
+            )
 
         domains.forEach { domain ->
             // Add domain to cmd
@@ -91,8 +80,24 @@ class DomainService(
     suspend fun delete(domain: Domain): Feedback {
         val cmd = mutableListOf("uberspace", "web", "domain", "del", domain.url)
 
+        var feedback = Feedback("", "")
+        deleteDomainRunner.subject()
+            .distinct()
+            .subscribeBy(
+                onNext = {
+                    feedback = it
+                    wsBroadcaster.broadcast(it, feedbackTopic)
+                },
+                onError = { t ->
+                    // Should not happened
+                    log.error(t.message)
+                    feedback = t.message?.let { it -> Feedback("", it) }!!
+                    wsBroadcaster.broadcast(feedback, feedbackTopic)
+                }
+            )
+
         deleteDomainRunner.execute(Command(cmd), DeleteDomainParser(domain.url))
-        return Feedback("", "")
+        return feedback
     }
 
     /**
