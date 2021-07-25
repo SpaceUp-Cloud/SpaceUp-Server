@@ -44,7 +44,11 @@ class ServiceController(private val serviceService: ServiceService,
     }
 
     /**
-     * Retrieve Stdout and Stderr logs
+     * Gather the info and error logs of a service
+     *
+     * @param servicename the name of the service we want to get logs
+     * @param limit default -1 (for the whole log file)
+     * @param reversed default true
      */
     @Get(uri = "/logs/{servicename}{?type}{?limit}{?reversed}", produces = [MediaType.APPLICATION_JSON])
     suspend fun getLogs(servicename: String, type: Optional<Logtype>, limit: Optional<Int>, reversed: Optional<Boolean>): Logfile {
