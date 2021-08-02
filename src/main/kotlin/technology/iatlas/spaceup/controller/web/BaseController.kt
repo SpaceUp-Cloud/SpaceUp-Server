@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.services.NavigationService
 import javax.inject.Inject
 
-@Secured(SecurityRule.IS_ANONYMOUS)
+@Secured(SecurityRule.IS_AUTHENTICATED)
 abstract class BaseController {
     private val log = LoggerFactory.getLogger(BaseController::class.java)
 
