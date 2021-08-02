@@ -15,6 +15,7 @@ import technology.iatlas.spaceup.services.SystemService
 class HomeController(private val systemService: SystemService) : BaseController() {
     // private val log = LoggerFactory.getLogger(HomeController::class.java)
 
+    @Secured(SecurityRule.IS_AUTHENTICATED)
     @WebNavigation("Home", mapping = "/", prio = 0)
     @Get(produces = [MediaType.TEXT_HTML])
     suspend fun home(): String {
