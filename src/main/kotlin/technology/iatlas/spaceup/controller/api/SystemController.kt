@@ -3,10 +3,13 @@ package technology.iatlas.spaceup.controller.api
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
+import io.micronaut.security.annotation.Secured
+import io.micronaut.security.rules.SecurityRule
 import technology.iatlas.spaceup.dto.Disk
 import technology.iatlas.spaceup.dto.Hostname
 import technology.iatlas.spaceup.services.SystemService
 
+@Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/system")
 class SystemController(private val systemService: SystemService) {
 
