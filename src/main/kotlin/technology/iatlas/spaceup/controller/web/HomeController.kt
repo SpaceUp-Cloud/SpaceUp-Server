@@ -4,10 +4,13 @@ import com.fizzed.rocker.runtime.StringBuilderOutput
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
+import io.micronaut.security.annotation.Secured
+import io.micronaut.security.rules.SecurityRule
 import technology.iatlas.spaceup.core.annotations.WebNavigation
 import technology.iatlas.spaceup.services.SystemService
 
 
+@Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/")
 class HomeController(private val systemService: SystemService) : BaseController() {
     // private val log = LoggerFactory.getLogger(HomeController::class.java)
