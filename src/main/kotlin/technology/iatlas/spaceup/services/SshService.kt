@@ -61,7 +61,12 @@ class SshService(
             channel.outputStream = responseStream
             channel.setErrStream(errorResponseStream)
 
-            channel.connect()
+            try {
+                channel.connect()
+            } catch (shhEx: JSchException) {
+                log.error("SSH Session is down. Will try to reconnect.")
+                initSSH()
+            }
 
             // When then channel close itself, we retrieved the data
             while (channel.isConnected) {
