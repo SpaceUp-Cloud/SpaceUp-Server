@@ -124,9 +124,7 @@ class SshService(
                     delay(50)
                 }
 
-                val responseExecution = String(responseExecution.toByteArray())
-                val errorExecution = String(errorExecution.toByteArray())
-                sshResponse = SshResponse(responseExecution, errorExecution)
+                sshResponse = SshResponse(String(responseExecution.toByteArray()), String(errorExecution.toByteArray()))
                 // SshResponse
                 //log.debug(sshResponse.toString())
             }
