@@ -13,33 +13,35 @@ import javax.inject.Singleton
 class SystemService(
     env: Environment,
     sshService: SshService) {
-
-    private lateinit var hostname: Hostname
     private val hostnameRunner = Runner<String>(env, sshService)
-
-    private lateinit var disk: Disk
     private val diskRunner = Runner<Disk>(env, sshService)
 
-    init {
+    suspend fun getDiskQuota(): Disk {
+        val cmd = mutableListOf("quota", "-gsl")
+        val emptyQuotaSpace: Float = 0.0F
+        var disk: Disk = Disk(
+            space = "",
+            spacePercentage = emptyQuotaSpace,
+            quota = "",
+            availableQuota = emptyQuotaSpace)
+
         diskRunner.subject().subscribe {
             disk = it
         }
 
-        hostnameRunner.subject().subscribe {
-            hostname = Hostname(it)
-        }
-    }
-
-    suspend fun getDiskQuota(): Disk? {
-        val cmd = mutableListOf("quota", "-gsl")
         diskRunner.execute(Command(cmd), QuotaParser())
         return disk
     }
 
     suspend fun getHostname(): Hostname {
         val cmd = mutableListOf("hostname")
-        hostnameRunner.execute(Command(cmd), EchoParser())
+        var hostname: Hostname = Hostname("")
 
+        hostnameRunner.subject().subscribe {
+            hostname = Hostname(it)
+        }
+
+        hostnameRunner.execute(Command(cmd), EchoParser())
         return hostname
     }
 }
