@@ -19,7 +19,7 @@ class SystemController(private val systemService: SystemService) {
     }
 
     @Get("/disk", produces = [MediaType.APPLICATION_JSON])
-    suspend fun getDiskUsage(): Disk? {
+    suspend fun getDiskUsage(): Disk {
         return systemService.getDiskQuota()
     }
 }
