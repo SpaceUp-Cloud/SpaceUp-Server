@@ -2,9 +2,9 @@ package technology.iatlas.spaceup.services
 
 import io.micronaut.context.env.Environment
 import io.micronaut.scheduling.annotation.Scheduled
+import jakarta.inject.Singleton
 import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
-import javax.inject.Singleton
 
 @Singleton
 class SchedulerService(

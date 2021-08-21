@@ -1,6 +1,7 @@
 package technology.iatlas.spaceup.services
 
 import com.jcraft.jsch.*
+import jakarta.inject.Singleton
 import kotlinx.coroutines.delay
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceUpSftpConfig
@@ -9,7 +10,6 @@ import technology.iatlas.spaceup.core.cmd.CommandInf
 import technology.iatlas.spaceup.core.cmd.SshResponse
 import java.io.ByteArrayOutputStream
 import java.io.File
-import javax.inject.Singleton
 
 @Singleton
 class SshService(

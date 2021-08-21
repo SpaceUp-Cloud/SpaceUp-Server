@@ -1,6 +1,5 @@
 package technology.iatlas.spaceup
 
-import com.fizzed.rocker.runtime.RockerRuntime
 import io.micronaut.runtime.Micronaut.build
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.info.Info
@@ -8,7 +7,7 @@ import io.swagger.v3.oas.annotations.info.Info
 @OpenAPIDefinition(
     info = Info(
             title = "SpaceUp",
-            version = "0.0"
+            version = "0.12"
     )
 )
 object Api {}

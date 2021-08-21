@@ -2,19 +2,15 @@ package technology.iatlas.spaceup.services
 
 import io.micronaut.context.env.Environment
 import io.micronaut.core.io.ResourceLoader
+import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceUpSftpConfig
-import technology.iatlas.spaceup.config.SpaceUpSshConfig
 import technology.iatlas.spaceup.config.SpaceupPathConfig
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.EchoParser
 import technology.iatlas.spaceup.core.parser.LogsParser
 import technology.iatlas.spaceup.core.parser.ServiceParser
 import technology.iatlas.spaceup.dto.*
-import java.io.File
-import java.net.URI
-import java.nio.file.Paths
-import javax.inject.Singleton
 
 @Singleton
 class ServiceService(
@@ -51,7 +47,7 @@ class ServiceService(
         }
 
         serviceExecRunner.subject().subscribe {
-            val feedback = if(it?.toLowerCase()!!.contains("(started|stopped)".toRegex())) {
+            val feedback = if(it?.lowercase()!!.contains("(started|stopped)".toRegex())) {
                 Feedback(it, "")
             } else {
                 Feedback("", it)
@@ -62,7 +58,7 @@ class ServiceService(
         }
 
         serviceDeleteRunner.subject().subscribe {
-            val feedback = if(it?.toLowerCase()!!.contains("error")) {
+            val feedback = if(it?.lowercase()!!.contains("error")) {
                 Feedback("", it)
             } else {
                 Feedback(it, "")
@@ -101,7 +97,7 @@ class ServiceService(
      */
     suspend fun execute(serivce: Service, option: ServiceOption): Feedback {
         val cmd: MutableList<String> = mutableListOf("supervisorctl",
-            option.name.toLowerCase(), serivce.name)
+            option.name.lowercase(), serivce.name)
 
         serviceExecRunner.execute(Command(cmd), EchoParser())
         return executeServiceFeedback

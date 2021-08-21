@@ -1,6 +1,5 @@
 package technology.iatlas.spaceup.controller.api
 
-import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Delete
@@ -13,7 +12,6 @@ import technology.iatlas.spaceup.config.SpaceupPathConfig
 import technology.iatlas.spaceup.dto.*
 import technology.iatlas.spaceup.services.ServiceService
 import java.util.*
-import javax.annotation.Nullable
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/service")

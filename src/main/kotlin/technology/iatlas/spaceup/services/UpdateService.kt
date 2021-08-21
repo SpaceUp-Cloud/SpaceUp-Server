@@ -1,8 +1,8 @@
 package technology.iatlas.spaceup.services
 
+import jakarta.inject.Singleton
 import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.dto.UpdatePackage
-import javax.inject.Singleton
 
 
 @Singleton

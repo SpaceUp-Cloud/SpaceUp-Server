@@ -14,7 +14,7 @@ class CreateDomainParser(private val domain: String) : ParserInf<Feedback> {
         val processOut = processResponse.readText()
 
         val error = errorList.filter {
-            processOut.toLowerCase().contains(it)
+            processOut.lowercase().contains(it)
         }
 
         return if(error.isNotEmpty()) {
