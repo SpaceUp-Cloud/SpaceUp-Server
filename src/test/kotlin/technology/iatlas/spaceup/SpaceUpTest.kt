@@ -1,9 +1,9 @@
 package technology.iatlas.spaceup
 import io.micronaut.runtime.EmbeddedApplication
-import io.micronaut.test.annotation.MicronautTest
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import jakarta.inject.Inject
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import javax.inject.Inject
 
 @MicronautTest
 class SpaceUpTest {

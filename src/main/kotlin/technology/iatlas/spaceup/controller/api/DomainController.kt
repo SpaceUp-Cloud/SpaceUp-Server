@@ -5,13 +5,11 @@ import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
-import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.dto.Domain
 import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.services.DomainService
 import java.util.*
-import javax.annotation.Nullable
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/domain")

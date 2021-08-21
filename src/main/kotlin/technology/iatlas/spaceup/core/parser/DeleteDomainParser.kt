@@ -12,7 +12,7 @@ class DeleteDomainParser(private val domain: String) : ParserInf<Feedback> {
         var errorMsg = ""
         var infoMsg = ""
 
-        if (responseText.toLowerCase().contains("error", true)) {
+        if (responseText.lowercase().contains("error", true)) {
             errorMsg = responseText
         } else {
             infoMsg = responseText
