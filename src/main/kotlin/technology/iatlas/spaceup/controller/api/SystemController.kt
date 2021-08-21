@@ -8,6 +8,7 @@ import io.micronaut.security.rules.SecurityRule
 import technology.iatlas.spaceup.dto.Disk
 import technology.iatlas.spaceup.dto.Hostname
 import technology.iatlas.spaceup.services.SystemService
+import java.util.*
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/system")
@@ -21,5 +22,12 @@ class SystemController(private val systemService: SystemService) {
     @Get("/disk", produces = [MediaType.APPLICATION_JSON])
     suspend fun getDiskUsage(): Disk {
         return systemService.getDiskQuota()
+    }
+
+    @Get("/version", produces = [MediaType.TEXT_PLAIN])
+    fun getVersion(): String {
+        val versionProperty = Properties()
+        versionProperty.load(this.javaClass.getResourceAsStream("/version.properties"))
+        return versionProperty.getProperty("version") ?: "no version"
     }
 }
