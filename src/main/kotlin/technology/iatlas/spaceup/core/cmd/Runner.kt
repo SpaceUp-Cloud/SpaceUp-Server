@@ -3,6 +3,7 @@ package technology.iatlas.spaceup.core.cmd
 import io.micronaut.context.env.Environment
 import io.micronaut.tracing.annotation.ContinueSpan
 import io.micronaut.tracing.annotation.SpanTag
+import jakarta.inject.Singleton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -10,7 +11,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.services.SshService
 import java.io.BufferedReader
-import javax.inject.Singleton
 
 @Singleton
 open class Runner<T>(

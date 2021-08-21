@@ -1,7 +1,7 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.websocket.WebSocketBroadcaster
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 @Singleton
 class WsBroadcaster(private val broadcaster: WebSocketBroadcaster) {
