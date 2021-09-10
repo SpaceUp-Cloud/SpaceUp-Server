@@ -1,9 +1,18 @@
-= Your Project
-author@example.org
+= SpaceUp Server
+thraax.session@iatlas.technology
 
-Write a short introduction about your project
+SpaceUp is a "simple" server / client construct, which helps provide or do actions on your webhost. Or just simplify things without using ssh/console.
+It does as much possible without even a database, to keep it easy as possible.
 
-== Build
+== Features
+
+* Adding/Deleting domains
+* Start/Stop/Restart services
+* Inspecting logfiles of the corresponding service
+* Have a look on the space
+* Future feature: You can write your own (automation) script (*.sus) to even more simplify jobs and stuff. Like updating a piece of software. And this script will be automatically available as REST service and visible in the app! Cool, right? 😁
+
+== Build & Run
 
 Explain what it requires and how to build the project. For example:
 
@@ -12,6 +21,8 @@ This project requires Java 8 (min) and you can build it executing the following 
 [source,console]
 ----
 ./gradlew build
+java -jar SpaceUp-{Version}-all.jar
+***REMOVED*** Don't forget to create web backend to make it publish
 ----
 
 == Architecture
@@ -34,3 +45,7 @@ Remember you can include piece of code extracted from your project using the `in
 
     include::{sourcedir}/com/mycompany/service/MyService.java[tags=init]
 
+Example
+----
+include::../../main/kotlin/technology/iatlas/spaceup/Application.kt[]
+----
