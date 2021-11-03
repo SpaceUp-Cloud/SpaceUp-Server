@@ -10,6 +10,7 @@ import technology.iatlas.spaceup.core.cmd.CommandInf
 import technology.iatlas.spaceup.core.cmd.SshResponse
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.InputStreamReader
 
 @Singleton
 class SshService(
@@ -113,7 +114,7 @@ class SshService(
         try {
             writeScriptChannel.connect()
             val sftp = writeScriptChannel as ChannelSftp
-            sftp.put(file.scriptPath?.file, remotefile, ChannelSftp.OVERWRITE)
+            sftp.put(file.scriptPath?.openStream(), remotefile, ChannelSftp.OVERWRITE)
 
             if(file.doExecute) {
                 log.debug("Execute $executeCmd")
