@@ -24,32 +24,17 @@ open class Runner<T>(
     override suspend fun execute(@SpanTag("runner.cmd") cmd: CommandInf, parser: ParserInf<T>) {
         log.trace("Actual cmd: {} ", cmd.parameters)
 
-        if (devMode) {
-            val script = cmd.shellScript
-            val output = if(script.name == "") {
-                val res = sshService.execute(cmd)
-                parser.parseSshOutput(res)
-            } else {
-                val res = sshService.upload(cmd)
-                parser.parseSshOutput(res)
-            }
-            //log.debug("Parsed output: $output")
-            subject.onNext(output)
+        val script = cmd.shellScript
+        val output = if(script.name == "") {
+            val res = sshService.execute(cmd)
+            parser.parseSshOutput(res)
         } else {
-            val processBuilder = ProcessBuilder()
-            processBuilder.command(cmd.parameters)
-            processBuilder.redirectOutput(ProcessBuilder.Redirect.PIPE)
-                .redirectError(ProcessBuilder.Redirect.PIPE)
-
-            lateinit var res: BufferedReader
-            GlobalScope.launch(Dispatchers.IO) {
-                run {
-                    val proc = processBuilder.start()
-                    proc.waitFor()
-                    res = proc.inputStream.bufferedReader()
-                }
-            }
-            subject.onNext(parser.parseProcessOutput(res))
+            val res = sshService.upload(cmd)
+            parser.parseSshOutput(res)
         }
+        if(devMode) {
+            log.debug("Parsed output: $output")
+        }
+        subject.onNext(output)
     }
 }
