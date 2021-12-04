@@ -101,15 +101,31 @@ infoLog="$logPath/$servicename.log"
 errorLog="$logPath/$servicename-Err.log"
 
 if [ "$logtype" == "both" ]; then
-  get_logs "$isReversed" "$limit" "$infoLog"
+  if [ -f $infoLog ] && [ -s $infoLog ]; then
+    get_logs "$isReversed" "$limit" "$infoLog"
+  else
+    echo "Info log is empty or does not exist."
+  fi
   echo "---"
-  get_logs "$isReversed" "$limit" "$errorLog"
+  if [ -f $errorLog ] && [ -s $errorLog ]; then
+    get_logs "$isReversed" "$limit" "$errorLog"
+  else
+    echo "Error log is empty or does not exist."
+  fi
 else
   if [ "$logtype" == "info" ]; then
-    get_logs "$isReversed" "$limit" "$infoLog"
+    if [ -f $infoLog ] && [ -s $infoLog ]; then
+      get_logs "$isReversed" "$limit" "$infoLog"
+    else
+      echo "Info log is empty or does not exist."
+    fi
   fi
   echo "---"
   if [ "$logtype" == "error" ]; then
-    get_logs "$isReversed" "$limit" "$errorLog"
+    if [ -f $errorLog ] && [ -s $errorLog ]; then
+      get_logs "$isReversed" "$limit" "$errorLog"
+    else
+      echo "Error log is empty or does not exist."
+    fi
   fi
 fi
