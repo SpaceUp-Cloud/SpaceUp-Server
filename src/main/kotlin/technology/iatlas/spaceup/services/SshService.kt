@@ -10,7 +10,6 @@ import technology.iatlas.spaceup.core.cmd.CommandInf
 import technology.iatlas.spaceup.core.cmd.SshResponse
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.InputStreamReader
 
 @Singleton
 class SshService(
@@ -97,7 +96,7 @@ class SshService(
             initSSH()
         }
         val file = cmd.shellScript
-        val remotefile = sftpConfig.remotedir + "/" + file.name
+        val remotefile = sftpConfig.remotedir?.replace("~", "/home/${sshConfig.username}") + "/" + file.name
 
         val writeScriptChannel: Channel = session.openChannel("sftp") as Channel
 
@@ -114,6 +113,7 @@ class SshService(
         try {
             writeScriptChannel.connect()
             val sftp = writeScriptChannel as ChannelSftp
+            log.info("Upload script ${file.name} to ${sftpConfig.remotedir}")
             sftp.put(file.scriptPath?.openStream(), remotefile, ChannelSftp.OVERWRITE)
 
             if(file.doExecute) {
