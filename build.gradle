@@ -1,8 +1,8 @@
 plugins {
     id "org.asciidoctor.jvm.convert" version "3.1.0"
-    id "org.jetbrains.kotlin.jvm" version "1.6.0"
-    id "org.jetbrains.kotlin.kapt" version "1.6.0"
-    id "org.jetbrains.kotlin.plugin.allopen" version "1.6.0"
+    id "org.jetbrains.kotlin.jvm" version "1.6.10"
+    id "org.jetbrains.kotlin.kapt" version "1.6.10"
+    id "org.jetbrains.kotlin.plugin.allopen" version "1.6.10"
     id "com.github.johnrengelman.shadow" version "6.0.0"
     id "org.sonarqube" version "3.3"
     id "application"
@@ -34,7 +34,7 @@ dependencies {
     implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     implementation("io.micronaut:micronaut-inject:$micronautVersion")
     implementation("io.micronaut:micronaut-validation:$micronautVersion")
-    implementation('io.micronaut.rxjava3:micronaut-rxjava3:2.0.0')
+    implementation('io.micronaut.rxjava3:micronaut-rxjava3:2.1.1')
     implementation("io.reactivex.rxjava3:rxkotlin:3.0.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
@@ -51,14 +51,14 @@ dependencies {
     implementation("io.micronaut.security:micronaut-security-jwt:$micronautVersion")
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions:3.0.0")
     implementation("io.micronaut.cache:micronaut-cache-caffeine:3.0.0")
-    implementation('org.apache.logging.log4j:log4j-core:2.14.1')
+    implementation('org.apache.logging.log4j:log4j-core:2.16.0')
     implementation('com.google.code.gson:gson:2.8.9')
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt')
     implementation('com.jcraft:jsch:0.1.55')
-    runtimeOnly('org.apache.logging.log4j:log4j-api:2.14.1')
-    runtimeOnly('org.apache.logging.log4j:log4j-slf4j-impl:2.14.1')
+    runtimeOnly('org.apache.logging.log4j:log4j-api:2.16.0')
+    runtimeOnly('org.apache.logging.log4j:log4j-slf4j-impl:2.16.0')
     runtimeOnly('com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0')
-    runtimeOnly('io.netty:netty-tcnative:2.0.45.Final')
+    runtimeOnly('io.netty:netty-tcnative:2.0.46.Final')
     runtimeOnly('io.netty:netty-tcnative-boringssl-static:2.0.46.Final')
     implementation("org.reflections:reflections:0.10.2")
     kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
@@ -80,7 +80,7 @@ test {
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion('11')
+    sourceCompatibility = JavaVersion.toVersion('8')
 }
 
 allOpen {
@@ -88,14 +88,14 @@ allOpen {
 }
 compileKotlin {
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '1.8'
         //Will retain parameter names for Java reflection
         javaParameters = true
     }
 }
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '1.8'
         javaParameters = true
     }
 }
