@@ -1,8 +1,8 @@
 package technology.iatlas.spaceup.services
 
+import io.micronaut.context.annotation.Context
 import io.micronaut.context.env.Environment
 import io.reactivex.rxjava3.kotlin.subscribeBy
-import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.CreateDomainParser
@@ -12,7 +12,7 @@ import technology.iatlas.spaceup.dto.Command
 import technology.iatlas.spaceup.dto.Domain
 import technology.iatlas.spaceup.dto.Feedback
 
-@Singleton
+@Context
 class DomainService(
     private val env: Environment,
     private val sshService: SshService,
