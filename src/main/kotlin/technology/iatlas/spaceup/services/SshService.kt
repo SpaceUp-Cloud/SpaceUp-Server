@@ -123,7 +123,7 @@ class SshService(
             log.info("Upload script ${file.name} to ${sftpConfig.remotedir}")
             sftp.put(file.scriptPath?.openStream(), remotefile, ChannelSftp.OVERWRITE)
 
-            if(file.doExecute) {
+            if(file.doExecuteFile) {
                 log.debug("Execute $executeCmd")
                 executionChannel.connect()
 
