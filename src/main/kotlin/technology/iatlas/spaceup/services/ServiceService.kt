@@ -116,7 +116,7 @@ class ServiceService(
             "-l", limits.toString(),
             reversed,
         )
-        val sftpFile = SftpFile("getLogs.sh", logsScript.get(), doExecute = true)
+        val sftpFile = SftpFile("getLogs.sh", logsScript.get(), doExecuteFile = true)
         serviceLogRunner.execute(Command(cmd, sftpFile), LogsParser())
 
         return Logfile(currentLogs)
