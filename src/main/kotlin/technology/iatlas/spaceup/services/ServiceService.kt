@@ -1,8 +1,8 @@
 package technology.iatlas.spaceup.services
 
+import io.micronaut.context.annotation.Context
 import io.micronaut.context.env.Environment
 import io.micronaut.core.io.ResourceLoader
-import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceUpSftpConfig
 import technology.iatlas.spaceup.config.SpaceupPathConfig
@@ -12,7 +12,7 @@ import technology.iatlas.spaceup.core.parser.LogsParser
 import technology.iatlas.spaceup.core.parser.ServiceParser
 import technology.iatlas.spaceup.dto.*
 
-@Singleton
+@Context
 class ServiceService(
     env: Environment,
     sshService: SshService,

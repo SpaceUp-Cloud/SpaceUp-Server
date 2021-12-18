@@ -1,15 +1,17 @@
 package technology.iatlas.spaceup.core.auth
 
+import io.micronaut.context.annotation.Context
 import io.micronaut.http.HttpRequest
-import io.micronaut.security.authentication.*
+import io.micronaut.security.authentication.AuthenticationProvider
+import io.micronaut.security.authentication.AuthenticationRequest
+import io.micronaut.security.authentication.AuthenticationResponse
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableEmitter
-import jakarta.inject.Singleton
 import org.reactivestreams.Publisher
 import technology.iatlas.spaceup.config.SpaceUpSshConfig
 
-@Singleton
+@Context
 class AuthenticationProviderUserPassword(
     private val sshConfig: SpaceUpSshConfig
 ): AuthenticationProvider  {
