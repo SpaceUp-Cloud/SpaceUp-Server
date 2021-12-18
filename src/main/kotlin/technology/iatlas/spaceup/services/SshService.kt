@@ -1,7 +1,7 @@
 package technology.iatlas.spaceup.services
 
 import com.jcraft.jsch.*
-import jakarta.inject.Singleton
+import io.micronaut.context.annotation.Context
 import kotlinx.coroutines.delay
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceUpSftpConfig
@@ -11,21 +11,17 @@ import technology.iatlas.spaceup.core.cmd.SshResponse
 import java.io.ByteArrayOutputStream
 import java.io.File
 
-@Singleton
+@Context
 class SshService(
     private val sshConfig: SpaceUpSshConfig,
-    private val sftpConfig: SpaceUpSftpConfig
+    private val sftpConfig: SpaceUpSftpConfig,
     ) {
     private val log = LoggerFactory.getLogger(SshService::class.java)
 
     private lateinit var session: Session
 
     // Configure SSH
-    init {
-        initSSH()
-    }
-
-    private fun initSSH() {
+    fun initSSH() {
         val jsch = JSch()
 
         val privatekey: String? = sshConfig.privatekey
@@ -43,16 +39,27 @@ class SshService(
             log.info("Authenticate SSH via password!")
         }
         session.setConfig("StrictHostKeyChecking", "no")
-        session.connect()
+        try {
+            session.connect()
+        } catch (jschException: JSchException) {
+            log.error(jschException.message)
+        }
     }
 
     suspend fun execute(command: CommandInf): SshResponse {
         log.debug("Execute $command")
-        if(!session.isConnected) {
+        if(!this::session.isInitialized || !session.isConnected) {
             initSSH()
         }
 
-        val channel: ChannelExec = session.openChannel("exec") as ChannelExec
+        var channel: ChannelExec
+        try {
+            channel = session.openChannel("exec") as ChannelExec
+        } catch (shhEx: JSchException) {
+            log.error("SSH Session is down. Will try to reconnect.")
+            initSSH()
+            channel = session.openChannel("exec") as ChannelExec
+        }
 
         try {
             channel.setCommand(command.parameters.joinToString(" "))

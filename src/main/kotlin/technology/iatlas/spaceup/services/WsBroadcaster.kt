@@ -1,9 +1,9 @@
 package technology.iatlas.spaceup.services
 
+import io.micronaut.context.annotation.Context
 import io.micronaut.websocket.WebSocketBroadcaster
-import jakarta.inject.Singleton
 
-@Singleton
+@Context
 class WsBroadcaster(private val broadcaster: WebSocketBroadcaster) {
 
     /**
