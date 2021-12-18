@@ -5,5 +5,5 @@ import java.net.URL
 data class SftpFile(
     val name: String,
     val scriptPath: URL?,
-    val doExecute: Boolean = false
+    val doExecuteFile: Boolean = false
 )
