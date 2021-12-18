@@ -1,14 +1,14 @@
 package technology.iatlas.spaceup.core.cmd
 
+import io.micronaut.context.annotation.Context
 import io.micronaut.context.env.Environment
 import io.micronaut.tracing.annotation.ContinueSpan
 import io.micronaut.tracing.annotation.SpanTag
-import jakarta.inject.Singleton
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.services.SshService
 
-@Singleton
+@Context
 open class Runner<T>(
     env: Environment,
     private val sshService: SshService) : BaseRunner<T>() {
