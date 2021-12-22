@@ -83,8 +83,7 @@ class SshService(
             val response = String(responseStream.toByteArray())
             val error = String(errorResponseStream.toByteArray())
             val sshResponse = SshResponse(response, error)
-            // SshResponse
-            log.debug(sshResponse.toString())
+            log.trace(sshResponse.toString())
 
             return sshResponse
         } finally {
@@ -103,7 +102,8 @@ class SshService(
             initSSH()
         }
         val file = cmd.shellScript
-        val remotefile = sftpConfig.remotedir?.replace("~", "/home/${sshConfig.username}") + "/" + file.name
+        val remotefile =
+            sftpConfig.remotedir?.replace("~", "/home/${sshConfig.username}") + "/.spaceup/tmp/" + file.name
 
         val writeScriptChannel: Channel = session.openChannel("sftp") as Channel
 
@@ -137,6 +137,7 @@ class SshService(
                 //log.debug(sshResponse.toString())
             }
 
+            log.trace(sshResponse.toString())
             return sshResponse
         } finally {
             writeScriptChannel.disconnect()
