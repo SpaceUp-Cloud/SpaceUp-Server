@@ -9,7 +9,7 @@ plugins {
     id 'maven-publish'
 }
 
-version "0.0.16-SNAPSHOT"
+version "0.0.17-SNAPSHOT"
 group "technology.iatlas.spaceup"
 
 repositories {
