@@ -2,7 +2,6 @@ package technology.iatlas.spaceup.core.startup
 
 import com.lordcodes.turtle.ShellLocation
 import com.lordcodes.turtle.shellRun
-import io.micronaut.context.env.Environment
 import io.micronaut.context.event.StartupEvent
 import io.micronaut.runtime.event.annotation.EventListener
 import jakarta.inject.Singleton
@@ -13,13 +12,9 @@ import technology.iatlas.spaceup.services.DbService
 
 @Singleton
 class StartupEventListener(
-    env: Environment,
     private val dbService: DbService
 ) {
     private val log = LoggerFactory.getLogger(StartupEventListener::class.java)
-
-    // TODO: 22.12.2021 replace with Void and create dummy parser as it has nothing to parse
-    //private val remoteRunner = Runner<String>(env, sshService)
 
     @EventListener
     internal fun onApplicationEvent(event: StartupEvent) {
