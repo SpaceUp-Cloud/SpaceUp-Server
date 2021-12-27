@@ -13,7 +13,7 @@ class SchedulerService(
 
     @Scheduled(fixedRate = "\${spaceup.scheduler.domains.update}", initialDelay = "\${spaceup.scheduler.delayed}")
     internal fun updateDomainList() {
-        log.debug("Update domain list")
+        log.info("Update domain list")
         runBlocking {
             domainService.updateDomainList()
             domainService.list()
