@@ -6,11 +6,13 @@ import io.micronaut.http.annotation.*
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import org.slf4j.LoggerFactory
+import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.dto.Domain
 import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.services.DomainService
 import java.util.*
 
+@Installed
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/domain")
 class DomainController(private val domainService: DomainService) {

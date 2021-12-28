@@ -5,11 +5,13 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
+import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.dto.Disk
 import technology.iatlas.spaceup.dto.Hostname
 import technology.iatlas.spaceup.services.SystemService
 import java.util.*
 
+@Installed
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/system")
 class SystemController(private val systemService: SystemService) {
