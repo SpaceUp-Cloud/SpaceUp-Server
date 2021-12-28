@@ -33,6 +33,7 @@ class DbService(
             //.compress(true)
             .build()
 
+        // Just for logging inside migration
         migration1.steps().forEach { _ -> }
 
         db = Nitrite
@@ -41,6 +42,8 @@ class DbService(
             .schemaVersion(0)
             .addMigrations(migration1)
             .openOrCreate("SpaceUp", "Spac3Up!***REMOVED***")
+
+        log.info("Created and migrated DB")
 
         try {
             val userCollection = db.getCollection("user")
@@ -54,6 +57,8 @@ class DbService(
         }catch (ex : IndexingException) {
             log.warn(ex.message)
         }
+
+        log.info("Added indices")
     }
 
     fun getDb(): Nitrite {

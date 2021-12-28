@@ -29,7 +29,7 @@ class StartupEventListener(
         createDirectories()
 
         // Step 2: init and migrate db
-        createDbAndInit()
+        initDb()
 
         log.info("Finished SpaceUp startup")
     }
@@ -49,8 +49,7 @@ class StartupEventListener(
         }
     }
 
-    private fun createDbAndInit() {
-        // This will throw
+    private fun initDb() {
         dbService.initDb()
     }
 }
