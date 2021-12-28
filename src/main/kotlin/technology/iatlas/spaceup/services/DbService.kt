@@ -44,29 +44,36 @@ class DbService(
             .openOrCreate("SpaceUp", "Spac3Up!***REMOVED***")
 
         log.info("Created and migrated DB")
-
+        log.info("Indexing field ...")
         try {
             val userCollection = db.getCollection("user")
-            userCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "username")
+            if(!userCollection.isIndexing("username")) {
+                log.debug("'username for user' already indexed")
+                userCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "username")
+            }
         }catch (ex : IndexingException) {
             log.warn(ex.message)
         }
 
         try {
             val sshCollection = db.getCollection("ssh")
-            sshCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "username")
+            if(!sshCollection.isIndexing("username")) {
+                log.debug("'username for ssh' already indexed")
+                sshCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "username")
+            }
         }catch (ex : IndexingException) {
             log.warn(ex.message)
         }
 
         try {
             val serverCollection = db.getCollection("server")
-            serverCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "installed")
+            if(!serverCollection.isIndexing("installed")) {
+                log.debug("'installed for server' already indexed")
+                serverCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "installed")
+            }
         }catch (ex : IndexingException) {
             log.warn(ex.message)
         }
-
-        log.info("Added indices")
     }
 
     fun getDb(): Nitrite {
