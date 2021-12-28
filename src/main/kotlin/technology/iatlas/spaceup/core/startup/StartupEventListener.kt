@@ -5,6 +5,8 @@ import com.lordcodes.turtle.shellRun
 import io.micronaut.context.event.StartupEvent
 import io.micronaut.runtime.event.annotation.EventListener
 import jakarta.inject.Singleton
+import org.dizitart.no2.collection.Document
+import org.dizitart.no2.filters.Filter
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.services.DbService
 
@@ -51,5 +53,17 @@ class StartupEventListener(
 
     private fun initDb() {
         dbService.initDb()
+
+        val db = dbService.getDb()
+        val serverCollection = db.getCollection("server")
+        val installed = serverCollection.find(Filter.ALL)
+        log.info("Installed: ${installed.first().get("installed")}")
+
+        if(installed.isEmpty) {
+            log.info("Seems to be first run. Set not installed!")
+            val doc = Document.createDocument()
+                .put("installed", false)
+            serverCollection.insert(doc)
+        }
     }
 }
