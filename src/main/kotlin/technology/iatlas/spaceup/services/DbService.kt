@@ -33,6 +33,8 @@ class DbService(
             //.compress(true)
             .build()
 
+        migration1.steps().forEach { _ -> }
+
         db = Nitrite
             .builder()
             .loadModule(storeModule)
@@ -66,25 +68,22 @@ class Migration1(startVersion: Int, endVersion: Int) : Migration(startVersion, e
     private val log = LoggerFactory.getLogger(Migration1::class.java)
 
     override fun migrate(instructions: Instructions?) {
+        log.debug("Create 'user' repo")
         instructions
             ?.forRepository("user")
             ?.addField<String>("username")
             ?.addField<String>("password")
 
+        log.debug("Create 'ssh' repo")
         instructions
             ?.forRepository("ssh")
             ?.addField<String>("server")
             ?.addField<String>("username")
             ?.addField<String>("password")
 
+        log.debug("Create 'server' repo")
         instructions
             ?.forRepository("server")
             ?.addField("installed", false)
-
-        instructions
-            ?.forRepository("auth")
-            ?.addField("jwtTime", "60")
-
-        log.info("Create $instructions")
     }
 }
