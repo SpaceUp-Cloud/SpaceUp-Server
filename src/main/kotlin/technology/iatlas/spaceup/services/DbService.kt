@@ -3,6 +3,7 @@ package technology.iatlas.spaceup.services
 import io.micronaut.context.annotation.Context
 import org.dizitart.no2.Nitrite
 import org.dizitart.no2.exceptions.IndexingException
+import org.dizitart.no2.filters.Filter
 import org.dizitart.no2.index.IndexOptions
 import org.dizitart.no2.index.IndexType
 import org.dizitart.no2.migration.Instructions
@@ -82,7 +83,14 @@ class DbService(
         }
         return db
     }
-}
+
+    fun isAppInstalled(): Boolean {
+        val serverCollection = db.getCollection("server")
+
+        val doc = serverCollection.find(Filter.ALL)
+        return doc.first().get("installed") as Boolean
+    }
+ }
 
 class Migration1(startVersion: Int, endVersion: Int) : Migration(startVersion, endVersion) {
     private val log = LoggerFactory.getLogger(Migration1::class.java)
