@@ -48,10 +48,18 @@ class DbService(
         try {
             val userCollection = db.getCollection("user")
             userCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "username")
+        }catch (ex : IndexingException) {
+            log.warn(ex.message)
+        }
 
+        try {
             val sshCollection = db.getCollection("ssh")
             sshCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "username")
+        }catch (ex : IndexingException) {
+            log.warn(ex.message)
+        }
 
+        try {
             val serverCollection = db.getCollection("server")
             serverCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "installed")
         }catch (ex : IndexingException) {
