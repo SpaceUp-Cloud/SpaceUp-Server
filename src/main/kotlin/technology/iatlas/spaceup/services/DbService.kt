@@ -2,6 +2,9 @@ package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
 import org.dizitart.no2.Nitrite
+import org.dizitart.no2.exceptions.IndexingException
+import org.dizitart.no2.index.IndexOptions
+import org.dizitart.no2.index.IndexType
 import org.dizitart.no2.migration.Instructions
 import org.dizitart.no2.migration.Migration
 import org.dizitart.no2.mvstore.MVStoreModule
@@ -36,6 +39,19 @@ class DbService(
             .schemaVersion(0)
             .addMigrations(migration1)
             .openOrCreate("SpaceUp", "Spac3Up!#")
+
+        try {
+            val userCollection = db.getCollection("user")
+            userCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "username")
+
+            val sshCollection = db.getCollection("ssh")
+            sshCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "username")
+
+            val serverCollection = db.getCollection("server")
+            serverCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "installed")
+        }catch (ex : IndexingException) {
+            log.warn(ex.message)
+        }
     }
 
     fun getDb(): Nitrite {
@@ -47,6 +63,8 @@ class DbService(
 }
 
 class Migration1(startVersion: Int, endVersion: Int) : Migration(startVersion, endVersion) {
+    private val log = LoggerFactory.getLogger(Migration1::class.java)
+
     override fun migrate(instructions: Instructions?) {
         instructions
             ?.forRepository("user")
@@ -55,15 +73,18 @@ class Migration1(startVersion: Int, endVersion: Int) : Migration(startVersion, e
 
         instructions
             ?.forRepository("ssh")
+            ?.addField<String>("server")
             ?.addField<String>("username")
             ?.addField<String>("password")
 
         instructions
-            ?.forRepository("app")
+            ?.forRepository("server")
             ?.addField("installed", false)
 
         instructions
             ?.forRepository("auth")
             ?.addField("jwtTime", "60")
+
+        log.info("Create $instructions")
     }
 }
