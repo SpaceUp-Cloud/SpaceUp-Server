@@ -21,7 +21,7 @@ class StartupEventListener(
         val os = System.getProperty("os.name")
         log.debug("OS: $os")
         if(!os.lowercase().contains("linux")) {
-            log.warn("Currently only GNU/Linux is supported for local setup!")
+            log.warn("Currently only GNU/Linux is supported!")
             return
         }
 
