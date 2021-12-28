@@ -48,8 +48,8 @@ class DbService(
         log.info("Indexing field ...")
         try {
             val userCollection = db.getCollection("user")
-            if(!userCollection.isIndexing("username")) {
-                log.debug("'username for user' already indexed")
+            if(!userCollection.hasIndex("username")) {
+                log.debug("indexing 'username for user'")
                 userCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "username")
             }
         }catch (ex : IndexingException) {
@@ -58,8 +58,8 @@ class DbService(
 
         try {
             val sshCollection = db.getCollection("ssh")
-            if(!sshCollection.isIndexing("username")) {
-                log.debug("'username for ssh' already indexed")
+            if(!sshCollection.hasIndex("username")) {
+                log.debug("indexing 'username for ssh'")
                 sshCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "username")
             }
         }catch (ex : IndexingException) {
@@ -68,8 +68,8 @@ class DbService(
 
         try {
             val serverCollection = db.getCollection("server")
-            if(!serverCollection.isIndexing("installed")) {
-                log.debug("'installed for server' already indexed")
+            if(!serverCollection.hasIndex("installed")) {
+                log.debug("indexing 'installed for server'")
                 serverCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "installed")
             }
         }catch (ex : IndexingException) {
