@@ -5,8 +5,6 @@ import com.lordcodes.turtle.shellRun
 import io.micronaut.context.event.StartupEvent
 import io.micronaut.runtime.event.annotation.EventListener
 import jakarta.inject.Singleton
-import org.dizitart.no2.migration.Instructions
-import org.dizitart.no2.migration.Migration
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.services.DbService
 
@@ -30,6 +28,9 @@ class StartupEventListener(
         // Step 1: create directories if not exist
         createDirectories()
 
+        // Step 2: init and migrate db
+        createDbAndInit()
+
         log.info("Finished SpaceUp startup")
     }
 
@@ -49,30 +50,7 @@ class StartupEventListener(
     }
 
     private fun createDbAndInit() {
-        val db = dbService.createOrOpen()
-
-        val migration1 = Migration1(0, 1)
-        db.schemaVersion(0).addMigrations(migration1)
-            .openOrCreate("SpaceUp", "Spac3Up!#")
-
+        // This will throw
+        dbService.initDb()
     }
-}
-
-class Migration1(startVersion: Int, endVersion: Int) : Migration(startVersion, endVersion) {
-    override fun migrate(instructions: Instructions?) {
-        instructions
-            ?.forRepository("user")
-            ?.addField<String>("username")
-            ?.addField<String>("password")
-
-        instructions
-            ?.forRepository("ssh")
-            ?.addField<String>("username")
-            ?.addField<String>("password")
-
-        instructions
-            ?.forRepository("auth")
-            ?.addField<String>("jwtTime", "60")
-    }
-
 }
