@@ -44,9 +44,9 @@ class StartupEventListener(
         val remoteScriptDir = ".spaceup/tmp"
 
         shellRun(home) {
-            log.info("Create $remoteHome")
+            log.info("Create $home/$remoteHome")
             command("mkdir", listOf("-p", remoteHome))
-            log.info("Create $remoteScriptDir")
+            log.info("Create $home/$remoteScriptDir")
             command("mkdir", listOf("-p", remoteScriptDir))
         }
     }
@@ -56,14 +56,14 @@ class StartupEventListener(
 
         val db = dbService.getDb()
         val serverCollection = db.getCollection("server")
-        val installed = serverCollection.find(Filter.ALL)
-        log.info("Installed: ${installed.first().get("installed")}")
+        val serverDocs = serverCollection.find(Filter.ALL)
 
-        if(installed.isEmpty) {
+        if(serverDocs.isEmpty) {
             log.info("Seems to be first run. Set not installed!")
             val doc = Document.createDocument()
                 .put("installed", false)
             serverCollection.insert(doc)
         }
+        log.info("Installed: ${serverDocs.first()["installed"]}")
     }
 }
