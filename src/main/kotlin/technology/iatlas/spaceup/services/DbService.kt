@@ -20,10 +20,15 @@ class DbService(
 ) {
     private val log = LoggerFactory.getLogger(DbService::class.java)
     private lateinit var db: Nitrite
+    private var dbPath: File
+
+    init {
+        val path = spaceupPathConfig.db.replaceFirst("~", System.getProperty("user.home"))
+        dbPath = File(path, "spaceup.db")
+    }
 
     fun initDb() {
-        val path = spaceupPathConfig.db.replaceFirst("~", System.getProperty("user.home"))
-        val dbPath = File(path, "spaceup.db")
+
         log.info("Init DB @ $dbPath")
 
         val migration1 = Migration1(0, 1)
@@ -89,6 +94,11 @@ class DbService(
 
         val doc = serverCollection.find(Filter.ALL)
         return doc.first().get("installed") as Boolean
+    }
+
+    fun deleteDb() {
+        val deleted = dbPath.delete()
+        log.info("$dbPath was deleted: $deleted")
     }
  }
 
