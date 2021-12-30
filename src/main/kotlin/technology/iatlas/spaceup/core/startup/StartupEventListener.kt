@@ -5,9 +5,8 @@ import com.lordcodes.turtle.shellRun
 import io.micronaut.context.event.StartupEvent
 import io.micronaut.runtime.event.annotation.EventListener
 import jakarta.inject.Singleton
-import org.dizitart.no2.collection.Document
-import org.dizitart.no2.filters.Filter
 import org.slf4j.LoggerFactory
+import technology.iatlas.spaceup.dto.Server
 import technology.iatlas.spaceup.services.DbService
 
 @Singleton
@@ -55,15 +54,15 @@ class StartupEventListener(
         dbService.initDb()
 
         val db = dbService.getDb()
-        val serverCollection = db.getCollection("server")
-        val serverDocs = serverCollection.find(Filter.ALL)
+        val serverRepo = db.getRepository(Server::class.java)
+        val server = serverRepo.find()
 
-        if(serverDocs.isEmpty) {
+        if(server?.firstOrNull() == null) {
             log.info("Seems to be first run. Set not installed!")
-            val doc = Document.createDocument()
-                .put("installed", false)
-            serverCollection.insert(doc)
+            val doc = Server(false)
+            serverRepo.insert(doc)
+        } else {
+            log.info("Installed: ${server.first()}")
         }
-        log.info("Installed: ${serverDocs.first()["installed"]}")
     }
 }

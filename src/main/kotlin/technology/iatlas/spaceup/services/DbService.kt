@@ -3,7 +3,6 @@ package technology.iatlas.spaceup.services
 import io.micronaut.context.annotation.Context
 import org.dizitart.no2.Nitrite
 import org.dizitart.no2.exceptions.IndexingException
-import org.dizitart.no2.filters.Filter
 import org.dizitart.no2.index.IndexOptions
 import org.dizitart.no2.index.IndexType
 import org.dizitart.no2.migration.Instructions
@@ -12,6 +11,9 @@ import org.dizitart.no2.mvstore.MVStoreModule
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceupPathConfig
 import technology.iatlas.spaceup.core.exceptions.DbNotInitializedException
+import technology.iatlas.spaceup.dto.Server
+import technology.iatlas.spaceup.dto.Ssh
+import technology.iatlas.spaceup.dto.User
 import java.io.File
 
 @Context
@@ -28,6 +30,10 @@ class DbService(
     }
 
     fun initDb() {
+        if(dbPath.isFile && dbPath.exists()) {
+            openDb()
+            return
+        }
 
         log.info("Init DB @ $dbPath")
 
@@ -45,14 +51,15 @@ class DbService(
         db = Nitrite
             .builder()
             .loadModule(storeModule)
-            .schemaVersion(0)
-            .addMigrations(migration1)
-            .openOrCreate("SpaceUp", "Spac3Up!***REMOVED***")
+            .schemaVersion(1)
+            //.addMigrations(migration1)
+                //"SpaceUp", "Spac3Up!***REMOVED***"
+            .openOrCreate()
 
         log.info("Created and migrated DB")
-        log.info("Indexing field ...")
+        log.info("Indexing fields ...")
         try {
-            val userCollection = db.getCollection("user")
+            val userCollection = db.getRepository(User::class.java)
             if(!userCollection.hasIndex("username")) {
                 log.debug("indexing 'username for user'")
                 userCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "username")
@@ -62,7 +69,7 @@ class DbService(
         }
 
         try {
-            val sshCollection = db.getCollection("ssh")
+            val sshCollection = db.getRepository(Ssh::class.java)
             if(!sshCollection.hasIndex("username")) {
                 log.debug("indexing 'username for ssh'")
                 sshCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "username")
@@ -72,7 +79,7 @@ class DbService(
         }
 
         try {
-            val serverCollection = db.getCollection("server")
+            val serverCollection = db.getRepository(Server::class.java)
             if(!serverCollection.hasIndex("installed")) {
                 log.debug("indexing 'installed for server'")
                 serverCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "installed")
@@ -80,6 +87,23 @@ class DbService(
         }catch (ex : IndexingException) {
             log.warn(ex.message)
         }
+    }
+
+    private fun openDb() {
+        log.info("Open DB $dbPath")
+        val storeModule = MVStoreModule.withConfig()
+            .filePath(dbPath)
+            // Differ between production and dev mode
+            //.compress(true)
+            .build()
+
+        db = Nitrite
+            .builder()
+            .loadModule(storeModule)
+            .schemaVersion(1)
+                // Does not work with credentials
+                // "SpaceUp", "Spac3Up!***REMOVED***"
+            .openOrCreate()
     }
 
     fun getDb(): Nitrite {
@@ -90,10 +114,10 @@ class DbService(
     }
 
     fun isAppInstalled(): Boolean {
-        val serverCollection = db.getCollection("server")
+        val serverRepo = db.getRepository(Server::class.java)
+        val server = serverRepo.find().first()
 
-        val doc = serverCollection.find(Filter.ALL)
-        return doc.first().get("installed") as Boolean
+        return server.installed
     }
 
     fun deleteDb() {
@@ -108,20 +132,20 @@ class Migration1(startVersion: Int, endVersion: Int) : Migration(startVersion, e
     override fun migrate(instructions: Instructions?) {
         log.debug("Create 'user' repo")
         instructions
-            ?.forRepository("user")
+            ?.forRepository(User::class.java)
             ?.addField<String>("username")
             ?.addField<String>("password")
 
         log.debug("Create 'ssh' repo")
         instructions
-            ?.forRepository("ssh")
+            ?.forRepository(Ssh::class.java)
             ?.addField<String>("server")
             ?.addField<String>("username")
             ?.addField<String>("password")
 
         log.debug("Create 'server' repo")
         instructions
-            ?.forRepository("server")
+            ?.forRepository(Server::class.java)
             ?.addField("installed", false)
     }
 }
