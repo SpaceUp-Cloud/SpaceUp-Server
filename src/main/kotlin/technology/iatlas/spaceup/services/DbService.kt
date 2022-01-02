@@ -38,14 +38,13 @@ class DbService(
 
         log.info("Init DB @ $dbPath")
 
-        val migration1 = Migration1(0, 1)
-
         val storeModule = MVStoreModule.withConfig()
             .filePath(dbPath)
                 // Differ between production and dev mode
             //.compress(true)
             .build()
 
+        //val migration1 = Migration1(0, 1)
         // Just for logging inside migration
         //migration1.steps().forEach { _ -> }
 
