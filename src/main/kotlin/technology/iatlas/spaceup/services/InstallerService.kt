@@ -110,7 +110,9 @@ class InstallerService(
         val serverDto = Server(true, "")
         serverRepo.update(Filter.ALL, serverDto)
 
-        return HttpResponse.ok("Installation done. Set system to state 'installed'")
+        val finishMsg = "Installation done. Set system to state 'installed'"
+        log.info(finishMsg)
+        return HttpResponse.ok(finishMsg)
     }
 
     /**
