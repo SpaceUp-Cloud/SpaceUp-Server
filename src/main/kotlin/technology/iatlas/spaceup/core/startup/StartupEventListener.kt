@@ -22,8 +22,8 @@ class StartupEventListener(
 
     @EventListener
     internal fun onApplicationEvent(event: StartupEvent) {
+        showBanner()
         colored {
-            showBanner().cyan.bold
             println("\tSpaceUp Server (${systemService.getSpaceUpVersion()})".cyan.bold)
         }
 
@@ -76,19 +76,23 @@ class StartupEventListener(
         } else {
             val installed = server.installed
             if(!installed) {
-                log.info("Finish installation with API key: ${server.apiKey}")
+                colored {
+                    log.info("Finish installation with API key: ${server.apiKey.yellow.bold}")
+                }
             }
         }
     }
 
     private fun showBanner() {
-        println("""   ▄████████    ▄███████▄    ▄████████  ▄████████    ▄████████ ███    █▄     ▄███████▄ 
+        colored {
+            println("""   ▄████████    ▄███████▄    ▄████████  ▄████████    ▄████████ ███    █▄     ▄███████▄ 
   ███    ███   ███    ███   ███    ███ ███    ███   ███    ███ ███    ███   ███    ███ 
   ███    █▀    ███    ███   ███    ███ ███    █▀    ███    █▀  ███    ███   ███    ███ 
   ███          ███    ███   ███    ███ ███         ▄███▄▄▄     ███    ███   ███    ███ 
 ▀███████████ ▀█████████▀  ▀███████████ ███        ▀▀███▀▀▀     ███    ███ ▀█████████▀  
          ███   ███          ███    ███ ███    █▄    ███    █▄  ███    ███   ███        
    ▄█    ███   ███          ███    ███ ███    ███   ███    ███ ███    ███   ███        
- ▄████████▀   ▄████▀        ███    █▀  ████████▀    ██████████ ████████▀   ▄████▀      """.trimIndent())
+ ▄████████▀   ▄████▀        ███    █▀  ████████▀    ██████████ ████████▀   ▄████▀      """.cyan.bold.trimIndent())
+        }
     }
 }
