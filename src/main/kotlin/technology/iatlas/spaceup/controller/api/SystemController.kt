@@ -9,7 +9,6 @@ import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.dto.Disk
 import technology.iatlas.spaceup.dto.Hostname
 import technology.iatlas.spaceup.services.SystemService
-import java.util.*
 
 @Installed
 @Secured(SecurityRule.IS_AUTHENTICATED)
@@ -28,8 +27,6 @@ class SystemController(private val systemService: SystemService) {
 
     @Get("/version", produces = [MediaType.TEXT_PLAIN])
     fun getVersion(): String {
-        val versionProperty = Properties()
-        versionProperty.load(this.javaClass.getResourceAsStream("/version.properties"))
-        return versionProperty.getProperty("version") ?: "no version"
+        return systemService.getSpaceUpVersion()
     }
 }
