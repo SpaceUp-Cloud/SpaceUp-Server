@@ -6,20 +6,27 @@ import io.micronaut.context.event.StartupEvent
 import io.micronaut.runtime.event.annotation.EventListener
 import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
+import technology.iatlas.spaceup.core.helper.colored
 import technology.iatlas.spaceup.dto.Server
 import technology.iatlas.spaceup.services.DbService
 import technology.iatlas.spaceup.services.InstallerService
+import technology.iatlas.spaceup.services.SystemService
 
 @Singleton
 class StartupEventListener(
     private val dbService: DbService,
-    private val installerService: InstallerService
+    private val installerService: InstallerService,
+    private val systemService: SystemService
 ) {
     private val log = LoggerFactory.getLogger(StartupEventListener::class.java)
 
     @EventListener
     internal fun onApplicationEvent(event: StartupEvent) {
-        showBanner()
+        colored {
+            showBanner().cyan.bold
+            println("\tSpaceUp Server (${systemService.getSpaceUpVersion()})".cyan.bold)
+        }
+
         log.info("Running SpaceUp startup")
 
         val os = System.getProperty("os.name")
