@@ -1,8 +1,5 @@
 package technology.iatlas.spaceup.dto
 
-import org.dizitart.no2.collection.Document
-import org.dizitart.no2.common.mapper.Mappable
-import org.dizitart.no2.common.mapper.NitriteMapper
 import org.dizitart.no2.index.IndexType
 import org.dizitart.no2.repository.annotations.Entity
 import org.dizitart.no2.repository.annotations.Id
@@ -17,7 +14,7 @@ data class Ssh(
     var username: String,
     var password: String,
     var server: String
-) : Mappable {
+) /*: Mappable {
     override fun write(mapper: NitriteMapper?): Document {
         val document = Document.createDocument()
         document.put("username", username)
@@ -34,4 +31,4 @@ data class Ssh(
             server = document.get("server") as String
         }
     }
-}
+}*/

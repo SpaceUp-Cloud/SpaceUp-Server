@@ -1,6 +1,7 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
+import org.dizitart.kno2.nitrite
 import org.dizitart.no2.Nitrite
 import org.dizitart.no2.exceptions.IndexingException
 import org.dizitart.no2.index.IndexOptions
@@ -46,15 +47,19 @@ class DbService(
             .build()
 
         // Just for logging inside migration
-        migration1.steps().forEach { _ -> }
+        //migration1.steps().forEach { _ -> }
 
-        db = Nitrite
+        /*db = Nitrite
             .builder()
             .loadModule(storeModule)
             .schemaVersion(1)
             //.addMigrations(migration1)
                 //"SpaceUp", "Spac3Up!***REMOVED***"
-            .openOrCreate()
+            .openOrCreate()*/
+
+        db = nitrite("SpaceUp", "Spac3Up!***REMOVED***") {
+            loadModule(storeModule)
+        }
 
         log.info("Created and migrated DB")
         log.info("Indexing fields ...")
@@ -90,20 +95,24 @@ class DbService(
     }
 
     private fun openDb() {
-        log.info("Open DB $dbPath")
+        log.info("Create or open DB $dbPath")
         val storeModule = MVStoreModule.withConfig()
             .filePath(dbPath)
             // Differ between production and dev mode
             //.compress(true)
             .build()
 
-        db = Nitrite
+        /*db = Nitrite
             .builder()
             .loadModule(storeModule)
             .schemaVersion(1)
                 // Does not work with credentials
                 // "SpaceUp", "Spac3Up!***REMOVED***"
-            .openOrCreate()
+            .openOrCreate()*/
+
+        db = nitrite ("SpaceUp", "Spac3Up!***REMOVED***"){
+            loadModule(storeModule)
+        }
     }
 
     fun getDb(): Nitrite {
