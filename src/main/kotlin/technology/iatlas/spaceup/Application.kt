@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.info.Info
 @OpenAPIDefinition(
     info = Info(
             title = "SpaceUp",
-            version = "0.12"
+            version = "0.20"
     )
 )
 object Api
