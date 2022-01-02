@@ -57,7 +57,7 @@ dependencies {
     implementation('org.apache.logging.log4j:log4j-core:2.17.0')
     implementation('com.google.code.gson:gson:2.8.9')
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt')
-    implementation('com.jcraft:jsch:0.1.55')
+    implementation('com.github.mwiede:jsch:0.1.72')
     // NoSQL
     implementation(platform("org.dizitart:nitrite-bom:4.0.1-SNAPSHOT"))
     implementation('org.dizitart:nitrite')
