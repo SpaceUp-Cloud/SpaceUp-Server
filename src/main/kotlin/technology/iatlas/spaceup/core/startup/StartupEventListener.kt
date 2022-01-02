@@ -19,6 +19,7 @@ class StartupEventListener(
 
     @EventListener
     internal fun onApplicationEvent(event: StartupEvent) {
+        showBanner()
         log.info("Running SpaceUp startup")
 
         val os = System.getProperty("os.name")
@@ -71,5 +72,16 @@ class StartupEventListener(
                 log.info("Finish installation with API key: ${server.apiKey}")
             }
         }
+    }
+
+    private fun showBanner() {
+        println("""   ▄████████    ▄███████▄    ▄████████  ▄████████    ▄████████ ███    █▄     ▄███████▄ 
+  ███    ███   ███    ███   ███    ███ ███    ███   ███    ███ ███    ███   ███    ███ 
+  ███    █▀    ███    ███   ███    ███ ███    █▀    ███    █▀  ███    ███   ███    ███ 
+  ███          ███    ███   ███    ███ ███         ▄███▄▄▄     ███    ███   ███    ███ 
+▀███████████ ▀█████████▀  ▀███████████ ███        ▀▀███▀▀▀     ███    ███ ▀█████████▀  
+         ███   ███          ███    ███ ███    █▄    ███    █▄  ███    ███   ███        
+   ▄█    ███   ███          ███    ███ ███    ███   ███    ███ ███    ███   ███        
+ ▄████████▀   ▄████▀        ███    █▀  ████████▀    ██████████ ████████▀   ▄████▀      """.trimIndent())
     }
 }
