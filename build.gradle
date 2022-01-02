@@ -63,6 +63,11 @@ dependencies {
     implementation('org.dizitart:nitrite')
     implementation('org.dizitart:nitrite-mvstore-adapter')
     implementation('org.dizitart:potassium-nitrite')
+    implementation('org.dizitart:nitrite-jackson-mapper')
+    implementation('org.dizitart:nitrite-spatial')
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     // Shell commands
     implementation('com.lordcodes.turtle:turtle:0.6.0')
     runtimeOnly('org.apache.logging.log4j:log4j-api:2.17.0')
