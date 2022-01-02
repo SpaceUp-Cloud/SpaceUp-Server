@@ -147,5 +147,6 @@ class Migration1(startVersion: Int, endVersion: Int) : Migration(startVersion, e
         instructions
             ?.forRepository(Server::class.java)
             ?.addField("installed", false)
+            ?.addField("apiKey", "")
     }
 }
