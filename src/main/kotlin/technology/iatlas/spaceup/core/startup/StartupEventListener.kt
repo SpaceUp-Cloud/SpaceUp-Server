@@ -8,10 +8,12 @@ import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.dto.Server
 import technology.iatlas.spaceup.services.DbService
+import technology.iatlas.spaceup.services.InstallerService
 
 @Singleton
 class StartupEventListener(
-    private val dbService: DbService
+    private val dbService: DbService,
+    private val installerService: InstallerService
 ) {
     private val log = LoggerFactory.getLogger(StartupEventListener::class.java)
 
@@ -55,14 +57,19 @@ class StartupEventListener(
 
         val db = dbService.getDb()
         val serverRepo = db.getRepository(Server::class.java)
-        val server = serverRepo.find()
+        val server = serverRepo.find().firstOrNull()
 
-        if(server?.firstOrNull() == null) {
+        if(server == null) {
             log.info("Seems to be first run. Set not installed!")
-            val doc = Server(false)
+            val apiKey = installerService.generateAPIKey()
+            log.info("Finish installation with API key: $apiKey")
+            val doc = Server(false, apiKey)
             serverRepo.insert(doc)
         } else {
-            log.info("Installed: ${server.first()}")
+            val installed = server.installed
+            if(!installed) {
+                log.info("Finish installation with API key: ${server.apiKey}")
+            }
         }
     }
 }
