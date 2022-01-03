@@ -80,7 +80,9 @@ class StartupEventListener(
         if(server == null) {
             log.info("Seems to be first run. Set not installed!")
             val apiKey = installerService.generateAPIKey()
-            log.info("Finish installation with API key: $apiKey")
+            colored {
+                log.info("Finish installation with API key: ${apiKey.yellow.bold}")
+            }
             val doc = Server(false, apiKey)
             serverRepo.insert(doc)
         } else {
