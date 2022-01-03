@@ -133,9 +133,13 @@ class DbService(
 
     fun isAppInstalled(): Boolean {
         val serverRepo = db.getRepository(Server::class.java)
-        val server = serverRepo.find().first()
+        val server = serverRepo.find().firstOrNull()
 
-        return server.installed
+        var isInstalled = false
+        if(server != null) {
+            isInstalled = server.installed
+        }
+        return isInstalled
     }
 
     fun deleteDb() {
