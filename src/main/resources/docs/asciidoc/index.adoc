@@ -37,7 +37,7 @@ See:
 
 The SpaceUp Server can run locally or directly on Uberspace and will open SSH channel to Uberspace.
 
-[plantuml, architecture-diagram, svg, svg-type="inline"]
+[plantuml, architecture-diagram, svg, opts=inline]
 ----
 package "Client side" {
     [SpaceUp Client] <-> HTTP
