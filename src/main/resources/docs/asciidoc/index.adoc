@@ -2,7 +2,9 @@
 thraax.session@iatlas.technology
 
 SpaceUp is a "simple" server / client construct, which helps provide or do actions on your webhost. Or just simplify things without using ssh/console.
-It does as much possible without even a database (only saving credentials / install process), to keep it easy as possible.
+It does as much possible without a database (only saving credentials / install process), to keep it easy as possible.
+
+The server application is written in kotlin with micronaut as web framework. The client is written in Dart with Flutter as framework.
 
 == Features
 
@@ -13,17 +15,61 @@ It does as much possible without even a database (only saving credentials / inst
 * Future feature: You can write your own (automation) script (*.sus) to even more simplify jobs and stuff.
 Like updating a piece of software. And this script will be automatically available as REST service and visible in the app! Cool, right? 😁
 
+* Other features which are planned:
+** Handle web backends (uberspace web commands)
+** Handle mail (uberspace mail commands)
+** Add/Delete services with internal editor
+** Like written above: SUS-Scripts (SpaceUp Script) to create simple automation
+** Support GraalVM as native application for smaller footprint
+** Migrating to JVM 11 =< x
+** ... and so on.
+
+If any other feature is wished, write me a small email, so I will register you for youtrack to open an issue:
+*thraax.session@iatlas.technology*
+
+Little big bonus: There is a multiplatform app (written in Flutter) which already consumes the APIs. 😁
+You should know it's not tested with ios/osx as I am not an apple user.
+But it works for Web, Android, Windows and soon Linux.
+
+== Code Repo / Bug tracker / etc.
+
+I've of course my own tool infrastructure where I keep my code and bugs in place.
+
+Git: https://git.iatlas.dev/SpaceUp
+
+Youtrack: https://yt.iatlas.dev/articles/SU-A-1/Preamble
+
+Artifactory: https://artifactory.iatlas.dev/***REMOVED***browse/browse:technology.iatlas.spaceup:technology%2Fiatlas%2Fspaceup%2FSpaceUp
+
+Youtrack is mainly for bug tracking but also a little knowledgebase.
+But the main documentation will be in Asciidoc which will be updated with the server application.
+
+It can be visited here: https://<yourserver>:9090
+
+
 == Build & Run
 
-Explain what it requires and how to build the project.
-This project requires Java 8 (min) and you can build it executing the following command:
+=== Server application
+
+Requirements:
+
+* Java 8
+
+The application itself is a fatjar which can be directly executed.
 
 [source,console]
 ----
 ./gradlew build
-java -jar SpaceUp-{Version}-all.jar
-***REMOVED*** Don't forget to create web backend to make it publish
+
+***REMOVED***
+***REMOVED*** The parameters are necessary for now.
+***REMOVED*** Later they will be used from the installation process.
+***REMOVED***
+
+java -jar SpaceUp-{Version}-all.jar -micronaut.host.server=0.0.0.0 -spaceup.ssh.host=<Your server to connect> -spaceup.ssh.username=<User> -spaceup.ssh.password=<Password>
 ----
+
+Don't forget to create the uberspace web backend to make it external visible for the client. 😉
 
 After the first run, you have run the installation procedure which is also explained in the swagger-ui. (Only in dev mode)
 
@@ -32,6 +78,27 @@ See:
 * https://<yourserver>:9090/swagger-ui
 * https://<yourserver>:9090/redoc
 * https://<yourserver>:9090/rapidoc
+
+=== Client application
+
+I'll upload regular the client apps here:
+https://artifactory.iatlas.dev/***REMOVED***browse/browse:spaceup-client
+
+Requirements:
+
+* Flutter (current version)
+* ADB (if you want to install it directly on your Android phone)
+
+[source,console]
+----
+***REMOVED*** platform: apk, web, windows and etc.
+flutter build <platform> --no-sound-null-safety
+----
+
+Afterwards you can find it here:
+----
+<your-directory>\SpaceUp-UI\spaceup_ui\build\windows\runner\Release
+----
 
 == Architecture
 
