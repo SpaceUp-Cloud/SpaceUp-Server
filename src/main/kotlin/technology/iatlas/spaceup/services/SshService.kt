@@ -115,7 +115,7 @@ class SshService(
         }
         val file = cmd.shellScript
         val remotefile =
-            sftpConfig.remotedir?.replace("~", "/home/${sshConfig.username}") + "/.spaceup/tmp/" + file.name
+            sftpConfig.remotedir?.replace("~", "/home/${sshConfig.username!!}") + "/${file.name}"
 
         val writeScriptChannel: Channel = session.openChannel("sftp") as Channel
 
@@ -132,7 +132,7 @@ class SshService(
         try {
             writeScriptChannel.connect()
             val sftp = writeScriptChannel as ChannelSftp
-            log.info("Upload script ${file.name} to ${sftpConfig.remotedir}")
+            log.info("Upload script ${file.name} to $remotefile")
             sftp.put(file.scriptPath?.openStream(), remotefile, ChannelSftp.OVERWRITE)
 
             if(file.doExecuteFile) {
