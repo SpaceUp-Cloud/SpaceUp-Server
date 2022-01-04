@@ -15,10 +15,7 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
-import org.asciidoctor.Asciidoctor
-import org.asciidoctor.Attributes
-import org.asciidoctor.Options
-import org.asciidoctor.Placement
+import org.asciidoctor.*
 
 @Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/")
@@ -29,14 +26,20 @@ class DocController {
     fun getDocs(): String {
         val adoc = this.javaClass.getResource("/docs/asciidoc/index.adoc")!!.readText()
 
+        System.setProperty("jruby.compat.version", "RUBY1_9")
+        System.setProperty("jruby.compile.mode", "OFF")
+
         val asciidoc = Asciidoctor.Factory.create()
         asciidoc.requireLibrary("asciidoctor-diagram")
         val attr = Attributes.builder()
             .tableOfContents(true)
             .tableOfContents(Placement.LEFT)
+            .dataUri(true)
+            .experimental(true)
             .build()
 
         val options = Options.builder()
+            .safe(SafeMode.SAFE)
             .headerFooter(true)
             .backend("html5")
             .build()
