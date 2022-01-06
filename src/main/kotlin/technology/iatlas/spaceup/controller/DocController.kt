@@ -16,14 +16,17 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import org.asciidoctor.*
+import java.util.*
 
 @Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/")
 class DocController {
 
     @Secured(SecurityRule.IS_ANONYMOUS)
-    @Get(produces = [MediaType.TEXT_HTML])
-    fun getDocs(): String {
+    @Get(uri = "{?theme}", produces = [MediaType.TEXT_HTML])
+    fun getDocs(theme: Optional<String>): String {
+        val applyTheme = if(theme.isPresent) theme.get() else "asciidoctor"
+
         val adoc = this.javaClass.getResource("/docs/asciidoc/index.adoc")!!.readText()
 
         System.setProperty("jruby.compat.version", "RUBY1_9")
@@ -32,6 +35,8 @@ class DocController {
         val asciidoc = Asciidoctor.Factory.create()
         asciidoc.requireLibrary("asciidoctor-diagram")
         val attr = Attributes.builder()
+            .styleSheetName("$applyTheme.css")
+            .linkCss(true)
             .tableOfContents(true)
             .tableOfContents(Placement.LEFT)
             .dataUri(true)
