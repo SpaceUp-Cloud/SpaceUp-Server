@@ -106,6 +106,7 @@ The SpaceUp Server can run locally or directly on Uberspace and will open SSH ch
 
 [plantuml, architecture-diagram, svg, opts=inline]
 ----
+!pragma layout smetana
 package "Client side" {
     [SpaceUp Client] <-> HTTP
 }
