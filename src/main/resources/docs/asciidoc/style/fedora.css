@@ -1,0 +1,53 @@
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+
+@import url(//fonts.googleapis.com/css?family=Montserrat|Open+Sans);
+@import url(https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css); /* Default asciidoc style framework - important */
+
+/* CUSTOMISATIONS */
+/* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
+:root{
+--maincolor:***REMOVED***FFFFFF;
+--primarycolor:***REMOVED***294172; /* Fedora Dark Blue */
+--secondarycolor:***REMOVED***3c6eb4; /* Fedora Blue */
+--tertiarycolor:***REMOVED***CCCCCC;
+--highlightcolor:***REMOVED***e59728; /* Features Orange */
+--sidebarbackground:***REMOVED***CACACA;
+--linkcolor:***REMOVED***0D47A1;
+--linkcoloralternate:***REMOVED***db3279; /* Friends Magneta */
+--white:***REMOVED***FFFFFF;
+--black:***REMOVED***000000;
+}
+
+/* Text styles */
+
+body{font-family: "Open Sans",sans-serif;background-color: var(--maincolor);color:var(--black);}
+
+h1{color:var(--primarycolor) !important;font-family:"Montserrat",sans-serif;}
+h2,h3,h4,h5,h6{color:var(--secondarycolor) !important;font-family:"Montserrat",sans-serif;}
+.title{color:var(--black) !important;font-family:"Open Sans",sans-serif;font-style: normal; font-weight: normal;}
+a{text-decoration: none;}
+p{font-family: "Open Sans",sans-serif ! important}
+***REMOVED***toc.toc2 a:link{color:var(--linkcolor);}
+blockquote{color:var(--linkcoloralternate) !important}
+.quoteblock blockquote:before{color:var(--linkcoloralternate)}
+code{color:var(--white);background-color: var(--highlightcolor) !important}
+mark{background-color: var(--highlightcolor)} /* Text highlighting color */
+
+/* Table styles */
+th{background-color: var(--maincolor);color:var(--black) !important;}
+td{background-color: var(--maincolor);color: var(--black) !important}
+
+
+***REMOVED***toc.toc2{background-color:var(--sidebarbackground);}
+***REMOVED***toctitle{color:var(--white);}
+
+/* Responsiveness fixes */
+video {
+  max-width: 100%;
+}
+
+@media all and (max-width: 600px) {
+table {
+  width: 55vw!important;
+  font-size: 3vw;
+}
