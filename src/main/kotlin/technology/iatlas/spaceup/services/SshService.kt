@@ -12,6 +12,7 @@ package technology.iatlas.spaceup.services
 
 import com.jcraft.jsch.*
 import io.micronaut.context.annotation.Context
+import io.micronaut.context.annotation.Value
 import kotlinx.coroutines.delay
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceUpSftpConfig
@@ -19,6 +20,8 @@ import technology.iatlas.spaceup.config.SpaceUpSshConfig
 import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.cmd.CommandInf
 import technology.iatlas.spaceup.core.cmd.SshResponse
+import technology.iatlas.spaceup.core.helper.colored
+import technology.iatlas.spaceup.dto.Ssh
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -27,26 +30,64 @@ import java.io.File
 class SshService(
     private val sshConfig: SpaceUpSshConfig,
     private val sftpConfig: SpaceUpSftpConfig,
+    private val dbService: DbService,
+    private val spaceUpService: SpaceUpService
     ) {
     private val log = LoggerFactory.getLogger(SshService::class.java)
 
     private lateinit var session: Session
 
+    @Value("\${spaceup.dev.ssh.db-credentials}")
+    private lateinit var useDbCredentials: String
+
     // Configure SSH
     fun initSSH() {
         val jsch = JSch()
 
+        var username = ""
+        var password = ""
+        var host = ""
+
+        if(spaceUpService.isDevMode() && useDbCredentials == "false") {
+            colored {
+                log.debug("Use configuration from parameters in dev mode.".yellow)
+            }
+            username = sshConfig.username!!
+            password = sshConfig.password!!
+            host = sshConfig.host!!
+        } else {
+            log.info("Take saved credentials")
+            val db = dbService.getDb()
+            val sshRepo = db.getRepository(Ssh::class.java)
+            log.debug("Assuming there is only one configuration")
+            val ssh = sshRepo.find().first()
+
+            username = ssh.username
+            password = ssh.password
+            host = ssh.server
+        }
+
+        if((sshConfig.privatekey == null || sshConfig.privatekey!!.isEmpty())) {
+            colored {
+                log.warn("To authenticate with Privatekey supply" +
+                        " '-spaceup.ssh.privatekey=\"your path to key\"' ".yellow + "to JAR.")
+            }
+        }
+
+        if(sshConfig.port == null) {
+            log.error("Provide SSH port '-***REMOVED***' to JAR.")
+        }
+
         val privatekey: String? = sshConfig.privatekey
         if (privatekey != null && privatekey.isNotEmpty()) {
             jsch.addIdentity(File(privatekey).normalize().path)
-            session = jsch.getSession(
-                    sshConfig.username, sshConfig.host, Integer.valueOf(sshConfig.port!!))
+            session = jsch.getSession(username, host, Integer.valueOf(sshConfig.port!!))
 
             log.info("Authenticate SSH via private key!")
         } else {
             session = jsch.getSession(
-                    sshConfig.username, sshConfig.host, Integer.valueOf(sshConfig.port!!))
-            session.setPassword(sshConfig.password)
+                    username, host, Integer.valueOf(sshConfig.port!!))
+            session.setPassword(password)
 
             log.info("Authenticate SSH via password!")
         }
