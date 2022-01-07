@@ -20,13 +20,15 @@ import technology.iatlas.spaceup.core.helper.colored
 import technology.iatlas.spaceup.dto.Server
 import technology.iatlas.spaceup.services.DbService
 import technology.iatlas.spaceup.services.InstallerService
+import technology.iatlas.spaceup.services.SpaceUpService
 import technology.iatlas.spaceup.services.SystemService
 
 @Singleton
 class StartupEventListener(
     private val dbService: DbService,
     private val installerService: InstallerService,
-    private val systemService: SystemService
+    private val systemService: SystemService,
+    private val spaceUpService: SpaceUpService
 ) {
     private val log = LoggerFactory.getLogger(StartupEventListener::class.java)
 
@@ -36,7 +38,6 @@ class StartupEventListener(
         colored {
             println("\tSpaceUp Server (${systemService.getSpaceUpVersion()})".cyan.bold)
         }
-
         log.info("Running SpaceUp startup")
 
         val os = System.getProperty("os.name")
@@ -44,6 +45,16 @@ class StartupEventListener(
         if(!os.lowercase().contains("linux")) {
             log.warn("Currently only GNU/Linux is supported!")
             return
+        }
+
+        if(spaceUpService.isDevMode()) {
+            colored {
+                log.warn("You are running in DEV mode!".yellow.bold)
+                log.warn("If 'spaceup.dev.ssh.db-credentials' set to false".yellow.bold)
+                log.warn(
+                    "Supply all necessary SSH configuration as parameters to ensure SpaceUp can run as expected!"
+                        .yellow.bold)
+            }
         }
 
         // Step 1: create directories if not exist
