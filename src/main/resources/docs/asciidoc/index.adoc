@@ -1,6 +1,17 @@
 = SpaceUp Server
 thraax.session@iatlas.technology
 
+=== Asciidoc Themes
+If you want to use another theme. Replace theme-name: {data-baseurl}/?theme={theme-name}
+
+.Click me to open Themes
+[%collapsible]
+====
+{data-themes}
+====
+
+== Description
+
 SpaceUp is a "simple" server / client construct, which helps provide or do actions on your webhost. Or just simplify things without using ssh/console.
 It does as much possible without a database (only saving credentials / install process), to keep it easy as possible.
 
@@ -12,16 +23,16 @@ The server application is written in kotlin with micronaut as web framework. The
 * Start/Stop/Restart services
 * Inspecting logfiles of the corresponding service
 * Have a look on the space
-* Future feature: You can write your own (automation) script (*.sus) to even more simplify jobs and stuff.
-Like updating a piece of software. And this script will be automatically available as REST service and visible in the app! Cool, right? 😁
 
 * Other features which are planned:
 ** Handle web backends (uberspace web commands)
 ** Handle mail (uberspace mail commands)
 ** Add/Delete services with internal editor
-** Like written above: SUS-Scripts (SpaceUp Script) to create simple automation
 ** Support GraalVM as native application for smaller footprint
 ** Migrating to JVM 11 =< x
+** Self-Updating JAR (Never download it by yourself again!)
+** Write your own (automation) script (*.sus) to even more simplify jobs and stuff.
+Like updating a piece of software. And this script will be automatically available as REST service and visible in the app! Cool, right? 😁
 ** ... and so on.
 
 If any other feature is wished, write me a small email, so I will register you for youtrack to open an issue:
@@ -39,13 +50,11 @@ Git: https://git.iatlas.dev/SpaceUp
 
 Youtrack: https://yt.iatlas.dev/articles/SU-A-1/Preamble
 
-Artifactory: https://artifactory.iatlas.dev/***REMOVED***browse/browse:technology.iatlas.spaceup:technology%2Fiatlas%2Fspaceup%2FSpaceUp
+Artifactory:
+https://artifactory.iatlas.dev/***REMOVED***browse/browse:technology.iatlas.spaceup:technology%2Fiatlas%2Fspaceup%2FSpaceUp
 
 Youtrack is mainly for bug tracking but also a little knowledgebase.
-But the main documentation will be in Asciidoc which will be updated with the server application.
-
-It can be visited here: https://<yourserver>:9090
-
+But the main documentation will be here in Asciidoc which will be regularly updated.
 
 == Build & Run
 
@@ -57,39 +66,87 @@ Requirements:
 
 The application itself is a fatjar which can be directly executed.
 
-[source,console]
+[console]
 ----
-./gradlew build
+***REMOVED*** Build the jar file
+./gradlew assemble
 
 ***REMOVED***
 ***REMOVED*** The parameters are necessary for now.
 ***REMOVED*** Later they will be used from the installation process.
 ***REMOVED***
 
-java -jar SpaceUp-{Version}-all.jar -micronaut.host.server=0.0.0.0 -spaceup.ssh.host=<Your server to connect> -spaceup.ssh.username=<User> -spaceup.ssh.password=<Password>
+***REMOVED*** Normal prod usecase
+java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.host.server=0.0.0.0 -micronaut.host.port=<Your Port>
+
+***REMOVED*** In dev you can directly supply SSH configuration when you pass "-***REMOVED***"
+***REMOVED*** Default is spaceup.dev.ssh.db-credentials=false
+java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.host.server=127.0.0.1 -micronaut.host.port=<Your Port> spaceup.dev.ssh.db-credentials=false -spaceup.ssh.host=<Your server to connect> -spaceup.ssh.username=<User> -spaceup.ssh.password=<Password>
 ----
 
 Don't forget to create the uberspace web backend to make it external visible for the client. 😉
 
-After the first run, you have run the installation procedure which is also explained in the swagger-ui. (Only in dev mode)
+*After the first run, you have run the installation procedure* which is also explained in the swagger-ui.
+Swaager-ui, redoc and rapidoc are only available in dev mode as they are normally not necessary to finish the installation.
+In the near time I will adapt the app which helps you to finish the set up SpaceUp.
 
 See:
 
-* https://<yourserver>:9090/swagger-ui
-* https://<yourserver>:9090/redoc
-* https://<yourserver>:9090/rapidoc
+* {data-baseurl}/swagger-ui
+* {data-baseurl}/redoc
+* {data-baseurl}/rapidoc
+
+After first startup you will be greeted with this console output.
+*Beware the output of they API Key, which you need to verify that it is you, when you finish the installation!*
+
+[console]
+----
+ __  __ _                                  _
+|  \/  (_) ___ _ __ ___  _ __   __ _ _   _| |_
+| |\/| | |/ __| '__/ _ \| '_ \ / _` | | | | __|
+| |  | | | (__| | | (_) | | | | (_| | |_| | |_
+|_|  |_|_|\___|_|  \___/|_| |_|\__,_|\__,_|\__|
+  Micronaut (v3.2.4)
+
+11:13:10.693 [main] INFO  io.micronaut.context.env.DefaultEnvironment - Established active environments: [prod]
+2022-01-07 11:13:10,697 main DEBUG AsyncLogger.ThreadNameStrategy=UNCACHED (user specified null, default is UNCACHED)
+2022-01-07 11:13:10,697 main DEBUG org.apache.logging.log4j.core.util.SystemClock does not support precise timestamps.
+   ▄████████    ▄███████▄    ▄████████  ▄████████    ▄████████ ███    █▄     ▄███████▄
+  ███    ███   ███    ███   ███    ███ ███    ███   ███    ███ ███    ███   ███    ███
+  ███    █▀    ███    ███   ███    ███ ███    █▀    ███    █▀  ███    ███   ███    ███
+  ███          ███    ███   ███    ███ ███         ▄███▄▄▄     ███    ███   ███    ███
+▀███████████ ▀█████████▀  ▀███████████ ███        ▀▀███▀▀▀     ███    ███ ▀█████████▀
+         ███   ███          ███    ███ ███    █▄    ███    █▄  ███    ███   ███
+   ▄█    ███   ███          ███    ███ ███    ███   ███    ███ ███    ███   ███
+ ▄████████▀   ▄████▀        ███    █▀  ████████▀    ██████████ ████████▀   ▄████▀
+	SpaceUp Server (0.0.20-SNAPSHOT)
+11:13:12.050 [main] INFO  technology.iatlas.spaceup.core.startup.StartupEventListener - Running SpaceUp startup
+11:13:12.050 [main] DEBUG technology.iatlas.spaceup.core.startup.StartupEventListener - OS: Linux
+11:13:12.050 [main] INFO  technology.iatlas.spaceup.core.startup.StartupEventListener - Create remote directories
+11:13:12.053 [main] INFO  technology.iatlas.spaceup.core.startup.StartupEventListener - Create /home/gino/.spaceup
+11:13:12.060 [main] INFO  technology.iatlas.spaceup.core.startup.StartupEventListener - Create /home/gino/.spaceup/tmp
+11:13:12.062 [main] INFO  technology.iatlas.spaceup.services.DbService - Init DB @ /home/gino/.spaceup/spaceup.db
+11:13:12.367 [main] INFO  technology.iatlas.spaceup.services.DbService - Created and migrated DB
+11:13:12.367 [main] INFO  technology.iatlas.spaceup.services.DbService - Indexing fields ...
+11:13:12.721 [main] INFO  technology.iatlas.spaceup.core.startup.StartupEventListener - Seems to be first run. Set not installed!
+11:13:12.726 [main] INFO  technology.iatlas.spaceup.core.startup.StartupEventListener - Finish installation with API key: IvTX3L4b
+11:13:12.732 [main] INFO  technology.iatlas.spaceup.core.startup.StartupEventListener - Finished SpaceUp startup
+11:13:12.823 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 2456ms. Server Running: http://localhost:9090
+----
 
 === Client application
 
 I'll upload regular the client apps here:
 https://artifactory.iatlas.dev/***REMOVED***browse/browse:spaceup-client
 
+But if you like to build it by your own, go ahead with the following!
+
 Requirements:
 
 * Flutter (current version)
 * ADB (if you want to install it directly on your Android phone)
 
-[source,console]
+[console]
 ----
 ***REMOVED*** platform: apk, web, windows and etc.
 flutter build <platform> --no-sound-null-safety
@@ -102,18 +159,22 @@ Afterwards you can find it here:
 
 == Architecture
 
-The SpaceUp Server can run locally or directly on Uberspace and will open SSH channel to Uberspace.
+The SpaceUp Server can run locally or directly on Uberspace and will open SSH channel to Uberspace / to local SSHD.
+
+=== The Big Picture
 
 [plantuml, architecture-diagram, svg, opts=inline]
 ----
 !pragma layout smetana
+
 package "Client side" {
-    [SpaceUp Client] <-> HTTP
+    [SpaceUp Client] <-> HTTP : "CRUD"
 }
 
 package "Local or Uberspace Server" {
     SSH <-left-> [SpaceUp Server] : Remote scripts
-    HTTP <-left-> [SpaceUp Server]
+    HTTP <-left-> [SpaceUp Server] : "API Endpoints"
+    [SpaceUp Server] <-up-> NoSQL_DB
 }
 
 cloud {
