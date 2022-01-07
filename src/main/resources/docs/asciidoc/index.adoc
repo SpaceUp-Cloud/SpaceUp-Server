@@ -77,11 +77,11 @@ The application itself is a fatjar which can be directly executed.
 #
 
 # Normal prod usecase
-java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.host.server=0.0.0.0 -micronaut.host.port=<Your Port>
+java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.server.host=0.0.0.0 -micronaut.host.port=<Your Port>
 
 # In dev you can directly supply SSH configuration when you pass "-spaceup.dev.ssh.db-credentials=true"
 # Default is spaceup.dev.ssh.db-credentials=false
-java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.host.server=127.0.0.1 -micronaut.host.port=<Your Port> spaceup.dev.ssh.db-credentials=false -spaceup.ssh.host=<Your server to connect> -spaceup.ssh.username=<User> -spaceup.ssh.password=<Password>
+java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.server.host=127.0.0.1 -micronaut.host.port=<Your Port> spaceup.dev.ssh.db-credentials=false -spaceup.ssh.host=<Your server to connect> -spaceup.ssh.username=<User> -spaceup.ssh.password=<Password>
 ----
 
 Don't forget to create the uberspace web backend to make it external visible for the client. 😉
