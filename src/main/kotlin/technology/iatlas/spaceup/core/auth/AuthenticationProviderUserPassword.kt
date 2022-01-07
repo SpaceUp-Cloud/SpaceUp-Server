@@ -19,26 +19,41 @@ import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableEmitter
 import org.reactivestreams.Publisher
-import technology.iatlas.spaceup.config.SpaceUpSshConfig
+import org.slf4j.LoggerFactory
+import technology.iatlas.spaceup.core.helper.colored
+import technology.iatlas.spaceup.dto.User
+import technology.iatlas.spaceup.services.DbService
 
 @Context
 class AuthenticationProviderUserPassword(
-    private val sshConfig: SpaceUpSshConfig
+    private val dbService: DbService
 ): AuthenticationProvider  {
     override fun authenticate(
         httpRequest: HttpRequest<*>?,
         authenticationRequest: AuthenticationRequest<*, *>?
     ): Publisher<AuthenticationResponse>? {
+        val log = LoggerFactory.getLogger(AuthenticationProviderUserPassword::class.java)
+
+        val db = dbService.getDb()
+        val userRepo = db.getRepository(User::class.java)
+
         return Flowable.create({
             emitter: FlowableEmitter<AuthenticationResponse> ->
             if (authenticationRequest != null) {
-                // Authenticate locally
-                if(authenticationRequest.identity == sshConfig.username && authenticationRequest.secret == sshConfig.password) {
-                    emitter.onNext(AuthenticationResponse.success(sshConfig.username!!))
+                val userFound = userRepo.find().find {
+                    authenticationRequest.identity == it.username && authenticationRequest.secret == it.password
+                }
+
+                if(userFound != null) {
+                    colored {
+                        log.info("${userFound.username} is authenticated!".green.bold)
+                    }
+                    emitter.onNext(AuthenticationResponse.success(userFound.username))
                     emitter.onComplete()
                 } else {
                     emitter.onError(AuthenticationResponse.exception())
                 }
+
             } else {
                 emitter.onError(AuthenticationResponse.exception())
             }
