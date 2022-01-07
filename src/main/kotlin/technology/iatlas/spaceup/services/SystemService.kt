@@ -11,7 +11,6 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
-import io.micronaut.context.env.Environment
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.EchoParser
 import technology.iatlas.spaceup.core.parser.QuotaParser
@@ -21,11 +20,9 @@ import technology.iatlas.spaceup.dto.Hostname
 import java.util.*
 
 @Context
-class SystemService(
-    env: Environment,
-    sshService: SshService) {
-    private val hostnameRunner = Runner<String>(env, sshService)
-    private val diskRunner = Runner<Disk>(env, sshService)
+class SystemService(sshService: SshService) {
+    private val hostnameRunner = Runner<String>(sshService)
+    private val diskRunner = Runner<Disk>(sshService)
 
     suspend fun getDiskQuota(): Disk {
         val cmd = mutableListOf("quota", "-gsl")

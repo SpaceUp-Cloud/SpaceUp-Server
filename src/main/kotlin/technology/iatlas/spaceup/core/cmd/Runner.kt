@@ -11,7 +11,6 @@
 package technology.iatlas.spaceup.core.cmd
 
 import io.micronaut.context.annotation.Context
-import io.micronaut.context.env.Environment
 import io.micronaut.tracing.annotation.ContinueSpan
 import io.micronaut.tracing.annotation.SpanTag
 import org.slf4j.Logger
@@ -20,15 +19,12 @@ import technology.iatlas.spaceup.services.SshService
 
 @Context
 open class Runner<T>(
-    env: Environment,
     private val sshService: SshService) : BaseRunner<T>() {
     private val log: Logger = LoggerFactory.getLogger(Runner::class.java)
 
-    private var devMode = env.activeNames.contains("dev")
-
     @ContinueSpan
     override suspend fun execute(@SpanTag("runner.cmd") cmd: CommandInf, parser: ParserInf<T>) {
-        log.trace("Actual cmd: {} ", cmd.parameters)
+        log.debug("Actual cmd: {} ", cmd.parameters)
 
         val script = cmd.shellScript
         val output = if(script.name == "") {
@@ -38,9 +34,8 @@ open class Runner<T>(
             val res = sshService.upload(cmd)
             parser.parseSshOutput(res)
         }
-        if(devMode) {
-            log.debug("Parsed output: $output")
-        }
+
+        log.trace("Parsed output: $output")
         subject.onNext(output)
     }
 }
