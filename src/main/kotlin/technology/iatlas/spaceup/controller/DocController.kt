@@ -13,18 +13,25 @@ package technology.iatlas.spaceup.controller
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
+import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import org.asciidoctor.*
+import java.io.File
 import java.util.*
 
 @Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/")
-class DocController {
+class DocController(
+    private val es: EmbeddedServer
+) {
+    private val stylesDir = this.javaClass.getResource("/docs/asciidoc/style")
 
     @Secured(SecurityRule.IS_ANONYMOUS)
     @Get(uri = "{?theme}", produces = [MediaType.TEXT_HTML])
     fun getDocs(theme: Optional<String>): String {
+        val baseUrl = es.scheme + "://" + es.host + ":" + es.port
+
         val applyTheme = if(theme.isPresent) theme.get() else "asciidoctor"
 
         val adoc = this.javaClass.getResource("/docs/asciidoc/index.adoc")!!.readText()
@@ -36,11 +43,17 @@ class DocController {
         asciidoc.requireLibrary("asciidoctor-diagram")
         val attr = Attributes.builder()
             .styleSheetName("$applyTheme.css")
-            .linkCss(true)
+            .stylesDir(stylesDir!!.path)
+            .linkCss(false)
+            .copyCss(false)
             .tableOfContents(true)
             .tableOfContents(Placement.LEFT)
             .dataUri(true)
             .experimental(true)
+
+            .attribute("data-baseurl", baseUrl)
+            .attribute("data-themes", getAllStylesheets())
+
             .build()
 
         val options = Options.builder()
@@ -51,6 +64,18 @@ class DocController {
         options.setAttributes(attr)
 
         return asciidoc.convert(adoc, options)
+    }
+
+    private fun getAllStylesheets(): List<String> {
+        val allFiles = mutableListOf<String>()
+
+        File(stylesDir!!.file).walk().forEach {
+            if(it.isFile && it.name.contains(".css")) {
+                allFiles.add(it.name.split(".")[0])
+            }
+        }
+
+        return allFiles.sorted()
     }
 
 }
