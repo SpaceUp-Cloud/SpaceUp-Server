@@ -11,7 +11,6 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
-import io.micronaut.context.env.Environment
 import io.micronaut.core.io.ResourceLoader
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceUpSftpConfig
@@ -24,7 +23,6 @@ import technology.iatlas.spaceup.dto.*
 
 @Context
 class ServiceService(
-    env: Environment,
     sshService: SshService,
     private val config: SpaceupPathConfig,
     private val sftpConfig: SpaceUpSftpConfig,
@@ -42,10 +40,10 @@ class ServiceService(
     private lateinit var deleteServiceFeedback: Feedback
     private lateinit var currentLogs: Log
 
-    private val serviceListRunner = Runner<List<Service>>(env, sshService)
-    private val serviceExecRunner = Runner<String>(env, sshService)
-    private val serviceDeleteRunner = Runner<String>(env, sshService)
-    private val serviceLogRunner = Runner<Log>(env, sshService)
+    private val serviceListRunner = Runner<List<Service>>(sshService)
+    private val serviceExecRunner = Runner<String>(sshService)
+    private val serviceDeleteRunner = Runner<String>(sshService)
+    private val serviceLogRunner = Runner<Log>(sshService)
 
     init {
         serviceListRunner.subject().subscribe {

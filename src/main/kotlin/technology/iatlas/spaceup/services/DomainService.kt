@@ -11,7 +11,6 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
-import io.micronaut.context.env.Environment
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.cmd.Runner
@@ -24,16 +23,15 @@ import technology.iatlas.spaceup.dto.Feedback
 
 @Context
 class DomainService(
-    private val env: Environment,
     private val sshService: SshService,
     private val wsBroadcaster: WsBroadcaster): WsServiceInf {
     private val log = LoggerFactory.getLogger(DomainService::class.java)
 
-    private val domainListRunner = Runner<List<Domain>>(env, sshService)
+    private val domainListRunner = Runner<List<Domain>>(sshService)
     private var domains = listOf<Domain>()
 
-    private val addDomainRunner = Runner<Feedback>(env, sshService)
-    private val deleteDomainRunner = Runner<Feedback>(env, sshService)
+    private val addDomainRunner = Runner<Feedback>(sshService)
+    private val deleteDomainRunner = Runner<Feedback>(sshService)
 
     override val topic = "domains"
 
