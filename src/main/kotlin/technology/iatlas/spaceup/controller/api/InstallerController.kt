@@ -17,10 +17,11 @@ import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Header
 import io.micronaut.http.annotation.Post
+import io.micronaut.security.annotation.Secured
+import io.micronaut.security.rules.SecurityRule
 import technology.iatlas.spaceup.core.annotations.Installation
 import technology.iatlas.spaceup.dto.Ssh
 import technology.iatlas.spaceup.dto.User
-import technology.iatlas.spaceup.services.DbService
 import technology.iatlas.spaceup.services.InstallerService
 
 /**
@@ -28,11 +29,9 @@ import technology.iatlas.spaceup.services.InstallerService
  * The endpoint will only be reachable when there isn't an installation.
  */
 @Installation
+@Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/api/installer")
-class InstallerController(
-    private val dbService: DbService,
-    private val installerService: InstallerService
-) {
+class InstallerController(private val installerService: InstallerService) {
     /**
      * Create a new user for authentication on SpaceUp
      * @param User defines a user database object
