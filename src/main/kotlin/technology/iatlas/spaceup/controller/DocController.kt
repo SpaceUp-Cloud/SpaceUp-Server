@@ -18,14 +18,17 @@ import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import org.asciidoctor.*
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.*
+import kotlin.io.path.Path
 
 @Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/")
 class DocController(
     private val es: EmbeddedServer
 ) {
-    private val stylesDir = this.javaClass.getResource("/docs/asciidoc/style")
+    private val stylesDir = this.javaClass.getResource("/docs/asciidoc/style")!!
 
     @Secured(SecurityRule.IS_ANONYMOUS)
     @Get(uri = "{?theme}", produces = [MediaType.TEXT_HTML])
@@ -43,12 +46,13 @@ class DocController(
         asciidoc.requireLibrary("asciidoctor-diagram")
         val attr = Attributes.builder()
             .styleSheetName("$applyTheme.css")
-            .stylesDir(stylesDir!!.path)
+            .stylesDir(File(stylesDir.file).path)
             .linkCss(false)
             .copyCss(false)
             .tableOfContents(true)
             .tableOfContents(Placement.LEFT)
             .dataUri(true)
+            .allowUriRead(true)
             .experimental(true)
 
             .attribute("data-baseurl", baseUrl)
@@ -69,11 +73,18 @@ class DocController(
     private fun getAllStylesheets(): List<String> {
         val allFiles = mutableListOf<String>()
 
-        File(stylesDir!!.file).walk().forEach {
+        File(stylesDir.toExternalForm()).walk().forEach {
             if(it.isFile && it.name.contains(".css")) {
                 allFiles.add(it.name.split(".")[0])
             }
         }
+
+        /*val absPath = Path(stylesDir!!.path)
+        Files.walk(absPath).forEach {
+            if(it.fileName.endsWith(".css")) {
+                allFiles.add(it.fileName.toString().split(".")[0])
+            }
+        }*/
 
         return allFiles.sorted()
     }
