@@ -154,9 +154,14 @@ class SshService(
         if(!session.isConnected) {
             initSSH()
         }
+
+        val db = dbService.getDb()
+        val sshRepo = db.getRepository(Ssh::class.java)
+        val ssh = sshRepo.find().first()
+
         val file = cmd.shellScript
         val remotefile =
-            sftpConfig.remotedir?.replace("~", "/home/${sshConfig.username!!}") + "/${file.name}"
+            sftpConfig.remotedir?.replace("~", "/home/${ssh.username}") + "/${file.name}"
 
         val writeScriptChannel: Channel = session.openChannel("sftp") as Channel
 
