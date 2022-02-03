@@ -48,7 +48,7 @@ dependencies {
     implementation("io.micronaut:micronaut-http-server-netty:$micronautVersion")
     implementation("io.micronaut:micronaut-http-client:$micronautVersion")
     implementation('io.swagger.core.v3:swagger-annotations:2.1.12')
-    implementation("io.micronaut:micronaut-tracing:$micronautVersion")
+    implementation("io.micronaut:micronaut-tracing:3.2.4")
     runtimeOnly('io.jaegertracing:jaeger-thrift:1.7.0')
     implementation('io.micronaut.mongodb:micronaut-mongo-reactive:4.0.0')
     implementation("io.micronaut.security:micronaut-security:3.2.0")
