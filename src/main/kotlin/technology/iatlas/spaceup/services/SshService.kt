@@ -44,9 +44,9 @@ class SshService(
     fun initSSH() {
         val jsch = JSch()
 
-        var username = ""
-        var password = ""
-        var host = ""
+        var username: String
+        var password: String
+        var host: String
 
         if(spaceUpService.isDevMode() && useDbCredentials == "false") {
             colored {
