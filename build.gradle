@@ -55,7 +55,6 @@ dependencies {
     implementation('io.micronaut.security:micronaut-security-jwt:3.3.0')
     implementation('io.micronaut.kotlin:micronaut-kotlin-extension-functions:3.1.0')
     implementation('io.micronaut.cache:micronaut-cache-caffeine:3.1.0')
-    implementation('org.apache.logging.log4j:log4j-core:2.17.0')
     implementation('com.google.code.gson:gson:2.8.9')
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt')
     implementation('com.github.mwiede:jsch:0.1.72')
@@ -76,8 +75,14 @@ dependencies {
     implementation group: 'org.asciidoctor', name: 'asciidoctorj-api', version: '2.5.2'
     implementation group: 'org.asciidoctor', name: 'asciidoctorj-diagram', version: '2.2.1'
 
+    compileOnly 'org.graalvm.nativeimage:svm'
+    annotationProcessor 'io.micronaut:micronaut-graal'
+
+    runtimeOnly("ch.qos.logback:logback-classic")
+    /*runtimeOnly('org.slf4j:log4j-over-slf4j:1.7.35')
+    implementation('org.apache.logging.log4j:log4j-core:2.17.0')
     runtimeOnly('org.apache.logging.log4j:log4j-api:2.17.0')
-    runtimeOnly('org.apache.logging.log4j:log4j-slf4j-impl:2.17.0')
+    runtimeOnly('org.apache.logging.log4j:log4j-slf4j-impl:2.17.0')*/
     runtimeOnly('com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1')
     runtimeOnly('io.netty:netty-tcnative:2.0.48.Final')
     runtimeOnly('io.netty:netty-tcnative-boringssl-static:2.0.48.Final')
@@ -112,6 +117,7 @@ compileKotlin {
         jvmTarget = '11'
         //Will retain parameter names for Java reflection
         javaParameters = true
+        useIR = true
     }
 }
 compileTestKotlin {
