@@ -17,6 +17,7 @@ import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import org.asciidoctor.*
+import org.slf4j.LoggerFactory
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -28,6 +29,7 @@ import kotlin.io.path.Path
 class DocController(
     private val es: EmbeddedServer
 ) {
+    private val log = LoggerFactory.getLogger(DocController::class.java)
     private val stylesDir = this.javaClass.getResource("/docs/asciidoc/style")!!
 
     @Secured(SecurityRule.IS_ANONYMOUS)
@@ -38,6 +40,8 @@ class DocController(
         val applyTheme = if(theme.isPresent) theme.get() else "asciidoctor"
 
         val adoc = this.javaClass.getResource("/docs/asciidoc/index.adoc")!!.readText()
+        val cssDir = File(stylesDir.file).canonicalPath
+        log.debug("CSS dir: $cssDir")
 
         System.setProperty("jruby.compat.version", "RUBY1_9")
         System.setProperty("jruby.compile.mode", "OFF")
@@ -46,7 +50,7 @@ class DocController(
         asciidoc.requireLibrary("asciidoctor-diagram")
         val attr = Attributes.builder()
             .styleSheetName("$applyTheme.css")
-            .stylesDir(File(stylesDir.file).path)
+            .stylesDir(cssDir)
             .linkCss(false)
             .copyCss(false)
             .tableOfContents(true)
@@ -73,18 +77,20 @@ class DocController(
     private fun getAllStylesheets(): List<String> {
         val allFiles = mutableListOf<String>()
 
-        File(stylesDir.toExternalForm()).walk().forEach {
+        /*File(stylesDir.file).walk().forEach {
+            log.debug("CSS file: $it")
             if(it.isFile && it.name.contains(".css")) {
                 allFiles.add(it.name.split(".")[0])
             }
-        }
+        }*/
 
-        /*val absPath = Path(stylesDir!!.path)
+        val absPath = Path(stylesDir.path)
         Files.walk(absPath).forEach {
             if(it.fileName.endsWith(".css")) {
+                log.debug("CSS file: $it")
                 allFiles.add(it.fileName.toString().split(".")[0])
             }
-        }*/
+        }
 
         return allFiles.sorted()
     }
