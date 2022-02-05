@@ -1,6 +1,6 @@
-<configuration>
+<configuration scan="true" scanPeriod="15 seconds">
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="root" class="ch.qos.logback.core.ConsoleAppender">
         <withJansi>true</withJansi>
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
@@ -9,7 +9,9 @@
         </encoder>
     </appender>
 
-    <root level="info">
-        <appender-ref ref="STDOUT" />
+    <logger name="technology.iatlas.spaceup" level="debug"/>
+
+    <root level="${root-level:-INFO}">
+        <appender-ref ref="root" />
     </root>
 </configuration>
