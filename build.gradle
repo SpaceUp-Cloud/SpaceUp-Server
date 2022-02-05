@@ -75,14 +75,7 @@ dependencies {
     implementation group: 'org.asciidoctor', name: 'asciidoctorj-api', version: '2.5.2'
     implementation group: 'org.asciidoctor', name: 'asciidoctorj-diagram', version: '2.2.1'
 
-    compileOnly 'org.graalvm.nativeimage:svm'
-    annotationProcessor 'io.micronaut:micronaut-graal'
-
     runtimeOnly("ch.qos.logback:logback-classic")
-    /*runtimeOnly('org.slf4j:log4j-over-slf4j:1.7.35')
-    implementation('org.apache.logging.log4j:log4j-core:2.17.0')
-    runtimeOnly('org.apache.logging.log4j:log4j-api:2.17.0')
-    runtimeOnly('org.apache.logging.log4j:log4j-slf4j-impl:2.17.0')*/
     runtimeOnly('com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1')
     runtimeOnly('io.netty:netty-tcnative:2.0.48.Final')
     runtimeOnly('io.netty:netty-tcnative-boringssl-static:2.0.48.Final')
