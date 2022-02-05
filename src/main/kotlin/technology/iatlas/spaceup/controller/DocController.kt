@@ -19,10 +19,7 @@ import io.micronaut.security.rules.SecurityRule
 import org.asciidoctor.*
 import org.slf4j.LoggerFactory
 import java.io.File
-import java.nio.file.Files
-import java.nio.file.Paths
 import java.util.*
-import kotlin.io.path.Path
 
 @Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/")
@@ -77,18 +74,10 @@ class DocController(
     private fun getAllStylesheets(): List<String> {
         val allFiles = mutableListOf<String>()
 
-        /*File(stylesDir.file).walk().forEach {
-            log.debug("CSS file: $it")
+        File(stylesDir.file).walk().forEach {
+            log.trace("CSS file: $it")
             if(it.isFile && it.name.contains(".css")) {
                 allFiles.add(it.name.split(".")[0])
-            }
-        }*/
-
-        val absPath = Path(stylesDir.path)
-        Files.walk(absPath).forEach {
-            if(it.fileName.endsWith(".css")) {
-                log.debug("CSS file: $it")
-                allFiles.add(it.fileName.toString().split(".")[0])
             }
         }
 
