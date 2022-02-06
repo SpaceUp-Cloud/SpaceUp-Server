@@ -20,14 +20,17 @@ import technology.iatlas.spaceup.dto.Hostname
 import java.util.*
 
 @Context
-class SystemService(sshService: SshService) {
+class SystemService(
+    sshService: SshService,
+    private val dbService: DbService
+    ) {
     private val hostnameRunner = Runner<String>(sshService)
     private val diskRunner = Runner<Disk>(sshService)
 
     suspend fun getDiskQuota(): Disk {
         val cmd = mutableListOf("quota", "-gsl")
-        val emptyQuotaSpace: Float = 0.0F
-        var disk: Disk = Disk(
+        val emptyQuotaSpace = 0.0F
+        var disk = Disk(
             space = "",
             spacePercentage = emptyQuotaSpace,
             quota = "",
@@ -43,7 +46,7 @@ class SystemService(sshService: SshService) {
 
     suspend fun getHostname(): Hostname {
         val cmd = mutableListOf("hostname")
-        var hostname: Hostname = Hostname("")
+        var hostname = Hostname("")
 
         hostnameRunner.subject().subscribe {
             hostname = Hostname(it)
@@ -57,5 +60,9 @@ class SystemService(sshService: SshService) {
         val versionProperty = Properties()
         versionProperty.load(this.javaClass.getResourceAsStream("/version.properties"))
         return versionProperty.getProperty("version") ?: "no version"
+    }
+
+    fun getIsInstalled(): Boolean {
+        return dbService.isAppInstalled()
     }
 }
