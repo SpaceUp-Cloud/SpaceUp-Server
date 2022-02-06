@@ -10,6 +10,8 @@
 
 package technology.iatlas.spaceup.controller.api
 
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
@@ -35,7 +37,18 @@ class SystemController(private val systemService: SystemService) {
         return systemService.getDiskQuota()
     }
 
-    @Get("/version", produces = [MediaType.TEXT_PLAIN])
+    @Get("/installed", produces = [MediaType.APPLICATION_JSON])
+    suspend fun getInstalled(): String {
+        val isInstalled = systemService.getIsInstalled()
+
+        val gson = Gson()
+        val jsonElement = JsonObject()
+        jsonElement.asJsonObject.addProperty("isInstalled", isInstalled)
+
+        return gson.toJson(jsonElement)
+    }
+
+    @Get("/version", produces = [MediaType.APPLICATION_JSON])
     fun getVersion(): String {
         return systemService.getSpaceUpVersion()
     }

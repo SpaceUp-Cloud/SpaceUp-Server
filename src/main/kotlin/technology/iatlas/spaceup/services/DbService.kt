@@ -126,7 +126,7 @@ class DbService(
 
     fun getDb(): Nitrite {
         if(!this::db.isInitialized) {
-            throw DbNotInitializedException("SpaceUp was not initialized! Run 'DbService.initDb()' first.")
+            throw DbNotInitializedException("SpaceUp DB was not initialized! Run 'DbService.initDb()' first.")
         }
         return db
     }
@@ -135,6 +135,7 @@ class DbService(
         val serverRepo = db.getRepository(Server::class.java)
         val server = serverRepo.find().firstOrNull()
 
+        log.debug("server object: {}", server)
         var isInstalled = false
         if(server != null) {
             isInstalled = server.installed
