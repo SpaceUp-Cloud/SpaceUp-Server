@@ -37,6 +37,7 @@ class SystemController(private val systemService: SystemService) {
         return systemService.getDiskQuota()
     }
 
+    @Secured(SecurityRule.IS_ANONYMOUS)
     @Get("/installed", produces = [MediaType.APPLICATION_JSON])
     suspend fun getInstalled(): String {
         val isInstalled = systemService.getIsInstalled()
