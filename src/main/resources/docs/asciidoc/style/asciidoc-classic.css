@@ -9,9 +9,9 @@ body {
 h1, h2, h3, h4, h5, h6,
 div.title, caption.title,
 thead, p.table.header,
-***REMOVED***toctitle,
-***REMOVED***author, ***REMOVED***revnumber, ***REMOVED***revdate, ***REMOVED***revremark,
-***REMOVED***footer {
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
   font-family: Arial,Helvetica,sans-serif;
 }
 
@@ -34,11 +34,11 @@ em {
 
 strong {
   font-weight: bold;
-  color: ***REMOVED***083194;
+  color: #083194;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: ***REMOVED***527bbd;
+  color: #527bbd;
   margin-top: 1.2em;
   margin-bottom: 0.5em;
   line-height: 1.3;
@@ -76,7 +76,7 @@ p {
 ul, ol, li > p {
   margin-top: 0;
 }
-ul > li     { color: ***REMOVED***aaa; }
+ul > li     { color: #aaa; }
 ul > li > * { color: black; }
 
 .monospaced, code, pre {
@@ -90,32 +90,32 @@ pre {
   white-space: pre-wrap;
 }
 
-***REMOVED***author {
-  color: ***REMOVED***527bbd;
+#author {
+  color: #527bbd;
   font-weight: bold;
   font-size: 1.1em;
 }
-***REMOVED***email {
+#email {
 }
-***REMOVED***revnumber, ***REMOVED***revdate, ***REMOVED***revremark {
+#revnumber, #revdate, #revremark {
 }
 
-***REMOVED***footer {
+#footer {
   font-size: small;
   border-top: 2px solid silver;
   padding-top: 0.5em;
   margin-top: 4.0em;
 }
-***REMOVED***footer-text {
+#footer-text {
   float: left;
   padding-bottom: 0.5em;
 }
-***REMOVED***footer-badges {
+#footer-badges {
   float: right;
   padding-bottom: 0.5em;
 }
 
-***REMOVED***preamble {
+#preamble {
   margin-top: 1.5em;
   margin-bottom: 1.5em;
 }
@@ -129,7 +129,7 @@ div.admonitionblock {
   margin-top: 2.0em;
   margin-bottom: 2.0em;
   margin-right: 10%;
-  color: ***REMOVED***606060;
+  color: #606060;
 }
 
 div.content { /* Block element content. */
@@ -138,7 +138,7 @@ div.content { /* Block element content. */
 
 /* Block element titles. */
 div.title, caption.title {
-  color: ***REMOVED***527bbd;
+  color: #527bbd;
   font-weight: bold;
   text-align: left;
   margin-top: 1.0em;
@@ -159,16 +159,16 @@ div.content + div.title {
 }
 
 div.sidebarblock > div.content {
-  background: ***REMOVED***ffffee;
-  border: 1px solid ***REMOVED***dddddd;
-  border-left: 4px solid ***REMOVED***f0f0f0;
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
   padding: 0.5em;
 }
 
 div.listingblock > div.content {
-  border: 1px solid ***REMOVED***dddddd;
-  border-left: 5px solid ***REMOVED***f0f0f0;
-  background: ***REMOVED***f8f8f8;
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
   padding: 0.5em;
 }
 
@@ -176,8 +176,8 @@ div.quoteblock, div.verseblock {
   padding-left: 1.0em;
   margin-left: 1.0em;
   margin-right: 10%;
-  border-left: 5px solid ***REMOVED***f0f0f0;
-  color: ***REMOVED***888;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
 }
 
 div.quoteblock > div.attribution {
@@ -203,16 +203,16 @@ div.admonitionblock .icon {
   font-size: 1.1em;
   font-weight: bold;
   text-decoration: underline;
-  color: ***REMOVED***527bbd;
+  color: #527bbd;
   padding-right: 0.5em;
 }
 div.admonitionblock td.content {
   padding-left: 0.5em;
-  border-left: 3px solid ***REMOVED***dddddd;
+  border-left: 3px solid #dddddd;
 }
 
 div.exampleblock > div.content {
-  border-left: 3px solid ***REMOVED***dddddd;
+  border-left: 3px solid #dddddd;
   padding-left: 0.5em;
 }
 
@@ -303,16 +303,16 @@ span.footnote, span.footnoteref {
   vertical-align: super;
 }
 
-***REMOVED***footnotes {
+#footnotes {
   margin: 20px 0 20px 0;
   padding: 7px 0 0 0;
 }
 
-***REMOVED***footnotes div.footnote {
+#footnotes div.footnote {
   margin: 0 0 5px 0;
 }
 
-***REMOVED***footnotes hr {
+#footnotes hr {
   border: none;
   border-top: 1px solid silver;
   height: 1px;
@@ -332,15 +332,15 @@ div.colist td img {
 }
 
 @media print {
-  ***REMOVED***footer-badges { display: none; }
+  #footer-badges { display: none; }
 }
 
-***REMOVED***toc {
+#toc {
   margin-bottom: 2.5em;
 }
 
-***REMOVED***toctitle {
-  color: ***REMOVED***527bbd;
+#toctitle {
+  color: #527bbd;
   font-size: 1.1em;
   font-weight: bold;
   margin-top: 1.0em;
@@ -418,11 +418,11 @@ div.tableblock {
   margin-bottom: 1.5em;
 }
 div.tableblock > table {
-  border: 3px solid ***REMOVED***527bbd;
+  border: 3px solid #527bbd;
 }
 thead, p.table.header {
   font-weight: bold;
-  color: ***REMOVED***527bbd;
+  color: #527bbd;
 }
 p.table {
   margin-top: 0;
@@ -452,7 +452,7 @@ table.tableblock {
 }
 thead, p.tableblock.header {
   font-weight: bold;
-  color: ***REMOVED***527bbd;
+  color: #527bbd;
 }
 p.tableblock {
   margin-top: 0;
@@ -461,14 +461,14 @@ table.tableblock {
   border-width: 3px;
   border-spacing: 0px;
   border-style: solid;
-  border-color: ***REMOVED***527bbd;
+  border-color: #527bbd;
   border-collapse: collapse;
 }
 th.tableblock, td.tableblock {
   border-width: 1px;
   padding: 4px;
   border-style: solid;
-  border-color: ***REMOVED***527bbd;
+  border-color: #527bbd;
 }
 
 table.tableblock.frame-topbot {
@@ -523,5 +523,5 @@ body.manpage div.sectionbody {
 }
 
 @media print {
-  body.manpage div***REMOVED***toc { display: none; }
+  body.manpage div#toc { display: none; }
 }

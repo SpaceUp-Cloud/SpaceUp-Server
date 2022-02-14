@@ -80,7 +80,7 @@ class SshService(
         }
 
         if(sshConfig.port == null) {
-            log.error("Provide SSH port '-***REMOVED***' to JAR.")
+            log.error("Provide SSH port '-spaceup.ssh.port=22' to JAR.")
         }
 
         val privatekey: String? = sshConfig.privatekey

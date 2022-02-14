@@ -51,7 +51,7 @@ Git: https://git.iatlas.dev/SpaceUp
 Youtrack: https://yt.iatlas.dev/articles/SU-A-1/Preamble
 
 Artifactory:
-https://artifactory.iatlas.dev/***REMOVED***browse/browse:technology.iatlas.spaceup:technology%2Fiatlas%2Fspaceup%2FSpaceUp
+https://artifactory.iatlas.dev/#browse/browse:technology.iatlas.spaceup:technology%2Fiatlas%2Fspaceup%2FSpaceUp
 
 Youtrack is mainly for bug tracking but also a little knowledgebase.
 But the main documentation will be here in Asciidoc which will be regularly updated.
@@ -68,20 +68,20 @@ The application itself is a fatjar which can be directly executed.
 
 [console]
 ----
-***REMOVED*** Build the jar file
+# Build the jar file
 ./gradlew assemble
 
-***REMOVED***
-***REMOVED*** The parameters are necessary for now.
-***REMOVED*** Later they will be used from the installation process.
-***REMOVED***
+#
+# The parameters are necessary for now.
+# Later they will be used from the installation process.
+#
 
-***REMOVED*** Normal prod usecase
+# Normal prod usecase
 java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.server.host=0.0.0.0 -micronaut.host.port=<Your Port>
 
-***REMOVED*** In dev you can directly supply SSH configuration when you pass "-***REMOVED***"
-***REMOVED*** Default is '-spaceup.dev.ssh.db-credentials=false'
-***REMOVED*** If you've got troubles, increase loglevel with '-spaceup.logging.level=DEBUG'
+# In dev you can directly supply SSH configuration when you pass "-spaceup.dev.ssh.db-credentials=true"
+# Default is '-spaceup.dev.ssh.db-credentials=false'
+# If you've got troubles, increase loglevel with '-spaceup.logging.level=DEBUG'
 java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.server.host=127.0.0.1 -micronaut.host.port=<Your Port> spaceup.dev.ssh.db-credentials=false -spaceup.ssh.host=<Your server to connect> -spaceup.ssh.username=<User> -spaceup.ssh.password=<Password>
 ----
 
@@ -138,7 +138,7 @@ After first startup you will be greeted with this console output.
 === Client application
 
 I'll upload regular the client apps here:
-https://artifactory.iatlas.dev/***REMOVED***browse/browse:spaceup-client
+https://artifactory.iatlas.dev/#browse/browse:spaceup-client
 
 But if you like to build it by your own, go ahead with the following!
 
@@ -149,7 +149,7 @@ Requirements:
 
 [console]
 ----
-***REMOVED*** platform: apk, web, windows and etc.
+# platform: apk, web, windows and etc.
 flutter build <platform> --no-sound-null-safety
 ----
 

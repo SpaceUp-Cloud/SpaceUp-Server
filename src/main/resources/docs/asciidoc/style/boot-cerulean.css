@@ -5,18 +5,18 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
-  color: ***REMOVED***555555;
-  background-color: ***REMOVED***ffffff;
+  color: #555555;
+  background-color: #ffffff;
   margin-left: 10%;
   margin-right: 10%;
 }
 
 /* document header (contains title etc) */
-***REMOVED***header {
+#header {
   width: 100%;
 }
-***REMOVED***header>h1 {
-  border-bottom: 1px solid ***REMOVED***ddddd8;
+#header>h1 {
+  border-bottom: 1px solid #ddddd8;
   padding-bottom: 8px;
 }
 
@@ -30,7 +30,7 @@ h6 {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 500;
   line-height: 1.2;
-  color: ***REMOVED***317eac;
+  color: #317eac;
 }
 h1,
 h2,
@@ -82,7 +82,7 @@ blockquote {
   padding: 10px 20px;
   margin: 0 0 20px;
   font-size: 17.5px;
-  border-left: 5px solid ***REMOVED***eeeeee;
+  border-left: 5px solid #eeeeee;
 }
 blockquote p:last-child,
 blockquote ul:last-child,
@@ -93,7 +93,7 @@ blockquote ol:last-child {
 blockquote.pull-right {
   padding-right: 15px;
   padding-left: 0;
-  border-right: 5px solid ***REMOVED***eeeeee;
+  border-right: 5px solid #eeeeee;
   border-left: 0;
   text-align: right;
 }
@@ -122,7 +122,7 @@ blockquote small,
 blockquote .small {
   display: block;
   line-height: 1.42857143;
-  color: ***REMOVED***999999;
+  color: #999999;
 }
 .attribution:before,
 blockquote footer:before,
@@ -146,12 +146,12 @@ ol ol {
 
 /* links */
 a {
-  color: ***REMOVED***2fa4e7;
+  color: #2fa4e7;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: ***REMOVED***157ab5;
+  color: #157ab5;
   text-decoration: underline;
 }
 a:focus {
@@ -164,7 +164,7 @@ hr {
   margin-top: 20px;
   margin-bottom: 20px;
   border: 0;
-  border-top: 1px solid ***REMOVED***eeeeee;
+  border-top: 1px solid #eeeeee;
 }
 
 /* table */
@@ -191,13 +191,13 @@ table th[class*="col-"] {
 caption {
   padding-top: 8px;
   padding-bottom: 8px;
-  color: ***REMOVED***999999;
+  color: #999999;
   text-align: left;
 }
 
 /* table header row */
 thead {
-  border-bottom: 2px solid ***REMOVED***dddddd;
+  border-bottom: 2px solid #dddddd;
 }
 
 /* table header cell */
@@ -208,13 +208,13 @@ th {
 
 /* table footer */
 tfoot {
-  color: ***REMOVED***807F81;
-  border-top: 1px solid ***REMOVED***dddddd;
+  color: #807F81;
+  border-top: 1px solid #dddddd;
 }
 
 /* table cell */
 td {
-  border-top: 1px solid ***REMOVED***dddddd;
+  border-top: 1px solid #dddddd;
 }
 td p {
   margin: auto;
@@ -223,10 +223,10 @@ td p {
 
 /* table body */
 tbody > tr:nth-of-type(odd) {
-  background-color: ***REMOVED***f9f9f9;
+  background-color: #f9f9f9;
 }
 tbody > tr:hover {
-  background-color: ***REMOVED***f5f5f5;
+  background-color: #f5f5f5;
 }
 
 /* inline code */
@@ -240,15 +240,15 @@ samp {
 code {
   padding: 2px 4px;
   font-size: 90%;
-  color: ***REMOVED***333333;
-  background-color: ***REMOVED***f5f5f5;
+  color: #333333;
+  background-color: #f5f5f5;
   border-radius: 4px;
 }
 kbd {
   padding: 2px 4px;
   font-size: 90%;
-  color: ***REMOVED***ffffff;
-  background-color: ***REMOVED***333333;
+  color: #ffffff;
+  background-color: #333333;
   border-radius: 3px;
   -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
           box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -268,9 +268,9 @@ pre {
   line-height: 1.42857143;
   word-break: break-all;
   word-wrap: break-word;
-  color: ***REMOVED***333333;
-  background-color: ***REMOVED***f5f5f5;
-  border: 1px solid ***REMOVED***cccccc;
+  color: #333333;
+  background-color: #f5f5f5;
+  border: 1px solid #cccccc;
   border-radius: 4px;
 }
 pre code {
@@ -289,11 +289,11 @@ img {
 }
 
 /* footer section */
-***REMOVED***footer {
+#footer {
   margin-top: 22px;
   padding: 14px 16px;
-  color: ***REMOVED***ffffff;
-  background-color: ***REMOVED***2fa4e7;
+  color: #ffffff;
+  background-color: #2fa4e7;
 }
 
 /* responsiveness fixes */
@@ -302,19 +302,19 @@ video {
 }
 
 /* table of Contents sidebar */
-***REMOVED***toctitle {
+#toctitle {
   display: none;
 }
 
-***REMOVED***toc {
+#toc {
   margin-top: 20px;
-  background-image: -webkit-linear-gradient(***REMOVED***54b4eb, ***REMOVED***2fa4e7 60%, ***REMOVED***1d9ce5);
-  background-image: -o-linear-gradient(***REMOVED***54b4eb, ***REMOVED***2fa4e7 60%, ***REMOVED***1d9ce5);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(***REMOVED***54b4eb), color-stop(60%, ***REMOVED***2fa4e7), to(***REMOVED***1d9ce5));
-  background-image: linear-gradient(***REMOVED***54b4eb, ***REMOVED***2fa4e7 60%, ***REMOVED***1d9ce5);
+  background-image: -webkit-linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
+  background-image: -o-linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#54b4eb), color-stop(60%, #2fa4e7), to(#1d9ce5));
+  background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
   background-repeat: no-repeat;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='***REMOVED***ff54b4eb', endColorstr='***REMOVED***ff1d9ce5', GradientType=0);
-  border-bottom: 1px solid ***REMOVED***178acc;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff54b4eb', endColorstr='#ff1d9ce5', GradientType=0);
+  border-bottom: 1px solid #178acc;
   -webkit-filter: none;
           filter: none;
   -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
@@ -322,7 +322,7 @@ video {
   border-radius: 4px 4px;
 }
 
-***REMOVED***toc ul {
+#toc ul {
   display: inline;
   list-style-type: none;
   margin: 0;
@@ -330,24 +330,24 @@ video {
   overflow: hidden;
 }
 
-***REMOVED***toc li {
+#toc li {
   display: block;
 }
 
-***REMOVED***toc a {
-  color: ***REMOVED***ffffff;
+#toc a {
+  color: #ffffff;
   float: left;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
 
-***REMOVED***toc li a:hover {
-  background-color: ***REMOVED***178acc;
+#toc li a:hover {
+  background-color: #178acc;
   text-decoration: none;
 }
 
-***REMOVED***toc:after {
+#toc:after {
   content: " ";
   visibility: hidden;
   display: block;

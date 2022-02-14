@@ -52,7 +52,7 @@ h6 {
   font-size: 20px;
 }
 
-***REMOVED***toc {
+#toc {
   display: none;
 }
 
@@ -142,7 +142,7 @@ p {
 }
 .title a {
   text-decoration: none;
-  background-image: linear-gradient(to bottom,rgba(0,0,0,.44) 50%,***REMOVED***fff 50%);
+  background-image: linear-gradient(to bottom,rgba(0,0,0,.44) 50%,#fff 50%);
   background-size: 2px 2px;
   background-position: 0 14px;
   background-repeat: repeat-x;
