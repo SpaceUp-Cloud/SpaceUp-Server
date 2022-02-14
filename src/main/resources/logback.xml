@@ -9,9 +9,9 @@
         </encoder>
     </appender>
 
-    <logger name="technology.iatlas.spaceup" level="debug"/>
+    <logger name="technology.iatlas.spaceup" level="${spaceup.logging.level:-INFO}"/>
 
-    <root level="${root-level:-INFO}">
+    <root level="INFO">
         <appender-ref ref="root" />
     </root>
 </configuration>
