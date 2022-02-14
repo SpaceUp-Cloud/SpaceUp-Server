@@ -1,8 +1,8 @@
-***REMOVED***!/usr/bin/env bash
+#!/usr/bin/env bash
 
-***REMOVED*** php fake command
+# php fake command
 
-subPhp=$1           ***REMOVED*** status
+subPhp=$1           # status
 
 if [[ "$subPhp" = "./occ" || "$subPhp" = "occ" ]]
 then

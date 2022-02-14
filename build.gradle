@@ -125,8 +125,8 @@ kapt {
         arg("micronaut.processing.group", "technology.iatlas.spaceup")
         arg("micronaut.processing.module", "spaceUp")
         arg("micronaut.openapi.views.spec",
-                "***REMOVED***,rapidoc.enabled=true," +
-                        "***REMOVED***,swagger-ui.theme=flattop")
+                "redoc.enabled=true,rapidoc.enabled=true," +
+                        "swagger-ui.enabled=true,swagger-ui.theme=flattop")
     }
 }
 

@@ -6,14 +6,14 @@
 /* CUSTOMISATIONS */
 /* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
 :root{
---maincolor:***REMOVED***FFFFFF;
---primarycolor:***REMOVED***b71c1c;
---sidebarbackground:***REMOVED***CCC;
---linkcolor:***REMOVED***b71c1c;
---linkcoloralternate:***REMOVED***f44336;
---white:***REMOVED***FFFFFF;
---black:***REMOVED***000000;
---grey:***REMOVED***212121;
+--maincolor:#FFFFFF;
+--primarycolor:#b71c1c;
+--sidebarbackground:#CCC;
+--linkcolor:#b71c1c;
+--linkcoloralternate:#f44336;
+--white:#FFFFFF;
+--black:#000000;
+--grey:#212121;
 }
 
 body{font-family: "Lato",sans-serif;background-color: var(--maincolor);color:var(--black);}
@@ -21,17 +21,17 @@ body{font-family: "Lato",sans-serif;background-color: var(--maincolor);color:var
 h1,h2,h3,h4,h5,h6{color:var(--primarycolor) !important;font-family:"Galada",sans-serif;}
 .title{color:var(--black) !important;font-family:"Galada",sans-serif;font-style: normal; font-weight: normal;}
 p{font-family: "Lato",sans-serif ! important;color:var(--grey)}
-***REMOVED***toc.toc2 a:link{color:var(--linkcolor);}
+#toc.toc2 a:link{color:var(--linkcolor);}
 
 
 /* Table styles */
 th{background-color: var(--primarycolor);color:var(--black) !important;color:var(--white) !important}
 td{color: var(--black)}
-tr:nth-child(even) {background-color: ***REMOVED***FFF !important}
-tr:nth-child(odd) {background: ***REMOVED***CCC !important}
+tr:nth-child(even) {background-color: #FFF !important}
+tr:nth-child(odd) {background: #CCC !important}
 
-***REMOVED***toc.toc2{background-color:var(--sidebarbackground);}
-***REMOVED***toctitle{color:var(--white);}
+#toc.toc2{background-color:var(--sidebarbackground);}
+#toctitle{color:var(--white);}
 
 /* Responsiveness fixes */
 video {

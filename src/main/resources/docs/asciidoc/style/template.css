@@ -4,7 +4,7 @@ body {
 }
 
 /* document header (contains title etc) */
-***REMOVED***header {
+#header {
   width: 100%;
 }
 
@@ -29,13 +29,13 @@ h6 {
 }
 
 /* Table of Contents sidebar */
-***REMOVED***toc {
+#toc {
   background-color: plum!important;
   color: white;
   font-weight: bold;
 }
 /* title of the TOC */
-***REMOVED***toctitle {
+#toctitle {
   color: white;
 }
 /* top-level entries in TOC */
@@ -48,7 +48,7 @@ h6 {
 }
 
 /* main content window */
-***REMOVED***content {
+#content {
   background-color: lavender;
   color: navy;
 }
@@ -194,12 +194,12 @@ audio {}
 video {}
 
 /* footer section */
-***REMOVED***footer {
+#footer {
   background-color: gray;
   color: red;
 }
 /* footer text (by default contains time of last document update) */
-***REMOVED***footer-text {
+#footer-text {
   font-weight: bold;
   color: white;
 }
