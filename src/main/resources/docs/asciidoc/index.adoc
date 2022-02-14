@@ -82,11 +82,7 @@ java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.server.host=0.0.0.0 -m
 # In dev you can directly supply SSH configuration when you pass "-spaceup.dev.ssh.db-credentials=true"
 # Default is '-spaceup.dev.ssh.db-credentials=false'
 # If you've got troubles, increase loglevel with '-spaceup.logging.level=DEBUG'
-<<<<<<< HEAD
-java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.server.host=127.0.0.1 -micronaut.host.port=<Your Port> -spaceup.ssh.host=<Your server to connect> -spaceup.ssh.username=<User> -spaceup.ssh.password=<Password>
-=======
 java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.server.host=127.0.0.1 -micronaut.host.port=<Your Port> spaceup.dev.ssh.db-credentials=false -spaceup.ssh.host=<Your server to connect> -spaceup.ssh.username=<User> -spaceup.ssh.password=<Password>
->>>>>>> 829ad21c792e26859d8dfd07a6587f987bbc8ab3
 ----
 
 Don't forget to create the uberspace web backend to make it external visible for the client. 😉
