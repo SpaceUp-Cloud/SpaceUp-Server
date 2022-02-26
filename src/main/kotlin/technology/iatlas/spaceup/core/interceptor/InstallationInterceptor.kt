@@ -16,6 +16,7 @@ import io.micronaut.aop.MethodInvocationContext
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import jakarta.inject.Singleton
+import org.litote.kmongo.getCollection
 import technology.iatlas.spaceup.core.annotations.Installation
 import technology.iatlas.spaceup.dto.db.Server
 import technology.iatlas.spaceup.services.DbService
@@ -28,9 +29,9 @@ class InstallationInterceptor(
 
     override fun intercept(context: MethodInvocationContext<Any, Any>?): Any? {
         val db = dbService.getDb()
-        val serverRepo = db.getRepository(Server::class.java)
+        val serverRepo = db.getCollection<Server>()
 
-        val server = serverRepo.find().first()
+        val server = serverRepo.find().first()!!
         if(server.installed) {
             /*throw InstalledException("App is already installed. " +
                     "Remove spaceup.db and restart Server if you need to.")*/
