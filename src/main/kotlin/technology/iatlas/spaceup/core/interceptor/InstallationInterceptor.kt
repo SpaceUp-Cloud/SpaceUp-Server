@@ -17,7 +17,7 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import jakarta.inject.Singleton
 import technology.iatlas.spaceup.core.annotations.Installation
-import technology.iatlas.spaceup.dto.Server
+import technology.iatlas.spaceup.dto.db.Server
 import technology.iatlas.spaceup.services.DbService
 
 @Singleton

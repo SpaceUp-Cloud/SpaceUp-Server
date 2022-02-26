@@ -17,7 +17,7 @@ import io.micronaut.runtime.event.annotation.EventListener
 import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.helper.colored
-import technology.iatlas.spaceup.dto.Server
+import technology.iatlas.spaceup.dto.db.Server
 import technology.iatlas.spaceup.services.DbService
 import technology.iatlas.spaceup.services.InstallerService
 import technology.iatlas.spaceup.services.SpaceUpService

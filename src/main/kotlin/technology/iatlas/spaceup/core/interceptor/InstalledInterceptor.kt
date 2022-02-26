@@ -16,7 +16,7 @@ import io.micronaut.aop.MethodInvocationContext
 import jakarta.inject.Singleton
 import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.exceptions.NotInstalledException
-import technology.iatlas.spaceup.dto.Server
+import technology.iatlas.spaceup.dto.db.Server
 import technology.iatlas.spaceup.services.DbService
 
 @Singleton
