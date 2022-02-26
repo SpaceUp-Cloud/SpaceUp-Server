@@ -20,8 +20,8 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import technology.iatlas.spaceup.core.annotations.Installation
-import technology.iatlas.spaceup.dto.Ssh
-import technology.iatlas.spaceup.dto.User
+import technology.iatlas.spaceup.dto.db.Ssh
+import technology.iatlas.spaceup.dto.db.User
 import technology.iatlas.spaceup.services.InstallerService
 
 /**
