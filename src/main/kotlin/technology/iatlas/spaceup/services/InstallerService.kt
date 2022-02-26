@@ -16,9 +16,9 @@ import io.micronaut.http.HttpStatus
 import org.dizitart.no2.filters.Filter
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.exceptions.InstalledException
-import technology.iatlas.spaceup.dto.Server
-import technology.iatlas.spaceup.dto.Ssh
-import technology.iatlas.spaceup.dto.User
+import technology.iatlas.spaceup.dto.db.Server
+import technology.iatlas.spaceup.dto.db.Ssh
+import technology.iatlas.spaceup.dto.db.User
 
 @Context
 class InstallerService(

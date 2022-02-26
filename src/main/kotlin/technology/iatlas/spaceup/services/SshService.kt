@@ -21,7 +21,7 @@ import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.cmd.CommandInf
 import technology.iatlas.spaceup.core.cmd.SshResponse
 import technology.iatlas.spaceup.core.helper.colored
-import technology.iatlas.spaceup.dto.Ssh
+import technology.iatlas.spaceup.dto.db.Ssh
 import java.io.ByteArrayOutputStream
 import java.io.File
 

@@ -21,7 +21,7 @@ import io.reactivex.rxjava3.core.FlowableEmitter
 import org.reactivestreams.Publisher
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.helper.colored
-import technology.iatlas.spaceup.dto.User
+import technology.iatlas.spaceup.dto.db.User
 import technology.iatlas.spaceup.services.DbService
 
 @Context
