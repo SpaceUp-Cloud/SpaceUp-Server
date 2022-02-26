@@ -14,6 +14,7 @@ import com.jcraft.jsch.*
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.annotation.Value
 import kotlinx.coroutines.delay
+import org.litote.kmongo.getCollection
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceUpSftpConfig
 import technology.iatlas.spaceup.config.SpaceUpSshConfig
@@ -58,9 +59,9 @@ class SshService(
         } else {
             log.info("Take saved credentials")
             val db = dbService.getDb()
-            val sshRepo = db.getRepository(Ssh::class.java)
+            val sshRepo = db.getCollection<Ssh>()
             log.debug("Assuming there is only one configuration")
-            val ssh = sshRepo.find().first()
+            val ssh = sshRepo.find().first()!!
 
             username = ssh.username
             password = ssh.password
@@ -156,8 +157,8 @@ class SshService(
         }
 
         val db = dbService.getDb()
-        val sshRepo = db.getRepository(Ssh::class.java)
-        val ssh = sshRepo.find().first()
+        val sshRepo = db.getCollection<Ssh>()
+        val ssh = sshRepo.find().first()!!
 
         val file = cmd.shellScript
         val remotefile =
