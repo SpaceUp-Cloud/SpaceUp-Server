@@ -82,7 +82,8 @@ dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.8.2')
     testImplementation("io.micronaut.test:micronaut-test-junit5:$micronautVersion")
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.8.2')
-    testImplementation('de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.3.1')
+    // Docker Testcontainer
+    testImplementation "org.testcontainers:testcontainers:1.16.3"
 }
 
 test.classpath += configurations.developmentOnly
