@@ -12,9 +12,11 @@ package technology.iatlas.spaceup.core.startup
 
 import com.lordcodes.turtle.ShellLocation
 import com.lordcodes.turtle.shellRun
+import io.micronaut.context.event.ShutdownEvent
 import io.micronaut.context.event.StartupEvent
 import io.micronaut.runtime.event.annotation.EventListener
 import jakarta.inject.Singleton
+import org.litote.kmongo.getCollection
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.helper.colored
 import technology.iatlas.spaceup.dto.db.Server
@@ -35,9 +37,6 @@ class StartupEventListener(
     @EventListener
     internal fun onApplicationEvent(event: StartupEvent) {
         showBanner()
-        colored {
-            println("\tSpaceUp Server (${systemService.getSpaceUpVersion()})".cyan.bold)
-        }
         log.info("Running SpaceUp startup")
 
         val os = System.getProperty("os.name")
@@ -82,10 +81,11 @@ class StartupEventListener(
     }
 
     private fun initDb() {
-        dbService.initDb()
+        dbService.init()
 
+        // Let's check if we are already installed properly
         val db = dbService.getDb()
-        val serverRepo = db.getRepository(Server::class.java)
+        val serverRepo = db.getCollection<Server>()
         val server = serverRepo.find().firstOrNull()
 
         if(server == null) {
@@ -95,7 +95,7 @@ class StartupEventListener(
                 log.info("Finish installation with API key: ${apiKey.yellow.bold}")
             }
             val doc = Server(false, apiKey)
-            serverRepo.insert(doc)
+            serverRepo.insertOne(doc)
         } else {
             val installed = server.installed
             if(!installed) {
@@ -116,6 +116,9 @@ class StartupEventListener(
          ███   ███          ███    ███ ███    █▄    ███    █▄  ███    ███   ███        
    ▄█    ███   ███          ███    ███ ███    ███   ███    ███ ███    ███   ███        
  ▄████████▀   ▄████▀        ███    █▀  ████████▀    ██████████ ████████▀   ▄████▀      """.cyan.bold.trimIndent())
+        }
+        colored {
+            println("\tSpaceUp Server (${systemService.getSpaceUpVersion()})".cyan.bold)
         }
     }
 }

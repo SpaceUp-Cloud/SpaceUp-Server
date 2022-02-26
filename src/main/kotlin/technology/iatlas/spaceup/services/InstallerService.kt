@@ -13,7 +13,10 @@ package technology.iatlas.spaceup.services
 import io.micronaut.context.annotation.Context
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
-import org.dizitart.no2.filters.Filter
+import org.litote.kmongo.eq
+import org.litote.kmongo.findOne
+import org.litote.kmongo.getCollection
+import org.litote.kmongo.setValue
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.exceptions.InstalledException
 import technology.iatlas.spaceup.dto.db.Server
@@ -36,22 +39,12 @@ class InstallerService(
             (('a'..'z') + ('A'..'Z') + ('0'..'9')).random()
         }.joinToString("")
 
-        /*val md = MessageDigest.getInstance("SHA-256")
-        val messageDigest = md.digest(setupKey.toByteArray())
-        val num = BigInteger(1, messageDigest)
-        var hashText = num.toString(16)
-        while(hashText.length < 32) {
-            hashText = "0$hashText"
-        }
-
-        return hashText*/
-
         return setupKey
     }
 
     fun getApiKey(): String {
         val db = dbService.getDb()
-        val serverRepo = db.getRepository(Server::class.java)
+        val serverRepo = db.getCollection<Server>()
 
         val servers = serverRepo.find().toList()
         if (servers.size > 1) throw InstalledException("Multiple contrains found! $servers")
@@ -61,47 +54,42 @@ class InstallerService(
 
     fun createSshUser(ssh: Ssh): HttpResponse<String> {
         val db = dbService.getDb()
-        val sshRepo = db.getRepository(Ssh::class.java)
+        val sshRepo = db.getCollection<Ssh>()
+        val sshUser = sshRepo.findOne(Ssh::username eq ssh.username)
 
-        val findSshUsers = sshRepo.find {
-            it.second.get("username") == ssh.username
-        }
-
-        if(!findSshUsers.isEmpty) {
+        if(sshUser != null) {
             val errorExistingUser = "SSH ${ssh.username} already exists"
             log.error(errorExistingUser)
             return HttpResponse.badRequest(errorExistingUser)
+        } else {
+            val result = sshRepo.insertOne(ssh)
+            if(result.wasAcknowledged()) {
+                log.info("SSH User ${ssh.username} was created.")
+                return HttpResponse.ok("User successfully created!")
+            }
+            log.error("Could not create $ssh")
+            return HttpResponse.badRequest("User ${ssh.username} was not created")
         }
-
-        val result = sshRepo.insert(ssh)
-        if(result.affectedCount == 1) {
-            log.info("SSH User ${ssh.username} was created")
-            return HttpResponse.ok("User successfully created!")
-        }
-
-        return HttpResponse.notAllowed()
     }
 
     fun createUser(user: User): HttpResponse<String> {
         val db = dbService.getDb()
-        val userRepo = db.getRepository(User::class.java)
-        val findUser = userRepo.find {
-            it.second.get("username") == user.username
-        }
+        val userRepo = db.getCollection<User>()
+        val findUser = userRepo.findOne(User::username eq user.username)
 
-        if(!findUser.isEmpty) {
+        if(findUser != null) {
             val errorExistingUser = "User ${user.username} exists already!"
             log.error(errorExistingUser)
             return HttpResponse.badRequest(errorExistingUser)
+        } else {
+            val result = userRepo.insertOne(user)
+            if(result.wasAcknowledged()) {
+                log.info("User ${user.username} was created with id ${result.insertedId}")
+                return HttpResponse.ok("User successfully created!")
+            }
+            log.error("Could not create $user")
+            return HttpResponse.badRequest("User ${user.username} was not created")
         }
-
-        val result = userRepo.insert(user)
-        if(result.affectedCount == 1) {
-            log.info("User ${user.username} was created")
-            return HttpResponse.ok("User successfully created!")
-        }
-
-        return HttpResponse.notAllowed()
     }
 
     fun finalizeInstallation(): HttpResponse<String> {
@@ -115,10 +103,8 @@ class InstallerService(
         // Seems to be fine everything
         // Set installation to be done
         val db = dbService.getDb()
-        val serverRepo = db.getRepository(Server::class.java)
-
-        val serverDto = Server(true, "")
-        serverRepo.update(Filter.ALL, serverDto)
+        val serverRepo = db.getCollection<Server>()
+        serverRepo.updateOne(Server::installed eq false, setValue(Server::installed, true))
 
         val finishMsg = "Installation done. Set system to state 'installed'"
         log.info(finishMsg)
@@ -131,22 +117,19 @@ class InstallerService(
     private fun validateStep(step: InstallSteps): Boolean {
         val db = dbService.getDb()
 
-        when (step) {
+        return when (step) {
             InstallSteps.CREATE_USER -> {
-                val userRepo = db.getRepository(User::class.java)
-                return !userRepo.find().isEmpty
+                val userRepo = db.getCollection<User>()
+                userRepo.findOne() != null
             }
             InstallSteps.CREATE_SSHUSER -> {
-                val sshRepo = db.getRepository(Ssh::class.java)
-                return !sshRepo.find().isEmpty
-            }
-            else -> {
-                return false
+                val sshRepo = db.getCollection<Ssh>()
+                sshRepo.findOne() != null
             }
         }
     }
 
-    fun getAllSteps(): List<InstallSteps> {
+    private fun getAllSteps(): List<InstallSteps> {
         return InstallSteps.values().toList()
     }
 }
