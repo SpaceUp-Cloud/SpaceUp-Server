@@ -10,7 +10,12 @@
 
 package technology.iatlas.spaceup.dto.db
 
+import technology.iatlas.spaceup.core.annotations.Encryption
+
 data class Ssh(
     var server: String,
     var username: String,
-): EncryptionObject()
+) {
+    @field:Encryption
+    lateinit var password: String
+}
