@@ -12,5 +12,4 @@ package technology.iatlas.spaceup.dto.db
 
 data class User(
     var username: String,
-    var password: String
-)
+): EncryptionObject()

@@ -70,6 +70,8 @@ dependencies {
     implementation group: 'org.asciidoctor', name: 'asciidoctorj', version: '2.5.2'
     implementation group: 'org.asciidoctor', name: 'asciidoctorj-api', version: '2.5.2'
     implementation group: 'org.asciidoctor', name: 'asciidoctorj-diagram', version: '2.2.1'
+    // https://mvnrepository.com/artifact/org.jasypt/jasypt
+    implementation('org.jasypt:jasypt:1.9.3')
 
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly('com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1')

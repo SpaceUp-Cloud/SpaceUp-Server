@@ -11,11 +11,13 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
+import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.dto.UpdatePackage
 
 
 @Context
+@Installed
 class UpdateService : UpdateServiceInf {
     override fun checkFor(updatePackage: UpdatePackage): Boolean {
         TODO("Not yet implemented")

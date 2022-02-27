@@ -13,11 +13,12 @@ package technology.iatlas.spaceup
 import io.micronaut.runtime.Micronaut.build
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.info.Info
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 
 @OpenAPIDefinition(
     info = Info(
             title = "SpaceUp",
-            version = "0.20"
+            version = "0.23.0"
     )
 )
 object Api
@@ -31,3 +32,14 @@ fun main(args: Array<String>) {
 		.start()
 }
 
+fun String.encrypt(secret: String): String {
+    val passwordEncryptor = StandardPBEStringEncryptor()
+    passwordEncryptor.setPassword(secret)
+    return passwordEncryptor.encrypt(this)
+}
+
+fun String.decrypt(secret: String): String {
+    val passwordEncryptor = StandardPBEStringEncryptor()
+    passwordEncryptor.setPassword(secret)
+    return passwordEncryptor.decrypt(this)
+}
