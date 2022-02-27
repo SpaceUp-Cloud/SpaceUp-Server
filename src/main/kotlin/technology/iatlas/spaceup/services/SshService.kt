@@ -22,6 +22,7 @@ import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.cmd.CommandInf
 import technology.iatlas.spaceup.core.cmd.SshResponse
 import technology.iatlas.spaceup.core.helper.colored
+import technology.iatlas.spaceup.decrypt
 import technology.iatlas.spaceup.dto.db.Ssh
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -32,7 +33,8 @@ class SshService(
     private val sshConfig: SpaceUpSshConfig,
     private val sftpConfig: SpaceUpSftpConfig,
     private val dbService: DbService,
-    private val spaceUpService: SpaceUpService
+    private val spaceUpService: SpaceUpService,
+    private val securityService: SecurityService
     ) {
     private val log = LoggerFactory.getLogger(SshService::class.java)
 
@@ -45,9 +47,9 @@ class SshService(
     fun initSSH() {
         val jsch = JSch()
 
-        var username: String
-        var password: String
-        var host: String
+        var username: String = ""
+        var password: String = ""
+        var host: String = ""
 
         if(spaceUpService.isDevMode() && useDbCredentials == "false") {
             colored {
@@ -63,9 +65,11 @@ class SshService(
             log.debug("Assuming there is only one configuration")
             val ssh = sshRepo.find().first()!!
 
-            username = ssh.username
-            password = ssh.password
-            host = ssh.server
+            securityService.decrypt(ssh) {
+                username = ssh.username
+                password = ssh.password
+                host = ssh.server
+            }
         }
 
         if((sshConfig.privatekey == null || sshConfig.privatekey!!.isEmpty())) {

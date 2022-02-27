@@ -11,7 +11,6 @@
 package technology.iatlas.spaceup.dto.db
 
 data class Ssh(
+    var server: String,
     var username: String,
-    var password: String,
-    var server: String
-)
+): EncryptionObject()
