@@ -10,6 +10,10 @@
 
 package technology.iatlas.spaceup.dto.db
 
+import technology.iatlas.spaceup.core.annotations.Encryption
+
 data class User(
     var username: String,
-): EncryptionObject()
+    @field:Encryption
+    var password: String
+)
