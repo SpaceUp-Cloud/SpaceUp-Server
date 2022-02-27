@@ -11,6 +11,7 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
+import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.EchoParser
 import technology.iatlas.spaceup.core.parser.QuotaParser

@@ -11,6 +11,7 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
+import io.micronaut.context.annotation.Value
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import org.litote.kmongo.eq
@@ -22,10 +23,12 @@ import technology.iatlas.spaceup.core.exceptions.InstalledException
 import technology.iatlas.spaceup.dto.db.Server
 import technology.iatlas.spaceup.dto.db.Ssh
 import technology.iatlas.spaceup.dto.db.User
+import technology.iatlas.spaceup.encrypt
 
 @Context
 class InstallerService(
-    private val dbService: DbService
+    private val dbService: DbService,
+    private val securityService: SecurityService
 ) {
 
     private val log = LoggerFactory.getLogger(InstallerService::class.java)
@@ -62,6 +65,8 @@ class InstallerService(
             log.error(errorExistingUser)
             return HttpResponse.badRequest(errorExistingUser)
         } else {
+            securityService.encrypt(ssh)
+
             val result = sshRepo.insertOne(ssh)
             if(result.wasAcknowledged()) {
                 log.info("SSH User ${ssh.username} was created.")
@@ -82,9 +87,11 @@ class InstallerService(
             log.error(errorExistingUser)
             return HttpResponse.badRequest(errorExistingUser)
         } else {
+            securityService.encrypt(user)
+
             val result = userRepo.insertOne(user)
             if(result.wasAcknowledged()) {
-                log.info("User ${user.username} was created with id ${result.insertedId}")
+                log.info("User ${user.username} was created.")
                 return HttpResponse.ok("User successfully created!")
             }
             log.error("Could not create $user")
