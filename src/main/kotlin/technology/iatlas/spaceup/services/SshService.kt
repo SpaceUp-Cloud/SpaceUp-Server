@@ -14,6 +14,7 @@ import com.jcraft.jsch.*
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.annotation.Value
 import kotlinx.coroutines.delay
+import org.litote.kmongo.findOne
 import org.litote.kmongo.getCollection
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceUpSftpConfig
@@ -22,7 +23,6 @@ import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.cmd.CommandInf
 import technology.iatlas.spaceup.core.cmd.SshResponse
 import technology.iatlas.spaceup.core.helper.colored
-import technology.iatlas.spaceup.decrypt
 import technology.iatlas.spaceup.dto.db.Ssh
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -47,9 +47,9 @@ class SshService(
     fun initSSH() {
         val jsch = JSch()
 
-        var username: String = ""
-        var password: String = ""
-        var host: String = ""
+        var username = ""
+        var password = ""
+        var host = ""
 
         if(spaceUpService.isDevMode() && useDbCredentials == "false") {
             colored {
@@ -62,8 +62,8 @@ class SshService(
             log.info("Take saved credentials")
             val db = dbService.getDb()
             val sshRepo = db.getCollection<Ssh>()
-            log.debug("Assuming there is only one configuration")
-            val ssh = sshRepo.find().first()!!
+            log.info("Assuming there is only one configuration")
+            val ssh = sshRepo.findOne()!!
 
             securityService.decrypt(ssh) {
                 username = ssh.username
