@@ -18,7 +18,7 @@ class SecurityService {
 
     /**
      * Encrypts any the field annotated with '@field:Encryption'
-     * @param obj requires an object of type EncryptionObject
+     * @param obj requires a POJO with annotated Encryption field
      * @see Encryption
      */
     fun <T> encrypt(obj: T) {
@@ -34,8 +34,8 @@ class SecurityService {
 
     /**
      * Decrypts any the field annotated with '@field:Encryption'
-     * @param obj - requires an object of type EncryptionObject
-     * @param function - Callback function to execute between decryption and encryption
+     * @param obj requires a POJO with annotated Encryption field
+     * @param function Callback function to execute between decryption and encryption
      * @see Encryption
      */
     fun <T> decrypt(obj: T, function: () -> Unit = {}) {
