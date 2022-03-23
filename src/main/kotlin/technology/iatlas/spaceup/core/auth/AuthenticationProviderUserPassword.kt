@@ -11,7 +11,6 @@
 package technology.iatlas.spaceup.core.auth
 
 import io.micronaut.context.annotation.Context
-import io.micronaut.context.annotation.Value
 import io.micronaut.http.HttpRequest
 import io.micronaut.security.authentication.AuthenticationProvider
 import io.micronaut.security.authentication.AuthenticationRequest
@@ -19,17 +18,16 @@ import io.micronaut.security.authentication.AuthenticationResponse
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableEmitter
-import org.jasypt.util.password.StrongPasswordEncryptor
 import org.litote.kmongo.getCollection
 import org.reactivestreams.Publisher
 import org.slf4j.LoggerFactory
+import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.helper.colored
-import technology.iatlas.spaceup.decrypt
 import technology.iatlas.spaceup.dto.db.User
-import technology.iatlas.spaceup.encrypt
 import technology.iatlas.spaceup.services.DbService
 import technology.iatlas.spaceup.services.SecurityService
 
+@Installed
 @Context
 class AuthenticationProviderUserPassword(
     private val dbService: DbService,
