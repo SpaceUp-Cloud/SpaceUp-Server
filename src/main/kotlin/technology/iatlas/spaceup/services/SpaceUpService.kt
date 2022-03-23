@@ -12,7 +12,7 @@ class SpaceUpService(
         val currentEnv = env.activeNames
         var isDev = false
         currentEnv.forEach {
-            if(it.contains("dev")) {
+            if(it.contains("dev") || it.contains("DEV") || it.contains("Dev")) {
                 isDev = true
             }
         }
