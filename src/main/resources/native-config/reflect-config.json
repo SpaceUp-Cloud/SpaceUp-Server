@@ -1,0 +1,4843 @@
+[
+{
+  "name":"[B",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"[I",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"[Lcom.fasterxml.jackson.databind.deser.BeanDeserializerModifier;"}
+,
+{
+  "name":"[Lcom.fasterxml.jackson.databind.deser.Deserializers;"}
+,
+{
+  "name":"[Lcom.fasterxml.jackson.databind.deser.KeyDeserializers;"}
+,
+{
+  "name":"[Lcom.fasterxml.jackson.databind.deser.ValueInstantiators;"}
+,
+{
+  "name":"[Lcom.fasterxml.jackson.databind.ser.BeanSerializerModifier;"}
+,
+{
+  "name":"[Lcom.fasterxml.jackson.databind.ser.Serializers;"}
+,
+{
+  "name":"[Lio.micronaut.http.HttpMethod;"}
+,
+{
+  "name":"[Ljava.lang.CharSequence;",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"[Ljnr.posix.Timespec;",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"[Ljnr.posix.Timeval;",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"boolean",
+  "allDeclaredFields":true}
+,
+{
+  "name":"ch.qos.logback.classic.encoder.PatternLayoutEncoder",
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"ch.qos.logback.classic.pattern.DateConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"ch.qos.logback.classic.pattern.LevelConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"ch.qos.logback.classic.pattern.LineSeparatorConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"ch.qos.logback.classic.pattern.LoggerConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"ch.qos.logback.classic.pattern.MessageConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"ch.qos.logback.classic.pattern.ThreadConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"ch.qos.logback.classic.pattern.color.HighlightingCompositeConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"ch.qos.logback.core.ConsoleAppender",
+  "queryAllPublicMethods":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setWithJansi","parameterTypes":["boolean"] }
+  ]}
+,
+{
+  "name":"ch.qos.logback.core.OutputStreamAppender",
+  "methods":[{"name":"setEncoder","parameterTypes":["ch.qos.logback.core.encoder.Encoder"] }]}
+,
+{
+  "name":"ch.qos.logback.core.encoder.LayoutWrappingEncoder",
+  "methods":[{"name":"setParent","parameterTypes":["ch.qos.logback.core.spi.ContextAware"] }]}
+,
+{
+  "name":"ch.qos.logback.core.pattern.PatternLayoutEncoderBase",
+  "methods":[{"name":"setPattern","parameterTypes":["java.lang.String"] }]}
+,
+{
+  "name":"ch.qos.logback.core.pattern.color.CyanCompositeConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"ch.qos.logback.core.pattern.color.GrayCompositeConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"ch.qos.logback.core.pattern.color.MagentaCompositeConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.fasterxml.jackson.databind.ext.Java7HandlersImpl",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.fasterxml.jackson.databind.ext.Java7SupportImpl",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.github.benmanes.caffeine.cache.BLCHeader$DrainStatusRef",
+  "fields":[{"name":"drainStatus"}]}
+,
+{
+  "name":"com.github.benmanes.caffeine.cache.BaseMpscLinkedArrayQueueColdProducerFields",
+  "fields":[{"name":"producerLimit"}]}
+,
+{
+  "name":"com.github.benmanes.caffeine.cache.BaseMpscLinkedArrayQueueConsumerFields",
+  "fields":[{"name":"consumerIndex"}]}
+,
+{
+  "name":"com.github.benmanes.caffeine.cache.BaseMpscLinkedArrayQueueProducerFields",
+  "fields":[{"name":"producerIndex"}]}
+,
+{
+  "name":"com.github.benmanes.caffeine.cache.PS",
+  "fields":[
+    {"name":"key"}, 
+    {"name":"value"}
+  ]}
+,
+{
+  "name":"com.github.benmanes.caffeine.cache.PSMS",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.github.benmanes.caffeine.cache.SSMS",
+  "methods":[{"name":"<init>","parameterTypes":["com.github.benmanes.caffeine.cache.Caffeine","com.github.benmanes.caffeine.cache.CacheLoader","boolean"] }]}
+,
+{
+  "name":"com.github.benmanes.caffeine.cache.StripedBuffer",
+  "fields":[{"name":"tableBusy"}]}
+,
+{
+  "name":"com.jcraft.jsch.DH25519",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.jcraft.jsch.DH448",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.jcraft.jsch.DHGEX256",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.jcraft.jsch.UserAuthKeyboardInteractive",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.jcraft.jsch.UserAuthNone",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.jcraft.jsch.UserAuthPublicKey",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.jcraft.jsch.bc.SignatureEd25519"}
+,
+{
+  "name":"com.jcraft.jsch.bc.SignatureEd448"}
+,
+{
+  "name":"com.jcraft.jsch.bc.XDH",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.jcraft.jsch.jce.AES128CTR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.jcraft.jsch.jce.DH",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.jcraft.jsch.jce.HMACSHA1",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.jcraft.jsch.jce.HMACSHA256ETM",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.jcraft.jsch.jce.Random",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.jcraft.jsch.jce.SHA256",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.jcraft.jsch.jce.SHA512",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.jcraft.jsch.jce.SignatureRSASHA512",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.kenai.jffi.Invoker",
+  "queriedMethods":[
+    {"name":"invokeI6","parameterTypes":["com.kenai.jffi.CallContext","long","int","int","int","int","int","int"] }, 
+    {"name":"invokeL6","parameterTypes":["com.kenai.jffi.CallContext","long","long","long","long","long","long","long"] }, 
+    {"name":"invokeN6","parameterTypes":["com.kenai.jffi.CallContext","long","long","long","long","long","long","long"] }
+  ]}
+,
+{
+  "name":"com.kenai.jffi.Version",
+  "fields":[
+    {"name":"MAJOR"}, 
+    {"name":"MICRO"}, 
+    {"name":"MINOR"}
+  ]}
+,
+{
+  "name":"com.kenai.jffi.internal.StubLoader",
+  "methods":[{"name":"isLoaded","parameterTypes":[] }]}
+,
+{
+  "name":"com.sun.crypto.provider.AESCipher$General",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.sun.crypto.provider.DHKeyAgreement",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.sun.crypto.provider.DHKeyFactory",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.sun.crypto.provider.DHKeyPairGenerator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.sun.crypto.provider.HmacCore$HmacSHA256",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.sun.crypto.provider.HmacSHA1",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.sun.crypto.provider.PBKDF2Core$HmacSHA1",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"com.sun.security.auth.module.UnixSystem",
+  "methods":[{"name":"<init>","parameterTypes":[] }],
+  "queriedMethods":[{"name":"getGroups","parameterTypes":[] }]}
+,
+{
+  "name":"com.typesafe.config.Config"}
+,
+{
+  "name":"int",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"io.micronaut.aop.internal.InterceptorRegistryBean",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.buffer.netty.$DefaultByteBufAllocatorConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.buffer.netty.$NettyByteBufferFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.$AsyncCacheErrorHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.$DefaultCacheErrorHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.$DefaultCacheManager$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.caffeine.$DefaultCacheConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.caffeine.$DefaultDynamicCacheManager$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.caffeine.$DefaultSyncCache$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.caffeine.metrics.$CaffeineCacheMetricsBinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.discovery.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.discovery.$CachingCompositeDiscoveryClient$Definition$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.discovery.$CachingCompositeDiscoveryClient$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.discovery.$DiscoveryClientCacheConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.interceptor.$CacheInterceptor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.interceptor.$DefaultCacheKeyGenerator$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.interceptor.$KotlinSuspendFunCacheKeyGenerator$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.jcache.$JCacheManager$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.cache.jcache.metrics.$JCacheMetricsBinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.configuration.mongo.core.$DefaultMongoClientSettingsFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.configuration.mongo.core.$DefaultMongoClientSettingsFactory$MongoClientSettings0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.configuration.mongo.core.$DefaultMongoConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.configuration.mongo.core.$NamedMongoConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.configuration.mongo.core.convert.$MongoConverterRegistrar$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.configuration.mongo.core.test.$MongoProcessFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.configuration.mongo.reactive.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.configuration.mongo.reactive.$DefaultReactiveMongoClientFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.configuration.mongo.reactive.$DefaultReactiveMongoClientFactory$MongoClient0$Definition$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.configuration.mongo.reactive.$DefaultReactiveMongoClientFactory$MongoClient0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.configuration.mongo.reactive.$NamedReactiveMongoClientFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.configuration.mongo.reactive.$NamedReactiveMongoClientFactory$MongoClient0$Definition$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.configuration.mongo.reactive.$NamedReactiveMongoClientFactory$MongoClient0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.configuration.mongo.reactive.health.$MongoHealthIndicator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.context.env.PropertiesPropertySourceLoader",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.context.env.hocon.HoconPropertySourceLoader",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.context.env.hocon.HoconPropertySourceLoaderImpl",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.context.env.yaml.YamlPropertySourceLoader",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.context.event.ApplicationEventPublisherFactory",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.discovery.$DefaultCompositeDiscoveryClient$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.discovery.$DefaultServiceInstanceIdGenerator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.discovery.cloud.digitalocean.$DigitalOceanInstanceMetadata$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.discovery.cloud.digitalocean.$DigitalOceanMetadataConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.discovery.cloud.digitalocean.$DigitalOceanMetadataResolver$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.discovery.config.$DefaultCompositeConfigurationClient$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.health.$DefaultCurrentHealthStatus$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.health.$HealthStatus$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.health.$HeartbeatConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.health.$HeartbeatDiscoveryClientCondition$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.health.$HeartbeatTask$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.bind.$DefaultRequestBinderRegistry$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.$DefaultHttpClientConfiguration$DefaultConnectionPoolConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.$DefaultHttpClientConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.$DefaultLoadBalancerResolver$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.$ServiceHttpClientCondition$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.$ServiceHttpClientConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.$ServiceHttpClientConfiguration$ServiceConnectionPoolConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.$ServiceHttpClientConfiguration$ServiceSslClientConfiguration$DefaultKeyConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.$ServiceHttpClientConfiguration$ServiceSslClientConfiguration$DefaultKeyStoreConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.$ServiceHttpClientConfiguration$ServiceSslClientConfiguration$DefaultTrustStoreConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.$ServiceHttpClientConfiguration$ServiceSslClientConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.$ServiceHttpClientFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.$ServiceHttpClientFactory$HealthCheckStarter1$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.$ServiceHttpClientFactory$ServiceInstanceList0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.bind.$DefaultHttpClientBinderRegistry$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.filter.$DefaultHttpClientFilterResolver$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.interceptor.$HttpClientIntroductionAdvice$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.interceptor.configuration.$DefaultClientVersioningConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.interceptor.configuration.$NamedClientVersioningConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.loadbalance.$DiscoveryClientLoadBalancerFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.loadbalance.$LoadBalancerConverters$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.loadbalance.$ServiceInstanceListLoadBalancerFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.netty.$DefaultNettyHttpClientRegistry$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.netty.$DefaultNettyHttpClientRegistry$HttpClient0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.client.netty.ssl.$NettyClientSslBuilder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.codec.$CodecConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.converters.$HttpConverterRegistrar$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.cookie.$SameSiteConverter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.hateoas.$AbstractResource$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.hateoas.$DefaultLink$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.hateoas.$JsonError$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.hateoas.$VndError$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.$DefaultEventLoopGroupConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.$DefaultEventLoopGroupFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.$DefaultEventLoopGroupRegistry$DefaultEventLoopGroup1$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.$DefaultEventLoopGroupRegistry$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.$DefaultEventLoopGroupRegistry$EventLoopGroup0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.$EpollAvailabilityCondition$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.$EpollEventLoopGroupFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.$KQueueAvailabilityCondition$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.$KQueueEventLoopGroupFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.$NettyThreadFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.$NettyThreadFactory$NettyThreadFactory0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.$NioEventLoopGroupFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.converters.$DefaultChannelOptionFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.converters.$EpollChannelOptionFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.channel.converters.$KQueueChannelOptionFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.configuration.$NettyGlobalConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.stream.HttpStreamsServerHandler",
+  "queriedMethods":[
+    {"name":"channelRead","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }, 
+    {"name":"channelReadComplete","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelWritabilityChanged","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"write","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object","io.netty.channel.ChannelPromise"] }
+  ]}
+,
+{
+  "name":"io.micronaut.http.netty.websocket.$NettyServerWebSocketBroadcaster$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.netty.websocket.$WebSocketMessageEncoder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.resource.$ResourceLoaderFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.resource.$ResourceLoaderFactory$FileSystemResourceLoader1$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.resource.$ResourceLoaderFactory$GetClassPathResourceLoader0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.resource.$ResourceLoaderFactory$ResourceResolver2$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.$CoroutineHelper$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.$HttpServerConfiguration$CorsConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.$HttpServerConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.$HttpServerConfiguration$HostResolutionConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.$HttpServerConfiguration$HttpLocaleResolutionConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.$HttpServerConfiguration$MultipartConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.$RouteExecutor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.binding.$BasicAuthArgumentBinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.binding.$LocaleArgumentBinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.binding.$RequestArgumentSatisfier$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.codec.$TextStreamCodec$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.context.$ServerRequestContextInstrumentation$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.cors.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.cors.$CorsFilter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.cors.$CorsOriginConverter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.exceptions.$ContentLengthExceededHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.exceptions.$ConversionErrorHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.exceptions.$DuplicateRouteHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.exceptions.$HttpStatusHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.exceptions.$JsonExceptionHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.exceptions.$URISyntaxHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.exceptions.$UnsatisfiedArgumentHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.exceptions.$UnsatisfiedRouteHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.exceptions.response.$HateoasErrorResponseProcessor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.$DefaultHttpCompressionStrategy$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.$DefaultHttpContentProcessorResolver$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.$DefaultNettyEmbeddedServerFactory$BuildDefaultServer0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.$DefaultNettyEmbeddedServerFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.$FormDataHttpContentSubscriberFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.$NettyEmbeddedServerInstance$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.$NettyRequestArgumentSatisfier$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.NettyHttpResponseFactory",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.NettyHttpServer$NettyHttpServerInitializer"}
+,
+{
+  "name":"io.micronaut.http.server.netty.RoutingInBoundHandler",
+  "queriedMethods":[
+    {"name":"channelInactive","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"exceptionCaught","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Throwable"] }, 
+    {"name":"userEventTriggered","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }
+  ]}
+,
+{
+  "name":"io.micronaut.http.server.netty.SmartHttpContentCompressor"}
+,
+{
+  "name":"io.micronaut.http.server.netty.binders.$NettyBinderRegistrar$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.binders.$PublisherBodyBinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.configuration.$NettyHttpServerConfiguration$AccessLogger$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.configuration.$NettyHttpServerConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.configuration.$NettyHttpServerConfiguration$FileTypeHandlerConfiguration$CacheControlConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.configuration.$NettyHttpServerConfiguration$FileTypeHandlerConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.configuration.$NettyHttpServerConfiguration$Http2Settings$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.configuration.$NettyHttpServerConfiguration$Parent$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.configuration.$NettyHttpServerConfiguration$Worker$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.converters.$NettyConverters$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.decoders.HttpRequestDecoder"}
+,
+{
+  "name":"io.micronaut.http.server.netty.encoders.HttpResponseEncoder"}
+,
+{
+  "name":"io.micronaut.http.server.netty.jackson.$JsonHttpContentSubscriberFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.jackson.$JsonViewMediaTypeCodecFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.jackson.$JsonViewServerFilter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.ssl.$BuildSelfSignedCondition$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.ssl.$CertificateProvidedSslBuilder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.ssl.$CertificateProvidedSslBuilder$SelfSignedNotConfigured$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.ssl.$SelfSignedSslBuilder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.ssl.$SelfSignedSslBuilder$SelfSignedConfigured$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.ssl.$SslEnabledCondition$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.types.files.$FileTypeHandlerConfiguration$CacheControlConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.types.files.$FileTypeHandlerConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.netty.websocket.NettyServerWebSocketUpgradeHandler"}
+,
+{
+  "name":"io.micronaut.http.server.util.$DefaultHttpClientAddressResolver$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.util.$DefaultHttpHostResolver$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.util.locale.$CompositeHttpLocaleResolver$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.util.locale.$CookieLocaleResolver$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.util.locale.$HttpFixedLocaleResolver$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.util.locale.$RequestLocaleResolver$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.server.websocket.$ServerWebSocketProcessor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.ssl.$ClientSslConfiguration$DefaultKeyConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.ssl.$ClientSslConfiguration$DefaultKeyStoreConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.ssl.$ClientSslConfiguration$DefaultTrustStoreConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.ssl.$ClientSslConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.ssl.$DefaultSslConfiguration$DefaultKeyConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.ssl.$DefaultSslConfiguration$DefaultKeyStoreConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.ssl.$DefaultSslConfiguration$DefaultTrustStoreConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.ssl.$DefaultSslConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.ssl.$ServerSslConfiguration$DefaultKeyConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.ssl.$ServerSslConfiguration$DefaultKeyStoreConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.ssl.$ServerSslConfiguration$DefaultTrustStoreConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.ssl.$ServerSslConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.http.util.$OutgoingHttpRequestProcessorImpl$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.inject.provider.BeanProviderDefinition",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.inject.provider.JakartaProviderBeanDefinition",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.inject.provider.JavaxProviderBeanDefinition"}
+,
+{
+  "name":"io.micronaut.jackson.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.$JacksonConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.$ObjectMapperFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.$ObjectMapperFactory$JsonFactory0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.$ObjectMapperFactory$ObjectMapper1$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.codec.$JsonMediaTypeCodec$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.codec.$JsonStreamMediaTypeCodec$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.core.env.CloudFoundryVcapApplicationPropertySourceLoader",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.core.env.CloudFoundryVcapServicesPropertySourceLoader",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.core.env.EnvJsonPropertySourceLoader",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.core.env.JsonPropertySourceLoader",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.databind.$DatabindPropertyBinderExceptionHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.databind.$JacksonDatabindMapper$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.databind.convert.$JacksonConverterRegistrar$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.kotlin.$KotlinModuleFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.kotlin.$KotlinModuleFactory$KotlinModuleFactory0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.modules.$BeanIntrospectionModule$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.serialize.$ConvertibleMultiValuesSerializer$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.serialize.$ConvertibleValuesSerializer$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.serialize.$JacksonObjectSerializer$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.serialize.$JsonNodeDeserializer$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.serialize.$JsonNodeSerializer$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.serialize.$OptionalValuesSerializer$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.serialize.$ResourceModule$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.jackson.serialize.$ResourceSerializerModifier$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.json.$JsonObjectSerializer$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.json.bind.$JsonBeanPropertyBinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.json.codec.$JsonMediaTypeCodec$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.json.codec.$JsonStreamMediaTypeCodec$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.json.convert.$JsonConverterRegistrar$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.logging.$LogLevel$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.logging.$PropertiesLoggingLevelsConfigurer$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.logging.impl.$Log4jLoggingSystem$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.logging.impl.$LogbackLoggingSystem$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.reactive.flow.converters.$FlowConverterRegistrar$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.reactive.reactor.instrument.$ReactorInstrumentation$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.reactive.reactor.instrument.$ReactorInstrumentation$ReactorInstrumenterFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.retry.annotation.$DefaultRetryPredicate$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.retry.intercept.$DefaultRetryInterceptor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.retry.intercept.$RecoveryInterceptor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.runtime.$ApplicationConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.runtime.$ApplicationConfiguration$InstanceConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.runtime.context.$CompositeMessageSource$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.runtime.context.env.$ConfigurationIntroductionAdvice$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.runtime.context.scope.$ThreadLocalCustomScope$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.runtime.context.scope.refresh.$RefreshInterceptor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.runtime.context.scope.refresh.$RefreshScope$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.runtime.converters.reactive.$ReactiveTypeConverterRegistrar$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.runtime.converters.time.$TimeConverterRegistrar$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.runtime.http.codec.$MediaTypeCodecRegistryFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.runtime.http.codec.$MediaTypeCodecRegistryFactory$MediaTypeCodecRegistry0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.runtime.http.codec.$TextPlainCodec$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.runtime.http.scope.$RequestCustomScope$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.runtime.server.watch.event.$FileWatchRestartListener$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.rxjava3.converters.$RxJava2ToRxJava3ConveterRegistrar$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.rxjava3.converters.$RxJava3ConverterRegistrar$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.rxjava3.instrument.$RxInstrumenterFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.rxjava3.instrument.$RxJava3Instrumentation$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.$DefaultTaskExceptionHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.$ScheduledExecutorTaskScheduler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.async.$AsyncInterceptor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.executor.$DefaultExecutorSelector$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.executor.$DefaultThreadFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.executor.$DefaultThreadFactory$ThreadFactory0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.executor.$ExecutorFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.executor.$ExecutorFactory$EventLoopGroupThreadFactory0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.executor.$ExecutorFactory$ExecutorService1$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.executor.$IOExecutorServiceConfig$Configuration0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.executor.$IOExecutorServiceConfig$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.executor.$ScheduledExecutorServiceConfig$Configuration0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.executor.$ScheduledExecutorServiceConfig$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.executor.$UserExecutorConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.executor.$UserExecutorConfiguration$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.instrument.$ExecutorServiceInstrumenter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.io.watch.$DefaultWatchThread$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.io.watch.$FileWatchCondition$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.io.watch.$FileWatchConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.io.watch.$WatchServiceFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.io.watch.$WatchServiceFactory$WatchService0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.scheduling.processor.$ScheduledMethodProcessor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.authentication.$Authentication$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.authentication.$AuthenticationArgumentBinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.authentication.$AuthenticationExceptionHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.authentication.$AuthenticationModeCondition$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.authentication.$Authenticator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.authentication.$BasicAuthAuthenticationConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.authentication.$BasicAuthAuthenticationFetcher$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.authentication.$ClientAuthentication$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.authentication.$CookieBasedAuthenticationModeCondition$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.authentication.$DefaultAuthorizationExceptionHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.authentication.$PrincipalArgumentBinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.authentication.$UsernamePasswordCredentials$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.config.$InterceptUrlMapConverter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.config.$RedirectConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.config.$RedirectConfigurationProperties$ForbiddenRedirectConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.config.$RedirectConfigurationProperties$ForbiddenRedirectConfigurationProperties$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.config.$RedirectConfigurationProperties$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.config.$RedirectConfigurationProperties$RefreshRedirectConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.config.$RedirectConfigurationProperties$RefreshRedirectConfigurationProperties$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.config.$RedirectConfigurationProperties$UnauthorizedRedirectConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.config.$RedirectConfigurationProperties$UnauthorizedRedirectConfigurationProperties$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.config.$SecurityConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.endpoints.$LoginController$Definition$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.endpoints.$LoginController$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.endpoints.$LoginControllerConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.endpoints.$LogoutController$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.endpoints.$LogoutControllerConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.endpoints.introspection.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.endpoints.introspection.$DefaultIntrospectionProcessor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.endpoints.introspection.$IntrospectionConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.endpoints.introspection.$IntrospectionController$Definition$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.endpoints.introspection.$IntrospectionController$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.endpoints.introspection.$IntrospectionRequest$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.endpoints.introspection.$IntrospectionResponse$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.errors.$CookiePriorToLoginPersistence$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.errors.$OauthErrorResponseExceptionHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.filters.$SecurityFilter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.filters.$SecurityFilterConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.filters.$SecurityFilterConfigurationProperties$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.rules.$AbstractSecurityRule$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.rules.$ConfigurationInterceptUrlMapRule$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.rules.$InterceptUrlMapRule$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.rules.$IpPatternsRule$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.rules.$SecuredAnnotationRule$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.rules.$SensitiveEndpointRule$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.$DefaultRolesFinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.$TokenAuthenticationFetcher$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.config.$TokenConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.bearer.$AccessRefreshTokenLoginHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.bearer.$BearerTokenConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.bearer.$BearerTokenReader$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.config.$JwtConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.converters.$EncryptionMethodConverter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.converters.$JWEAlgorithmConverter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.converters.$JWSAlgorithmConverter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.converters.$KeyTypeConverter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.cookie.$JwtCookieClearerLogoutHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.cookie.$JwtCookieConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.cookie.$JwtCookieLoginHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.cookie.$JwtCookieTokenReader$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.cookie.$RefreshTokenCookieConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.encryption.ec.$ECEncryptionFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.encryption.ec.$ECEncryptionFactory$EncryptionConfiguration0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.encryption.rsa.$RSAEncryptionFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.encryption.rsa.$RSAEncryptionFactory$EncryptionConfiguration0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.encryption.secret.$SecretEncryptionConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.encryption.secret.$SecretEncryptionFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.encryption.secret.$SecretEncryptionFactory$EncryptionConfiguration0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.endpoints.$KeysController$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.endpoints.$KeysControllerConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.endpoints.$OauthController$Definition$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.endpoints.$OauthController$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.endpoints.$OauthControllerConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.endpoints.$TokenRefreshRequest$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.generator.$AccessTokenConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.generator.$DefaultAccessRefreshTokenGenerator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.generator.$JwtTokenGenerator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.generator.$RefreshTokenConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.generator.$RefreshTokenConfigurationProperties$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.generator.$SignedRefreshTokenGenerator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.generator.claims.$JWTClaimsSetGenerator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.render.$AccessRefreshToken$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.render.$BearerAccessRefreshToken$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.render.$BearerTokenRenderer$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.ec.$ECSignatureFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.ec.$ECSignatureFactory$SignatureConfiguration0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.ec.$ECSignatureGeneratorFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.ec.$ECSignatureGeneratorFactory$SignatureGeneratorConfiguration0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.jwks.$DefaultJwkValidator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.jwks.$JwksSignature$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.jwks.$JwksSignatureConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.jwks.$JwksSignatureConfigurationProperties$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.rsa.$RSASignatureFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.rsa.$RSASignatureFactory$SignatureConfiguration0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.rsa.$RSASignatureGeneratorFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.rsa.$RSASignatureGeneratorFactory$SignatureGeneratorConfiguration0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.secret.$SecretSignature$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.secret.$SecretSignatureConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.signature.secret.$SecretSignatureConfiguration$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.validator.$AudienceJwtClaimsValidator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.validator.$DefaultJwtAuthenticationFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.validator.$ExpirationJwtClaimsValidator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.validator.$IssuerJwtClaimsValidator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.validator.$JwtClaimsValidatorConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.validator.$JwtTokenValidator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.validator.$NotBeforeJwtClaimsValidator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.jwt.validator.$SubjectNotNullJwtClaimsValidator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.propagation.$HttpHeaderTokenPropagator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.propagation.$HttpHeaderTokenPropagatorConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.propagation.$TokenPropagationConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.propagation.$TokenPropagationHttpClientFilter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.token.reader.$DefaultTokenResolver$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.utils.$DefaultSecurityService$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.x509.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.x509.$X509AuthenticationArgumentBinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.x509.$X509AuthenticationFetcher$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.x509.$X509ConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.security.x509.$X509ConfigurationProperties$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.$DefaultTracer$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.$DefaultTracer$NoopTracer0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.$AsyncReporterConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.$BraveTracerConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.$BraveTracerConfiguration$HttpClientSenderConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.$BraveTracerConfiguration$SamplerConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.$BraveTracerFactory$AsyncReporter3$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.$BraveTracerFactory$BraveTracer2$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.$BraveTracerFactory$BraveTracing0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.$BraveTracerFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.$BraveTracerFactory$SpanCustomizer1$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.$BraveTracingInvocationInstrumenter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.$ZipkinServiceInstanceList$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.instrument.http.$BraveTracingClientFilter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.instrument.http.$BraveTracingServerFilter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.instrument.http.$HttpTracingFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.instrument.http.$HttpTracingFactory$HttpClientHandler1$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.instrument.http.$HttpTracingFactory$HttpServerHandler2$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.instrument.http.$HttpTracingFactory$HttpTracing0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.log.$Slf4jCurrentTraceContextFactory$CurrentTraceContext0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.log.$Slf4jCurrentTraceContextFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.sender.$HttpClientSenderFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.brave.sender.$HttpClientSenderFactory$ZipkinSender0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.instrument.http.$OpenTracingClientFilter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.instrument.http.$OpenTracingServerFilter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.instrument.hystrix.$TracingHystrixConcurrentStrategy$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.instrument.kotlin.$HttpCoroutineTracingDispatcherFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.instrument.util.$MdcInstrumenter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.instrument.util.$OpenTracingInvocationInstrumenter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.instrument.util.$ThreadTracingInvocationInstrumenterFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.interceptor.$TraceInterceptor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.jaeger.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.jaeger.$JaegerConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.jaeger.$JaegerConfiguration$JaegerReporterConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.jaeger.$JaegerConfiguration$JaegerSamplerConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.jaeger.$JaegerConfiguration$JaegerSenderConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.jaeger.$JaegerTracerFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.jaeger.$JaegerTracerFactory$JaegerConfiguration0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.jaeger.$JaegerTracerFactory$JaegerTracer2$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.tracing.jaeger.$JaegerTracerFactory$JaegerTracerBuilder1$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.validation.$ValidatingInterceptor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.validation.exceptions.$ConstraintExceptionHandler$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.validation.validator.$DefaultClockProvider$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.validation.validator.$DefaultValidator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.validation.validator.$DefaultValidatorConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.validation.validator.$DefaultValidatorFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.validation.validator.constraints.$DefaultConstraintValidators$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.validation.validator.constraints.$DefaultConstraintValidators$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.validation.validator.constraints.$EmailValidator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.validation.validator.constraints.$PatternValidator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.validation.validator.extractors.$DefaultValueExtractors$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.validation.validator.extractors.$DefaultValueExtractors$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.validation.validator.messages.$DefaultValidationMessages$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.validation.validator.resolver.$CompositeTraversableResolver$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.$AnnotatedFilterRouteBuilder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.$AnnotatedMethodRouteBuilder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.$DefaultRouter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.naming.$ConfigurableUriNamingStrategy$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.naming.$HyphenatedUriNamingStrategy$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.resource.$StaticResourceConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.resource.$StaticResourceResolverFactory$Build0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.resource.$StaticResourceResolverFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.version.$ConfigurationDefaultVersionProvider$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.version.$RouteVersionFilter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.version.$RoutesVersioningConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.version.$VersionAwareRouterListener$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.version.resolution.$HeaderVersionResolver$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.version.resolution.$HeaderVersionResolverConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.version.resolution.$ParameterVersionResolver$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.web.router.version.resolution.$ParameterVersionResolverConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.micronaut.websocket.interceptor.$ClientWebSocketInterceptor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"io.netty.bootstrap.ServerBootstrap$1"}
+,
+{
+  "name":"io.netty.bootstrap.ServerBootstrap$ServerBootstrapAcceptor",
+  "queriedMethods":[
+    {"name":"channelRead","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }, 
+    {"name":"exceptionCaught","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Throwable"] }
+  ]}
+,
+{
+  "name":"io.netty.buffer.AbstractByteBufAllocator",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"io.netty.buffer.AbstractReferenceCountedByteBuf",
+  "fields":[{"name":"refCnt"}]}
+,
+{
+  "name":"io.netty.channel.ChannelDuplexHandler",
+  "queriedMethods":[
+    {"name":"bind","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.net.SocketAddress","io.netty.channel.ChannelPromise"] }, 
+    {"name":"close","parameterTypes":["io.netty.channel.ChannelHandlerContext","io.netty.channel.ChannelPromise"] }, 
+    {"name":"connect","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.net.SocketAddress","java.net.SocketAddress","io.netty.channel.ChannelPromise"] }, 
+    {"name":"deregister","parameterTypes":["io.netty.channel.ChannelHandlerContext","io.netty.channel.ChannelPromise"] }, 
+    {"name":"disconnect","parameterTypes":["io.netty.channel.ChannelHandlerContext","io.netty.channel.ChannelPromise"] }, 
+    {"name":"flush","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"read","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"write","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object","io.netty.channel.ChannelPromise"] }
+  ]}
+,
+{
+  "name":"io.netty.channel.ChannelHandlerAdapter",
+  "queriedMethods":[{"name":"exceptionCaught","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Throwable"] }]}
+,
+{
+  "name":"io.netty.channel.ChannelInboundHandlerAdapter",
+  "queriedMethods":[
+    {"name":"channelActive","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelInactive","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelRead","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }, 
+    {"name":"channelReadComplete","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelRegistered","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelUnregistered","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelWritabilityChanged","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"exceptionCaught","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Throwable"] }, 
+    {"name":"userEventTriggered","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }
+  ]}
+,
+{
+  "name":"io.netty.channel.ChannelInitializer",
+  "queriedMethods":[
+    {"name":"channelRegistered","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"exceptionCaught","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Throwable"] }
+  ]}
+,
+{
+  "name":"io.netty.channel.ChannelOutboundHandlerAdapter",
+  "queriedMethods":[
+    {"name":"bind","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.net.SocketAddress","io.netty.channel.ChannelPromise"] }, 
+    {"name":"close","parameterTypes":["io.netty.channel.ChannelHandlerContext","io.netty.channel.ChannelPromise"] }, 
+    {"name":"connect","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.net.SocketAddress","java.net.SocketAddress","io.netty.channel.ChannelPromise"] }, 
+    {"name":"deregister","parameterTypes":["io.netty.channel.ChannelHandlerContext","io.netty.channel.ChannelPromise"] }, 
+    {"name":"disconnect","parameterTypes":["io.netty.channel.ChannelHandlerContext","io.netty.channel.ChannelPromise"] }, 
+    {"name":"flush","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"read","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }
+  ]}
+,
+{
+  "name":"io.netty.channel.CombinedChannelDuplexHandler",
+  "queriedMethods":[
+    {"name":"bind","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.net.SocketAddress","io.netty.channel.ChannelPromise"] }, 
+    {"name":"channelActive","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelInactive","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelRead","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }, 
+    {"name":"channelReadComplete","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelRegistered","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelUnregistered","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelWritabilityChanged","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"close","parameterTypes":["io.netty.channel.ChannelHandlerContext","io.netty.channel.ChannelPromise"] }, 
+    {"name":"connect","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.net.SocketAddress","java.net.SocketAddress","io.netty.channel.ChannelPromise"] }, 
+    {"name":"deregister","parameterTypes":["io.netty.channel.ChannelHandlerContext","io.netty.channel.ChannelPromise"] }, 
+    {"name":"disconnect","parameterTypes":["io.netty.channel.ChannelHandlerContext","io.netty.channel.ChannelPromise"] }, 
+    {"name":"exceptionCaught","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Throwable"] }, 
+    {"name":"flush","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"read","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"userEventTriggered","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }, 
+    {"name":"write","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object","io.netty.channel.ChannelPromise"] }
+  ]}
+,
+{
+  "name":"io.netty.channel.DefaultChannelPipeline$HeadContext",
+  "queriedMethods":[
+    {"name":"bind","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.net.SocketAddress","io.netty.channel.ChannelPromise"] }, 
+    {"name":"channelActive","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelInactive","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelRead","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }, 
+    {"name":"channelReadComplete","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelRegistered","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelUnregistered","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelWritabilityChanged","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"close","parameterTypes":["io.netty.channel.ChannelHandlerContext","io.netty.channel.ChannelPromise"] }, 
+    {"name":"connect","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.net.SocketAddress","java.net.SocketAddress","io.netty.channel.ChannelPromise"] }, 
+    {"name":"deregister","parameterTypes":["io.netty.channel.ChannelHandlerContext","io.netty.channel.ChannelPromise"] }, 
+    {"name":"disconnect","parameterTypes":["io.netty.channel.ChannelHandlerContext","io.netty.channel.ChannelPromise"] }, 
+    {"name":"exceptionCaught","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Throwable"] }, 
+    {"name":"flush","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"read","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"userEventTriggered","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }, 
+    {"name":"write","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object","io.netty.channel.ChannelPromise"] }
+  ]}
+,
+{
+  "name":"io.netty.channel.DefaultChannelPipeline$TailContext",
+  "queriedMethods":[
+    {"name":"channelActive","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelInactive","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelRead","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }, 
+    {"name":"channelReadComplete","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelRegistered","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelUnregistered","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelWritabilityChanged","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"exceptionCaught","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Throwable"] }, 
+    {"name":"userEventTriggered","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }
+  ]}
+,
+{
+  "name":"io.netty.channel.SimpleChannelInboundHandler",
+  "queriedMethods":[{"name":"channelRead","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }]}
+,
+{
+  "name":"io.netty.channel.embedded.EmbeddedChannel$2"}
+,
+{
+  "name":"io.netty.handler.codec.MessageToByteEncoder",
+  "queriedMethods":[{"name":"write","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object","io.netty.channel.ChannelPromise"] }]}
+,
+{
+  "name":"io.netty.handler.codec.MessageToMessageCodec",
+  "queriedMethods":[
+    {"name":"channelRead","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }, 
+    {"name":"write","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object","io.netty.channel.ChannelPromise"] }
+  ]}
+,
+{
+  "name":"io.netty.handler.codec.MessageToMessageDecoder",
+  "queriedMethods":[{"name":"channelRead","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }]}
+,
+{
+  "name":"io.netty.handler.codec.MessageToMessageEncoder",
+  "queriedMethods":[{"name":"write","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object","io.netty.channel.ChannelPromise"] }]}
+,
+{
+  "name":"io.netty.handler.codec.compression.JdkZlibEncoder",
+  "queriedMethods":[{"name":"close","parameterTypes":["io.netty.channel.ChannelHandlerContext","io.netty.channel.ChannelPromise"] }]}
+,
+{
+  "name":"io.netty.handler.codec.http.HttpContentDecoder",
+  "queriedMethods":[
+    {"name":"channelInactive","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelReadComplete","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }
+  ]}
+,
+{
+  "name":"io.netty.handler.codec.http.HttpContentDecompressor"}
+,
+{
+  "name":"io.netty.handler.codec.http.HttpContentEncoder",
+  "queriedMethods":[{"name":"channelInactive","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }]}
+,
+{
+  "name":"io.netty.handler.codec.http.HttpServerCodec"}
+,
+{
+  "name":"io.netty.handler.codec.http.HttpServerKeepAliveHandler",
+  "queriedMethods":[
+    {"name":"channelRead","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }, 
+    {"name":"write","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object","io.netty.channel.ChannelPromise"] }
+  ]}
+,
+{
+  "name":"io.netty.handler.codec.http.websocketx.extensions.WebSocketServerExtensionHandler",
+  "queriedMethods":[
+    {"name":"channelRead","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }, 
+    {"name":"write","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object","io.netty.channel.ChannelPromise"] }
+  ]}
+,
+{
+  "name":"io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler"}
+,
+{
+  "name":"io.netty.handler.flow.FlowControlHandler",
+  "queriedMethods":[
+    {"name":"channelInactive","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelRead","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }, 
+    {"name":"channelReadComplete","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"read","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }
+  ]}
+,
+{
+  "name":"io.netty.handler.stream.ChunkedWriteHandler",
+  "queriedMethods":[
+    {"name":"channelInactive","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"channelWritabilityChanged","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"flush","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }, 
+    {"name":"write","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object","io.netty.channel.ChannelPromise"] }
+  ]}
+,
+{
+  "name":"io.netty.util.ReferenceCountUtil",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueColdProducerFields",
+  "fields":[{"name":"producerLimit"}]}
+,
+{
+  "name":"io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueConsumerFields",
+  "fields":[{"name":"consumerIndex"}]}
+,
+{
+  "name":"io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueProducerFields",
+  "fields":[{"name":"producerIndex"}]}
+,
+{
+  "name":"io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueConsumerIndexField",
+  "fields":[{"name":"consumerIndex"}]}
+,
+{
+  "name":"io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueProducerIndexField",
+  "fields":[{"name":"producerIndex"}]}
+,
+{
+  "name":"io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueProducerLimitField",
+  "fields":[{"name":"producerLimit"}]}
+,
+{
+  "name":"io.reactivex.Completable"}
+,
+{
+  "name":"io.reactivex.Maybe"}
+,
+{
+  "name":"io.reactivex.Observable"}
+,
+{
+  "name":"io.reactivex.Single"}
+,
+{
+  "name":"io.reactivex.rxjava3.core.Completable"}
+,
+{
+  "name":"io.reactivex.rxjava3.core.Flowable"}
+,
+{
+  "name":"io.reactivex.rxjava3.core.Maybe"}
+,
+{
+  "name":"io.reactivex.rxjava3.core.Observable"}
+,
+{
+  "name":"io.reactivex.rxjava3.core.Single"}
+,
+{
+  "name":"java.io.FileDescriptor",
+  "fields":[{"name":"fd"}]}
+,
+{
+  "name":"java.io.FilePermission"}
+,
+{
+  "name":"java.io.FilterInputStream",
+  "fields":[{"name":"in"}]}
+,
+{
+  "name":"java.io.FilterOutputStream",
+  "fields":[{"name":"out"}]}
+,
+{
+  "name":"java.io.Serializable",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"java.lang.CharSequence",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"java.lang.ClassLoader",
+  "queriedMethods":[{"name":"getResourceAsStream","parameterTypes":["java.lang.String"] }]}
+,
+{
+  "name":"java.lang.Cloneable",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"java.lang.Iterable",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"java.lang.Long",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"java.lang.Module"}
+,
+{
+  "name":"java.lang.Number",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"java.lang.Object",
+  "allDeclaredFields":true,
+  "allDeclaredClasses":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"java.lang.Process"}
+,
+{
+  "name":"java.lang.RuntimePermission"}
+,
+{
+  "name":"java.lang.String",
+  "allDeclaredFields":true,
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"java.lang.Thread",
+  "fields":[{"name":"threadLocalRandomProbe"}]}
+,
+{
+  "name":"java.lang.management.ManagementFactory",
+  "methods":[{"name":"getRuntimeMXBean","parameterTypes":[] }]}
+,
+{
+  "name":"java.lang.management.RuntimeMXBean",
+  "methods":[
+    {"name":"getInputArguments","parameterTypes":[] }, 
+    {"name":"getName","parameterTypes":[] }
+  ]}
+,
+{
+  "name":"java.lang.reflect.Executable",
+  "methods":[{"name":"getParameters","parameterTypes":[] }]}
+,
+{
+  "name":"java.lang.reflect.Method",
+  "methods":[{"name":"isDefault","parameterTypes":[] }]}
+,
+{
+  "name":"java.lang.reflect.Parameter",
+  "methods":[{"name":"getName","parameterTypes":[] }]}
+,
+{
+  "name":"java.net.NetPermission"}
+,
+{
+  "name":"java.net.SocketPermission"}
+,
+{
+  "name":"java.net.URLPermission",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.String","java.lang.String"] }]}
+,
+{
+  "name":"java.nio.Bits",
+  "fields":[{"name":"UNALIGNED"}]}
+,
+{
+  "name":"java.nio.Buffer",
+  "queryAllDeclaredMethods":true,
+  "fields":[{"name":"address"}]}
+,
+{
+  "name":"java.nio.ByteBuffer",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"java.nio.DirectByteBuffer",
+  "queriedMethods":[{"name":"<init>","parameterTypes":["long","int"] }]}
+,
+{
+  "name":"java.security.AllPermission"}
+,
+{
+  "name":"java.security.MessageDigestSpi"}
+,
+{
+  "name":"java.security.SecureRandomParameters"}
+,
+{
+  "name":"java.security.SecurityPermission"}
+,
+{
+  "name":"java.security.interfaces.RSAPrivateKey"}
+,
+{
+  "name":"java.security.interfaces.RSAPublicKey"}
+,
+{
+  "name":"java.util.AbstractMap",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"java.util.HashMap",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"java.util.LinkedHashMap",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"java.util.Map",
+  "allDeclaredFields":true,
+  "allDeclaredClasses":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"java.util.Map$Entry",
+  "allDeclaredFields":true,
+  "allDeclaredClasses":true,
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"java.util.PropertyPermission"}
+,
+{
+  "name":"javax.crypto.interfaces.DHPrivateKey"}
+,
+{
+  "name":"javax.crypto.interfaces.DHPublicKey"}
+,
+{
+  "name":"javax.management.ObjectName"}
+,
+{
+  "name":"jdk.internal.misc.Unsafe",
+  "methods":[{"name":"getUnsafe","parameterTypes":[] }]}
+,
+{
+  "name":"jnr.constants.platform.linux.AddressFamily"}
+,
+{
+  "name":"jnr.constants.platform.linux.AddressInfo"}
+,
+{
+  "name":"jnr.constants.platform.linux.Errno"}
+,
+{
+  "name":"jnr.constants.platform.linux.Fcntl"}
+,
+{
+  "name":"jnr.constants.platform.linux.INAddr"}
+,
+{
+  "name":"jnr.constants.platform.linux.IP"}
+,
+{
+  "name":"jnr.constants.platform.linux.IPProto"}
+,
+{
+  "name":"jnr.constants.platform.linux.NameInfo"}
+,
+{
+  "name":"jnr.constants.platform.linux.OpenFlags"}
+,
+{
+  "name":"jnr.constants.platform.linux.PRIO"}
+,
+{
+  "name":"jnr.constants.platform.linux.ProtocolFamily"}
+,
+{
+  "name":"jnr.constants.platform.linux.RLIM"}
+,
+{
+  "name":"jnr.constants.platform.linux.RLIMIT"}
+,
+{
+  "name":"jnr.constants.platform.linux.Shutdown"}
+,
+{
+  "name":"jnr.constants.platform.linux.Signal"}
+,
+{
+  "name":"jnr.constants.platform.linux.Sock"}
+,
+{
+  "name":"jnr.constants.platform.linux.SocketLevel"}
+,
+{
+  "name":"jnr.constants.platform.linux.SocketMessage"}
+,
+{
+  "name":"jnr.constants.platform.linux.SocketOption"}
+,
+{
+  "name":"jnr.constants.platform.linux.TCP"}
+,
+{
+  "name":"jnr.enxio.channels.Native$LibC",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.enxio.channels.Native$LibC$jnr$ffi$2",
+  "methods":[{"name":"<init>","parameterTypes":["jnr.ffi.Runtime","jnr.ffi.provider.jffi.NativeLibrary","java.lang.Object[]"] }]}
+,
+{
+  "name":"jnr.ffi.Pointer",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.ffi.byref.ByReference",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.ffi.byref.IntByReference",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.ffi.byref.NumberByReference",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.ffi.byref.ShortByReference",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.ffi.mapper.FromNativeConverter",
+  "queriedMethods":[{"name":"fromNative","parameterTypes":["java.lang.Object","jnr.ffi.mapper.FromNativeContext"] }]}
+,
+{
+  "name":"jnr.ffi.mapper.ToNativeConverter",
+  "queriedMethods":[{"name":"toNative","parameterTypes":["java.lang.Object","jnr.ffi.mapper.ToNativeContext"] }]}
+,
+{
+  "name":"jnr.ffi.provider.converters.ByReferenceParameterConverter",
+  "queriedMethods":[{"name":"nativeType","parameterTypes":[] }]}
+,
+{
+  "name":"jnr.ffi.provider.converters.ByReferenceParameterConverter$Out",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.ffi.provider.converters.CharSequenceArrayParameterConverter",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.ffi.provider.converters.CharSequenceParameterConverter",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.ffi.provider.converters.StringResultConverter",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.ffi.provider.converters.StructArrayParameterConverter",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.ffi.provider.converters.StructArrayParameterConverter$Out",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.ffi.provider.converters.StructByReferenceToNativeConverter",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.ffi.provider.jffi.BufferParameterStrategy",
+  "queriedMethods":[{"name":"address","parameterTypes":["java.nio.Buffer"] }]}
+,
+{
+  "name":"jnr.ffi.provider.jffi.NativeClosureManager$ClosureSite",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.ffi.provider.jffi.NativeClosureProxy$$impl$$0",
+  "queriedMethods":[
+    {"name":"<init>","parameterTypes":["jnr.ffi.provider.jffi.NativeRuntime","java.lang.Object[]"] }, 
+    {"name":"invoke","parameterTypes":["int"] }
+  ]}
+,
+{
+  "name":"jnr.ffi.provider.jffi.PointerParameterStrategy",
+  "queriedMethods":[{"name":"address","parameterTypes":["jnr.ffi.Pointer"] }]}
+,
+{
+  "name":"jnr.ffi.provider.jffi.Provider",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"jnr.ffi.provider.jffi.platform.x86_64.linux.TypeAliases",
+  "fields":[{"name":"ALIASES"}]}
+,
+{
+  "name":"jnr.posix.BaseNativePOSIX$2",
+  "queriedMethods":[{"name":"fromNative","parameterTypes":["java.lang.Object","jnr.ffi.mapper.FromNativeContext"] }]}
+,
+{
+  "name":"jnr.posix.BaseNativePOSIX$3",
+  "queriedMethods":[
+    {"name":"nativeType","parameterTypes":[] }, 
+    {"name":"toNative","parameterTypes":["java.lang.Object","jnr.ffi.mapper.ToNativeContext"] }
+  ]}
+,
+{
+  "name":"jnr.posix.BaseNativePOSIX$4",
+  "queriedMethods":[
+    {"name":"nativeType","parameterTypes":[] }, 
+    {"name":"toNative","parameterTypes":["java.lang.Object","jnr.ffi.mapper.ToNativeContext"] }
+  ]}
+,
+{
+  "name":"jnr.posix.BaseNativePOSIX$5",
+  "queriedMethods":[
+    {"name":"nativeType","parameterTypes":[] }, 
+    {"name":"toNative","parameterTypes":["java.lang.Object","jnr.ffi.mapper.ToNativeContext"] }
+  ]}
+,
+{
+  "name":"jnr.posix.BaseNativePOSIX$6",
+  "queriedMethods":[
+    {"name":"nativeType","parameterTypes":[] }, 
+    {"name":"toNative","parameterTypes":["java.lang.Object","jnr.ffi.mapper.ToNativeContext"] }
+  ]}
+,
+{
+  "name":"jnr.posix.BaseNativePOSIX$PointerConverter",
+  "queriedMethods":[{"name":"nativeType","parameterTypes":[] }]}
+,
+{
+  "name":"jnr.posix.Crypt",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.posix.Crypt$jnr$ffi$1",
+  "methods":[{"name":"<init>","parameterTypes":["jnr.ffi.Runtime","jnr.ffi.provider.jffi.NativeLibrary","java.lang.Object[]"] }]}
+,
+{
+  "name":"jnr.posix.Flock",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.posix.LibC$LibCSignalHandler",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.posix.LinuxLibC",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.posix.LinuxLibC$VariableAccessor$$0",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Object[]"] }]}
+,
+{
+  "name":"jnr.posix.LinuxLibC$jnr$ffi$0",
+  "methods":[{"name":"<init>","parameterTypes":["jnr.ffi.Runtime","jnr.ffi.provider.jffi.NativeLibrary","java.lang.Object[]"] }]}
+,
+{
+  "name":"jnr.posix.LinuxPOSIX$1",
+  "queriedMethods":[{"name":"fromNative","parameterTypes":["java.lang.Object","jnr.ffi.mapper.FromNativeContext"] }]}
+,
+{
+  "name":"jnr.posix.RLimit",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"jnr.posix.Timespec",
+  "queriedMethods":[{"name":"<init>","parameterTypes":["jnr.ffi.Runtime"] }]}
+,
+{
+  "name":"jnr.posix.Timeval",
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbArray",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbArray$INVOKER$s$0$0$to_json",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbFalse",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbFalse$INVOKER$s$0$0$to_json",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbFloat",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbFloat$INVOKER$s$0$0$to_json",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbHash",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbHash$INVOKER$s$0$0$to_json",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbInteger",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbInteger$INVOKER$s$0$0$to_json",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbNil",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbNil$INVOKER$s$0$0$to_json",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbObject",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbObject$INVOKER$s$0$0$to_json",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbString",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbString$INVOKER$s$0$0$to_json",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbString$INVOKER$s$0$0$to_json_raw",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbString$INVOKER$s$0$0$to_json_raw_object",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbString$INVOKER$s$1$0$included",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbTrue",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"json.ext.GeneratorMethods$RbTrue$INVOKER$s$0$0$to_json",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorMethods$StringExtend",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"json.ext.GeneratorMethods$StringExtend$INVOKER$s$1$0$json_create",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorService",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"json.ext.GeneratorState",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$0$0$allow_nan_p",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$0$0$array_nl_get",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$0$0$ascii_only_p",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$0$0$buffer_initial_length_get",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$0$0$check_circular_p",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$0$0$depth_get",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$0$0$escape_slash_get",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$0$0$indent_get",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$0$0$max_nesting_get",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$0$0$object_nl_get",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$0$0$space_before_get",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$0$0$space_get",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$0$0$to_h",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$0$1$initialize",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$1$0$array_nl_set",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$1$0$buffer_initial_length_set",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$1$0$configure",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$1$0$depth_set",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$1$0$escape_slash_set",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$1$0$generate",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$1$0$indent_set",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$1$0$initialize_copy",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$1$0$max_nesting_set",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$1$0$object_nl_set",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$1$0$op_aref",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$1$0$space_before_set",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$1$0$space_set",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$i$2$0$op_aset",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.GeneratorState$INVOKER$s$1$0$from_state",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.Parser",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"json.ext.Parser$INVOKER$i$0$0$parse",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.Parser$INVOKER$i$0$0$source_get",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.Parser$INVOKER$i$0$1$initialize",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.Parser$INVOKER$s$0$1$newInstance",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"json.ext.ParserService",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"kotlin.Metadata",
+  "queryAllDeclaredMethods":true,
+  "methods":[
+    {"name":"bv","parameterTypes":[] }, 
+    {"name":"d1","parameterTypes":[] }, 
+    {"name":"d2","parameterTypes":[] }, 
+    {"name":"k","parameterTypes":[] }, 
+    {"name":"mv","parameterTypes":[] }, 
+    {"name":"pn","parameterTypes":[] }, 
+    {"name":"xi","parameterTypes":[] }, 
+    {"name":"xs","parameterTypes":[] }
+  ]}
+,
+{
+  "name":"kotlin.Unit"}
+,
+{
+  "name":"kotlin.jvm.internal.DefaultConstructorMarker"}
+,
+{
+  "name":"kotlin.reflect.jvm.internal.ReflectionFactoryImpl",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter",
+  "allPublicFields":true}
+,
+{
+  "name":"kotlinx.coroutines.flow.Flow"}
+,
+{
+  "name":"long",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"org.asciidoctor.extension.BaseProcessor",
+  "allDeclaredFields":true,
+  "allDeclaredClasses":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicConstructors":true}
+,
+{
+  "name":"org.asciidoctor.extension.BlockMacroProcessor",
+  "allDeclaredFields":true,
+  "allDeclaredClasses":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicConstructors":true}
+,
+{
+  "name":"org.asciidoctor.extension.BlockProcessor",
+  "allDeclaredFields":true,
+  "allDeclaredClasses":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicConstructors":true}
+,
+{
+  "name":"org.asciidoctor.extension.InlineMacroProcessor",
+  "allDeclaredFields":true,
+  "allDeclaredClasses":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicConstructors":true}
+,
+{
+  "name":"org.asciidoctor.extension.MacroProcessor",
+  "allDeclaredFields":true,
+  "allDeclaredClasses":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicConstructors":true}
+,
+{
+  "name":"org.asciidoctor.extension.Processor",
+  "allDeclaredFields":true,
+  "allDeclaredClasses":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"org.asciidoctor.extension.Treeprocessor",
+  "allDeclaredFields":true,
+  "allDeclaredClasses":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicConstructors":true}
+,
+{
+  "name":"org.asciidoctor.jruby.log.internal.JavaLogger",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"org.asciidoctor.jruby.log.internal.JavaLogger$INVOKER$i$0$0$debug",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"org.asciidoctor.jruby.log.internal.JavaLogger$INVOKER$i$0$0$error",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"org.asciidoctor.jruby.log.internal.JavaLogger$INVOKER$i$0$0$fatal",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"org.asciidoctor.jruby.log.internal.JavaLogger$INVOKER$i$0$0$info",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"org.asciidoctor.jruby.log.internal.JavaLogger$INVOKER$i$0$0$warn",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"org.asciidoctor.jruby.log.internal.JavaLogger$INVOKER$i$0$2$add",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"org.asciidoctor.jruby.log.internal.JavaLogger$INVOKER$i$0$2$debug",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"org.asciidoctor.jruby.log.internal.JavaLogger$INVOKER$i$0$2$error",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"org.asciidoctor.jruby.log.internal.JavaLogger$INVOKER$i$0$2$fatal",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"org.asciidoctor.jruby.log.internal.JavaLogger$INVOKER$i$0$2$info",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"org.asciidoctor.jruby.log.internal.JavaLogger$INVOKER$i$0$2$initialize",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"org.asciidoctor.jruby.log.internal.JavaLogger$INVOKER$i$0$2$warn",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.RubyModule","org.jruby.runtime.Visibility","java.lang.String"] }]}
+,
+{
+  "name":"org.dizitart.no2.collection.Document",
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"org.dizitart.no2.collection.NitriteDocument",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true}
+,
+{
+  "name":"org.dizitart.no2.common.mapper.Mappable",
+  "allDeclaredFields":true,
+  "allDeclaredClasses":true,
+  "queryAllDeclaredMethods":true}
+,
+{
+  "name":"org.dizitart.no2.common.mapper.NitriteMapper"}
+,
+{
+  "name":"org.h2.store.fs.FilePathDisk",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.h2.store.fs.FilePathNio",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.RubyArray",
+  "queriedMethods":[{"name":"empty_p","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.RubyBasicObject",
+  "fields":[
+    {"name":"varTable"}, 
+    {"name":"varTableStamp"}
+  ],
+  "methods":[{"name":"ensureInstanceVariablesSettable","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.RubyClass",
+  "queriedMethods":[
+    {"name":"allocate","parameterTypes":[] }, 
+    {"name":"newInstance","parameterTypes":["org.jruby.runtime.ThreadContext","org.jruby.runtime.Block"] }
+  ]}
+,
+{
+  "name":"org.jruby.RubyConverter",
+  "allDeclaredFields":true}
+,
+{
+  "name":"org.jruby.RubyEnumerable",
+  "queriedMethods":[{"name":"to_a","parameterTypes":["org.jruby.runtime.ThreadContext","org.jruby.runtime.builtin.IRubyObject"] }]}
+,
+{
+  "name":"org.jruby.RubyHash",
+  "queriedMethods":[{"name":"empty_p","parameterTypes":["org.jruby.runtime.ThreadContext"] }]}
+,
+{
+  "name":"org.jruby.RubyKernel",
+  "queriedMethods":[
+    {"name":"nil_p","parameterTypes":["org.jruby.runtime.ThreadContext","org.jruby.runtime.builtin.IRubyObject"] }, 
+    {"name":"raise","parameterTypes":["org.jruby.runtime.ThreadContext","org.jruby.runtime.builtin.IRubyObject","org.jruby.runtime.builtin.IRubyObject[]","org.jruby.runtime.Block"] }, 
+    {"name":"require","parameterTypes":["org.jruby.runtime.ThreadContext","org.jruby.runtime.builtin.IRubyObject","org.jruby.runtime.builtin.IRubyObject","org.jruby.runtime.Block"] }, 
+    {"name":"send","parameterTypes":["org.jruby.runtime.ThreadContext","org.jruby.runtime.builtin.IRubyObject","org.jruby.runtime.builtin.IRubyObject","org.jruby.runtime.Block"] }, 
+    {"name":"sprintf","parameterTypes":["org.jruby.runtime.ThreadContext","org.jruby.runtime.builtin.IRubyObject","org.jruby.runtime.builtin.IRubyObject[]"] }
+  ]}
+,
+{
+  "name":"org.jruby.RubyNil",
+  "queriedMethods":[{"name":"nil_p","parameterTypes":["org.jruby.runtime.ThreadContext"] }]}
+,
+{
+  "name":"org.jruby.RubyString",
+  "queriedMethods":[{"name":"empty_p","parameterTypes":["org.jruby.runtime.ThreadContext"] }]}
+,
+{
+  "name":"org.jruby.ext.cgi.escape.CGIEscape",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ext.digest.DigestLibrary",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ext.digest.MD5",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ext.etc.EtcLibrary",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ext.io.wait.IOWaitLibrary",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ext.pathname.PathnameLibrary",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ext.rbconfig.RbConfigLibrary",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ext.set.SetLibrary",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ext.socket.SocketLibrary",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ext.stringio.StringIOLibrary",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ext.strscan.StringScannerLibrary",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ext.tempfile.TempfileLibrary",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ext.timeout.Timeout",
+  "methods":[{"name":"load","parameterTypes":["org.jruby.Ruby"] }]}
+,
+{
+  "name":"org.jruby.ext.zlib.ZlibLibrary",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject1",
+  "allDeclaredClasses":true,
+  "fields":[{"name":"var0"}]}
+,
+{
+  "name":"org.jruby.gen.RubyObject10",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var2"}, 
+    {"name":"var3"}, 
+    {"name":"var4"}, 
+    {"name":"var5"}, 
+    {"name":"var6"}, 
+    {"name":"var7"}, 
+    {"name":"var8"}, 
+    {"name":"var9"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject10Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject11",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var10"}, 
+    {"name":"var2"}, 
+    {"name":"var3"}, 
+    {"name":"var4"}, 
+    {"name":"var5"}, 
+    {"name":"var6"}, 
+    {"name":"var7"}, 
+    {"name":"var8"}, 
+    {"name":"var9"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject11Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject13",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var10"}, 
+    {"name":"var11"}, 
+    {"name":"var12"}, 
+    {"name":"var2"}, 
+    {"name":"var3"}, 
+    {"name":"var4"}, 
+    {"name":"var5"}, 
+    {"name":"var6"}, 
+    {"name":"var7"}, 
+    {"name":"var8"}, 
+    {"name":"var9"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject13Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject14",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var10"}, 
+    {"name":"var11"}, 
+    {"name":"var12"}, 
+    {"name":"var13"}, 
+    {"name":"var2"}, 
+    {"name":"var3"}, 
+    {"name":"var4"}, 
+    {"name":"var5"}, 
+    {"name":"var6"}, 
+    {"name":"var7"}, 
+    {"name":"var8"}, 
+    {"name":"var9"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject14Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject16",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var10"}, 
+    {"name":"var11"}, 
+    {"name":"var12"}, 
+    {"name":"var13"}, 
+    {"name":"var14"}, 
+    {"name":"var15"}, 
+    {"name":"var2"}, 
+    {"name":"var3"}, 
+    {"name":"var4"}, 
+    {"name":"var5"}, 
+    {"name":"var6"}, 
+    {"name":"var7"}, 
+    {"name":"var8"}, 
+    {"name":"var9"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject16Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject1Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject2",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject20",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var10"}, 
+    {"name":"var11"}, 
+    {"name":"var12"}, 
+    {"name":"var13"}, 
+    {"name":"var14"}, 
+    {"name":"var15"}, 
+    {"name":"var16"}, 
+    {"name":"var17"}, 
+    {"name":"var18"}, 
+    {"name":"var19"}, 
+    {"name":"var2"}, 
+    {"name":"var3"}, 
+    {"name":"var4"}, 
+    {"name":"var5"}, 
+    {"name":"var6"}, 
+    {"name":"var7"}, 
+    {"name":"var8"}, 
+    {"name":"var9"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject20Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject23",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var10"}, 
+    {"name":"var11"}, 
+    {"name":"var12"}, 
+    {"name":"var13"}, 
+    {"name":"var14"}, 
+    {"name":"var15"}, 
+    {"name":"var16"}, 
+    {"name":"var17"}, 
+    {"name":"var18"}, 
+    {"name":"var19"}, 
+    {"name":"var2"}, 
+    {"name":"var20"}, 
+    {"name":"var21"}, 
+    {"name":"var22"}, 
+    {"name":"var3"}, 
+    {"name":"var4"}, 
+    {"name":"var5"}, 
+    {"name":"var6"}, 
+    {"name":"var7"}, 
+    {"name":"var8"}, 
+    {"name":"var9"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject23Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject24",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var10"}, 
+    {"name":"var11"}, 
+    {"name":"var12"}, 
+    {"name":"var13"}, 
+    {"name":"var14"}, 
+    {"name":"var15"}, 
+    {"name":"var16"}, 
+    {"name":"var17"}, 
+    {"name":"var18"}, 
+    {"name":"var19"}, 
+    {"name":"var2"}, 
+    {"name":"var20"}, 
+    {"name":"var21"}, 
+    {"name":"var22"}, 
+    {"name":"var23"}, 
+    {"name":"var3"}, 
+    {"name":"var4"}, 
+    {"name":"var5"}, 
+    {"name":"var6"}, 
+    {"name":"var7"}, 
+    {"name":"var8"}, 
+    {"name":"var9"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject24Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject25",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var10"}, 
+    {"name":"var11"}, 
+    {"name":"var12"}, 
+    {"name":"var13"}, 
+    {"name":"var14"}, 
+    {"name":"var15"}, 
+    {"name":"var16"}, 
+    {"name":"var17"}, 
+    {"name":"var18"}, 
+    {"name":"var19"}, 
+    {"name":"var2"}, 
+    {"name":"var20"}, 
+    {"name":"var21"}, 
+    {"name":"var22"}, 
+    {"name":"var23"}, 
+    {"name":"var24"}, 
+    {"name":"var3"}, 
+    {"name":"var4"}, 
+    {"name":"var5"}, 
+    {"name":"var6"}, 
+    {"name":"var7"}, 
+    {"name":"var8"}, 
+    {"name":"var9"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject25Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject27",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var10"}, 
+    {"name":"var11"}, 
+    {"name":"var12"}, 
+    {"name":"var13"}, 
+    {"name":"var14"}, 
+    {"name":"var15"}, 
+    {"name":"var16"}, 
+    {"name":"var17"}, 
+    {"name":"var18"}, 
+    {"name":"var19"}, 
+    {"name":"var2"}, 
+    {"name":"var20"}, 
+    {"name":"var21"}, 
+    {"name":"var22"}, 
+    {"name":"var23"}, 
+    {"name":"var24"}, 
+    {"name":"var25"}, 
+    {"name":"var26"}, 
+    {"name":"var3"}, 
+    {"name":"var4"}, 
+    {"name":"var5"}, 
+    {"name":"var6"}, 
+    {"name":"var7"}, 
+    {"name":"var8"}, 
+    {"name":"var9"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject27Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject2Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject3",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var2"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject3Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject4",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var2"}, 
+    {"name":"var3"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject47",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var10"}, 
+    {"name":"var11"}, 
+    {"name":"var12"}, 
+    {"name":"var13"}, 
+    {"name":"var14"}, 
+    {"name":"var15"}, 
+    {"name":"var16"}, 
+    {"name":"var17"}, 
+    {"name":"var18"}, 
+    {"name":"var19"}, 
+    {"name":"var2"}, 
+    {"name":"var20"}, 
+    {"name":"var21"}, 
+    {"name":"var22"}, 
+    {"name":"var23"}, 
+    {"name":"var24"}, 
+    {"name":"var25"}, 
+    {"name":"var26"}, 
+    {"name":"var27"}, 
+    {"name":"var28"}, 
+    {"name":"var29"}, 
+    {"name":"var3"}, 
+    {"name":"var30"}, 
+    {"name":"var31"}, 
+    {"name":"var32"}, 
+    {"name":"var33"}, 
+    {"name":"var34"}, 
+    {"name":"var35"}, 
+    {"name":"var36"}, 
+    {"name":"var37"}, 
+    {"name":"var38"}, 
+    {"name":"var39"}, 
+    {"name":"var4"}, 
+    {"name":"var40"}, 
+    {"name":"var41"}, 
+    {"name":"var42"}, 
+    {"name":"var43"}, 
+    {"name":"var44"}, 
+    {"name":"var45"}, 
+    {"name":"var46"}, 
+    {"name":"var5"}, 
+    {"name":"var6"}, 
+    {"name":"var7"}, 
+    {"name":"var8"}, 
+    {"name":"var9"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject47Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject4Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject5",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var2"}, 
+    {"name":"var3"}, 
+    {"name":"var4"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject50",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var10"}, 
+    {"name":"var11"}, 
+    {"name":"var12"}, 
+    {"name":"var13"}, 
+    {"name":"var14"}, 
+    {"name":"var15"}, 
+    {"name":"var16"}, 
+    {"name":"var17"}, 
+    {"name":"var18"}, 
+    {"name":"var19"}, 
+    {"name":"var2"}, 
+    {"name":"var20"}, 
+    {"name":"var21"}, 
+    {"name":"var22"}, 
+    {"name":"var23"}, 
+    {"name":"var24"}, 
+    {"name":"var25"}, 
+    {"name":"var26"}, 
+    {"name":"var27"}, 
+    {"name":"var28"}, 
+    {"name":"var29"}, 
+    {"name":"var3"}, 
+    {"name":"var30"}, 
+    {"name":"var31"}, 
+    {"name":"var32"}, 
+    {"name":"var33"}, 
+    {"name":"var34"}, 
+    {"name":"var35"}, 
+    {"name":"var36"}, 
+    {"name":"var37"}, 
+    {"name":"var38"}, 
+    {"name":"var39"}, 
+    {"name":"var4"}, 
+    {"name":"var40"}, 
+    {"name":"var41"}, 
+    {"name":"var42"}, 
+    {"name":"var43"}, 
+    {"name":"var44"}, 
+    {"name":"var45"}, 
+    {"name":"var46"}, 
+    {"name":"var47"}, 
+    {"name":"var48"}, 
+    {"name":"var49"}, 
+    {"name":"var5"}, 
+    {"name":"var6"}, 
+    {"name":"var7"}, 
+    {"name":"var8"}, 
+    {"name":"var9"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject50Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject5Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject6",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var2"}, 
+    {"name":"var3"}, 
+    {"name":"var4"}, 
+    {"name":"var5"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject6Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.RubyObject7",
+  "allDeclaredClasses":true,
+  "fields":[
+    {"name":"var0"}, 
+    {"name":"var1"}, 
+    {"name":"var2"}, 
+    {"name":"var3"}, 
+    {"name":"var4"}, 
+    {"name":"var5"}, 
+    {"name":"var6"}
+  ]}
+,
+{
+  "name":"org.jruby.gen.RubyObject7Allocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$AbstractRubyMethod$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$NativeException$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyArgsFile$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyArray$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyBasicObject$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyBinding$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyBoolean$False$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyBoolean$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyBoolean$True$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyClass$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyClassPathVariable$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyComparable$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyComplex$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyConverter$EncodingErrorMethods$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyConverter$InvalidByteSequenceErrorMethods$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyConverter$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyConverter$UndefinedConversionErrorMethods$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyDir$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyEncoding$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyEnumerable$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyEnumerator$FeedValue$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyEnumerator$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyException$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyFile$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyFileStat$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyFileTest$FileTestFileMethods$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyFileTest$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyFloat$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyGC$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyGenerator$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyGlobal$CaseInsensitiveStringOnlyRubyHash$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyHash$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyIO$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyInteger$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyInterrupt$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyKernel$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyKeyError$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyLocalJumpError$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyMarshal$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyMatchData$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyMath$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyMethod$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyModule$ModuleKernelMethods$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyModule$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyNameError$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyNameError$RubyNameErrorMessage$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyNil$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyNoMethodError$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyNumeric$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyObjectSpace$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyObjectSpace$WeakMap$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyProc$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyProcess$GroupID$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyProcess$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyProcess$RubyStatus$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyProcess$Sys$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyProcess$UserID$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyRandom$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyRange$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyRational$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyRegexp$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubySignal$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubySignalException$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyStopIteration$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyString$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyStruct$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyStruct$StructMethods$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubySymbol$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubySystemCallError$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubySystemExit$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyThread$Location$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyThread$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyThreadGroup$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyTime$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyUnboundMethod$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyUncaughtThrowError$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$RubyYielder$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$common$RubyWarnings$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$cgi$escape$CGIEscape$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$digest$RubyDigest$DigestBase$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$digest$RubyDigest$DigestClass$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$digest$RubyDigest$DigestInstance$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$digest$RubyDigest$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$etc$RubyEtc$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$fiber$ThreadFiber$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$io$wait$IOWaitLibrary$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$jruby$JRubyExecutionContextLocal$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$jruby$JRubyLibrary$JRubyConfig$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$jruby$JRubyLibrary$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$jruby$JRubyUtilLibrary$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$pathname$RubyPathname$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$pathname$RubyPathname$PathnameKernelMethods$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$set$EnumerableExt$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$set$RubySet$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$set$RubySortedSet$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$socket$Addrinfo$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$socket$Ifaddr$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$socket$Option$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$socket$RubyBasicSocket$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$socket$RubyIPSocket$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$socket$RubyServerSocket$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$socket$RubySocket$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$socket$RubyTCPServer$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$socket$RubyTCPSocket$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$socket$RubyUDPSocket$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$socket$RubyUNIXServer$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$socket$RubyUNIXSocket$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$stringio$StringIO$GenericReadable$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$stringio$StringIO$GenericWritable$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$stringio$StringIO$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$strscan$RubyStringScanner$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$tempfile$Tempfile$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$thread$ConditionVariable$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$thread$Mutex$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$thread$Queue$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$thread$SizedQueue$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$timeout$Timeout$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$tracepoint$TracePoint$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$zlib$JZlibDeflate$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$zlib$JZlibInflate$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$zlib$JZlibRubyGzipReader$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$zlib$JZlibRubyGzipWriter$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$zlib$RubyGzipFile$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$zlib$RubyZlib$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$ext$zlib$ZStream$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$java$addons$ArrayJavaAddons$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$java$addons$ClassJavaAddons$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$java$addons$IOJavaAddons$AnyIO$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$java$addons$IOJavaAddons$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$java$addons$KernelJavaAddons$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$java$addons$StringJavaAddons$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$java$proxies$ArrayJavaProxy$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$java$proxies$ArrayJavaProxyCreator$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$java$proxies$InterfaceJavaProxy$JavaInterfaceExtender$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$java$proxies$JavaInterfaceTemplate$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$java$proxies$JavaProxy$ClassMethods$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$java$proxies$JavaProxy$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$java$proxies$MapJavaProxy$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$Java$OldStyleExtensionInherited$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$Java$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$JavaAccessibleObject$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$JavaArrayUtilities$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$JavaCallable$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$JavaClass$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$JavaConstructor$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$JavaField$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$JavaMethod$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$JavaObject$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$JavaPackage$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$JavaProxyMethods$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$JavaUtilities$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$proxy$JavaProxyClass$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$proxy$JavaProxyClass$ProxyMethodImpl$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$proxy$JavaProxyConstructor$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.gen.org$jruby$javasupport$proxy$JavaProxyReflectionObject$POPULATOR",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ir.passes.AddCallProtocolInstructions",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ir.passes.AddMissingInitsPass",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ir.passes.DeadCodeElimination",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ir.passes.LiveVariableAnalysis",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ir.passes.LocalOptimizationPass",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ir.passes.OptimizeDelegationPass",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ir.passes.OptimizeDynScopesPass",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.ir.targets.Bootstrap",
+  "methods":[{"name":"testModuleMatch","parameterTypes":["org.jruby.runtime.ThreadContext","org.jruby.runtime.builtin.IRubyObject","int"] }]}
+,
+{
+  "name":"org.jruby.java.util.SystemPropertiesMap",
+  "allDeclaredFields":true,
+  "allDeclaredClasses":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicConstructors":true}
+,
+{
+  "name":"org.jruby.management.BeanManagerImpl",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.Ruby","boolean"] }]}
+,
+{
+  "name":"org.jruby.runtime.BlockBody",
+  "methods":[{"name":"testBlockBody","parameterTypes":["org.jruby.runtime.Block","org.jruby.runtime.BlockBody"] }]}
+,
+{
+  "name":"org.jruby.runtime.scope.ManyVarsDynamicScope",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope0",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope1",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope10",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope11",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope12",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope13",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope14",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope16",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope19",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope2",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope22",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope25",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope28",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope3",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope37",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope4",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope5",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope6",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope7",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope8",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.runtime.scopes.DynamicScope9",
+  "methods":[{"name":"<init>","parameterTypes":["org.jruby.parser.StaticScope","org.jruby.runtime.DynamicScope"] }]}
+,
+{
+  "name":"org.jruby.util.SunSignalFacade",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"org.jruby.util.log.StandardErrorLogger",
+  "methods":[
+    {"name":"<init>","parameterTypes":["java.lang.Class"] }, 
+    {"name":"<init>","parameterTypes":["java.lang.String"] }
+  ]}
+,
+{
+  "name":"reactor.core.publisher.Flux"}
+,
+{
+  "name":"reactor.core.publisher.Mono"}
+,
+{
+  "name":"short",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true}
+,
+{
+  "name":"sun.misc.Unsafe",
+  "fields":[{"name":"theUnsafe"}],
+  "methods":[{"name":"invokeCleaner","parameterTypes":["java.nio.ByteBuffer"] }],
+  "queriedMethods":[
+    {"name":"allocateMemory","parameterTypes":["long"] }, 
+    {"name":"copyMemory","parameterTypes":["java.lang.Object","long","java.lang.Object","long","long"] }, 
+    {"name":"freeMemory","parameterTypes":["long"] }, 
+    {"name":"getAddress","parameterTypes":["long"] }, 
+    {"name":"getAndAddLong","parameterTypes":["java.lang.Object","long","long"] }, 
+    {"name":"getAndSetObject","parameterTypes":["java.lang.Object","long","java.lang.Object"] }, 
+    {"name":"getByte","parameterTypes":["long"] }, 
+    {"name":"getDouble","parameterTypes":["long"] }, 
+    {"name":"getFloat","parameterTypes":["long"] }, 
+    {"name":"getInt","parameterTypes":["long"] }, 
+    {"name":"getLong","parameterTypes":["long"] }, 
+    {"name":"getShort","parameterTypes":["long"] }, 
+    {"name":"putAddress","parameterTypes":["long","long"] }, 
+    {"name":"putByte","parameterTypes":["long","byte"] }, 
+    {"name":"putDouble","parameterTypes":["long","double"] }, 
+    {"name":"putFloat","parameterTypes":["long","float"] }, 
+    {"name":"putInt","parameterTypes":["long","int"] }, 
+    {"name":"putLong","parameterTypes":["long","long"] }, 
+    {"name":"putShort","parameterTypes":["long","short"] }
+  ]}
+,
+{
+  "name":"sun.nio.ch.FileChannelImpl",
+  "fields":[{"name":"fd"}]}
+,
+{
+  "name":"sun.nio.ch.NativeThread",
+  "methods":[
+    {"name":"current","parameterTypes":[] }, 
+    {"name":"signal","parameterTypes":["long"] }
+  ]}
+,
+{
+  "name":"sun.nio.ch.SelChImpl",
+  "methods":[{"name":"getFD","parameterTypes":[] }]}
+,
+{
+  "name":"sun.nio.ch.SelectorImpl",
+  "fields":[
+    {"name":"publicSelectedKeys"}, 
+    {"name":"selectedKeys"}
+  ]}
+,
+{
+  "name":"sun.reflect.ReflectionFactory",
+  "methods":[
+    {"name":"getReflectionFactory","parameterTypes":[] }, 
+    {"name":"newConstructorForSerialization","parameterTypes":["java.lang.Class","java.lang.reflect.Constructor"] }
+  ]}
+,
+{
+  "name":"sun.security.provider.MD2",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"sun.security.provider.MD5",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"sun.security.provider.NativePRNG",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"sun.security.provider.SHA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"sun.security.provider.SHA2$SHA256",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"sun.security.provider.SHA5$SHA384",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"sun.security.provider.SHA5$SHA512",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"sun.security.rsa.RSAKeyFactory$Legacy",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"sun.security.rsa.RSASignature$SHA512withRSA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.config.$DevUrlConfig$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.config.$DevUrlConfig$IntrospectionRef",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.config.$SpaceUpSftpConfig$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.config.$SpaceUpSshConfig$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.config.$SpaceupPathConfig$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.controller.$DocController$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.controller.api.$DomainController$Definition$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.controller.api.$DomainController$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.controller.api.$InstallerController$Definition$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.controller.api.$InstallerController$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.controller.api.$ServiceController$Definition$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.controller.api.$ServiceController$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.controller.api.$SystemController$Definition$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.controller.api.$SystemController$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.core.auth.$AuthenticationProviderUserPassword$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.core.cmd.$Runner$Definition$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.core.cmd.$Runner$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.core.interceptor.$InstallationInterceptor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.core.interceptor.$InstalledInterceptor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.core.startup.$StartupEventListener$ApplicationEventListener$onApplicationEvent$SpaceUp1$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.core.startup.$StartupEventListener$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.dto.Domain",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"getUrl","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.dto.Server",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true}
+,
+{
+  "name":"technology.iatlas.spaceup.dto.Ssh",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.String","java.lang.String","java.lang.String"] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.services.$DbService$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.services.$DomainService$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.services.$InstallerService$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.services.$SchedulerService$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.services.$ServiceService$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.services.$SpaceUpService$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.services.$SshService$Definition$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.services.$SshService$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.services.$SystemService$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.services.$UpdateService$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.services.$WsBroadcaster$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"technology.iatlas.spaceup.services.SshService",
+  "fields":[{"name":"useDbCredentials"}]}
+,
+{
+  "name":"technology.iatlas.spaceup.websocket.$WebsocketServer$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]}
+,
+{
+  "name":"void",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true}
+
+]
