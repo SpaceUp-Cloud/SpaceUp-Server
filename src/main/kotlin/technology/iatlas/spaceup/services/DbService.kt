@@ -14,13 +14,16 @@ package technology.iatlas.spaceup.services
 import com.mongodb.client.MongoDatabase
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.annotation.Value
+import io.micronaut.context.env.Environment
 import org.litote.kmongo.KMongo
 import org.litote.kmongo.getCollection
 import org.slf4j.LoggerFactory
+import technology.iatlas.spaceup.core.helper.colored
 import technology.iatlas.spaceup.dto.db.Server
 
 @Context
 class DbService(
+    spaceUpService: SpaceUpService,
     @Value("\${mongodb.uri}")
     mongoDbConnection: String
 ) {
@@ -30,7 +33,14 @@ class DbService(
     init {
         val client = KMongo.createClient(mongoDbConnection)
         log.info("Created DB Connection to $mongoDbConnection")
-        db = client.getDatabase("SpaceUp")
+        db = if(spaceUpService.isDevMode()) {
+            colored {
+                log.info("Get development DB".yellow)
+            }
+            client.getDatabase("SpaceUp_Dev")
+        } else {
+            client.getDatabase("SpaceUp")
+        }
     }
 
     fun getDb(): MongoDatabase {
