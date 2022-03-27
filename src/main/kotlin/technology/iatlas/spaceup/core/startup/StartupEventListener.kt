@@ -12,7 +12,6 @@ package technology.iatlas.spaceup.core.startup
 
 import com.lordcodes.turtle.ShellLocation
 import com.lordcodes.turtle.shellRun
-import io.micronaut.context.event.ShutdownEvent
 import io.micronaut.context.event.StartupEvent
 import io.micronaut.runtime.event.annotation.EventListener
 import jakarta.inject.Singleton
