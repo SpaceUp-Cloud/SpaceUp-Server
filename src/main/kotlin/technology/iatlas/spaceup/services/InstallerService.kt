@@ -11,7 +11,6 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
-import io.micronaut.context.annotation.Value
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import org.litote.kmongo.eq
@@ -23,7 +22,6 @@ import technology.iatlas.spaceup.core.exceptions.InstalledException
 import technology.iatlas.spaceup.dto.db.Server
 import technology.iatlas.spaceup.dto.db.Ssh
 import technology.iatlas.spaceup.dto.db.User
-import technology.iatlas.spaceup.encrypt
 
 @Context
 class InstallerService(

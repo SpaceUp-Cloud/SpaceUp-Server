@@ -13,7 +13,6 @@ package technology.iatlas.spaceup.services
 import io.micronaut.context.annotation.Context
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import org.slf4j.LoggerFactory
-import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.CreateDomainParser
 import technology.iatlas.spaceup.core.parser.DeleteDomainParser

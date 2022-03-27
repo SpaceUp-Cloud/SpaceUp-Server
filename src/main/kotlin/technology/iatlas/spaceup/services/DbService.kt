@@ -14,7 +14,6 @@ package technology.iatlas.spaceup.services
 import com.mongodb.client.MongoDatabase
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.annotation.Value
-import io.micronaut.context.env.Environment
 import org.litote.kmongo.KMongo
 import org.litote.kmongo.getCollection
 import org.slf4j.LoggerFactory
