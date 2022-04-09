@@ -6,18 +6,18 @@ body {
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 15px;
   line-height: 1.42857143;
-  color: ***REMOVED***777777;
-  background-color: ***REMOVED***ffffff;
+  color: #777777;
+  background-color: #ffffff;
   margin-left: 10%;
   margin-right: 10%;
 }
 
 /* document header (contains title etc) */
-***REMOVED***header {
+#header {
   width: 100%;
 }
-***REMOVED***header>h1 {
-  border-bottom: 1px solid ***REMOVED***ddddd8;
+#header>h1 {
+  border-bottom: 1px solid #ddddd8;
   padding-bottom: 8px;
 }
 
@@ -31,7 +31,7 @@ h6 {
   font-family: "News Cycle", "Arial Narrow Bold", sans-serif;
   font-weight: 700;
   line-height: 1.1;
-  color: ***REMOVED***000000;
+  color: #000000;
 }
 h1,
 h2,
@@ -83,7 +83,7 @@ blockquote {
   padding: 10.5px 21px;
   margin: 0 0 21px;
   font-size: 18.75px;
-  border-left: 5px solid ***REMOVED***eeeeee;
+  border-left: 5px solid #eeeeee;
 }
 blockquote p:last-child,
 blockquote ul:last-child,
@@ -94,7 +94,7 @@ blockquote ol:last-child {
 blockquote.pull-right {
   padding-right: 15px;
   padding-left: 0;
-  border-right: 5px solid ***REMOVED***eeeeee;
+  border-right: 5px solid #eeeeee;
   border-left: 0;
   text-align: right;
 }
@@ -124,7 +124,7 @@ blockquote .small {
   display: block;
   font-size: 80%;
   line-height: 1.42857143;
-  color: ***REMOVED***999999;
+  color: #999999;
 }
 .attribution:before,
 blockquote footer:before,
@@ -148,13 +148,13 @@ ol ol {
 
 /* links */
 a {
-  color: ***REMOVED***18bc9c;
+  color: #18bc9c;
   background-color: transparent;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: ***REMOVED***e22620;
+  color: #e22620;
   text-decoration: underline;
 }
 a:focus {
@@ -167,7 +167,7 @@ hr {
   margin-top: 21px;
   margin-bottom: 21px;
   border: 0;
-  border-top: 1px solid ***REMOVED***eeeeee;
+  border-top: 1px solid #eeeeee;
 }
 
 /* table */
@@ -194,13 +194,13 @@ table th[class*="col-"] {
 caption {
   padding-top: 8px;
   padding-bottom: 8px;
-  color: ***REMOVED***999999;
+  color: #999999;
   text-align: left;
 }
 
 /* table header row */
 thead {
-  border-bottom: 2px solid ***REMOVED***dddddd;
+  border-bottom: 2px solid #dddddd;
 }
 
 /* table header cell */
@@ -211,13 +211,13 @@ th {
 
 /* table footer */
 tfoot {
-  color: ***REMOVED***807F81;
-  border-top: 1px solid ***REMOVED***dddddd;
+  color: #807F81;
+  border-top: 1px solid #dddddd;
 }
 
 /* table cell */
 td {
-  border-top: 1px solid ***REMOVED***dddddd;
+  border-top: 1px solid #dddddd;
 }
 td p {
   margin: auto;
@@ -226,10 +226,10 @@ td p {
 
 /* table body */
 tbody > tr:nth-of-type(odd) {
-  background-color: ***REMOVED***f9f9f9;
+  background-color: #f9f9f9;
 }
 tbody > tr:hover {
-  background-color: ***REMOVED***f5f5f5;
+  background-color: #f5f5f5;
 }
 
 /* inline code */
@@ -243,15 +243,15 @@ samp {
 code {
   padding: 2px 4px;
   font-size: 90%;
-  color: ***REMOVED***333333;
-  background-color: ***REMOVED***f5f5f5;
+  color: #333333;
+  background-color: #f5f5f5;
   border-radius: 4px;
 }
 kbd {
   padding: 2px 4px;
   font-size: 90%;
-  color: ***REMOVED***ffffff;
-  background-color: ***REMOVED***333333;
+  color: #ffffff;
+  background-color: #333333;
   border-radius: 3px;
   -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
           box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -271,9 +271,9 @@ pre {
   line-height: 1.42857143;
   word-break: break-all;
   word-wrap: break-word;
-  color: ***REMOVED***333333;
-  background-color: ***REMOVED***f5f5f5;
-  border: 1px solid ***REMOVED***cccccc;
+  color: #333333;
+  background-color: #f5f5f5;
+  border: 1px solid #cccccc;
   border-radius: 4px;
 }
 pre code {
@@ -292,11 +292,11 @@ img {
 }
 
 /* footer section */
-***REMOVED***footer {
+#footer {
   margin-top: 22px;
   padding: 14px 16px;
-  color: ***REMOVED***777777;
-  background-color: ***REMOVED***ffffff;
+  color: #777777;
+  background-color: #ffffff;
 }
 
 /* responsiveness fixes */
@@ -305,11 +305,11 @@ video {
 }
 
 /* table of Contents sidebar */
-***REMOVED***toctitle {
-  color: ***REMOVED***ffffff;
+#toctitle {
+  color: #ffffff;
 }
 
-***REMOVED***toc ul {
+#toc ul {
   display: inline;
   list-style-type: none;
   margin: 0;
@@ -317,25 +317,25 @@ video {
   overflow: hidden;
 }
 
-***REMOVED***toc li {
+#toc li {
   display: block;
 }
 
-***REMOVED***toc a {
-  background-color: ***REMOVED***ffffff;
+#toc a {
+  background-color: #ffffff;
   float: left;
-  color: ***REMOVED***777777;
+  color: #777777;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
 
-***REMOVED***toc li a:hover {
-  background-color: ***REMOVED***eeeeee;
+#toc li a:hover {
+  background-color: #eeeeee;
   text-decoration: none;
 }
 
-***REMOVED***toc:after {
+#toc:after {
   content: " ";
   visibility: hidden;
   display: block;

@@ -60,8 +60,8 @@ class QuotaParser: ParserInf<Disk> {
 
         // German decimal format
         val percentage = ((100f / Integer.valueOf(quota)) * Integer.valueOf(space))
-        //val diffPercentage = DecimalFormat("***REMOVED***,***REMOVED******REMOVED***00.00").format((100f - percentage)).toString()
-        //val usedPercentage = DecimalFormat("***REMOVED***,***REMOVED******REMOVED***00.00").format(percentage).toString()
+        //val diffPercentage = DecimalFormat("#,##00.00").format((100f - percentage)).toString()
+        //val usedPercentage = DecimalFormat("#,##00.00").format(percentage).toString()
 
         val disk = Disk(spaceWithUnit, percentage, quotaWithUnit, (100f - percentage))
         log.trace("Disk: $disk")

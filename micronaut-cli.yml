@@ -4,4 +4,4 @@ testFramework: junit
 sourceLanguage: kotlin
 buildTool: gradle
 features: [annotation-api, app-name, asciidoctor, cache-ehcache, docker, file-watch, graalvm, gradle, http-client, junit, kotlin, kotlin-application, kotlin-extension-functions, log4j2, mongo-reactive, netty-server, openapi, properties, readme, security, security-annotations, security-jwt, shade, tracing-jaeger, views-rocker]
-***REMOVED***features: [annotation-api, app-name, graalvm, gradle, http-client, junit, kotlin, kotlin-application, kotlin-extension-functions, log4j2, openapi, properties, readme, shade]
+#features: [annotation-api, app-name, graalvm, gradle, http-client, junit, kotlin, kotlin-application, kotlin-extension-functions, log4j2, openapi, properties, readme, shade]
