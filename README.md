@@ -3,14 +3,14 @@
 Buildserver status:  
 ![TeamCity build status](https://tc.iatlas.dev/app/rest/builds/buildType:id:SpaceUpServer_Build/statusIcon.svg)
 
-##Description
+## Description
 
 SpaceUp is a "simple" server / client construct, which helps provide or do actions on your webhost. Or just simplify things without using ssh/console.
 It does as much possible without a database (only saving credentials / install process), to keep it easy as possible.
 
 The server application is written in kotlin with micronaut as web framework. The client is written in Dart with Flutter as framework.
 
-##Features
+## Features
 
 * Adding/Deleting domains
 * Start/Stop/Restart services
@@ -35,7 +35,7 @@ Little big bonus: There is a multiplatform app (written in Flutter) which alread
 You should know it's not tested with ios/osx as I am not an apple user.
 But it works for Web, Android, Windows and soon Linux.
 
-##Code Repo / Bug tracker / etc.
+## Code Repo / Bug tracker / etc.
 
 I've of course my own tool infrastructure where I keep my code and bugs in place.
 
@@ -46,9 +46,9 @@ Youtrack: https://yt.iatlas.dev/
 Artifactory:
 https://artifactory.iatlas.dev/#browse/browse:technology.iatlas.spaceup:technology%2Fiatlas%2Fspaceup%2FSpaceUp
 
-##Build & Run
+## Build & Run
 
-###Server application
+### Server application
 
 Requirements:
 
@@ -123,7 +123,7 @@ After first startup you will be greeted with this console output.
 12:14:35.148 [default-nioEventLoopGroup-1-2] INFO  t.iatlas.spaceup.services.SshService - Upload script getLogs.sh to /home/thraax/.spaceup/tmp/getLogs.sh
 ```
 
-###Client application
+### Client application
 
 For GNU/Linux, it's as snap available here:
 
