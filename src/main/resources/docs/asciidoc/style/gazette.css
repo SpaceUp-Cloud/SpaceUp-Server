@@ -6,13 +6,13 @@
 /* CUSTOMISATIONS */
 /* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
 :root{
---maincolor:***REMOVED***FFFFFF;
---primarycolor:***REMOVED***000000;
---secondarycolor:***REMOVED***AAAAAA;
---tertiarycolor:***REMOVED***CCCCCC;
---sidebarbackground:***REMOVED***FFFFFF;
---linkcolor:***REMOVED***0D47A1;
---linkcoloralternate:***REMOVED***B71C1C;
+--maincolor:#FFFFFF;
+--primarycolor:#000000;
+--secondarycolor:#AAAAAA;
+--tertiarycolor:#CCCCCC;
+--sidebarbackground:#FFFFFF;
+--linkcolor:#0D47A1;
+--linkcoloralternate:#B71C1C;
 }
 
 /* Text styles */
@@ -29,7 +29,7 @@ h1,h2,h3,h4,h5,h6 {
 h1 {
   font-family: "UnifrakturMaguntia", serif;
 }
-***REMOVED***header h1 {
+#header h1 {
   border-bottom: 2px solid black!important;
 }
 h2 {
@@ -69,12 +69,12 @@ hr {
 }
 a {
   text-decoration: none;
-  color: ***REMOVED***5A5A5A!important;
+  color: #5A5A5A!important;
 }
 p {
   font-family: "Source Serif Pro", serif !important;
 }
-***REMOVED***toc.toc2 a:link {
+#toc.toc2 a:link {
   color: var(--linkcolor);
   font-family: "Source Serif Pro", serif;
 }
@@ -126,10 +126,10 @@ td {
 }
 
 
-***REMOVED***toc.toc2 {
+#toc.toc2 {
   background-color: var(--sidebarbackground);
 }
-***REMOVED***toctitle {
+#toctitle {
   color: black;
   font-family: "Source Serif Pro", serif;
   font-weight: bold;

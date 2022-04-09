@@ -18,15 +18,20 @@ import io.micronaut.security.authentication.AuthenticationResponse
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableEmitter
+import org.litote.kmongo.getCollection
 import org.reactivestreams.Publisher
 import org.slf4j.LoggerFactory
+import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.helper.colored
-import technology.iatlas.spaceup.dto.User
+import technology.iatlas.spaceup.dto.db.User
 import technology.iatlas.spaceup.services.DbService
+import technology.iatlas.spaceup.services.SecurityService
 
+@Installed
 @Context
 class AuthenticationProviderUserPassword(
-    private val dbService: DbService
+    private val dbService: DbService,
+    private val securityService: SecurityService
 ): AuthenticationProvider  {
     override fun authenticate(
         httpRequest: HttpRequest<*>?,
@@ -35,13 +40,19 @@ class AuthenticationProviderUserPassword(
         val log = LoggerFactory.getLogger(AuthenticationProviderUserPassword::class.java)
 
         val db = dbService.getDb()
-        val userRepo = db.getRepository(User::class.java)
+        val userRepo = db.getCollection<User>()
 
         return Flowable.create({
             emitter: FlowableEmitter<AuthenticationResponse> ->
             if (authenticationRequest != null) {
                 val userFound = userRepo.find().find {
-                    authenticationRequest.identity == it.username && authenticationRequest.secret == it.password
+                    var found = false
+
+                    securityService.decrypt(it) {
+                        found = (authenticationRequest.identity == it.username &&
+                                authenticationRequest.secret == it.password)
+                    }
+                    found
                 }
 
                 if(userFound != null) {

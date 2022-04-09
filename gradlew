@@ -1,25 +1,25 @@
-***REMOVED***!/usr/bin/env sh
+#!/usr/bin/env sh
 
-***REMOVED***
-***REMOVED*** Copyright (c) 2022 Gino Atlas.
-***REMOVED***
-***REMOVED*** Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-***REMOVED***
-***REMOVED*** The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-***REMOVED***
-***REMOVED*** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-***REMOVED***
+#
+# Copyright (c) 2022 Gino Atlas.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
 
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED***
-***REMOVED******REMOVED***  Gradle start up script for UN*X
-***REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+##############################################################################
+##
+##  Gradle start up script for UN*X
+##
+##############################################################################
 
-***REMOVED*** Attempt to set APP_HOME
-***REMOVED*** Resolve links: $0 may be a link
+# Attempt to set APP_HOME
+# Resolve links: $0 may be a link
 PRG="$0"
-***REMOVED*** Need this for relative symlinks.
+# Need this for relative symlinks.
 while [ -h "$PRG" ] ; do
     ls=`ls -ld "$PRG"`
     link=`expr "$ls" : '.*-> \(.*\)$'`
@@ -37,10 +37,10 @@ cd "$SAVED" >/dev/null
 APP_NAME="Gradle"
 APP_BASE_NAME=`basename "$0"`
 
-***REMOVED*** Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
 DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
 
-***REMOVED*** Use the maximum available, or set MAX_FD != -1 to use that value.
+# Use the maximum available, or set MAX_FD != -1 to use that value.
 MAX_FD="maximum"
 
 warn () {
@@ -54,7 +54,7 @@ die () {
     exit 1
 }
 
-***REMOVED*** OS specific support (must be 'true' or 'false').
+# OS specific support (must be 'true' or 'false').
 cygwin=false
 msys=false
 darwin=false
@@ -77,10 +77,10 @@ esac
 CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
 
 
-***REMOVED*** Determine the Java command to use to start the JVM.
+# Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then
     if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
-        ***REMOVED*** IBM's JDK on AIX uses strange locations for the executables
+        # IBM's JDK on AIX uses strange locations for the executables
         JAVACMD="$JAVA_HOME/jre/sh/java"
     else
         JAVACMD="$JAVA_HOME/bin/java"
@@ -99,7 +99,7 @@ Please set the JAVA_HOME variable in your environment to match the
 location of your Java installation."
 fi
 
-***REMOVED*** Increase the maximum file descriptors if we can.
+# Increase the maximum file descriptors if we can.
 if [ "$cygwin" = "false" -a "$darwin" = "false" -a "$nonstop" = "false" ] ; then
     MAX_FD_LIMIT=`ulimit -H -n`
     if [ $? -eq 0 ] ; then
@@ -115,19 +115,19 @@ if [ "$cygwin" = "false" -a "$darwin" = "false" -a "$nonstop" = "false" ] ; then
     fi
 fi
 
-***REMOVED*** For Darwin, add options to specify how the application appears in the dock
+# For Darwin, add options to specify how the application appears in the dock
 if $darwin; then
     GRADLE_OPTS="$GRADLE_OPTS \"-Xdock:name=$APP_NAME\" \"-Xdock:icon=$APP_HOME/media/gradle.icns\""
 fi
 
-***REMOVED*** For Cygwin or MSYS, switch paths to Windows format before running java
+# For Cygwin or MSYS, switch paths to Windows format before running java
 if [ "$cygwin" = "true" -o "$msys" = "true" ] ; then
     APP_HOME=`cygpath --path --mixed "$APP_HOME"`
     CLASSPATH=`cygpath --path --mixed "$CLASSPATH"`
 
     JAVACMD=`cygpath --unix "$JAVACMD"`
 
-    ***REMOVED*** We build the pattern for arguments to be converted via cygpath
+    # We build the pattern for arguments to be converted via cygpath
     ROOTDIRSRAW=`find -L / -maxdepth 1 -mindepth 1 -type d 2>/dev/null`
     SEP=""
     for dir in $ROOTDIRSRAW ; do
@@ -135,17 +135,17 @@ if [ "$cygwin" = "true" -o "$msys" = "true" ] ; then
         SEP="|"
     done
     OURCYGPATTERN="(^($ROOTDIRS))"
-    ***REMOVED*** Add a user-defined pattern to the cygpath arguments
+    # Add a user-defined pattern to the cygpath arguments
     if [ "$GRADLE_CYGPATTERN" != "" ] ; then
         OURCYGPATTERN="$OURCYGPATTERN|($GRADLE_CYGPATTERN)"
     fi
-    ***REMOVED*** Now convert the arguments - kludge to limit ourselves to /bin/sh
+    # Now convert the arguments - kludge to limit ourselves to /bin/sh
     i=0
     for arg in "$@" ; do
         CHECK=`echo "$arg"|egrep -c "$OURCYGPATTERN" -`
-        CHECK2=`echo "$arg"|egrep -c "^-"`                                 ***REMOVED******REMOVED******REMOVED*** Determine if an option
+        CHECK2=`echo "$arg"|egrep -c "^-"`                                 ### Determine if an option
 
-        if [ $CHECK -ne 0 ] && [ $CHECK2 -eq 0 ] ; then                    ***REMOVED******REMOVED******REMOVED*** Added a condition
+        if [ $CHECK -ne 0 ] && [ $CHECK2 -eq 0 ] ; then                    ### Added a condition
             eval `echo args$i`=`cygpath --path --ignore --mixed "$arg"`
         else
             eval `echo args$i`="\"$arg\""
@@ -166,14 +166,14 @@ if [ "$cygwin" = "true" -o "$msys" = "true" ] ; then
     esac
 fi
 
-***REMOVED*** Escape application args
+# Escape application args
 save () {
     for i do printf %s\\n "$i" | sed "s/'/'\\\\''/g;1s/^/'/;\$s/\$/' \\\\/" ; done
     echo " "
 }
 APP_ARGS=`save "$@"`
 
-***REMOVED*** Collect all arguments for the java command, following the shell quoting and substitution rules
+# Collect all arguments for the java command, following the shell quoting and substitution rules
 eval set -- $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS "\"-Dorg.gradle.appname=$APP_BASE_NAME\"" -classpath "\"$CLASSPATH\"" org.gradle.wrapper.GradleWrapperMain "$APP_ARGS"
 
 exec "$JAVACMD" "$@"

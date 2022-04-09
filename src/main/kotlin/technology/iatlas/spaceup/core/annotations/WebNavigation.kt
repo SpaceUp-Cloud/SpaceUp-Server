@@ -20,7 +20,7 @@ package technology.iatlas.spaceup.core.annotations
  * @param prio Introduces the order in the web navigation
  * @param newTab If the link should be opened in a new tab or target self
  * @since 10.12.2021
- * @see ***REMOVED***RouterService.kt
+ * @see #RouterService.kt
  * @author Gino Atlas <thraax.session@gino-atlas.de>
  */
 annotation class WebNavigation(

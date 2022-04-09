@@ -7,15 +7,15 @@
 /* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
 
 :root{
---maincolor:***REMOVED***FFFFFF;
---primarycolor:***REMOVED***2c3e50;
---secondarycolor:***REMOVED***ba3925;
---tertiarycolor: ***REMOVED***186d7a;
---sidebarbackground:***REMOVED***CCC;
---linkcolor:***REMOVED***b71c1c;
---linkcoloralternate:***REMOVED***f44336;
---white:***REMOVED***FFFFFF;
---black:***REMOVED***000000;
+--maincolor:#FFFFFF;
+--primarycolor:#2c3e50;
+--secondarycolor:#ba3925;
+--tertiarycolor: #186d7a;
+--sidebarbackground:#CCC;
+--linkcolor:#b71c1c;
+--linkcoloralternate:#f44336;
+--white:#FFFFFF;
+--black:#000000;
 }
 
 /* Text styles */

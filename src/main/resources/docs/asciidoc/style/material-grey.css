@@ -7,26 +7,26 @@
 /* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
 
 :root{
---maincolor:***REMOVED***FFFFFF;
---primarycolor:***REMOVED***9E9E9E; /* Grey 500 */
---secondarycolor:***REMOVED***ba3925;
---tertiarycolor: ***REMOVED***186d7a;
---sidebarbackground:***REMOVED***212121; /* Grey 900 */
---linkcolor:***REMOVED***EEEEEE; /* Grey 200 */
---linkcoloralternate:***REMOVED***f44336;
---white:***REMOVED***FFFFFF;
---black:***REMOVED***000000;
+--maincolor:#FFFFFF;
+--primarycolor:#9E9E9E; /* Grey 500 */
+--secondarycolor:#ba3925;
+--tertiarycolor: #186d7a;
+--sidebarbackground:#212121; /* Grey 900 */
+--linkcolor:#EEEEEE; /* Grey 200 */
+--linkcoloralternate:#f44336;
+--white:#FFFFFF;
+--black:#000000;
 }
 
 body{font-family: "Noto Sans",sans-serif;}
 
-***REMOVED***header{background-color:var(--primarycolor); padding:25px;max-width: none;}
-***REMOVED***footer{background-color: var(--sidebarbackground);}
+#header{background-color:var(--primarycolor); padding:25px;max-width: none;}
+#footer{background-color: var(--sidebarbackground);}
 h1,h2,h3{background-color:var(--primarycolor);color:var(--white) !important;font-family:"Noto Sans",sans-serif;text-decoration:none;padding:10px;}
 h4,h5,h6{color:var(--primarycolor);}
 .title{color:var(--sidebarbackground) !important;font-family:"Noto Sans",sans-serif;font-style: normal; font-weight: normal;}
 p{font-family: "Noto Sans",sans-serif ! important}
-***REMOVED***toc.toc2 a:link{color:white;}
+#toc.toc2 a:link{color:white;}
 
 a {
   text-decoration: none;
@@ -47,13 +47,13 @@ mark {
 .sect1{border-bottom:1px solid grey;border-radius:8px;}
 
 /* Table styles */
-th{background-color: var(--linkcolor);color:***REMOVED***FFFFFF;}
+th{background-color: var(--linkcolor);color:#FFFFFF;}
 
-***REMOVED***toc.toc2{background-color:var(--sidebarbackground);color:white !important;}
-***REMOVED***toc.toc2.a{color:var(--white);}
-***REMOVED***toc.toc2.a:active{color:var(--white) !important;}
-***REMOVED***toc.toc2.a:visited{color:var(--white) !important;}
-***REMOVED***toctitle{color:white;font-size: 16px;}
+#toc.toc2{background-color:var(--sidebarbackground);color:white !important;}
+#toc.toc2.a{color:var(--white);}
+#toc.toc2.a:active{color:var(--white) !important;}
+#toc.toc2.a:visited{color:var(--white) !important;}
+#toctitle{color:white;font-size: 16px;}
 
 /* Responsiveness fixes */
 video {

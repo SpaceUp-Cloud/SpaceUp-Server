@@ -6,14 +6,14 @@
 /* CUSTOMISATIONS */
 /* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
 :root{
---maincolor:***REMOVED***282c34;
---primarycolor:***REMOVED***f39c12;
---secondarycolor:***REMOVED***03a9f4;
---tertiarycolor:***REMOVED***4db6ac;
---sidebarbackground:***REMOVED***21252b;
---linkcolor:***REMOVED***f44336;
---linkcoloralternate:***REMOVED***ff9800;
---white:***REMOVED***FFFFFF;
+--maincolor:#282c34;
+--primarycolor:#f39c12;
+--secondarycolor:#03a9f4;
+--tertiarycolor:#4db6ac;
+--sidebarbackground:#21252b;
+--linkcolor:#f44336;
+--linkcoloralternate:#ff9800;
+--white:#FFFFFF;
 }
 
 /* Text styles */
@@ -24,7 +24,7 @@ h1{color:var(--primarycolor) !important;font-family:"Noto Sans",sans-serif;}
 h2,h3,h4,h5,h6{color:var(--secondarycolor) !important;font-family:"Noto Sans",sans-serif;}
 .title{color:var(--white) !important;font-family:"Noto Sans",sans-serif;font-style: normal; font-weight: normal;}
 p{font-family: "Noto Sans",sans-serif ! important}
-***REMOVED***toc.toc2 a:link{color:var(--linkcolor);}
+#toc.toc2 a:link{color:var(--linkcolor);}
 blockquote{color:var(--tertiarycolor) !important}
 .quoteblock{color:var(--white)}
 code{color:var(--linkcoloralternate);background-color: var(--sidebarbackground) !important}
@@ -35,8 +35,8 @@ th{background-color: var(--maincolor);color:var(--white) !important;}
 td{background-color: var(--maincolor);color: var(--linkcoloralternate) !important}
 
 
-***REMOVED***toc.toc2{background-color:var(--sidebarbackground);}
-***REMOVED***toctitle{color:var(--white);}
+#toc.toc2{background-color:var(--sidebarbackground);}
+#toctitle{color:var(--white);}
 
 /* Responsiveness fixes */
 video {
@@ -75,7 +75,7 @@ a {
   color: var(--primarycolor);
 }
 
-***REMOVED***preamble > .sectionbody > .paragraph:first-of-type p {
+#preamble > .sectionbody > .paragraph:first-of-type p {
   color: var(--white);
 }
 
@@ -100,9 +100,9 @@ a {
   color: var(--white);
 }
 
-***REMOVED***header .details {
+#header .details {
   color: var(--white);
 }
-***REMOVED***header .details span.email a {
+#header .details span.email a {
   color: var(--linkcoloralternate);
 }

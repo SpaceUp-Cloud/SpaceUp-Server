@@ -7,15 +7,15 @@
 /* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
 
 :root{
---maincolor:***REMOVED***FFFFFF;
---primarycolor:***REMOVED***E95420;
---secondarycolor:***REMOVED***333333;
---tertiarycolor: ***REMOVED***772953;
---sidebarbackground:***REMOVED***CCC;
---linkcolor:***REMOVED***b71c1c;
---linkcoloralternate:***REMOVED***f44336;
---white:***REMOVED***FFFFFF;
---black:***REMOVED***000000;
+--maincolor:#FFFFFF;
+--primarycolor:#E95420;
+--secondarycolor:#333333;
+--tertiarycolor: #772953;
+--sidebarbackground:#CCC;
+--linkcolor:#b71c1c;
+--linkcoloralternate:#f44336;
+--white:#FFFFFF;
+--black:#000000;
 }
 
 /* Text styles */
@@ -25,16 +25,16 @@ h1,h2{color:var(--primarycolor) !important;font-family:"Ubuntu",sans-serif;}
 h3,h4,h5,h6{color:var(--secondarycolor);font-family: "Ubuntu",sans-serif;}
 .title{color:(--primarycolor) !important;font-family:"Ubuntu",sans-serif;font-style: normal; font-weight: normal;}
 p{font-family: "Ubuntu",sans-serif ! important}
-***REMOVED***toc.toc2 a:link{color:white;}
+#toc.toc2 a:link{color:white;}
 code{background-color: var(--secondarycolor) !important;color:var(--white)}
 
 
 /* Table styles */
 th{background-color: var(--tertiarycolor);color:var(--white) !important;}
 
-***REMOVED***toc.toc2{background-color:***REMOVED***2C001E;color:white;}
-***REMOVED***toc.toc2.a{color:white;}
-***REMOVED***toctitle{color:***REMOVED***E95420;}
+#toc.toc2{background-color:#2C001E;color:white;}
+#toc.toc2.a{color:white;}
+#toctitle{color:#E95420;}
 
 /* Responsiveness fixes */
 video {
