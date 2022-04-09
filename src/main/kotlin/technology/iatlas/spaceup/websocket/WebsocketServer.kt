@@ -15,7 +15,6 @@ import io.micronaut.websocket.CloseReason
 import io.micronaut.websocket.WebSocketSession
 import io.micronaut.websocket.annotation.*
 import org.slf4j.LoggerFactory
-import technology.iatlas.spaceup.dto.Feedback
 
 @ServerWebSocket("/ws/{topic}")
 class WebsocketServer{
@@ -48,10 +47,9 @@ class WebsocketServer{
     /**
      * Will be used to send messages to the client
      */
-    private fun publish(message: Feedback?, session: WebSocketSession) {
+    /*private fun publish(message: Feedback?, session: WebSocketSession) {
         if(session.isOpen) {
             session.sendAsync(message)
         }
-    }
-
+    }*/
 }

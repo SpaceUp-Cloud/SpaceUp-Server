@@ -12,10 +12,13 @@ package technology.iatlas.spaceup
 import io.micronaut.runtime.EmbeddedApplication
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import jakarta.inject.Inject
+import org.junit.Ignore
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 @MicronautTest
+@Disabled
 class SpaceUpTest {
 
     @Inject

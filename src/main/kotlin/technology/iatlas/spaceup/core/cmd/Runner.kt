@@ -23,7 +23,7 @@ open class Runner<T>(
     private val log: Logger = LoggerFactory.getLogger(Runner::class.java)
 
     @ContinueSpan
-    override suspend fun execute(@SpanTag("runner.cmd") cmd: CommandInf, parser: ParserInf<T>) {
+    override suspend fun execute(@SpanTag("ssh.runner") cmd: CommandInf, parser: ParserInf<T>) {
         log.debug("Actual cmd: {} ", cmd.parameters)
 
         val script = cmd.shellScript
