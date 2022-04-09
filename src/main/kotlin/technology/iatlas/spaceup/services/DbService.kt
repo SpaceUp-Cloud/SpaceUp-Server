@@ -92,7 +92,6 @@ class DbService(
         val serverRepo = db.getCollection<Server>()
         val server = serverRepo.find().firstOrNull()
 
-        log.debug("server object: {}", server)
         var isInstalled = false
         if(server != null) {
             isInstalled = server.installed
