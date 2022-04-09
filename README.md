@@ -41,7 +41,7 @@ I've of course my own tool infrastructure where I keep my code and bugs in place
 
 Git: https://git.iatlas.dev/SpaceUp
 
-Youtrack: https://yt.iatlas.dev/
+Youtrack: https://yt.iatlas.dev/issues/SU
 
 Artifactory:
 https://artifactory.iatlas.dev/#browse/browse:technology.iatlas.spaceup:technology%2Fiatlas%2Fspaceup%2FSpaceUp
