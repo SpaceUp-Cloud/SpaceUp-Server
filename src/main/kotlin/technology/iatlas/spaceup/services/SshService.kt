@@ -14,6 +14,8 @@ import com.jcraft.jsch.*
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.annotation.Value
 import kotlinx.coroutines.delay
+import org.litote.kmongo.findOne
+import org.litote.kmongo.getCollection
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceUpSftpConfig
 import technology.iatlas.spaceup.config.SpaceUpSshConfig
@@ -21,7 +23,7 @@ import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.cmd.CommandInf
 import technology.iatlas.spaceup.core.cmd.SshResponse
 import technology.iatlas.spaceup.core.helper.colored
-import technology.iatlas.spaceup.dto.Ssh
+import technology.iatlas.spaceup.dto.db.Ssh
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -31,7 +33,8 @@ class SshService(
     private val sshConfig: SpaceUpSshConfig,
     private val sftpConfig: SpaceUpSftpConfig,
     private val dbService: DbService,
-    private val spaceUpService: SpaceUpService
+    private val spaceUpService: SpaceUpService,
+    private val securityService: SecurityService
     ) {
     private val log = LoggerFactory.getLogger(SshService::class.java)
 
@@ -44,9 +47,9 @@ class SshService(
     fun initSSH() {
         val jsch = JSch()
 
-        var username: String
-        var password: String
-        var host: String
+        var username = ""
+        var password = ""
+        var host = ""
 
         if(spaceUpService.isDevMode() && useDbCredentials == "false") {
             colored {
@@ -58,13 +61,15 @@ class SshService(
         } else {
             log.info("Take saved credentials")
             val db = dbService.getDb()
-            val sshRepo = db.getRepository(Ssh::class.java)
-            log.debug("Assuming there is only one configuration")
-            val ssh = sshRepo.find().first()
+            val sshRepo = db.getCollection<Ssh>()
+            log.info("Assuming there is only one configuration")
+            val ssh = sshRepo.findOne()!!
 
-            username = ssh.username
-            password = ssh.password
-            host = ssh.server
+            securityService.decrypt(ssh) {
+                username = ssh.username
+                password = ssh.password
+                host = ssh.server
+            }
         }
 
         if((sshConfig.privatekey == null || sshConfig.privatekey!!.isEmpty())) {
@@ -156,8 +161,8 @@ class SshService(
         }
 
         val db = dbService.getDb()
-        val sshRepo = db.getRepository(Ssh::class.java)
-        val ssh = sshRepo.find().first()
+        val sshRepo = db.getCollection<Ssh>()
+        val ssh = sshRepo.find().first()!!
 
         val file = cmd.shellScript
         val remotefile =

@@ -1,4 +1,4 @@
-/*
+/*micronautVersion
  * Copyright (c) 2022 Gino Atlas.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -13,11 +13,12 @@ package technology.iatlas.spaceup
 import io.micronaut.runtime.Micronaut.build
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.info.Info
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 
 @OpenAPIDefinition(
     info = Info(
             title = "SpaceUp",
-            version = "0.20"
+            version = "0.23.0"
     )
 )
 object Api
@@ -31,3 +32,14 @@ fun main(args: Array<String>) {
 		.start()
 }
 
+fun String.encrypt(secret: String): String {
+    val passwordEncryptor = StandardPBEStringEncryptor()
+    passwordEncryptor.setPassword(secret)
+    return passwordEncryptor.encrypt(this)
+}
+
+fun String.decrypt(secret: String): String {
+    val passwordEncryptor = StandardPBEStringEncryptor()
+    passwordEncryptor.setPassword(secret)
+    return passwordEncryptor.decrypt(this)
+}

@@ -8,37 +8,14 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package technology.iatlas.spaceup.dto
+package technology.iatlas.spaceup.dto.db
 
-import org.dizitart.no2.index.IndexType
-import org.dizitart.no2.repository.annotations.Entity
-import org.dizitart.no2.repository.annotations.Id
-import org.dizitart.no2.repository.annotations.Index
+import technology.iatlas.spaceup.core.annotations.Encryption
 
-@Entity(
-    value = "ssh",
-    indices = [Index(value = ["username"], type = IndexType.UNIQUE)]
-)
 data class Ssh(
-    @Id
+    var server: String,
     var username: String,
-    var password: String,
-    var server: String
-) /*: Mappable {
-    override fun write(mapper: NitriteMapper?): Document {
-        val document = Document.createDocument()
-        document.put("username", username)
-        document.put("password", password)
-        document.put("server", server)
-
-        return document
-    }
-
-    override fun read(mapper: NitriteMapper?, document: Document?) {
-        if(document != null) {
-            username = document.get("username") as String
-            password = document.get("password") as String
-            server = document.get("server") as String
-        }
-    }
-}*/
+) {
+    @field:Encryption
+    lateinit var password: String
+}

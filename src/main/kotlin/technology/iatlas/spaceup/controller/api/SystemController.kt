@@ -22,24 +22,24 @@ import technology.iatlas.spaceup.dto.Disk
 import technology.iatlas.spaceup.dto.Hostname
 import technology.iatlas.spaceup.services.SystemService
 
-@Installed
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/system")
-class SystemController(private val systemService: SystemService) {
+open class SystemController(private val systemService: SystemService) {
 
+    @Installed
     @Get("/hostname", produces = [MediaType.APPLICATION_JSON])
-    suspend fun getHostname(): Hostname {
+    open suspend fun getHostname(): Hostname {
         return systemService.getHostname()
     }
-
+    @Installed
     @Get("/disk", produces = [MediaType.APPLICATION_JSON])
-    suspend fun getDiskUsage(): Disk {
+    open suspend fun getDiskUsage(): Disk {
         return systemService.getDiskQuota()
     }
 
     @Secured(SecurityRule.IS_ANONYMOUS)
     @Get("/installed", produces = [MediaType.APPLICATION_JSON])
-    suspend fun getInstalled(): String {
+    fun getInstalled(): String {
         val isInstalled = systemService.getIsInstalled()
 
         val gson = Gson()
