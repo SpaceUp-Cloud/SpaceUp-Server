@@ -66,7 +66,18 @@ class ReadWebbackendParser: ParserInf<List<WebbackendConfiguration>> {
                 val regex = Regex("://(.*:.*)@")
                 val service = splittedResponse[2].replace(regex, "://xxx:xxx@")
 
-                val webbackendConfiguration = WebbackendConfiguration(web, process, service)
+                val webbackendConfiguration = WebbackendConfiguration(web = web, process = process, service = service)
+                configList.add(webbackendConfiguration)
+            } else if(splittedResponse.size == 4) {
+                val web = splittedResponse[0]
+                val prefix = splittedResponse[1]
+                val process = splittedResponse[2]
+
+                // sanitize credentials
+                val regex = Regex("://(.*:.*)@")
+                val service = splittedResponse[3].replace(regex, "://xxx:xxx@")
+
+                val webbackendConfiguration = WebbackendConfiguration(web, prefix, process, service)
                 configList.add(webbackendConfiguration)
             } else {
                 // For / apache configuration as there are no processes/services behind
