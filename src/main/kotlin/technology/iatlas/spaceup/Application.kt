@@ -50,7 +50,7 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 @OpenAPIDefinition(
     info = Info(
             title = "SpaceUp",
-            version = "0.23.0"
+            version = "0.25.0"
     )
 )
 object Api
