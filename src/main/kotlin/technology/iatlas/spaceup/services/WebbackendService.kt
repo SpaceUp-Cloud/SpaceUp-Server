@@ -101,11 +101,14 @@ class WebbackendService(
         val createCmd: MutableList<String> = mutableListOf(baseCmd, "set")
         if(webbackendCmd.isApache) {
             createCmd.add("--apache")
-        } else if(webbackendCmd.isHttp) {
+        }
+        if(webbackendCmd.isHttp) {
             createCmd.add("--http")
-        } else if(webbackendCmd.removePrefix) {
+        }
+        if(webbackendCmd.removePrefix) {
             createCmd.add("--remove-prefix")
-        } else if(webbackendCmd.port != null) {
+        }
+        if(webbackendCmd.port != null) {
             createCmd.add("--port ${webbackendCmd.port}")
         }
         createCmd.add(webbackendCmd.url)
@@ -121,7 +124,7 @@ class WebbackendService(
             if(it.lowercase().contains("does not exist")) {
                 feedback.error = it
             } else {
-                feedback.info = "Successfully deleted web backend for $domain"
+                feedback.info = it
             }
             wsBroadcaster.broadcast(feedback, topic)
         }
