@@ -14,7 +14,7 @@ class ProcessService(
     override val topic = "process"
     private val processRunner = Runner<String>(sshService)
 
-    suspend fun getProcess(pid: Int): String {
+    suspend fun getProgByProcess(pid: Int): String {
         var program = ""
         val getProgramByPID = mutableListOf("ps", "-p", "$pid", "-o", "args", "--no-headers")
         processRunner.subject().subscribe {
