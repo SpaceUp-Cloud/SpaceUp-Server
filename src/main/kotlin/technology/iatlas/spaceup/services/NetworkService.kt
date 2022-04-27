@@ -9,6 +9,7 @@ import technology.iatlas.spaceup.dto.NetworkProgram
 @Context
 class NetworkService(
     sshService: SshService,
+    private val processService: ProcessService,
     private val wsBroadcaster: WsBroadcaster
 ): WsServiceInf {
 
@@ -26,6 +27,11 @@ class NetworkService(
         }
 
         networkReadRunner.execute(Command(networkConnectionsCmd), NetworkListenerParser())
+
+        // Resolve process id and replace program with actual call
+        networkPrograms.map {
+            it.program = processService.getProgByProcess(it.pid).trim()
+        }
         return networkPrograms
     }
 }

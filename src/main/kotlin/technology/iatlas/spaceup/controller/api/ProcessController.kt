@@ -18,6 +18,6 @@ class ProcessController(
 
     @Get("/proccess/{pid}", produces = [MediaType.TEXT_PLAIN])
     suspend fun getProgramForPid(pid: Int): HttpResponse<String> {
-        return HttpResponse.ok(processService.getProcess(pid))
+        return HttpResponse.ok(processService.getProgByProcess(pid))
     }
 }
