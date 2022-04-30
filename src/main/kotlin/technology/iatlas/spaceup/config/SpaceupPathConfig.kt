@@ -48,5 +48,4 @@ import io.micronaut.context.annotation.ConfigurationProperties
 class SpaceupPathConfig {
     var services: String = "~/etc/services.d"
     var logs: String = "~/logs"
-    var db: String = "~/.spaceup"
 }
