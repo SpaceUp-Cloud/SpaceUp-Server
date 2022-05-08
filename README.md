@@ -13,12 +13,12 @@ The server application is written in kotlin with micronaut as web framework. The
 ## Features
 
 * Adding/Deleting domains
+* Handle Web backends
 * Start/Stop/Restart services
 * Inspecting logfiles of the corresponding service
 * Have a look on the space
 
 * Other features which are planned:
-  * Handle web backends (uberspace web commands)
   * Handle mail (uberspace mail commands)
   * Add/Delete services with internal editor
   * Support GraalVM as native application for smaller footprint
@@ -44,7 +44,7 @@ Git: https://git.iatlas.dev/SpaceUp
 Youtrack: https://yt.iatlas.dev/issues/SU
 
 Artifactory:
-https://artifactory.iatlas.dev/#browse/browse:technology.iatlas.spaceup:technology%2Fiatlas%2Fspaceup%2FSpaceUp
+https://artifactory.iatlas.dev/
 
 ## Build & Run
 
