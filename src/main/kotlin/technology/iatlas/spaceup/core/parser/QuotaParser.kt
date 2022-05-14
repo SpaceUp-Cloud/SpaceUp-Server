@@ -48,6 +48,7 @@ import technology.iatlas.spaceup.core.cmd.SshResponse
 import technology.iatlas.spaceup.dto.Disk
 import java.io.BufferedReader
 import java.util.*
+import kotlin.math.roundToInt
 
 class QuotaParser: ParserInf<Disk> {
     private val log = LoggerFactory.getLogger(QuotaParser::class.java)
@@ -95,7 +96,8 @@ class QuotaParser: ParserInf<Disk> {
         //val diffPercentage = DecimalFormat("#,##00.00").format((100f - percentage)).toString()
         //val usedPercentage = DecimalFormat("#,##00.00").format(percentage).toString()
 
-        val disk = Disk(spaceWithUnit, percentage, quotaWithUnit, (100f - percentage))
+        val percentageTwoDecimals = (percentage * 100.0).roundToInt() / 100.0
+        val disk = Disk(spaceWithUnit, percentageTwoDecimals.toFloat(), quotaWithUnit, (100 - percentageTwoDecimals).toFloat())
         log.trace("Disk: $disk")
 
         return disk
