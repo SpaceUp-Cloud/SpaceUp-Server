@@ -187,8 +187,8 @@ publishing {
     }
     repositories {
         maven {
-            name "nexus"
-            url "https://artifactory.iatlas.dev/repository/technology.iatlas.spaceup/"
+            name "Maven"
+            url "https://artifactory.iatlas.dev/releases/"
             credentials {
                 username "${nexusUsername}"
                 password "${nexusPassword}"
