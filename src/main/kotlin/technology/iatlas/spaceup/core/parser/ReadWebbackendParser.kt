@@ -60,7 +60,7 @@ class ReadWebbackendParser: ParserInf<List<WebbackendConfiguration>> {
             val splittedResponse = it.split(",").map { p -> p.trim() }
             if(splittedResponse.size == 3) {
                 val web = splittedResponse[0]
-                val process = splittedResponse[1]
+                val process = splittedResponse[1].replace("listening: ", "")
 
                 // sanitize credentials
                 val regex = Regex("://(.*:.*)@")
@@ -71,7 +71,7 @@ class ReadWebbackendParser: ParserInf<List<WebbackendConfiguration>> {
             } else if(splittedResponse.size == 4) {
                 val web = splittedResponse[0]
                 val prefix = splittedResponse[1]
-                val process = splittedResponse[2]
+                val process = splittedResponse[2].replace("listening: ", "")
 
                 // sanitize credentials
                 val regex = Regex("://(.*:.*)@")
