@@ -1,138 +1,95 @@
 /*
- * Copyright (c) 2022 Gino Atlas.
+ * Copyright (c) 2022 spaceup@iatlas.technology.
+ * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
+ *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
+ * You don't have to do anything special to accept the license and you don’t have to notify anyone which that you have made that decision.
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * SpaceUp-Server is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See your chosen license for more details.
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * You should have received a copy of both licenses along with SpaceUp-Server
+ * If not, see <http://www.gnu.org/licenses/>.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * There is a strong belief within us that the license we have chosen provides not only the best solution for providing you with the essential freedom necessary to use SpaceUp-Server within your projects, but also for maintaining enough copyleft strength for us to feel confident and secure with releasing our hard work to the public. For your convenience we've included our own interpretation of the license we chose, which can be seen below.
+ *
+ * Our interpretation of the GNU Affero General Public License version 3: (Quoted words are words in which there exists a definition within the license to avoid ambiguity.)
+ *   1. You must always provide the source code, copyright and license information of SpaceUp-Server whenever you "convey" any part of SpaceUp-Server;
+ *      be it a verbatim copy or a modified copy.
+ *   2. SpaceUp-Server was developed as a library and has therefore been designed without knowledge of your work; as such the following should be implied:
+ *      a) SpaceUp-Server was developed without knowledge of your work; as such the following should be implied:
+ *         i)  SpaceUp-Server should not fall under a work which is "based on" your work.
+ *         ii) You should be free to use SpaceUp-Server in a work covered by the:
+ *             - GNU General Public License version 2
+ *             - GNU Lesser General Public License version 2.1
+ *             This is due to those licenses classifying SpaceUp-Server as a work which would fall under an "aggregate" work by their terms and definitions;
+ *             as such it should not be covered by their terms and conditions. The relevant passages start at:
+ *             - Line 129 of the GNU General Public License version 2
+ *             - Line 206 of the GNU Lesser General Public License version 2.1
+ *      b) If you have not "modified", "adapted" or "extended" SpaceUp-Server then your work should not be bound by this license,
+ *         as you are using SpaceUp-Server under the definition of an "aggregate" work.
+ *      c) If you have "modified", "adapted" or "extended" SpaceUp-Server then any of those modifications/extensions/adaptations which you have made
+ *         should indeed be bound by this license, as you are using SpaceUp-Server under the definition of a "based on" work.
+ *
+ * Our hopes is that our own interpretation of license aligns perfectly with your own values and goals for using our work freely and securely. If you have any questions at all about the licensing chosen for SpaceUp-Server you can email us directly at spaceup@iatlas.technology or you can get in touch with the license authors (the Free Software Foundation) at licensing@fsf.org to gain their opinion too.
+ *
+ * Alternatively you can provide feedback and acquire the support you need at our support forum. We'll definitely try and help you as soon as possible, and to the best of our ability; as we understand that user experience is everything, so we want to make you as happy as possible! So feel free to get in touch via our support forum and chat with other users of SpaceUp-Server here at:
+ * https://spaceup.iatlas.technology
+ *
+ * Thanks, and we hope you enjoy using SpaceUp-Server and that it's everything you ever hoped it could be.
  */
 
 
 package technology.iatlas.spaceup.services
 
+import com.mongodb.client.MongoDatabase
 import io.micronaut.context.annotation.Context
-import org.dizitart.kno2.nitrite
-import org.dizitart.no2.Nitrite
-import org.dizitart.no2.exceptions.IndexingException
-import org.dizitart.no2.index.IndexOptions
-import org.dizitart.no2.index.IndexType
-import org.dizitart.no2.migration.Instructions
-import org.dizitart.no2.migration.Migration
-import org.dizitart.no2.mvstore.MVStoreModule
+import io.micronaut.context.annotation.Value
+import org.litote.kmongo.KMongo
+import org.litote.kmongo.getCollection
 import org.slf4j.LoggerFactory
-import technology.iatlas.spaceup.config.SpaceupPathConfig
-import technology.iatlas.spaceup.core.exceptions.DbNotInitializedException
-import technology.iatlas.spaceup.dto.Server
-import technology.iatlas.spaceup.dto.Ssh
-import technology.iatlas.spaceup.dto.User
-import java.io.File
+import technology.iatlas.spaceup.core.helper.colored
+import technology.iatlas.spaceup.dto.db.Server
 
 @Context
 class DbService(
-    spaceupPathConfig: SpaceupPathConfig
+    spaceUpService: SpaceUpService,
+    @Value("\${mongodb.uri}")
+    mongoDbConnection: String
 ) {
     private val log = LoggerFactory.getLogger(DbService::class.java)
-    private lateinit var db: Nitrite
-    private var dbPath: File
+    private var db: MongoDatabase
 
     init {
-        val path = spaceupPathConfig.db.replaceFirst("~", System.getProperty("user.home"))
-        dbPath = File(path, "spaceup.db")
-    }
-
-    fun initDb() {
-        if(dbPath.isFile && dbPath.exists()) {
-            openDb()
-            return
-        }
-
-        log.info("Init DB @ $dbPath")
-
-        val storeModule = MVStoreModule.withConfig()
-            .filePath(dbPath)
-                // Differ between production and dev mode
-            //.compress(true)
-            .build()
-
-        //val migration1 = Migration1(0, 1)
-        // Just for logging inside migration
-        //migration1.steps().forEach { _ -> }
-
-        /*db = Nitrite
-            .builder()
-            .loadModule(storeModule)
-            .schemaVersion(1)
-            //.addMigrations(migration1)
-            .openOrCreate()*/
-
-        db = nitrite("SpaceUp", "Spac3Up!#") {
-            loadModule(storeModule)
-        }
-
-        log.info("Created and migrated DB")
-        log.info("Indexing fields ...")
-        try {
-            val userCollection = db.getRepository(User::class.java)
-            if(!userCollection.hasIndex("username")) {
-                log.debug("indexing 'username for user'")
-                userCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "username")
+        val client = KMongo.createClient(mongoDbConnection)
+        log.info("Created DB Connection to $mongoDbConnection")
+        db = if(spaceUpService.isDevMode()) {
+            colored {
+                log.info("Get development DB".yellow)
             }
-        }catch (ex : IndexingException) {
-            log.warn(ex.message)
-        }
-
-        try {
-            val sshCollection = db.getRepository(Ssh::class.java)
-            if(!sshCollection.hasIndex("username")) {
-                log.debug("indexing 'username for ssh'")
-                sshCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "username")
-            }
-        }catch (ex : IndexingException) {
-            log.warn(ex.message)
-        }
-
-        try {
-            val serverCollection = db.getRepository(Server::class.java)
-            if(!serverCollection.hasIndex("installed")) {
-                log.debug("indexing 'installed for server'")
-                serverCollection.createIndex(IndexOptions.indexOptions(IndexType.UNIQUE), "installed")
-            }
-        }catch (ex : IndexingException) {
-            log.warn(ex.message)
+            client.getDatabase("SpaceUp_Dev")
+        } else {
+            client.getDatabase("SpaceUp")
         }
     }
 
-    private fun openDb() {
-        log.info("Create or open DB $dbPath")
-        val storeModule = MVStoreModule.withConfig()
-            .filePath(dbPath)
-            // Differ between production and dev mode
-            //.compress(true)
-            .build()
-
-        /*db = Nitrite
-            .builder()
-            .loadModule(storeModule)
-            .schemaVersion(1)
-                // Does not work with credentials
-                // "SpaceUp", "Spac3Up!#"
-            .openOrCreate()*/
-
-        db = nitrite ("SpaceUp", "Spac3Up!#"){
-            loadModule(storeModule)
-        }
-    }
-
-    fun getDb(): Nitrite {
-        if(!this::db.isInitialized) {
-            throw DbNotInitializedException("SpaceUp was not initialized! Run 'DbService.initDb()' first.")
-        }
+    fun getDb(): MongoDatabase {
         return db
     }
 
+    fun init() {
+        /*try {
+            db.createCollection("Server")
+            db.createCollection("User")
+            db.createCollection("SSH")
+        }catch (ex: MongoCommandException) {
+            log.warn("Collections already exist!")
+        }*/
+    }
+
     fun isAppInstalled(): Boolean {
-        val serverRepo = db.getRepository(Server::class.java)
+        val serverRepo = db.getCollection<Server>()
         val server = serverRepo.find().firstOrNull()
 
         var isInstalled = false
@@ -142,33 +99,4 @@ class DbService(
         return isInstalled
     }
 
-    fun deleteDb() {
-        val deleted = dbPath.delete()
-        log.info("$dbPath was deleted: $deleted")
-    }
  }
-
-class Migration1(startVersion: Int, endVersion: Int) : Migration(startVersion, endVersion) {
-    private val log = LoggerFactory.getLogger(Migration1::class.java)
-
-    override fun migrate(instructions: Instructions?) {
-        log.debug("Create 'user' repo")
-        instructions
-            ?.forRepository(User::class.java)
-            ?.addField<String>("username")
-            ?.addField<String>("password")
-
-        log.debug("Create 'ssh' repo")
-        instructions
-            ?.forRepository(Ssh::class.java)
-            ?.addField<String>("server")
-            ?.addField<String>("username")
-            ?.addField<String>("password")
-
-        log.debug("Create 'server' repo")
-        instructions
-            ?.forRepository(Server::class.java)
-            ?.addField("installed", false)
-            ?.addField("apiKey", "")
-    }
-}

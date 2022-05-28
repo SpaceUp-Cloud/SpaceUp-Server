@@ -1,11 +1,43 @@
 /*
- * Copyright (c) 2022 Gino Atlas.
+ * Copyright (c) 2022 spaceup@iatlas.technology.
+ * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
+ *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
+ * You don't have to do anything special to accept the license and you don’t have to notify anyone which that you have made that decision.
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * SpaceUp-Server is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See your chosen license for more details.
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * You should have received a copy of both licenses along with SpaceUp-Server
+ * If not, see <http://www.gnu.org/licenses/>.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * There is a strong belief within us that the license we have chosen provides not only the best solution for providing you with the essential freedom necessary to use SpaceUp-Server within your projects, but also for maintaining enough copyleft strength for us to feel confident and secure with releasing our hard work to the public. For your convenience we've included our own interpretation of the license we chose, which can be seen below.
+ *
+ * Our interpretation of the GNU Affero General Public License version 3: (Quoted words are words in which there exists a definition within the license to avoid ambiguity.)
+ *   1. You must always provide the source code, copyright and license information of SpaceUp-Server whenever you "convey" any part of SpaceUp-Server;
+ *      be it a verbatim copy or a modified copy.
+ *   2. SpaceUp-Server was developed as a library and has therefore been designed without knowledge of your work; as such the following should be implied:
+ *      a) SpaceUp-Server was developed without knowledge of your work; as such the following should be implied:
+ *         i)  SpaceUp-Server should not fall under a work which is "based on" your work.
+ *         ii) You should be free to use SpaceUp-Server in a work covered by the:
+ *             - GNU General Public License version 2
+ *             - GNU Lesser General Public License version 2.1
+ *             This is due to those licenses classifying SpaceUp-Server as a work which would fall under an "aggregate" work by their terms and definitions;
+ *             as such it should not be covered by their terms and conditions. The relevant passages start at:
+ *             - Line 129 of the GNU General Public License version 2
+ *             - Line 206 of the GNU Lesser General Public License version 2.1
+ *      b) If you have not "modified", "adapted" or "extended" SpaceUp-Server then your work should not be bound by this license,
+ *         as you are using SpaceUp-Server under the definition of an "aggregate" work.
+ *      c) If you have "modified", "adapted" or "extended" SpaceUp-Server then any of those modifications/extensions/adaptations which you have made
+ *         should indeed be bound by this license, as you are using SpaceUp-Server under the definition of a "based on" work.
+ *
+ * Our hopes is that our own interpretation of license aligns perfectly with your own values and goals for using our work freely and securely. If you have any questions at all about the licensing chosen for SpaceUp-Server you can email us directly at spaceup@iatlas.technology or you can get in touch with the license authors (the Free Software Foundation) at licensing@fsf.org to gain their opinion too.
+ *
+ * Alternatively you can provide feedback and acquire the support you need at our support forum. We'll definitely try and help you as soon as possible, and to the best of our ability; as we understand that user experience is everything, so we want to make you as happy as possible! So feel free to get in touch via our support forum and chat with other users of SpaceUp-Server here at:
+ * https://spaceup.iatlas.technology
+ *
+ * Thanks, and we hope you enjoy using SpaceUp-Server and that it's everything you ever hoped it could be.
  */
 
 package technology.iatlas.spaceup.services
@@ -13,16 +45,20 @@ package technology.iatlas.spaceup.services
 import io.micronaut.context.annotation.Context
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
-import org.dizitart.no2.filters.Filter
+import org.litote.kmongo.eq
+import org.litote.kmongo.findOne
+import org.litote.kmongo.getCollection
+import org.litote.kmongo.setValue
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.exceptions.InstalledException
-import technology.iatlas.spaceup.dto.Server
-import technology.iatlas.spaceup.dto.Ssh
-import technology.iatlas.spaceup.dto.User
+import technology.iatlas.spaceup.dto.db.Server
+import technology.iatlas.spaceup.dto.db.Ssh
+import technology.iatlas.spaceup.dto.db.User
 
 @Context
 class InstallerService(
-    private val dbService: DbService
+    private val dbService: DbService,
+    private val securityService: SecurityService
 ) {
 
     private val log = LoggerFactory.getLogger(InstallerService::class.java)
@@ -36,22 +72,12 @@ class InstallerService(
             (('a'..'z') + ('A'..'Z') + ('0'..'9')).random()
         }.joinToString("")
 
-        /*val md = MessageDigest.getInstance("SHA-256")
-        val messageDigest = md.digest(setupKey.toByteArray())
-        val num = BigInteger(1, messageDigest)
-        var hashText = num.toString(16)
-        while(hashText.length < 32) {
-            hashText = "0$hashText"
-        }
-
-        return hashText*/
-
         return setupKey
     }
 
     fun getApiKey(): String {
         val db = dbService.getDb()
-        val serverRepo = db.getRepository(Server::class.java)
+        val serverRepo = db.getCollection<Server>()
 
         val servers = serverRepo.find().toList()
         if (servers.size > 1) throw InstalledException("Multiple contrains found! $servers")
@@ -61,47 +87,46 @@ class InstallerService(
 
     fun createSshUser(ssh: Ssh): HttpResponse<String> {
         val db = dbService.getDb()
-        val sshRepo = db.getRepository(Ssh::class.java)
+        val sshRepo = db.getCollection<Ssh>()
+        val sshUser = sshRepo.findOne(Ssh::username eq ssh.username)
 
-        val findSshUsers = sshRepo.find {
-            it.second.get("username") == ssh.username
-        }
-
-        if(!findSshUsers.isEmpty) {
+        if(sshUser != null) {
             val errorExistingUser = "SSH ${ssh.username} already exists"
             log.error(errorExistingUser)
             return HttpResponse.badRequest(errorExistingUser)
-        }
+        } else {
+            securityService.encrypt(ssh)
 
-        val result = sshRepo.insert(ssh)
-        if(result.affectedCount == 1) {
-            log.info("SSH User ${ssh.username} was created")
-            return HttpResponse.ok("User successfully created!")
+            val result = sshRepo.insertOne(ssh)
+            if(result.wasAcknowledged()) {
+                log.info("SSH User ${ssh.username} was created.")
+                return HttpResponse.ok("User successfully created!")
+            }
+            log.error("Could not create $ssh")
+            return HttpResponse.badRequest("User ${ssh.username} was not created")
         }
-
-        return HttpResponse.notAllowed()
     }
 
     fun createUser(user: User): HttpResponse<String> {
         val db = dbService.getDb()
-        val userRepo = db.getRepository(User::class.java)
-        val findUser = userRepo.find {
-            it.second.get("username") == user.username
-        }
+        val userRepo = db.getCollection<User>()
+        val findUser = userRepo.findOne(User::username eq user.username)
 
-        if(!findUser.isEmpty) {
+        if(findUser != null) {
             val errorExistingUser = "User ${user.username} exists already!"
             log.error(errorExistingUser)
             return HttpResponse.badRequest(errorExistingUser)
-        }
+        } else {
+            securityService.encrypt(user)
 
-        val result = userRepo.insert(user)
-        if(result.affectedCount == 1) {
-            log.info("User ${user.username} was created")
-            return HttpResponse.ok("User successfully created!")
+            val result = userRepo.insertOne(user)
+            if(result.wasAcknowledged()) {
+                log.info("User ${user.username} was created.")
+                return HttpResponse.ok("User successfully created!")
+            }
+            log.error("Could not create $user")
+            return HttpResponse.badRequest("User ${user.username} was not created")
         }
-
-        return HttpResponse.notAllowed()
     }
 
     fun finalizeInstallation(): HttpResponse<String> {
@@ -115,10 +140,8 @@ class InstallerService(
         // Seems to be fine everything
         // Set installation to be done
         val db = dbService.getDb()
-        val serverRepo = db.getRepository(Server::class.java)
-
-        val serverDto = Server(true, "")
-        serverRepo.update(Filter.ALL, serverDto)
+        val serverRepo = db.getCollection<Server>()
+        serverRepo.updateOne(Server::installed eq false, setValue(Server::installed, true))
 
         val finishMsg = "Installation done. Set system to state 'installed'"
         log.info(finishMsg)
@@ -131,22 +154,19 @@ class InstallerService(
     private fun validateStep(step: InstallSteps): Boolean {
         val db = dbService.getDb()
 
-        when (step) {
+        return when (step) {
             InstallSteps.CREATE_USER -> {
-                val userRepo = db.getRepository(User::class.java)
-                return !userRepo.find().isEmpty
+                val userRepo = db.getCollection<User>()
+                userRepo.findOne() != null
             }
             InstallSteps.CREATE_SSHUSER -> {
-                val sshRepo = db.getRepository(Ssh::class.java)
-                return !sshRepo.find().isEmpty
-            }
-            else -> {
-                return false
+                val sshRepo = db.getCollection<Ssh>()
+                sshRepo.findOne() != null
             }
         }
     }
 
-    fun getAllSteps(): List<InstallSteps> {
+    private fun getAllSteps(): List<InstallSteps> {
         return InstallSteps.values().toList()
     }
 }
