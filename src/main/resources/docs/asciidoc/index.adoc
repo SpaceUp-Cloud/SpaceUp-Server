@@ -80,7 +80,8 @@ The application itself is a fatjar which can be directly executed.
 java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.server.host=0.0.0.0 -micronaut.host.port=<Your Port>
 
 # In dev you can directly supply SSH configuration when you pass "-spaceup.dev.ssh.db-credentials=true"
-# Default is spaceup.dev.ssh.db-credentials=false
+# Default is '-spaceup.dev.ssh.db-credentials=false'
+# If you've got troubles, increase loglevel with '-spaceup.logging.level=DEBUG'
 java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.server.host=127.0.0.1 -micronaut.host.port=<Your Port> spaceup.dev.ssh.db-credentials=false -spaceup.ssh.host=<Your server to connect> -spaceup.ssh.username=<User> -spaceup.ssh.password=<Password>
 ----
 
