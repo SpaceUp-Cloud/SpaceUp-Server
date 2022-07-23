@@ -47,26 +47,18 @@ import io.micronaut.aop.MethodInterceptor
 import io.micronaut.aop.MethodInvocationContext
 import jakarta.inject.Singleton
 import org.litote.kmongo.getCollection
-import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.exceptions.NotInstalledException
 import technology.iatlas.spaceup.dto.db.Server
 import technology.iatlas.spaceup.services.DbService
-import technology.iatlas.spaceup.services.SpaceUpService
 
 @Singleton
 @InterceptorBean(Installed::class)
 class InstalledInterceptor(
-    private val dbService: DbService,
-    private val spaceUpService: SpaceUpService
+    private val dbService: DbService
 ) : MethodInterceptor<Any, Any> {
-    private val logger = LoggerFactory.getLogger(this::class.java)
 
     override fun intercept(context: MethodInvocationContext<Any, Any>?): Any? {
-        if(spaceUpService.isDevMode()) {
-            return context?.proceed()
-        }
-
         val db = dbService.getDb()
         val serverRepo = db.getCollection<Server>()
 
