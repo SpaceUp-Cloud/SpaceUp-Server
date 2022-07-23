@@ -30,7 +30,7 @@ class StartupEventListener(
     private val dbService: DbService,
     private val installerService: InstallerService,
     private val systemService: SystemService,
-    private val spaceUpService: SpaceUpService
+    private val spaceUpService: SpaceUpService,
 ) {
     private val log = LoggerFactory.getLogger(StartupEventListener::class.java)
 
@@ -56,7 +56,6 @@ class StartupEventListener(
                 log.warn(
                     "Supply all necessary SSH configuration as parameters to ensure SpaceUp can run as expected!"
                         .yellow.bold)
-                log.warn("Will ignore 'is installed mode' as you are running in dev mode".red.bold)
             }
         }
 
