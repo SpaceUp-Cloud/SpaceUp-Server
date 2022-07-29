@@ -17,6 +17,7 @@ repositories {
     mavenCentral()
     maven {
         url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+        url = uri("https://artifactory.iatlas.dev/releases")
     }
 }
 
@@ -73,6 +74,9 @@ dependencies {
     implementation group: 'org.asciidoctor', name: 'asciidoctorj-diagram', version: '2.2.1'
     // https://mvnrepository.com/artifact/org.jasypt/jasypt
     implementation('org.jasypt:jasypt:1.9.3')
+
+    // My stuff
+    implementation "technology.iatlas.sws:sws:1.2.1-SNAPSHOT"
 
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly('com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1')
