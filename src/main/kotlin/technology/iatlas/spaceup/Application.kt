@@ -42,15 +42,17 @@
 
 package technology.iatlas.spaceup
 
+import io.micronaut.http.HttpResponse
 import io.micronaut.runtime.Micronaut.build
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.info.Info
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
+import technology.iatlas.spaceup.dto.Feedback
 
 @OpenAPIDefinition(
     info = Info(
             title = "SpaceUp",
-            version = "0.25.0"
+            version = "0.26.0"
     )
 )
 object Api
@@ -74,4 +76,22 @@ fun String.decrypt(secret: String): String {
     val passwordEncryptor = StandardPBEStringEncryptor()
     passwordEncryptor.setPassword(secret)
     return passwordEncryptor.decrypt(this)
+}
+
+fun Feedback.toHttpResponse(): HttpResponse<Feedback> {
+    return if(this.isOk()) {
+        HttpResponse.created(this)
+    } else {
+        HttpResponse.badRequest(this)
+    }
+}
+
+fun Feedback.isOk(): Boolean {
+    return if((this.info.isNotEmpty() && this.error.isEmpty()) || this.error.isEmpty()) {
+        true
+    } else if (this.error.isNotEmpty()) {
+        false
+    } else {
+        false
+    }
 }
