@@ -170,9 +170,19 @@ class SshService(
                 delay(50)
             }
 
-            val response = String(responseStream.toByteArray())
-            val error = String(errorResponseStream.toByteArray())
-            val sshResponse = SshResponse(response, error)
+            val stdout = String(responseStream.toByteArray())
+            var stderr = String(errorResponseStream.toByteArray())
+            if(stderr.isEmpty() && channel.exitStatus != 0) {
+                stderr = "Script terminated with exit code: ${channel.exitStatus}"
+                colored {
+                    log.error(stderr.red)
+                }
+            } else if(stderr.isNotEmpty()) {
+                colored {
+                    log.error(stderr.red)
+                }
+            }
+            val sshResponse = SshResponse(stdout, stderr)
             log.trace(sshResponse.toString())
 
             return sshResponse
@@ -200,7 +210,7 @@ class SshService(
         val remotefile =
             sftpConfig.remotedir?.replace("~", "/home/${ssh.username}") + "/${file.name}"
 
-        val writeScriptChannel: Channel = session.openChannel("sftp") as Channel
+        val sftpChannel: Channel = session.openChannel("sftp") as Channel
 
         val executionChannel: ChannelExec = session.openChannel("exec") as ChannelExec
         val executeCmd = cmd.parameters.joinToString(" ")
@@ -213,12 +223,12 @@ class SshService(
 
         var sshResponse = SshResponse("", "")
         try {
-            writeScriptChannel.connect()
-            val sftp = writeScriptChannel as ChannelSftp
+            sftpChannel.connect()
+            val sftp = sftpChannel as ChannelSftp
             log.info("Upload script ${file.name} to $remotefile")
             sftp.put(file.scriptPath?.openStream(), remotefile, ChannelSftp.OVERWRITE)
 
-            if(file.doExecuteFile) {
+            if(file.execute) {
                 log.debug("Execute $executeCmd")
                 executionChannel.connect()
 
@@ -227,15 +237,27 @@ class SshService(
                     delay(50)
                 }
 
-                sshResponse = SshResponse(String(responseExecution.toByteArray()), String(errorExecution.toByteArray()))
+                val stdout = String(responseExecution.toByteArray())
+                var stderr = String(errorExecution.toByteArray())
+                if(stderr.isEmpty() && executionChannel.exitStatus != 0) {
+                    stderr = "Script terminated with exit code: ${executionChannel.exitStatus}"
+                    colored {
+                        log.error(stderr.red)
+                    }
+                } else if(stderr.isNotEmpty()) {
+                    colored {
+                        log.error(stderr.red)
+                    }
+                }
+                sshResponse = SshResponse(stdout, stderr)
                 // SshResponse
-                //log.debug(sshResponse.toString())
+                log.debug(sshResponse.toString())
             }
 
             log.trace(sshResponse.toString())
             return sshResponse
         } finally {
-            writeScriptChannel.disconnect()
+            sftpChannel.disconnect()
             executionChannel.disconnect()
         }
     }

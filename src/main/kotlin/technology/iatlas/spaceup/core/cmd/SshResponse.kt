@@ -42,4 +42,19 @@
 
 package technology.iatlas.spaceup.core.cmd
 
+import technology.iatlas.spaceup.dto.Feedback
+
 data class SshResponse(val stdout: String, val stderr: String)
+
+fun SshResponse.toFeedback(): Feedback {
+    val feedback = Feedback("", "")
+    if(this.stdout.isNotEmpty()) {
+        feedback.info = this.stdout
+    }
+
+    if(this.stderr.isNotEmpty()) {
+        feedback.error = this.stderr
+    }
+
+    return feedback
+}
