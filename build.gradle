@@ -55,7 +55,6 @@ dependencies {
     implementation("io.micronaut.security:micronaut-security:3.2.0")
     implementation('io.micronaut.security:micronaut-security-jwt:3.6.3')
     implementation('io.micronaut.kotlin:micronaut-kotlin-extension-functions:3.2.2')
-    implementation('io.micronaut.cache:micronaut-cache-caffeine:3.5.0')
     implementation('com.google.code.gson:gson:2.9.0')
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4')
     implementation('com.github.mwiede:jsch:0.2.2')
