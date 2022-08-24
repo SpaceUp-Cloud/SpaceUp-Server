@@ -32,7 +32,7 @@ class ReadWebbackendParser: ParserInf<List<WebbackendConfiguration>> {
 
                 // sanitize credentials
                 val regex = Regex("://(.*:.*)@")
-                val service = splittedResponse[2].replace(regex, "://xxx:xxx@")
+                val service = splittedResponse[2].replace(regex, "://[hidden]:[hidden]@")
 
                 val webbackendConfiguration = WebbackendConfiguration(web = web, process = process, service = service)
                 configList.add(webbackendConfiguration)
