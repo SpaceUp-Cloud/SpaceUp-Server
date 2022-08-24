@@ -23,11 +23,20 @@ class SpaceUpService(
         val currentEnv = env.activeNames
         var isDev = false
         currentEnv.forEach {
-            if(it.contains("dev") || it.contains("DEV") || it.contains("Dev")) {
+            val environment = it.lowercase()
+            if(environment.contains("dev")
+                || environment.contains("develop")
+                || environment.contains("development")) {
                 isDev = true
             }
         }
 
         return isDev
+    }
+
+    fun getSpaceUpVersion(): String {
+        val versionProperty = Properties()
+        versionProperty.load(this.javaClass.getResourceAsStream("/version.properties"))
+        return versionProperty.getProperty("version") ?: "no version"
     }
 }

@@ -49,7 +49,6 @@ import technology.iatlas.spaceup.core.parser.QuotaParser
 import technology.iatlas.spaceup.dto.Command
 import technology.iatlas.spaceup.dto.Disk
 import technology.iatlas.spaceup.dto.Hostname
-import java.util.*
 
 @Context
 class SystemService(
@@ -86,12 +85,6 @@ class SystemService(
 
         hostnameRunner.execute(Command(cmd), EchoParser())
         return hostname
-    }
-
-    fun getSpaceUpVersion(): String {
-        val versionProperty = Properties()
-        versionProperty.load(this.javaClass.getResourceAsStream("/version.properties"))
-        return versionProperty.getProperty("version") ?: "no version"
     }
 
     fun getIsInstalled(): Boolean {

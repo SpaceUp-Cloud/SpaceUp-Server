@@ -15,76 +15,106 @@ import com.lordcodes.turtle.shellRun
 import io.micronaut.context.event.StartupEvent
 import io.micronaut.runtime.event.annotation.EventListener
 import jakarta.inject.Singleton
+import kotlinx.coroutines.runBlocking
 import org.litote.kmongo.getCollection
 import org.slf4j.LoggerFactory
+import technology.iatlas.spaceup.core.cmd.toFeedback
 import technology.iatlas.spaceup.core.helper.colored
+import technology.iatlas.spaceup.dto.Command
 import technology.iatlas.spaceup.dto.db.Server
-import technology.iatlas.spaceup.services.DbService
-import technology.iatlas.spaceup.services.InstallerService
-import technology.iatlas.spaceup.services.SpaceUpService
-import technology.iatlas.spaceup.services.SystemService
-import kotlin.system.exitProcess
+import technology.iatlas.spaceup.isOk
+import technology.iatlas.spaceup.services.*
+import java.nio.file.Path
+import kotlin.io.path.Path
+import kotlin.io.path.createDirectories
 
 @Singleton
 class StartupEventListener(
     private val dbService: DbService,
     private val installerService: InstallerService,
     private val spaceUpService: SpaceUpService,
+    private val swsService: SwsService,
+    private val sshService: SshService,
 ) {
     private val log = LoggerFactory.getLogger(StartupEventListener::class.java)
+
+    private val os = System.getProperty("os.name")
 
     @EventListener
     internal fun onApplicationEvent(event: StartupEvent) {
         showBanner()
         log.info("Running SpaceUp startup")
-
-        val os = System.getProperty("os.name")
         log.debug("OS: $os")
-        if(!os.lowercase().contains("linux")) {
-            colored {
-                log.warn("Currently only GNU/Linux is supported!")
-                log.warn("Will shutdown server now.".red.bold)
-            }
-            exitProcess(2)
-        }
 
         if(spaceUpService.isDevMode()) {
             colored {
-                log.warn("You are running in DEV mode!".yellow.bold)
-                log.warn("If 'spaceup.dev.ssh.db-credentials' set to false".yellow.bold)
-                log.warn(
-                    "Supply all necessary SSH configuration as parameters to ensure SpaceUp can run as expected!"
-                        .yellow.bold)
+                log.warn("""
+                    You are running in DEV mode!
+                    If property 'spaceup.dev.ssh.db-credentials' is set to false
+                    then supply all necessary SSH configuration as parameters to ensure SpaceUp can run as expected!"""
+                    .yellow.bold.trimIndent())
             }
         }
 
         // Step 1: create directories if not exist
         createDirectories()
+        runBlocking {
+            createExternalDirectories()
+        }
 
-        // Step 2: init and migrate db
-        initDb()
+        // Step 2: check if spaceup was installed
+        checkInstallation()
+
+        // Step 3: fill sws cache
+        fillSwsCache()
 
         log.info("Finished SpaceUp startup")
     }
 
     private fun createDirectories() {
-        log.info("Create remote directories")
+        log.info("Create local directories")
 
-        val home = ShellLocation.HOME
-        val remoteHome = ".spaceup"
-        val remoteScriptDir = ".spaceup/tmp"
+        val spaceupHome = ".spaceup"
+        val spaceupTempDir = ".spaceup/tmp"
 
-        shellRun(home) {
-            log.info("Create $home/$remoteHome")
-            command("mkdir", listOf("-p", remoteHome))
-            log.info("Create $home/$remoteScriptDir")
-            command("mkdir", listOf("-p", remoteScriptDir))
+        if(os.lowercase().contains(Regex("(linux|mac)"))) {
+            val home = ShellLocation.HOME
+
+            shellRun(home) {
+                log.info("Create $home/$spaceupHome")
+                command("mkdir", listOf("-p", spaceupHome))
+                log.info("Create $home/$spaceupTempDir")
+                command("mkdir", listOf("-p", spaceupTempDir))
+            }
+            // Set properties for spaceup
+            System.setProperty("spaceup.home", "$home/$spaceupHome")
+            System.setProperty("spaceup.tempdir", "$home/$spaceupTempDir")
+        } else if (os.lowercase().contains("windows")) {
+            val home = System.getProperty("user.home")
+
+            log.info("Create $home\\$spaceupHome")
+            Path("$home/$spaceupHome").normalize().createDirectories()
+            System.setProperty("spaceup.home", "$home/$spaceupHome")
+            log.info("Create $home\\${spaceupTempDir.createNormalizedPath()}")
+            Path("$home/$spaceupTempDir").normalize().createDirectories()
+            System.setProperty("spaceup.tempdir", "$home/$spaceupTempDir")
         }
     }
 
-    private fun initDb() {
-        dbService.init()
+    private suspend fun createExternalDirectories() {
+        log.info("Create external directories")
+        val cmd = Command(mutableListOf(
+            "mkdir", "-p", "~/.spaceup",
+            "mkdir", "-p", "~/.spaceup/tmp"
+        ))
+        val response = sshService.execute(cmd)
+        val feedback = response.toFeedback()
+        if(!feedback.isOk()) {
+            log.error(feedback.error)
+        }
+    }
 
+    private fun checkInstallation() {
         // Let's check if we are already installed properly
         val db = dbService.getDb()
         val serverRepo = db.getCollection<Server>()
@@ -120,7 +150,11 @@ class StartupEventListener(
  ▄████████▀   ▄████▀        ███    █▀  ████████▀    ██████████ ████████▀   ▄████▀      """.cyan.bold.trimIndent())
         }
         colored {
-            println("\tSpaceUp Server (${systemService.getSpaceUpVersion()})".cyan.bold)
+            println("\tSpaceUp Server (${spaceUpService.getSpaceUpVersion()})".cyan.bold)
         }
     }
+}
+
+fun String.createNormalizedPath(): Path {
+    return Path(this).normalize()
 }

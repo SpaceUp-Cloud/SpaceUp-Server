@@ -52,11 +52,15 @@ import io.micronaut.security.rules.SecurityRule
 import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.dto.Disk
 import technology.iatlas.spaceup.dto.Hostname
+import technology.iatlas.spaceup.services.SpaceUpService
 import technology.iatlas.spaceup.services.SystemService
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/system")
-open class SystemController(private val systemService: SystemService) {
+open class SystemController(
+    private val systemService: SystemService,
+    private val spaceUpService: SpaceUpService
+    ) {
 
     @Installed
     @Get("/hostname", produces = [MediaType.APPLICATION_JSON])
@@ -83,6 +87,6 @@ open class SystemController(private val systemService: SystemService) {
 
     @Get("/version", produces = [MediaType.APPLICATION_JSON])
     fun getVersion(): String {
-        return systemService.getSpaceUpVersion()
+        return spaceUpService.getSpaceUpVersion()
     }
 }
