@@ -1,43 +1,11 @@
 /*
- * Copyright (c) 2022 spaceup@iatlas.technology.
- * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
- *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
- * You don't have to do anything special to accept the license and you don’t have to notify anyone which that you have made that decision.
+ * Copyright (c) 2022 Gino Atlas.
  *
- * SpaceUp-Server is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See your chosen license for more details.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
- * You should have received a copy of both licenses along with SpaceUp-Server
- * If not, see <http://www.gnu.org/licenses/>.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  *
- *
- * There is a strong belief within us that the license we have chosen provides not only the best solution for providing you with the essential freedom necessary to use SpaceUp-Server within your projects, but also for maintaining enough copyleft strength for us to feel confident and secure with releasing our hard work to the public. For your convenience we've included our own interpretation of the license we chose, which can be seen below.
- *
- * Our interpretation of the GNU Affero General Public License version 3: (Quoted words are words in which there exists a definition within the license to avoid ambiguity.)
- *   1. You must always provide the source code, copyright and license information of SpaceUp-Server whenever you "convey" any part of SpaceUp-Server;
- *      be it a verbatim copy or a modified copy.
- *   2. SpaceUp-Server was developed as a library and has therefore been designed without knowledge of your work; as such the following should be implied:
- *      a) SpaceUp-Server was developed without knowledge of your work; as such the following should be implied:
- *         i)  SpaceUp-Server should not fall under a work which is "based on" your work.
- *         ii) You should be free to use SpaceUp-Server in a work covered by the:
- *             - GNU General Public License version 2
- *             - GNU Lesser General Public License version 2.1
- *             This is due to those licenses classifying SpaceUp-Server as a work which would fall under an "aggregate" work by their terms and definitions;
- *             as such it should not be covered by their terms and conditions. The relevant passages start at:
- *             - Line 129 of the GNU General Public License version 2
- *             - Line 206 of the GNU Lesser General Public License version 2.1
- *      b) If you have not "modified", "adapted" or "extended" SpaceUp-Server then your work should not be bound by this license,
- *         as you are using SpaceUp-Server under the definition of an "aggregate" work.
- *      c) If you have "modified", "adapted" or "extended" SpaceUp-Server then any of those modifications/extensions/adaptations which you have made
- *         should indeed be bound by this license, as you are using SpaceUp-Server under the definition of a "based on" work.
- *
- * Our hopes is that our own interpretation of license aligns perfectly with your own values and goals for using our work freely and securely. If you have any questions at all about the licensing chosen for SpaceUp-Server you can email us directly at spaceup@iatlas.technology or you can get in touch with the license authors (the Free Software Foundation) at licensing@fsf.org to gain their opinion too.
- *
- * Alternatively you can provide feedback and acquire the support you need at our support forum. We'll definitely try and help you as soon as possible, and to the best of our ability; as we understand that user experience is everything, so we want to make you as happy as possible! So feel free to get in touch via our support forum and chat with other users of SpaceUp-Server here at:
- * https://spaceup.iatlas.technology
- *
- * Thanks, and we hope you enjoy using SpaceUp-Server and that it's everything you ever hoped it could be.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 package technology.iatlas.spaceup.services
@@ -45,7 +13,9 @@ package technology.iatlas.spaceup.services
 import com.jcraft.jsch.*
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.annotation.Value
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import org.litote.kmongo.findOne
 import org.litote.kmongo.getCollection
 import org.slf4j.LoggerFactory
@@ -91,10 +61,10 @@ class SshService(
             password = sshConfig.password!!
             host = sshConfig.host!!
         } else {
-            log.info("Take saved credentials")
+            log.debug("Take saved credentials")
             val db = dbService.getDb()
             val sshRepo = db.getCollection<Ssh>()
-            log.info("Assuming there is only one configuration")
+            log.debug("Assuming there is only one configuration")
             val ssh = sshRepo.findOne()!!
 
             securityService.decrypt(ssh) {
@@ -106,8 +76,11 @@ class SshService(
 
         if((sshConfig.privatekey == null || sshConfig.privatekey!!.isEmpty())) {
             colored {
-                log.warn("To authenticate with Privatekey supply" +
-                        " '-spaceup.ssh.privatekey=\"your path to key\"' ".yellow + "to JAR.")
+                if(log.isDebugEnabled) {
+                    // Show this only if debug is enabled
+                    log.warn("To authenticate with Privatekey supply" +
+                            " '-spaceup.ssh.privatekey=\"your path to key\"' ".yellow + "to JAR.")
+                }
             }
         }
 
@@ -116,7 +89,7 @@ class SshService(
         }
 
         val privatekey: String? = sshConfig.privatekey
-        if (privatekey != null && privatekey.isNotEmpty()) {
+        if (!privatekey.isNullOrEmpty()) {
             jsch.addIdentity(File(privatekey).normalize().path)
             session = jsch.getSession(username, host, Integer.valueOf(sshConfig.port!!))
 
@@ -137,18 +110,17 @@ class SshService(
     }
 
     suspend fun execute(command: CommandInf): SshResponse {
-        log.debug("Execute $command")
+        log.trace("Execute $command")
         if(!this::session.isInitialized || !session.isConnected) {
             initSSH()
         }
 
-        var channel: ChannelExec
-        try {
-            channel = session.openChannel("exec") as ChannelExec
+        val channel: ChannelExec = try {
+            session.openChannel("exec") as ChannelExec
         } catch (shhEx: JSchException) {
             log.error("SSH Session is down. Will try to reconnect.")
             initSSH()
-            channel = session.openChannel("exec") as ChannelExec
+            session.openChannel("exec") as ChannelExec
         }
 
         try {
@@ -225,11 +197,17 @@ class SshService(
         try {
             sftpChannel.connect()
             val sftp = sftpChannel as ChannelSftp
-            log.info("Upload script ${file.name} to $remotefile")
-            sftp.put(file.scriptPath?.openStream(), remotefile, ChannelSftp.OVERWRITE)
+            log.debug("Upload script ${file.name} to $remotefile")
+            withContext(Dispatchers.IO) {
+                val localScript = file.scriptPath?.file ?: ""
+                sftp.put(File(localScript).canonicalPath, remotefile, ChannelSftp.OVERWRITE)
+            }
 
             if(file.execute) {
-                log.debug("Execute $executeCmd")
+                log.trace("""
+                    "Execute script: ${cmd.parameters}
+                    $executeCmd
+                """.trimIndent())
                 executionChannel.connect()
 
                 // When then channel close itself, we retrieved the data
@@ -246,12 +224,13 @@ class SshService(
                     }
                 } else if(stderr.isNotEmpty()) {
                     colored {
+                        log.error("Script returned an error:")
                         log.error(stderr.red)
                     }
                 }
                 sshResponse = SshResponse(stdout, stderr)
                 // SshResponse
-                log.debug(sshResponse.toString())
+                log.trace(sshResponse.toString())
             }
 
             log.trace(sshResponse.toString())

@@ -10,24 +10,21 @@
 
 package technology.iatlas.spaceup
 
-import io.micronaut.core.annotation.TypeHint
 import io.micronaut.http.HttpResponse
 import io.micronaut.runtime.Micronaut.build
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
+import io.swagger.v3.oas.annotations.info.Contact
 import io.swagger.v3.oas.annotations.info.Info
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 import technology.iatlas.spaceup.dto.Feedback
 
-@TypeHint(
-    typeNames = [
-        "com.github.benmanes.caffeine.cache.SSMS"
-    ]
-)
 
 @OpenAPIDefinition(
     info = Info(
-            title = "SpaceUp",
-            version = "0.26.0"
+        title = "SpaceUp",
+        version = "0.26.0",
+        contact = Contact(name = "Thraax Session",
+            url = "https://spaceup.iatlas.technology", email = "spaceup@iatlas.technology")
     )
 )
 object Api

@@ -29,7 +29,6 @@ import kotlin.system.exitProcess
 class StartupEventListener(
     private val dbService: DbService,
     private val installerService: InstallerService,
-    private val systemService: SystemService,
     private val spaceUpService: SpaceUpService,
 ) {
     private val log = LoggerFactory.getLogger(StartupEventListener::class.java)
