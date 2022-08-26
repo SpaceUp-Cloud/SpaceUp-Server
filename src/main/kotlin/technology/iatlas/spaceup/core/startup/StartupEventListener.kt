@@ -66,7 +66,7 @@ class StartupEventListener(
         checkInstallation()
 
         // Step 3: fill sws cache
-        fillSwsCache()
+        //fillSwsCache()
 
         log.info("Finished SpaceUp startup")
     }
