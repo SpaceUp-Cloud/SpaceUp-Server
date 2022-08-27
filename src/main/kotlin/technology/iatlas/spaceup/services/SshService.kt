@@ -144,8 +144,11 @@ class SshService(
 
             val stdout = String(responseStream.toByteArray())
             var stderr = String(errorResponseStream.toByteArray())
-            if(stderr.isEmpty() && channel.exitStatus != 0) {
-                stderr = "Script terminated with exit code: ${channel.exitStatus}"
+            if(stderr.isNotEmpty() || channel.exitStatus != 0) {
+                stderr = """
+                    Command: ${command.parameters.joinToString { " " }}
+                    terminated with exit code: ${channel.exitStatus}
+                """.trimIndent()
                 colored {
                     log.error(stderr.red)
                 }
@@ -199,8 +202,14 @@ class SshService(
             val sftp = sftpChannel as ChannelSftp
             log.debug("Upload script ${file.name} to $remotefile")
             withContext(Dispatchers.IO) {
-                val localScript = file.scriptPath?.file ?: ""
-                sftp.put(File(localScript).canonicalPath, remotefile, ChannelSftp.OVERWRITE)
+                val os = System.getProperty("os.name")
+
+                if(os.lowercase().contains("windows")) {
+                    val localScript = file.scriptPath?.file ?: ""
+                    sftp.put(File(localScript).canonicalPath, remotefile, ChannelSftp.OVERWRITE)
+                } else {
+                    sftp.put(file.scriptPath?.openStream(), remotefile, ChannelSftp.OVERWRITE)
+                }
             }
 
             if(file.execute) {
@@ -218,7 +227,11 @@ class SshService(
                 val stdout = String(responseExecution.toByteArray())
                 var stderr = String(errorExecution.toByteArray())
                 if(stderr.isEmpty() && executionChannel.exitStatus != 0) {
-                    stderr = "Script terminated with exit code: ${executionChannel.exitStatus}"
+                    stderr = """
+                    Script: ${cmd.shellScript}
+                    Command: ${cmd.parameters.joinToString { " " }}
+                    terminated with exit code: ${executionChannel.exitStatus}
+                """.trimIndent()
                     colored {
                         log.error(stderr.red)
                     }
