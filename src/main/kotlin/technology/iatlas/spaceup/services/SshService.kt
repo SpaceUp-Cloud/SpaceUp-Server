@@ -144,15 +144,11 @@ class SshService(
 
             val stdout = String(responseStream.toByteArray())
             var stderr = String(errorResponseStream.toByteArray())
-            if(stderr.isNotEmpty() || channel.exitStatus != 0) {
+            if(stderr.isNotEmpty() && channel.exitStatus != 0) {
                 stderr = """
                     Command: ${command.parameters.joinToString { " " }}
                     terminated with exit code: ${channel.exitStatus}
                 """.trimIndent()
-                colored {
-                    log.error(stderr.red)
-                }
-            } else if(stderr.isNotEmpty()) {
                 colored {
                     log.error(stderr.red)
                 }
@@ -226,18 +222,13 @@ class SshService(
 
                 val stdout = String(responseExecution.toByteArray())
                 var stderr = String(errorExecution.toByteArray())
-                if(stderr.isEmpty() && executionChannel.exitStatus != 0) {
+                if(stderr.isNotEmpty() && executionChannel.exitStatus != 0) {
                     stderr = """
                     Script: ${cmd.shellScript}
                     Command: ${cmd.parameters.joinToString { " " }}
                     terminated with exit code: ${executionChannel.exitStatus}
                 """.trimIndent()
                     colored {
-                        log.error(stderr.red)
-                    }
-                } else if(stderr.isNotEmpty()) {
-                    colored {
-                        log.error("Script returned an error:")
                         log.error(stderr.red)
                     }
                 }
