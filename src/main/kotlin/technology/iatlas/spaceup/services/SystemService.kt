@@ -80,7 +80,7 @@ class SystemService(
         var hostname = Hostname("")
 
         hostnameRunner.subject().subscribe {
-            hostname = Hostname(it)
+            hostname = Hostname(it.trim())
         }
 
         hostnameRunner.execute(Command(cmd), EchoParser())
