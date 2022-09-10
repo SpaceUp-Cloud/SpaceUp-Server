@@ -89,12 +89,20 @@ class AuthenticationProviderUserPassword(
 
                 if(userFound != null) {
                     colored {
-                        log.info("${userFound.username} is authenticated!".green.bold)
+                        log.info("User ${userFound.username} is authenticated!".green.bold)
                     }
                     emitter.onNext(AuthenticationResponse.success(userFound.username))
                     emitter.onComplete()
                 } else {
+                    colored {
+                        log.error("User ${authenticationRequest.identity} not found!".red.bold)
+                    }
                     emitter.onError(AuthenticationResponse.exception())
+                }
+                // Get remote address who tried to access SpaceUp. Might be malicious. >:(
+                if (httpRequest != null) {
+                    // TODO feature idea for future, block access after various tries
+                    log.info("Remote address: ${httpRequest.remoteAddress.address.hostAddress}")
                 }
 
             } else {
