@@ -80,7 +80,7 @@ class InstallerService(
         val serverRepo = db.getCollection<Server>()
 
         val servers = serverRepo.find().toList()
-        if (servers.size > 1) throw InstalledException("Multiple contrains found! $servers")
+        if (servers.size > 1) throw InstalledException("Multiple constrains found! $servers")
 
         return servers.first().apiKey
     }

@@ -42,8 +42,10 @@
 
 package technology.iatlas.spaceup.dto.db
 
+import io.micronaut.core.annotation.ReflectiveAccess
 import technology.iatlas.spaceup.core.annotations.Encryption
 
+@ReflectiveAccess
 data class Ssh(
     var server: String,
     var username: String,

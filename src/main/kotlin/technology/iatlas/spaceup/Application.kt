@@ -10,13 +10,33 @@
 
 package technology.iatlas.spaceup
 
+import com.jcraft.jsch.Channel
+import com.jcraft.jsch.ChannelExec
+import com.jcraft.jsch.ChannelSftp
+import com.jcraft.jsch.JSch
+import com.jcraft.jsch.KeyExchange
+import com.jcraft.jsch.Session
+import com.jcraft.jsch.jce.AES128CTR
+import com.jcraft.jsch.jce.DH
+import com.jcraft.jsch.jce.HMACSHA1
+import com.jcraft.jsch.jce.HMACSHA256ETM
+import com.jcraft.jsch.jce.Random
+import com.jcraft.jsch.jce.SHA256
+import com.jcraft.jsch.jce.SignatureRSASHA512
+import io.micronaut.core.annotation.TypeHint
 import io.micronaut.http.HttpResponse
 import io.micronaut.runtime.Micronaut.build
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.info.Contact
 import io.swagger.v3.oas.annotations.info.Info
+import org.jasypt.encryption.pbe.StandardPBEByteEncryptor
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
+import org.jasypt.normalization.Normalizer
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.dto.Feedback
+import java.text.Normalizer.Form
+import java.text.Normalizer as jNormalizer
 
 
 @OpenAPIDefinition(
@@ -26,6 +46,47 @@ import technology.iatlas.spaceup.dto.Feedback
         contact = Contact(name = "Thraax Session",
             url = "https://spaceup.iatlas.technology", email = "spaceup@iatlas.technology")
     )
+)
+@TypeHint(
+    value = [
+        LoggerFactory::class,
+        Logger::class,
+        com.jcraft.jsch.Logger::class,
+        jNormalizer::class,
+        Normalizer::class,
+        Form::class,
+        StandardPBEStringEncryptor::class,
+        StandardPBEByteEncryptor::class,
+        Random::class,
+        JSch::class,
+        Channel::class,
+        ChannelExec::class,
+        ChannelSftp::class,
+        Session::class,
+        HMACSHA1::class,
+        AES128CTR::class,
+        KeyExchange::class,
+        SHA256::class,
+        DH::class,
+        SignatureRSASHA512::class,
+        HMACSHA256ETM::class,
+    ],
+    accessType = [
+        TypeHint.AccessType.ALL_DECLARED_CONSTRUCTORS,
+        TypeHint.AccessType.ALL_PUBLIC,
+        TypeHint.AccessType.ALL_DECLARED_FIELDS,
+        TypeHint.AccessType.ALL_DECLARED_METHODS,
+        TypeHint.AccessType.ALL_PUBLIC_CONSTRUCTORS,
+        TypeHint.AccessType.ALL_PUBLIC_FIELDS,
+        TypeHint.AccessType.ALL_PUBLIC_METHODS,
+    ],
+    typeNames = [
+        "com.jcraft.jsch.DHGEX256",
+        "com.jcraft.jsch.UserAuthNone",
+        "com.jcraft.jsch.UserAuthPassword",
+        "com.jcraft.jsch.UserAuthPublicKey",
+        "com.jcraft.jsch.UserAuthKeyboardInteractive",
+    ]
 )
 object Api
 
