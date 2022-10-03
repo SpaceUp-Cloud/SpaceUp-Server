@@ -1,50 +1,50 @@
 ## SpaceUp-Server
-
-Buildserver status:  
-![TeamCity build status](https://tc.iatlas.dev/app/rest/builds/buildType:id:SpaceUpServer_Build/statusIcon.svg)
+  
+SpaceUp-Server:  
+![TeamCity build status](https://tc.iatlas.dev/app/rest/builds/buildType:id:SpaceUpServer_Build/statusIcon.svg)  
+SWS:  
+![TeamCity build status](https://tc.iatlas.dev/app/rest/builds/buildType:id:SpaceUpServer_Sws_Build/statusIcon.svg)
 
 ## Description
 
-SpaceUp is a "simple" server / client construct, which helps provide or do actions on your webhost. Or just simplify things without using ssh/console.
-It does as much possible without a database (only saving credentials / install process), to keep it easy as possible.
-
+SpaceUp-Server is a webservice, which helps provide or do actions on your webhost on *Uberspace*.  
+Or just simplify things without using ssh/console.
 The server application is written in kotlin with micronaut as web framework. The client is written in Dart with Flutter as framework.
 
 ## Features
 
 * Adding/Deleting domains
-* Handle Web backends
+* Handle web backends
 * Start/Stop/Restart services
 * Inspecting logfiles of the corresponding service
-* Have a look on the space
-
+* Have a look on the disk space
+* Write your own (automation) scripts (SWS - Server Web Scripts) to even more simplify jobs and stuff.
+  Like updating a piece of software.
+* JVM 11 based
 * Other features which are planned:
-  * Handle mail (uberspace mail commands)
-  * Add/Delete services with internal editor
+  * Handle mail (uberspace mail)
+  * Show web traffic (uberspace traffik)
+  * Add/Delete services with an internal editor
   * Support GraalVM as native application for smaller footprint
-  * Migrating to JVM 11 =< x
   * Self-Updating JAR (Never download it by yourself again!)
-  * Write your own (automation) script (*.sus) to even more simplify jobs and stuff.
-  Like updating a piece of software. And this script will be automatically available as REST service and visible in the app! Cool, right? 😁
+  And this script will be automatically available as rest service and visible in the app! Cool, right? 😁
   * ... and so on.
 
-If any other feature is wished, write me a small email, so I will register you for youtrack to open an issue:
-*thraax.session@iatlas.technology*
+If any other feature is wished, or you want to *help me*, write me a small email.  
+So I will register you for youtrack to open an issue, or we have a discussion how you can support the project:    
+<spaceup-support@iatlas.technology>
 
-Little big bonus: There is a multiplatform app (written in Flutter) which already consumes the APIs. 😁
-You should know it's not tested with ios/osx as I am not an apple user.
-But it works for Web, Android, Windows and soon Linux.
+Little big bonus: There is a multiplatform app (written in Flutter) which already consumes the APIs. 😁  
+You should know it's not tested with ios/osx as I am not an apple user.  
+But it works for Web, Android, Windows and Linux.
 
 ## Code Repo / Bug tracker / etc.
 
 I've of course my own tool infrastructure where I keep my code and bugs in place.
 
-Git: https://git.iatlas.dev/SpaceUp
-
-Youtrack: https://yt.iatlas.dev/issues/SU
-
-Artifactory:
-https://artifactory.iatlas.dev/
+Git: https://git.iatlas.dev/SpaceUp  
+Youtrack: https://yt.iatlas.dev/issues/SU  
+Artifactory: https://artifactory.iatlas.dev/
 
 ## Build & Run
 
@@ -53,32 +53,43 @@ https://artifactory.iatlas.dev/
 Requirements:
 
 * Java 11
-* MongoDb 5.x (see Uberspace Lab how to enable it. It's straightforward 😁)
+* MongoDb 5.x [see Uberspace Lab how to enable it. It's straightforward 😁](https://lab.uberspace.de/guide_mongodb/)
 
 The application itself is a fatjar which can be directly executed.
+
+---
+
+All configuration properties to can be overriden.  
+Above in the configuration file are the Micronaut specifics. **Be carefully!!**
+[Micronaut-Properties](https://git.iatlas.dev/SpaceUp/SpaceUp-Server/src/branch/master/src/main/resources/application.properties#L45)  
+Here are the SpaceUp specific ones.
+[SpaceUp-Properties](https://git.iatlas.dev/SpaceUp/SpaceUp-Server/src/branch/master/src/main/resources/application.properties#L122)
 
 ```
 # Build the jar file
 ./gradlew assemble
 
 #
-# The parameters are necessary for now.
-# Later they will be used from the installation process.
+# TODO: Add parameter to override token-secret! Show how to generate it.
 #
 
 # Normal prod usecase
-java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.server.host=0.0.0.0 -micronaut.host.port=<Your Port> -mongodb.uri=mongodb://xxx:xxx@localhost:41421/admin
+java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.server.host=0.0.0.0 -micronaut.host.port=<Your Port> -mongodb.uri=mongodb://xxx:xxx@localhost:27017/admin
 
 # In dev you can directly supply SSH configuration when you pass "-spaceup.dev.ssh.db-credentials=true"
 # Default is '-spaceup.dev.ssh.db-credentials=false'
 # If you've got troubles, increase loglevel with '-spaceup.logging.level=DEBUG|TRACE'
-java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.server.host=127.0.0.1 -micronaut.host.port=<Your Port> spaceup.dev.ssh.db-credentials=false -spaceup.ssh.host=<Your server to connect> -spaceup.ssh.username=<User> -spaceup.ssh.password=<Password> -mongodb.uri=mongodb://xxx:xxx@localhost:41421/admin
+java -jar target/lib/SpaceUp-{Version}-all.jar -micronaut.server.host=127.0.0.1 -micronaut.host.port=<Your Port> spaceup.dev.ssh.db-credentials=false -spaceup.ssh.host=<Your server to connect> -spaceup.ssh.username=<User> -spaceup.ssh.password=<Password> -mongodb.uri=mongodb://xxx:xxx@localhost:27017/admin
+
+# TODO: Show how to pass arguments to native image
 ```
 
 Don't forget to create the uberspace web backend to make it external visible for the client. 😉
 
-*After the first run, you have run the installation procedure* in the app. You'll find the APIKey in the application logs.
-In dev mode there are Swagger-ui, Redoc and Rapidoc.
+*After the first run, you have run the installation procedure* in the app.  
+
+You'll find the APIKey in the application logs.
+In **dev** mode there are Swagger-ui, Redoc and Rapidoc.
 
 See:
 
@@ -86,8 +97,16 @@ See:
 * {server}/redoc
 * {server}/rapidoc
 
-After first startup you will be greeted with this console output.
-*Beware the output of they API Key, which you need to verify that it is you, when you finish the installation!*
+**After the first run, you have run the installation procedure** in the app or via REST.  
+You need the API key from the logs to proceed the installation.  
+*TODO show how to pass the API key via curl*
+
+All endpoints are secured. Means you have to be logged in and pass the JWT in the HTTP Header.  
+*TODO show how to pass the JWT via curl*
+
+*The swagger/redoc site will help you to send those requests.*
+
+After first startup you will be greeted with this console output:
 
 ```
  __  __ _                                  _   
@@ -95,10 +114,11 @@ After first startup you will be greeted with this console output.
 | |\/| | |/ __| '__/ _ \| '_ \ / _` | | | | __|
 | |  | | | (__| | | (_) | | | | (_| | |_| | |_ 
 |_|  |_|_|\___|_|  \___/|_| |_|\__,_|\__,_|\__|
-  Micronaut (v3.4.1)
+  Micronaut (v3.6.1)
 
-12:14:00.174 [main] INFO  i.m.context.env.DefaultEnvironment - Established active environments: [prod]
-12:14:02.772 [main] INFO  t.iatlas.spaceup.services.DbService - Created DB Connection to mongodb://xxx:xxx@localhost:41421/admin
+14:26:16.672 [main] INFO  i.m.context.env.DefaultEnvironment - Established active environments: [dev]
+14:26:17.873 [main] INFO  t.iatlas.spaceup.services.DbService - Created DB Connection to mongodb://[hidden]:[hidden]@localhost:27017/admin
+14:26:17.887 [main] INFO  t.iatlas.spaceup.services.DbService - Get development DB
    ▄████████    ▄███████▄    ▄████████  ▄████████    ▄████████ ███    █▄     ▄███████▄ 
   ███    ███   ███    ███   ███    ███ ███    ███   ███    ███ ███    ███   ███    ███ 
   ███    █▀    ███    ███   ███    ███ ███    █▀    ███    █▀  ███    ███   ███    ███ 
@@ -107,20 +127,20 @@ After first startup you will be greeted with this console output.
          ███   ███          ███    ███ ███    █▄    ███    █▄  ███    ███   ███        
    ▄█    ███   ███          ███    ███ ███    ███   ███    ███ ███    ███   ███        
  ▄████████▀   ▄████▀        ███    █▀  ████████▀    ██████████ ████████▀   ▄████▀      
-        SpaceUp Server (0.24.1-SNAPSHOT)
-12:14:03.578 [main] INFO  t.i.s.c.startup.StartupEventListener - Running SpaceUp startup
-12:14:03.579 [main] INFO  t.i.s.c.startup.StartupEventListener - Create remote directories
-12:14:03.589 [main] INFO  t.i.s.c.startup.StartupEventListener - Create /home/thraax/.spaceup
-12:14:03.608 [main] INFO  t.i.s.c.startup.StartupEventListener - Create /home/thraax/.spaceup/tmp
-12:14:04.081 [main] INFO  t.i.s.c.startup.StartupEventListener - Finished SpaceUp startup
-12:14:04.163 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 4417ms. Server Running: http://0.0.0.0:xxx
-12:14:06.530 [scheduled-executor-thread-1] INFO  t.i.s.services.SchedulerService - Update domain list
-12:14:06.589 [scheduled-executor-thread-1] INFO  t.iatlas.spaceup.services.SshService - Take saved credentials
-12:14:06.589 [scheduled-executor-thread-1] INFO  t.iatlas.spaceup.services.SshService - Assuming there is only one configuration
-12:14:06.667 [scheduled-executor-thread-1] WARN  t.iatlas.spaceup.services.SshService - To authenticate with Privatekey supply '-spaceup.ssh.privatekey="your path to key"' to JAR.
-12:14:06.672 [scheduled-executor-thread-1] INFO  t.iatlas.spaceup.services.SshService - Authenticate SSH via password!
-12:14:08.781 [default-nioEventLoopGroup-1-6] INFO  t.i.s.c.a.AuthenticationProviderUserPassword - thraax is authenticated!
-12:14:35.148 [default-nioEventLoopGroup-1-2] INFO  t.iatlas.spaceup.services.SshService - Upload script getLogs.sh to /home/thraax/.spaceup/tmp/getLogs.sh
+	SpaceUp Server (0.26.0-SNAPSHOT)
+14:26:18.467 [main] INFO  t.i.s.c.startup.StartupEventListener - Running SpaceUp startup
+14:26:18.468 [main] WARN  t.i.s.c.startup.StartupEventListener - 
+                    You are running in DEV mode!
+                    If property 'spaceup.dev.ssh.db-credentials' is set to false
+                    then supply all necessary SSH configuration as parameters to ensure SpaceUp can run as expected!
+14:26:18.468 [main] INFO  t.i.s.c.startup.StartupEventListener - Create local directories
+14:26:18.474 [main] INFO  t.i.s.c.startup.StartupEventListener - Create C:\Users\[hidden]\.spaceup
+14:26:18.479 [main] INFO  t.i.s.c.startup.StartupEventListener - Create C:\Users\[hidden]\.spaceup\tmp
+14:26:18.506 [main] INFO  t.i.s.c.startup.StartupEventListener - Create external directories
+14:26:19.282 [main] INFO  t.iatlas.spaceup.services.SshService - Authenticate SSH via password!
+14:26:20.041 [main] INFO  t.i.s.c.startup.StartupEventListener - Update SWS cache
+14:26:20.099 [main] INFO  t.i.s.c.startup.StartupEventListener - Finished SpaceUp startup
+14:26:20.843 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 4865ms. Server Running: http://0.0.0.0:9090
 ```
 
 ### Client application

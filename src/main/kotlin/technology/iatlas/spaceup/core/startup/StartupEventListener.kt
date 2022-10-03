@@ -102,7 +102,7 @@ class StartupEventListener(
         checkInstallation()
 
         // Step 3: fill sws cache
-        //fillSwsCache()
+        fillSwsCache()
 
         log.info("Finished SpaceUp startup")
     }
@@ -162,8 +162,8 @@ class StartupEventListener(
             colored {
                 log.info("Finish installation with API key: ${apiKey.yellow.bold}")
             }
-            val doc = Server(false, apiKey)
-            serverRepo.insertOne(doc)
+            val serverDocument = Server(false, apiKey)
+            serverRepo.insertOne(serverDocument)
         } else {
             val installed = server.installed
             if(!installed) {
