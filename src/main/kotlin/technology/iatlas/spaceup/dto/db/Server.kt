@@ -42,7 +42,8 @@
 
 package technology.iatlas.spaceup.dto.db
 
+@ReflectiveAccess
 data class Server(
-    var installed: Boolean = false,
-    var apiKey: String
+    val installed: Boolean = false,
+    val apiKey: String
 )

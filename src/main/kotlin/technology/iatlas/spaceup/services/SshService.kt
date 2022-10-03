@@ -10,7 +10,12 @@
 
 package technology.iatlas.spaceup.services
 
-import com.jcraft.jsch.*
+import com.jcraft.jsch.Channel
+import com.jcraft.jsch.ChannelExec
+import com.jcraft.jsch.ChannelSftp
+import com.jcraft.jsch.JSch
+import com.jcraft.jsch.JSchException
+import com.jcraft.jsch.Session
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.annotation.Value
 import kotlinx.coroutines.Dispatchers
