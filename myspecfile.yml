@@ -1,0 +1,599 @@
+openapi: 3.0.1
+info:
+  title: SpaceUp
+  contact:
+    name: Thraax Session
+    url: https://spaceup.iatlas.technology
+    email: spaceup@iatlas.technology
+  version: 0.26.0
+paths:
+  /api/domain/add:
+    post:
+      summary: Add a new domain
+      description: Add a new domain
+      operationId: add
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Domain'
+        required: true
+      responses:
+        "200":
+          description: Map - per domain a feedback
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feedback'
+  /api/domain/delete/{url}:
+    delete:
+      summary: Delete a domain with the corresponded url
+      description: Delete a domain with the corresponded url
+      operationId: delete
+      parameters:
+      - name: url
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Feedback
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+  /api/domain/list:
+    get:
+      summary: Get a list of domains
+      description: Get a list of domains
+      operationId: list
+      parameters:
+      - name: cached
+        in: query
+        schema:
+          type: boolean
+          nullable: true
+      responses:
+        "200":
+          description: List - list of domains
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Domain'
+  /api/installer/createSshSetup:
+    post:
+      summary: Create the ssh user for authentication via SSH
+      description: Create the ssh user for authentication via SSH
+      operationId: createSshUser
+      parameters:
+      - name: X-SpaceUp-Key
+        in: header
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ssh'
+        required: true
+      responses:
+        "200":
+          description: createSshUser 200 response
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/installer/createUser:
+    post:
+      summary: Create a new user for authentication on SpaceUp
+      description: Create a new user for authentication on SpaceUp
+      operationId: createUser
+      parameters:
+      - name: X-SpaceUp-Key
+        in: header
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "200":
+          description: createUser 200 response
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/installer/final:
+    post:
+      summary: This is the final step to finalize the installation.
+      description: This is the final step to finalize the installation. It needs to
+        be run.
+      operationId: finalize
+      parameters:
+      - name: X-SpaceUp-Key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: finalize 200 response
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/network/read/programs:
+    get:
+      summary: Read actively listening programs on network
+      description: Read actively listening programs on network
+      operationId: readListening
+      responses:
+        "200":
+          description: readListening 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NetworkProgram'
+  /api/process/proccess/{pid}:
+    get:
+      operationId: getProgramForPid
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: getProgramForPid 200 response
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/service/delete/{servicename}:
+    delete:
+      operationId: deleteService
+      parameters:
+      - name: servicename
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: deleteService 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+  /api/service/execute/{servicename}/{option}:
+    post:
+      summary: Execute an operation change to a Service
+      description: Execute an operation change to a Service
+      operationId: execute
+      parameters:
+      - name: servicename
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: option
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ServiceOption'
+      responses:
+        "200":
+          description: execute 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+  /api/service/list:
+    get:
+      summary: Get all services with their statuses
+      description: Get all services with their statuses
+      operationId: list_1
+      responses:
+        "200":
+          description: list_1 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+  /api/service/logs/{servicename}:
+    get:
+      summary: Gather the info and error logs of a service
+      description: Gather the info and error logs of a service
+      operationId: getLogs
+      parameters:
+      - name: servicename
+        in: path
+        description: the name of the service we want to get logs
+        required: true
+        schema:
+          type: string
+      - name: type
+        in: query
+        schema:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Logtype'
+      - name: limit
+        in: query
+        description: default -1 (for the whole log file)
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: reversed
+        in: query
+        description: default true
+        schema:
+          type: boolean
+          nullable: true
+      responses:
+        "200":
+          description: getLogs 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logfile'
+  /api/sws/all:
+    get:
+      operationId: getAllSws
+      responses:
+        "200":
+          description: getAllSws 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sws'
+  /api/sws/create/:
+    post:
+      operationId: create
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: create 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+  /api/sws/delete/{name}:
+    delete:
+      operationId: deleteSws
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: deleteSws 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+  /api/sws/update:
+    put:
+      operationId: updateSws
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: updateSws 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+  /api/system/disk:
+    get:
+      operationId: getDiskUsage
+      responses:
+        "200":
+          description: getDiskUsage 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Disk'
+  /api/system/hostname:
+    get:
+      operationId: getHostname
+      responses:
+        "200":
+          description: getHostname 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hostname'
+  /api/system/installed:
+    get:
+      operationId: getInstalled
+      responses:
+        "200":
+          description: getInstalled 200 response
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/system/version:
+    get:
+      operationId: getVersion
+      responses:
+        "200":
+          description: getVersion 200 response
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/web/backend/create:
+    post:
+      summary: Create a new web backend configuration with the 'uberspace web backend
+        set' command.
+      description: Create a new web backend configuration with the 'uberspace web
+        backend set' command.
+      operationId: create_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebbackendCmd'
+        required: true
+      responses:
+        "200":
+          description: Feedback - the feedback object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+  /api/web/backend/delete/{domain}:
+    delete:
+      summary: Delete the web backend configuration for a specific domain or url with
+        'uberspace web backend del param'.
+      description: Delete the web backend configuration for a specific domain or url
+        with 'uberspace web backend del param'.
+      operationId: delete_1
+      parameters:
+      - name: domain
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Feedback - the feedback object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+  /api/web/backend/read:
+    get:
+      summary: Gather the 'uberspace web backend list' configuration
+      description: Gather the 'uberspace web backend list' configuration
+      operationId: read
+      responses:
+        "200":
+          description: WebbackendConfiguration - the web backend configuration
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WebbackendConfiguration'
+components:
+  schemas:
+    AbstractCollection_Object_:
+      type: object
+      properties:
+        empty:
+          type: boolean
+    AbstractList_Object_:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/AbstractCollection_Object_'
+    ArrayList_String_:
+      allOf:
+      - $ref: '#/components/schemas/AbstractList_Object_'
+      - $ref: '#/components/schemas/AbstractCollection_Object_'
+      - type: object
+        properties:
+          empty:
+            type: boolean
+    Disk:
+      required:
+      - available-quota
+      - quota
+      - space
+      - space-percentage
+      type: object
+      properties:
+        space:
+          type: string
+        space-percentage:
+          type: number
+          format: float
+        quota:
+          type: string
+        available-quota:
+          type: number
+          format: float
+    Domain:
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+    Feedback:
+      required:
+      - error
+      - info
+      type: object
+      properties:
+        info:
+          type: string
+        error:
+          type: string
+    Hostname:
+      required:
+      - hostname
+      type: object
+      properties:
+        hostname:
+          type: string
+    Log:
+      required:
+      - error
+      - info
+      type: object
+      properties:
+        info:
+          $ref: '#/components/schemas/ArrayList_String_'
+        error:
+          $ref: '#/components/schemas/ArrayList_String_'
+    Logfile:
+      required:
+      - log
+      type: object
+      properties:
+        log:
+          $ref: '#/components/schemas/Log'
+    Logtype:
+      type: string
+      enum:
+      - Info
+      - Error
+      - Both
+    NetworkProgram:
+      required:
+      - pid
+      - port
+      - program
+      type: object
+      properties:
+        port:
+          type: integer
+          format: int32
+        pid:
+          type: integer
+          format: int32
+        program:
+          type: string
+    Service:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+          nullable: true
+        info:
+          type: string
+          nullable: true
+    ServiceOption:
+      type: string
+      enum:
+      - START
+      - STOP
+      - RESTART
+    Ssh:
+      required:
+      - password
+      - server
+      - username
+      type: object
+      properties:
+        server:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+    Sws:
+      required:
+      - content
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        content:
+          type: string
+    User:
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    WebbackendCmd:
+      required:
+      - is-apache
+      - is-http
+      - remove-prefix
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+        is-apache:
+          type: boolean
+        is-http:
+          type: boolean
+        remove-prefix:
+          type: boolean
+        port:
+          type: integer
+          format: int32
+          nullable: true
+    WebbackendConfiguration:
+      required:
+      - web
+      type: object
+      properties:
+        web:
+          type: string
+        prefix:
+          type: string
+          nullable: true
+        process:
+          type: string
+          nullable: true
+        service:
+          type: string
+          nullable: true
