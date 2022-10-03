@@ -40,12 +40,45 @@
  * Thanks, and we hope you enjoy using SpaceUp-Server and that it's everything you ever hoped it could be.
  */
 
-package technology.iatlas.spaceup.dto.db
+package technology.iatlas.spaceup.core.httpfilter
 
-import io.micronaut.core.annotation.ReflectiveAccess
+import io.micronaut.http.HttpRequest
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.MutableHttpResponse
+import io.micronaut.http.annotation.Filter
+import io.micronaut.http.filter.HttpServerFilter
+import io.micronaut.http.filter.ServerFilterChain
+import io.micronaut.http.simple.SimpleHttpResponseFactory
+import io.micronaut.security.annotation.Secured
+import io.micronaut.security.rules.SecurityRule
+import kotlinx.coroutines.runBlocking
+import org.reactivestreams.Publisher
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
+import reactor.core.scheduler.Schedulers
+import technology.iatlas.spaceup.services.DbService
+import technology.iatlas.spaceup.services.SpaceUpService
+import technology.iatlas.spaceup.services.SwsService
 
-@ReflectiveAccess
-data class Sws(
-    var name: String,
-    var content: String
-)
+
+@Filter("/api/sws/custom/**")
+@Secured(SecurityRule.IS_AUTHENTICATED)
+class SwsRouteFilter(
+    private val swsService: SwsService,
+    private val dbService: DbService,
+    private val spaceUpService: SpaceUpService
+): HttpServerFilter {
+
+    override fun doFilter(request: HttpRequest<*>, chain: ServerFilterChain?): Publisher<MutableHttpResponse<*>> {
+        return Flux.from(Mono.fromCallable {
+            runBlocking {
+                if(dbService.isAppInstalled() && (request.userPrincipal.isPresent || spaceUpService.isDevMode())) {
+                    swsService.execute(request)
+                } else {
+                    SimpleHttpResponseFactory.INSTANCE.status(
+                        HttpStatus.INTERNAL_SERVER_ERROR, "Server is not installed or user is not logged in.")
+                }
+            }
+        }.subscribeOn(Schedulers.boundedElastic()).flux())
+    }
+}
