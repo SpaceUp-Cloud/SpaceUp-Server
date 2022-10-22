@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2022 spaceup@iatlas.technology.
+ * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
  * You don't have to do anything special to accept the license and you don’t have to notify anyone which that you have made that decision.
@@ -10,7 +11,6 @@
  *
  * You should have received a copy of both licenses along with SpaceUp-Server
  * If not, see <http://www.gnu.org/licenses/>.
- *
  *
  * There is a strong belief within us that the license we have chosen provides not only the best solution for providing you with the essential freedom necessary to use SpaceUp-Server within your projects, but also for maintaining enough copyleft strength for us to feel confident and secure with releasing our hard work to the public. For your convenience we've included our own interpretation of the license we chose, which can be seen below.
  *
@@ -62,8 +62,8 @@ class InstalledInterceptor(
         val db = dbService.getDb()
         val serverRepo = db.getCollection<Server>()
 
-        val server = serverRepo.find().first()!!
-        if(!server.installed) {
+        val server: Server? = serverRepo.find().first()
+        if(server == null || !server.installed) {
             throw NotInstalledException("Application needs to be proper installed!")
         }
 

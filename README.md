@@ -32,7 +32,7 @@ The server application is written in kotlin with micronaut as web framework. The
 
 If any other feature is wished, or you want to *help me*, write me a small email.  
 So I will register you for youtrack to open an issue, or we have a discussion how you can support the project:    
-<spaceup-support@iatlas.technology>
+spaceup-support@iatlas.technology
 
 Little big bonus: There is a multiplatform app (written in Flutter) which already consumes the APIs. 😁  
 You should know it's not tested with ios/osx as I am not an apple user.  

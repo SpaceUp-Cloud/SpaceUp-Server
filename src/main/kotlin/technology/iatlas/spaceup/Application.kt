@@ -71,14 +71,6 @@ import java.text.Normalizer.Form
 import java.text.Normalizer as jNormalizer
 
 
-@OpenAPIDefinition(
-    info = Info(
-        title = "SpaceUp",
-        version = "0.26.0",
-        contact = Contact(name = "Thraax Session",
-            url = "https://spaceup.iatlas.technology", email = "spaceup@iatlas.technology")
-    )
-)
 @TypeHint(
     value = [
         LoggerFactory::class,
@@ -119,6 +111,14 @@ import java.text.Normalizer as jNormalizer
         "com.jcraft.jsch.UserAuthPublicKey",
         "com.jcraft.jsch.UserAuthKeyboardInteractive",
     ]
+)
+@OpenAPIDefinition(
+    info = Info(
+        title = "SpaceUp",
+        version = "0.26.0",
+        contact = Contact(name = "Thraax Session",
+            url = "https://spaceup.iatlas.technology", email = "spaceup@iatlas.technology")
+    )
 )
 object Api
 

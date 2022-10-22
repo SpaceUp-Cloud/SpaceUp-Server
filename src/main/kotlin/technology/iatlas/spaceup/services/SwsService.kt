@@ -43,11 +43,13 @@
 package technology.iatlas.spaceup.services
 
 import com.mongodb.client.MongoCollection
-import io.micronaut.context.annotation.Context
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MutableHttpResponse
 import io.micronaut.http.simple.SimpleHttpResponseFactory
+import io.micronaut.tracing.annotation.NewSpan
+import io.micronaut.tracing.annotation.SpanTag
+import jakarta.inject.Singleton
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.litote.kmongo.eq
@@ -56,7 +58,7 @@ import technology.iatlas.spaceup.config.SpaceUpSftpConfig
 import technology.iatlas.spaceup.config.SpaceupPathConfig
 import technology.iatlas.spaceup.core.cmd.SshResponse
 import technology.iatlas.spaceup.core.cmd.toFeedback
-import technology.iatlas.spaceup.core.startup.createNormalizedPath
+import technology.iatlas.spaceup.core.startup.toFile
 import technology.iatlas.spaceup.dto.Command
 import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.dto.SftpFile
@@ -66,8 +68,8 @@ import technology.iatlas.sws.SWS
 import technology.iatlas.sws.objects.ParserException
 import java.io.File
 
-@Context
-class SwsService(
+@Singleton
+open class SwsService(
     private val dbService: DbService,
     private val sshService: SshService,
     private val sftpConfig: SpaceUpSftpConfig,
@@ -81,7 +83,7 @@ class SwsService(
     private fun validateSWS(sws: Sws, feedback: Feedback) {
         log.info("Validate sws")
         // Create a temporary file
-        "$tempDir/${sws.name}.sws".createNormalizedPath().toFile().apply {
+        "$tempDir/${sws.name}.sws".toFile().apply {
             this.writeText(sws.content)
             try {
                 SWS.createAndParse(this)
@@ -198,11 +200,12 @@ class SwsService(
         }
     }
 
-    suspend fun execute(request: HttpRequest<*>): MutableHttpResponse<Feedback> {
-        val path = request.path.split("/api/sws/custom")[1]
+    @NewSpan("sws-execute")
+    open suspend fun execute(@SpanTag("http-request") request: HttpRequest<*>): MutableHttpResponse<Feedback> {
+        val path = request.path.split("/api/sws/execution")[1]
         val httpMethod = request.method
         val parameters: Map<String, List<String>> = request.parameters.asMap()
-        val bodyOptional = request.body
+        val httpBody = request.body
 
         log.info("Execute SWS [$httpMethod] [$path] ${parameters.map { 
             if(it.key.lowercase() == "pass" || it.key.lowercase() == "password") 
@@ -212,25 +215,25 @@ class SwsService(
 
         // Handle HTTP request parameters
         val swsHttpParameters = mutableMapOf<String, Any?>()
-        parameters.forEach { (t, u) ->
+        parameters.forEach { (k, v) ->
             try {
                 // Values come always as String. We have to cast numbers to integers
-                swsHttpParameters[t] = Integer.valueOf(u[0])
+                swsHttpParameters[k] = Integer.valueOf(v[0])
             } catch (ex: NumberFormatException) {
-                swsHttpParameters[t] = u[0]
+                swsHttpParameters[k] = v[0]
             }
         }
 
         // TODO: SU-19 Handle request body, important to transport secrets/credentials
         val body = mutableMapOf<String, Any?>()
-        if(bodyOptional.isPresent) {
+        if(httpBody.isPresent) {
             // The body is a map of anything
-            val tempBody = bodyOptional.get() as Map<*, *>
+            val tempBody = httpBody.get() as Map<*, *>
             tempBody.forEach { (k, v) ->
-                if(k is String) {
+                if(k is String) { // the key needs always be a string for mapping
                     body[k] = v
                 } else {
-                    log.warn("Key $k is not a string. Will be ignored!")
+                    log.warn("Key $k is not a string. '$k' and '$v' will be ignored!")
                 }
             }
         }
@@ -254,7 +257,7 @@ class SwsService(
 
         // Generate SWS
         var sws: SWS
-        val file = "$tempDir/${swsDb.name}.sws".createNormalizedPath().toFile()
+        val file = "$tempDir/${swsDb.name}.sws".toFile()
         file.bufferedWriter().use {
             it.write(swsDb.content)
         }.apply {
@@ -272,7 +275,7 @@ class SwsService(
         // Actual execution
         var response: SshResponse
         val scriptname = "${sws.name.replace(" ", "_")}.sh"
-        "$tempDir/$scriptname".createNormalizedPath().toFile().apply {
+        "$tempDir/$scriptname".toFile().apply {
             this.writeText(sws.serverScript)
 
             val script = "${sftpConfig.remotedir}/$scriptname"

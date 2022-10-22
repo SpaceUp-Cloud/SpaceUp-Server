@@ -42,6 +42,7 @@
 
 package technology.iatlas.spaceup.core.httpfilter
 
+import brave.Tracing
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MutableHttpResponse
@@ -51,6 +52,7 @@ import io.micronaut.http.filter.ServerFilterChain
 import io.micronaut.http.simple.SimpleHttpResponseFactory
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
+import io.micronaut.tracing.annotation.NewSpan
 import kotlinx.coroutines.runBlocking
 import org.reactivestreams.Publisher
 import reactor.core.publisher.Flux
@@ -61,21 +63,25 @@ import technology.iatlas.spaceup.services.SpaceUpService
 import technology.iatlas.spaceup.services.SwsService
 
 
-@Filter("/api/sws/custom/**")
+@Filter("/api/sws/execution/**")
 @Secured(SecurityRule.IS_AUTHENTICATED)
-class SwsRouteFilter(
+open class SwsRouteFilter(
     private val swsService: SwsService,
     private val dbService: DbService,
-    private val spaceUpService: SpaceUpService
+    private val spaceUpService: SpaceUpService,
+    private val tracing: Tracing
 ): HttpServerFilter {
 
-    override fun doFilter(request: HttpRequest<*>, chain: ServerFilterChain?): Publisher<MutableHttpResponse<*>> {
+    @NewSpan("sws-http")
+    override fun doFilter(
+        request: HttpRequest<*>, chain: ServerFilterChain?): Publisher<MutableHttpResponse<*>> {
         return Flux.from(Mono.fromCallable {
             runBlocking {
-                if(dbService.isAppInstalled() && (request.userPrincipal.isPresent || spaceUpService.isDevMode())) {
+                if(dbService.isAppInstalled() &&
+                    ((request.userPrincipal.isPresent && !spaceUpService.isDevMode()) || spaceUpService.isDevMode())) {
                     swsService.execute(request)
                 } else {
-                    SimpleHttpResponseFactory.INSTANCE.status(
+                    SimpleHttpResponseFactory.INSTANCE.status<String>(
                         HttpStatus.INTERNAL_SERVER_ERROR, "Server is not installed or user is not logged in.")
                 }
             }
