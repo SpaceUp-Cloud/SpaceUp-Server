@@ -47,6 +47,7 @@ import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
+import io.micronaut.tracing.annotation.ContinueSpan
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.dto.Feedback
@@ -73,6 +74,7 @@ class SwsController(
     }
 
     @Get(uri = "/all", produces = [MediaType.APPLICATION_JSON])
+    @ContinueSpan
     suspend fun getAllSws(): HttpResponse<List<Sws>> {
         log.info("Retrieve all sws configurations")
         val allSws = swsService.getAll()

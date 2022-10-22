@@ -60,6 +60,7 @@ import technology.iatlas.spaceup.services.InstallerService
 import technology.iatlas.spaceup.services.SpaceUpService
 import technology.iatlas.spaceup.services.SshService
 import technology.iatlas.spaceup.services.SwsService
+import java.io.File
 import java.nio.file.Path
 import kotlin.io.path.Path
 import kotlin.io.path.createDirectories
@@ -92,17 +93,19 @@ class StartupEventListener(
             }
         }
 
-        // Step 1: create directories if not exist
-        createDirectories()
-        runBlocking {
-            createExternalDirectories()
+        // Step 1: check if spaceup was installed
+        val isInstalled = checkInstallation()
+
+        if(isInstalled) {
+            // Step 2: create directories if not exist
+            createDirectories()
+            runBlocking {
+                createExternalDirectories()
+            }
+
+            // Step 3: fill sws cache
+            fillSwsCache()
         }
-
-        // Step 2: check if spaceup was installed
-        checkInstallation()
-
-        // Step 3: fill sws cache
-        fillSwsCache()
 
         log.info("Finished SpaceUp startup")
     }
@@ -150,12 +153,13 @@ class StartupEventListener(
         }
     }
 
-    private fun checkInstallation() {
+    private fun checkInstallation(): Boolean {
         // Let's check if we are already installed properly
         val db = dbService.getDb()
         val serverRepo = db.getCollection<Server>()
         val server = serverRepo.find().firstOrNull()
 
+        var isInstalled = false
         if(server == null) {
             log.info("Seems to be first run. Set not installed!")
             val apiKey = installerService.generateAPIKey()
@@ -171,7 +175,10 @@ class StartupEventListener(
                     log.info("Finish installation with API key: ${server.apiKey.yellow.bold}")
                 }
             }
+            isInstalled = installed
         }
+
+        return isInstalled
     }
 
     private fun fillSwsCache() {
@@ -198,4 +205,8 @@ class StartupEventListener(
 
 fun String.createNormalizedPath(): Path {
     return Path(this).normalize()
+}
+
+fun String.toFile(): File {
+    return this.createNormalizedPath().toFile()
 }

@@ -1,0 +1,22 @@
+{
+  "configurations": [
+    {
+      "type": "gradle",
+      "name": "Start Dev/Secured",
+      "environment": {
+        "MICRONAUT_ENVIRONMENTS": "dev"
+      },
+      "args": [
+        "-Pmicronaut.server.cors.enabled='false'",
+        "-Pmicronaut.security.enabled=true",
+        "-Pmicronaut.server.host=0.0.0.0",
+        "-Pspaceup.logging.level=DEBUG",
+        "-Pspaceup.scheduler.domains.update=10m",
+        "-Dmongodb.uri=mongodb://thraax_mongoroot:peijao3poongoof2sheewepahChoo3ic@mongo.iatlas.technology:41421/admin"
+      ],
+      "tasks": [
+        "run"
+      ]
+    }
+  ]
+}

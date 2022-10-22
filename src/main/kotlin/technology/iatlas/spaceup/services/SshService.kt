@@ -50,9 +50,9 @@ import com.jcraft.jsch.JSchException
 import com.jcraft.jsch.Session
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.annotation.Value
-import kotlinx.coroutines.Dispatchers
+import io.micronaut.tracing.annotation.NewSpan
+import io.micronaut.tracing.annotation.SpanTag
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 import org.litote.kmongo.findOne
 import org.litote.kmongo.getCollection
 import org.slf4j.LoggerFactory
@@ -83,7 +83,7 @@ class SshService(
     private lateinit var useDbCredentials: String
 
     // Configure SSH
-    fun initSSH() {
+    suspend fun initSSH() {
         val jsch = JSch()
 
         var username = ""
@@ -146,13 +146,14 @@ class SshService(
         }
     }
 
-    suspend fun execute(command: CommandInf): SshResponse {
+    @NewSpan
+    suspend fun execute(@SpanTag("ssh-command")command: CommandInf): SshResponse {
         log.trace("Execute $command")
         if(!this::session.isInitialized || !session.isConnected) {
             initSSH()
         }
 
-        val channel: ChannelExec = try {
+        val executionChannel: ChannelExec = try {
             session.openChannel("exec") as ChannelExec
         } catch (shhEx: JSchException) {
             log.error("SSH Session is down. Will try to reconnect.")
@@ -161,31 +162,33 @@ class SshService(
         }
 
         try {
-            channel.setCommand(command.parameters.joinToString(" "))
+            executionChannel.setCommand(command.parameters.joinToString(" "))
             val responseStream = ByteArrayOutputStream()
             val errorResponseStream = ByteArrayOutputStream()
-            channel.outputStream = responseStream
-            channel.setErrStream(errorResponseStream)
+            executionChannel.outputStream = responseStream
+            executionChannel.setErrStream(errorResponseStream)
 
             try {
-                channel.connect()
+                executionChannel.connect()
             } catch (shhEx: JSchException) {
                 log.error("SSH Session is down. Will try to reconnect.")
                 initSSH()
             }
 
             // When then channel close itself, we retrieved the data
-            while (channel.isConnected) {
-                delay(50)
+            while (executionChannel.isConnected) {
+                delay(20)
             }
 
             val stdout = String(responseStream.toByteArray())
             var stderr = String(errorResponseStream.toByteArray())
-            if(stderr.isNotEmpty() && channel.exitStatus != 0) {
+            if (stderr.isNotEmpty() && executionChannel.exitStatus != 0) {
                 stderr = """
-                    Command: ${command.parameters.joinToString { " " }}
-                    terminated with exit code: ${channel.exitStatus}
-                """.trimIndent()
+                        Script: ${command.shellScript}
+                        Command: ${command.parameters.joinToString(" ")}
+                        Script error: $stderr
+                        terminated with exit code: ${executionChannel.exitStatus}
+                    """.trimIndent()
                 colored {
                     log.error(stderr.red)
                 }
@@ -196,7 +199,7 @@ class SshService(
             return sshResponse
         } finally {
             //session.disconnect()
-            channel.disconnect()
+            executionChannel.disconnect()
         }
     }
 
@@ -204,7 +207,8 @@ class SshService(
      * Upload a shell script via SFTP and execute it optionally
      *
      */
-    suspend fun upload(cmd: CommandInf): SshResponse {
+    @NewSpan
+    suspend fun upload(@SpanTag("ssh-command") cmd: CommandInf): SshResponse {
         log.debug("Upload $cmd")
         if(!session.isConnected) {
             initSSH()
@@ -219,67 +223,31 @@ class SshService(
             sftpConfig.remotedir?.replace("~", "/home/${ssh.username}") + "/${file.name}"
 
         val sftpChannel: Channel = session.openChannel("sftp") as Channel
-
-        val executionChannel: ChannelExec = session.openChannel("exec") as ChannelExec
-        val executeCmd = cmd.parameters.joinToString(" ")
-        executionChannel.setCommand(executeCmd)
-
-        val responseExecution = ByteArrayOutputStream()
-        val errorExecution = ByteArrayOutputStream()
-        executionChannel.outputStream = responseExecution
-        executionChannel.setErrStream(errorExecution)
-
         var sshResponse = SshResponse("", "")
         try {
-            sftpChannel.connect()
+            if(!sftpChannel.isConnected) {
+                sftpChannel.connect()
+            }
+
             val sftp = sftpChannel as ChannelSftp
             log.debug("Upload script ${file.name} to $remotefile")
-            withContext(Dispatchers.IO) {
-                val os = System.getProperty("os.name")
 
-                if(os.lowercase().contains("windows")) {
-                    val localScript = file.scriptPath?.file ?: ""
-                    sftp.put(File(localScript).canonicalPath, remotefile, ChannelSftp.OVERWRITE)
-                } else {
-                    sftp.put(file.scriptPath?.openStream(), remotefile, ChannelSftp.OVERWRITE)
-                }
+            val os = System.getProperty("os.name")
+            if(os.lowercase().contains("windows")) {
+                val localScript = file.scriptPath?.file ?: ""
+                sftp.put(File(localScript).canonicalPath, remotefile, ChannelSftp.OVERWRITE)
+            } else {
+                sftp.put(file.scriptPath?.file, remotefile, ChannelSftp.OVERWRITE)
             }
 
             if(file.execute) {
-                log.trace("""
-                    "Execute script: ${cmd.parameters}
-                    $executeCmd
-                """.trimIndent())
-                executionChannel.connect()
-
-                // When then channel close itself, we retrieved the data
-                while (executionChannel.isConnected) {
-                    delay(50)
-                }
-
-                val stdout = String(responseExecution.toByteArray())
-                var stderr = String(errorExecution.toByteArray())
-                if(stderr.isNotEmpty() && executionChannel.exitStatus != 0) {
-                    stderr = """
-                    Script: ${cmd.shellScript}
-                    Command: ${cmd.parameters.joinToString(" ")}
-                    Script error: $stderr
-                    terminated with exit code: ${executionChannel.exitStatus}
-                """.trimIndent()
-                    colored {
-                        log.error(stderr.red)
-                    }
-                }
-                sshResponse = SshResponse(stdout, stderr)
-                // SshResponse
-                log.trace(sshResponse.toString())
+                sshResponse = execute(cmd)
             }
 
             log.trace(sshResponse.toString())
             return sshResponse
         } finally {
             sftpChannel.disconnect()
-            executionChannel.disconnect()
         }
     }
 }
