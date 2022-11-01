@@ -202,7 +202,7 @@ open class SwsService(
 
     @NewSpan("sws-execute")
     open suspend fun execute(@SpanTag("http-request") request: HttpRequest<*>): MutableHttpResponse<Feedback> {
-        val path = request.path.split("/api/sws/execution")[1]
+        val path = request.path.split("/api/sws/exec")[1]
         val httpMethod = request.method
         val parameters: Map<String, List<String>> = request.parameters.asMap()
         val httpBody = request.body
@@ -261,13 +261,13 @@ open class SwsService(
         file.bufferedWriter().use {
             it.write(swsDb.content)
         }.apply {
-            sws = SWS.createAndParse(file, swsHttpParameters)
+            sws = SWS.createAndParse(file, swsHttpParameters, body)
         }
 
         // Check if the request url matches with end
         if(!path.split(sws.name).first().replace("%20", " ").contains(sws.name)) {
             feedback.error = "Your sws url needs to begin with ${sws.name}.\n"
-            feedback.error += "Example: /api/sws/custom/${sws.name}/<customendpoint>"
+            feedback.error += "Example: /api/sws/exec/${sws.name}/<customendpoint>"
             log.error(feedback.error)
             return SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.BAD_REQUEST, feedback)
         }

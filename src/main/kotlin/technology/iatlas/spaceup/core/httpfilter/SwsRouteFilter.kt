@@ -42,7 +42,6 @@
 
 package technology.iatlas.spaceup.core.httpfilter
 
-import brave.Tracing
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MutableHttpResponse
@@ -63,14 +62,13 @@ import technology.iatlas.spaceup.services.SpaceUpService
 import technology.iatlas.spaceup.services.SwsService
 
 
-@Filter("/api/sws/execution/**")
+@Filter("/api/sws/exec/**")
 @Secured(SecurityRule.IS_AUTHENTICATED)
 open class SwsRouteFilter(
     private val swsService: SwsService,
     private val dbService: DbService,
-    private val spaceUpService: SpaceUpService,
-    private val tracing: Tracing
-): HttpServerFilter {
+    private val spaceUpService: SpaceUpService
+) : HttpServerFilter {
 
     @NewSpan("sws-http")
     override fun doFilter(
@@ -82,7 +80,7 @@ open class SwsRouteFilter(
                     swsService.execute(request)
                 } else {
                     SimpleHttpResponseFactory.INSTANCE.status<String>(
-                        HttpStatus.INTERNAL_SERVER_ERROR, "Server is not installed or user is not logged in.")
+                        HttpStatus.BAD_REQUEST, "Server is not installed or user is not logged in.")
                 }
             }
         }.subscribeOn(Schedulers.boundedElastic()).flux())
