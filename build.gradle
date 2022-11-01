@@ -56,13 +56,13 @@ dependencies {
     implementation("io.micronaut.security:micronaut-security:3.2.0")
     implementation('io.micronaut.security:micronaut-security-jwt:3.8.0')
     implementation('io.micronaut.kotlin:micronaut-kotlin-extension-functions:3.2.2')
-    implementation('com.google.code.gson:gson:2.9.0')
+    implementation('com.google.code.gson:gson:2.10')
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4')
     implementation('com.github.mwiede:jsch:0.2.4')
     // NoSQL
     implementation('io.micronaut.mongodb:micronaut-mongo-reactive:4.6.0')
-    implementation('org.litote.kmongo:kmongo:4.7.1')
-    implementation('org.litote.kmongo:kmongo-async:4.7.1')
+    implementation('org.litote.kmongo:kmongo:4.7.2')
+    implementation('org.litote.kmongo:kmongo-async:4.7.2')
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")

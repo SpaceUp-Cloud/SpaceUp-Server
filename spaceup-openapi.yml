@@ -464,6 +464,8 @@ components:
           type: string
         error:
           type: string
+      description: "Represent any kind of feedback, e.g. successfully reloaded a services\
+        \ or a domain"
     Hostname:
       required:
       - hostname
