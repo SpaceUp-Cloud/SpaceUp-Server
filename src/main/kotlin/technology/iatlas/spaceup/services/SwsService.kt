@@ -261,13 +261,21 @@ open class SwsService(
         file.bufferedWriter().use {
             it.write(swsDb.content)
         }.apply {
+<<<<<<< HEAD
             sws = SWS.createAndParse(file, swsHttpParameters, body)
+=======
+            sws = SWS.createAndParse(file, swsHttpParameters)
+>>>>>>> origin/master
         }
 
         // Check if the request url matches with end
         if(!path.split(sws.name).first().replace("%20", " ").contains(sws.name)) {
             feedback.error = "Your sws url needs to begin with ${sws.name}.\n"
+<<<<<<< HEAD
             feedback.error += "Example: /api/sws/exec/${sws.name}/<customendpoint>"
+=======
+            feedback.error += "Example: /api/sws/custom/${sws.name}/<customendpoint>"
+>>>>>>> origin/master
             log.error(feedback.error)
             return SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.BAD_REQUEST, feedback)
         }

@@ -12,7 +12,7 @@
         "-Pmicronaut.server.host=0.0.0.0",
         "-Pspaceup.logging.level=DEBUG",
         "-Pspaceup.scheduler.domains.update=10m",
-        "-Dmongodb.uri=mongodb://thraax_mongoroot:peijao3poongoof2sheewepahChoo3ic@mongo.iatlas.technology:41421/admin"
+        "-Dmongodb.uri=mongodb://***REMOVED***:***REMOVED***@***REMOVED***:***REMOVED***/admin"
       ],
       "tasks": [
         "run"
