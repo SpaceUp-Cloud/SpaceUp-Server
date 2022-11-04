@@ -65,14 +65,20 @@ class AuthenticationProviderUserPassword(
     private val dbService: DbService,
     private val securityService: SecurityService
 ): AuthenticationProvider  {
+    private val log = LoggerFactory.getLogger(AuthenticationProviderUserPassword::class.java)
+
+    private var ip: String = ""
+
     override fun authenticate(
         httpRequest: HttpRequest<*>?,
         authenticationRequest: AuthenticationRequest<*, *>?
     ): Publisher<AuthenticationResponse>? {
-        val log = LoggerFactory.getLogger(AuthenticationProviderUserPassword::class.java)
-
         val db = dbService.getDb()
         val userRepo = db.getCollection<User>()
+
+        validateIp(httpRequest)
+        tryAccess()
+        // TODO use an IP database or API to block foreign countries if wished.
 
         return Flowable.create({
             emitter: FlowableEmitter<AuthenticationResponse> ->
@@ -99,20 +105,27 @@ class AuthenticationProviderUserPassword(
                     }
                     emitter.onError(AuthenticationResponse.exception())
                 }
-                // Get remote address who tried to access SpaceUp. Might be malicious. >:(
-                if (httpRequest != null) {
-                    // TODO feature idea for future, block access after various tries
-                    val originalIp = httpRequest.headers.get("X-Forwarded-For")
-                    if(originalIp != null) {
-                        log.info("Remote address: $originalIp")
-                    } else {
-                        log.info("Remote address: ${httpRequest.remoteAddress.address.hostAddress}")
-                    }
-                }
-
+                logAccess()
             } else {
                 emitter.onError(AuthenticationResponse.exception())
             }
         }, BackpressureStrategy.ERROR)
+    }
+
+    private fun logAccess() {
+        // Get remote address who tried to access SpaceUp. Might be malicious. >:(
+        log.info("Authenticated from $ip")
+    }
+
+    private fun tryAccess() {
+        log.warn("Possible authentication from $ip")
+    }
+
+    private fun validateIp(httpRequest: HttpRequest<*>?) {
+        ip = if(httpRequest != null) {
+            httpRequest.headers.get("X-Forwarded-For") ?: httpRequest.remoteAddress.address.hostAddress
+        } else {
+            "<Unknown IP-Address>"
+        }
     }
 }
