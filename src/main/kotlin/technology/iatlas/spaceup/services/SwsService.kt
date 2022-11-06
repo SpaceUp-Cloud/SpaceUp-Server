@@ -50,7 +50,6 @@ import io.micronaut.http.simple.SimpleHttpResponseFactory
 import io.micronaut.tracing.annotation.NewSpan
 import io.micronaut.tracing.annotation.SpanTag
 import jakarta.inject.Singleton
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.litote.kmongo.eq
 import org.slf4j.LoggerFactory
@@ -66,7 +65,6 @@ import technology.iatlas.spaceup.dto.db.Sws
 import technology.iatlas.spaceup.isOk
 import technology.iatlas.sws.SWS
 import technology.iatlas.sws.objects.ParserException
-import java.io.File
 
 @Singleton
 open class SwsService(
@@ -187,12 +185,10 @@ open class SwsService(
         val swsRepo = dbService.getRepo<Sws>()
         swsRepo.find().forEach { sws ->
             try {
-                runBlocking {
-                    launch {
-                        log.debug("Add ${sws.name} to cache")
-                        // If it throws an exception, the content is corrupt
-                        swsCache.add(sws.content.toSWS())
-                    }
+                run {
+                    log.debug("Add '${sws.name}' to cache")
+                    // If it throws an exception, the content is corrupt
+                    swsCache.add(sws.content.toSWS())
                 }
             }catch (ex: ParserException) {
                 log.error(ex.message)
@@ -225,6 +221,7 @@ open class SwsService(
         }
 
         // TODO: SU-19 Handle request body, important to transport secrets/credentials
+        // Currently not possible, see https://github.com/micronaut-projects/micronaut-core/issues/7986
         val body = mutableMapOf<String, Any?>()
         if(httpBody.isPresent) {
             // The body is a map of anything
@@ -310,9 +307,9 @@ open class SwsService(
 fun String.toSWS(): SWS {
     var sws: SWS
     val tmpDir = System.getProperty("spaceup.tempdir")
-    File("$tmpDir/sws-${(1..100).random()}.sws").apply {
+    "$tmpDir/sws-${(1..100).random()}.sws".toFile().apply {
         this.writeText(this@toSWS)
-        sws = SWS.createAndParse(this, mutableMapOf())
+        sws = SWS.createAndParse(this)
     }
     return sws
 }

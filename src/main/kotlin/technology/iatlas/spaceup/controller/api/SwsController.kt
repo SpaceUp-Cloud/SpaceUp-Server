@@ -81,8 +81,10 @@ class SwsController(
         return HttpResponse.ok(allSws)
     }
 
-    @Put(uri = "/update", produces = [MediaType.APPLICATION_JSON], consumes = [MediaType.TEXT_PLAIN])
+    @Put(uri = "/update", produces = [MediaType.APPLICATION_JSON])
     suspend fun updateSws(@Body swsContent: String): HttpResponse<Feedback> {
+        log.info("Update SWS")
+        log.debug(swsContent)
         val sws = swsContent.toSWS()
         val swsDO = Sws(sws.name, swsContent)
         log.info("Update with $sws")

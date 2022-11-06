@@ -65,7 +65,6 @@ class DbService(
     init {
         val client = KMongo.createClient(mongoDbConnection)
         // sanitize credentials
-        // TODO create separate class extension to sanitize credentials on output
         val regex = Regex("://(.*:.*)@")
         log.info("Created DB Connection to ${mongoDbConnection.replace(regex, "://[hidden]:[hidden]@")}")
         db = if(spaceUpService.isDevMode()) {
