@@ -237,7 +237,7 @@ class SshService(
                 val localScript = file.scriptPath?.file ?: ""
                 sftp.put(File(localScript).canonicalPath, remotefile, ChannelSftp.OVERWRITE)
             } else {
-                sftp.put(file.scriptPath?.file, remotefile, ChannelSftp.OVERWRITE)
+                sftp.put(file.scriptPath?.openStream(), remotefile, ChannelSftp.OVERWRITE)
             }
 
             if(file.execute) {
