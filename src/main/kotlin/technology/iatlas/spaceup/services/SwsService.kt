@@ -306,10 +306,9 @@ open class SwsService(
 
 fun String.toSWS(): SWS {
     var sws: SWS
-    val tmpDir = System.getProperty("spaceup.tempdir")
-    "$tmpDir/sws-${(1..100).random()}.sws".toFile().apply {
+    kotlin.io.path.createTempFile("sws-${(1..100).random()}.sws").toFile().apply {
         this.writeText(this@toSWS)
         sws = SWS.createAndParse(this)
-    }
+    }.delete()
     return sws
 }
