@@ -81,7 +81,7 @@ open class SwsService(
     private fun validateSWS(sws: Sws, feedback: Feedback) {
         log.info("Validate sws")
         // Create a temporary file
-        "$tempDir/${sws.name}.sws".toFile().apply {
+        kotlin.io.path.createTempFile("$tempDir/${sws.name}.sws").normalize().toFile().apply {
             this.writeText(sws.content)
             try {
                 SWS.createAndParse(this)
@@ -89,7 +89,7 @@ open class SwsService(
                 log.error(ex.message)
                 feedback.error = "SWS content is corrupt! ${ex.message}"
             }
-        }
+        }.delete()
 
     }
 
