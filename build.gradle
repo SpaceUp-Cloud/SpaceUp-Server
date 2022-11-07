@@ -74,7 +74,7 @@ dependencies {
     implementation('org.jasypt:jasypt:1.9.3')
 
     // My stuff
-    implementation("technology.iatlas.sws:sws:1.4.0-SNAPSHOT")
+    implementation("technology.iatlas.sws:sws:1.4.1-SNAPSHOT")
 
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly('com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1')
