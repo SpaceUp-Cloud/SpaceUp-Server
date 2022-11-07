@@ -81,7 +81,7 @@ open class SwsService(
     private fun validateSWS(sws: Sws, feedback: Feedback) {
         log.info("Validate sws")
         // Create a temporary file
-        kotlin.io.path.createTempFile("$tempDir/${sws.name}.sws").normalize().toFile().apply {
+        kotlin.io.path.createTempFile("${sws.name}.sws").normalize().toFile().apply {
             this.writeText(sws.content)
             try {
                 SWS.createAndParse(this)
