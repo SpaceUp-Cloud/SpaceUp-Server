@@ -50,7 +50,7 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import org.slf4j.LoggerFactory
-import technology.iatlas.spaceup.config.SpaceupPathConfig
+import technology.iatlas.spaceup.config.SpaceupRemotePathConfig
 import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.dto.*
 import technology.iatlas.spaceup.services.ServiceService
@@ -60,7 +60,7 @@ import java.util.*
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/service")
 class ServiceController(private val serviceService: ServiceService,
-                        private val config: SpaceupPathConfig) {
+                        private val config: SpaceupRemotePathConfig) {
     private val log = LoggerFactory.getLogger(ServiceController::class.java)
 
     /**

@@ -87,7 +87,7 @@ class SystemService(
         return hostname
     }
 
-    fun getIsInstalled(): Boolean {
+    suspend fun getIsInstalled(): Boolean {
         return dbService.isAppInstalled()
     }
 }

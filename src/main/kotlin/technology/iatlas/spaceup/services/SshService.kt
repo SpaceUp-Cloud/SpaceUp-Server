@@ -53,11 +53,11 @@ import io.micronaut.context.annotation.Value
 import io.micronaut.tracing.annotation.NewSpan
 import io.micronaut.tracing.annotation.SpanTag
 import kotlinx.coroutines.delay
-import org.litote.kmongo.findOne
-import org.litote.kmongo.getCollection
+import kotlinx.coroutines.reactive.awaitFirst
+import org.litote.kmongo.reactivestreams.getCollection
 import org.slf4j.LoggerFactory
-import technology.iatlas.spaceup.config.SpaceUpSftpConfig
 import technology.iatlas.spaceup.config.SpaceUpSshConfig
+import technology.iatlas.spaceup.config.SpaceupRemotePathConfig
 import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.cmd.CommandInf
 import technology.iatlas.spaceup.core.cmd.SshResponse
@@ -70,7 +70,7 @@ import java.io.File
 @Context
 class SshService(
     private val sshConfig: SpaceUpSshConfig,
-    private val sftpConfig: SpaceUpSftpConfig,
+    private val spaceupRemotePathConfig: SpaceupRemotePathConfig,
     private val dbService: DbService,
     private val spaceUpService: SpaceUpService,
     private val securityService: SecurityService
@@ -102,7 +102,7 @@ class SshService(
             val db = dbService.getDb()
             val sshRepo = db.getCollection<Ssh>()
             log.debug("Assuming there is only one configuration")
-            val ssh = sshRepo.findOne()!!
+            val ssh = sshRepo.find().awaitFirst()
 
             securityService.decrypt(ssh) {
                 username = ssh.username
@@ -216,11 +216,11 @@ class SshService(
 
         val db = dbService.getDb()
         val sshRepo = db.getCollection<Ssh>()
-        val ssh = sshRepo.find().first()!!
+        val ssh = sshRepo.find().awaitFirst()
 
         val file = cmd.shellScript
         val remotefile =
-            sftpConfig.remotedir?.replace("~", "/home/${ssh.username}") + "/${file.name}"
+            spaceupRemotePathConfig.temp.replace("~", "/home/${ssh.username}") + "/${file.name}"
 
         val sftpChannel: Channel = session.openChannel("sftp") as Channel
         var sshResponse = SshResponse("", "")

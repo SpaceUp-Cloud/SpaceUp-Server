@@ -23,16 +23,11 @@ class SchedulerService(
     private val log = LoggerFactory.getLogger(SchedulerService::class.java)
 
     @Scheduled(fixedRate = "\${spaceup.scheduler.domains.update}", initialDelay = "\${spaceup.scheduler.delayed}")
-    internal fun updateDomainList() {
+    fun updateDomainList() = runBlocking {
         if(dbService.isAppInstalled()) {
             log.debug("Update domain list")
-            runBlocking {
-                domainService.updateDomainList()
-                domainService.list()
-            }
+            domainService.updateDomainList()
         }
-
-
     }
 
 }

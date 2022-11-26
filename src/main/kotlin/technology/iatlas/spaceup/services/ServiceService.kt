@@ -13,19 +13,25 @@ package technology.iatlas.spaceup.services
 import io.micronaut.context.annotation.Context
 import io.micronaut.core.io.ResourceLoader
 import org.slf4j.LoggerFactory
-import technology.iatlas.spaceup.config.SpaceUpSftpConfig
-import technology.iatlas.spaceup.config.SpaceupPathConfig
+import technology.iatlas.spaceup.config.SpaceupRemotePathConfig
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.EchoParser
 import technology.iatlas.spaceup.core.parser.LogsParser
 import technology.iatlas.spaceup.core.parser.ServiceParser
-import technology.iatlas.spaceup.dto.*
+import technology.iatlas.spaceup.dto.Command
+import technology.iatlas.spaceup.dto.Feedback
+import technology.iatlas.spaceup.dto.Log
+import technology.iatlas.spaceup.dto.Logfile
+import technology.iatlas.spaceup.dto.Logtype
+import technology.iatlas.spaceup.dto.Service
+import technology.iatlas.spaceup.dto.ServiceOption
+import technology.iatlas.spaceup.dto.SftpFile
 
 @Context
 class ServiceService(
     sshService: SshService,
-    private val config: SpaceupPathConfig,
-    private val sftpConfig: SpaceUpSftpConfig,
+    private val config: SpaceupRemotePathConfig,
+    private val spaceupRemotePathConfig: SpaceupRemotePathConfig,
     private val wsBroadcaster: WsBroadcaster,
     private val resourceLoader: ResourceLoader
     ) : WsServiceInf {
@@ -113,7 +119,7 @@ class ServiceService(
 
     suspend fun getLogs(servicename: String, type: Logtype, limits: Int, isReversed: Boolean): Logfile {
         val logsScript = resourceLoader.getResource("commands/getLogs.sh")
-        val remotefile = sftpConfig.remotedir + "/getLogs.sh"
+        val remotefile = spaceupRemotePathConfig.temp + "/getLogs.sh"
 
         val reversed = if (isReversed)  "--reversed" else ""
         val cmd: MutableList<String> = mutableListOf(

@@ -40,38 +40,13 @@
  * Thanks, and we hope you enjoy using SpaceUp-Server and that it's everything you ever hoped it could be.
  */
 
-package technology.iatlas.spaceup.core.interceptor
+package technology.iatlas.spaceup.config
 
-import io.micronaut.aop.InterceptorBean
-import io.micronaut.aop.MethodInterceptor
-import io.micronaut.aop.MethodInvocationContext
-import jakarta.inject.Singleton
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.reactive.asFlow
-import kotlinx.coroutines.runBlocking
-import org.litote.kmongo.reactivestreams.getCollection
-import technology.iatlas.spaceup.core.annotations.Installed
-import technology.iatlas.spaceup.core.exceptions.NotInstalledException
-import technology.iatlas.spaceup.dto.db.Server
-import technology.iatlas.spaceup.services.DbService
+import io.micronaut.context.annotation.ConfigurationProperties
 
-@Singleton
-@InterceptorBean(Installed::class)
-class InstalledInterceptor(
-    private val dbService: DbService
-) : MethodInterceptor<Any, Any> {
-
-    override fun intercept(context: MethodInvocationContext<Any, Any>?): Any? {
-        val db = dbService.getDb()
-        val serverRepo = db.getCollection<Server>()
-
-        runBlocking {
-            val server: Server? = serverRepo.find().asFlow().first()
-            if(server == null || !server.installed) {
-                throw NotInstalledException("Application needs to be proper installed!")
-            }
-        }
-
-        return context?.proceed()
-    }
+@ConfigurationProperties("spaceup.remote.path")
+class SpaceupRemotePathConfig {
+    var services: String = "~/etc/services.d"
+    var logs: String = "~/logs"
+    var temp: String = "~/.spaceup/tmp"
 }

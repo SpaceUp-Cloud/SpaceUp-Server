@@ -46,9 +46,15 @@ import io.micronaut.context.annotation.ConfigurationProperties
 
 @ConfigurationProperties("spaceup.ssh")
 class SpaceUpSshConfig {
+    // SSH username
     var username: String? = null
+    // SSH password
     var password: String? = null
+    // SSH private key
     var privatekey: String? = null
+    // SSH hostname
     var host: String? = null
-    var port: Int? = 22
+    // SSH port
+    // default: 22
+    var port: Int = 22
 }

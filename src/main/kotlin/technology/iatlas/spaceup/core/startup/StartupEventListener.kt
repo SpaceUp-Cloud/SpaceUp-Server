@@ -47,9 +47,16 @@ import com.lordcodes.turtle.shellRun
 import io.micronaut.context.event.StartupEvent
 import io.micronaut.runtime.event.annotation.EventListener
 import jakarta.inject.Singleton
-import kotlinx.coroutines.runBlocking
-import org.litote.kmongo.getCollection
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.reactive.asFlow
+import org.litote.kmongo.reactivestreams.getCollection
 import org.slf4j.LoggerFactory
+import technology.iatlas.spaceup.config.SpaceupLocalPathConfig
+import technology.iatlas.spaceup.config.SpaceupRemotePathConfig
 import technology.iatlas.spaceup.core.cmd.toFeedback
 import technology.iatlas.spaceup.core.helper.colored
 import technology.iatlas.spaceup.dto.Command
@@ -60,13 +67,14 @@ import technology.iatlas.spaceup.services.InstallerService
 import technology.iatlas.spaceup.services.SpaceUpService
 import technology.iatlas.spaceup.services.SshService
 import technology.iatlas.spaceup.services.SwsService
-import java.io.File
-import java.nio.file.Path
+import technology.iatlas.spaceup.util.createNormalizedPath
 import kotlin.io.path.Path
 import kotlin.io.path.createDirectories
 
 @Singleton
 class StartupEventListener(
+    private val spaceupRemotePathConfig: SpaceupRemotePathConfig,
+    private val spaceupLocalPathConfig: SpaceupLocalPathConfig,
     private val dbService: DbService,
     private val installerService: InstallerService,
     private val spaceUpService: SpaceUpService,
@@ -77,8 +85,21 @@ class StartupEventListener(
 
     private val os = System.getProperty("os.name")
 
+    @OptIn(DelicateCoroutinesApi::class)
     @EventListener
     internal fun onApplicationEvent(event: StartupEvent) {
+        // Execute long-running tasks first
+        GlobalScope.launch {
+            // Step 1: check if spaceup was installed
+            if(checkInstallation()) {
+                // Step 2: create directories if not exist
+                createDirectories()
+                createExternalDirectories()
+                // Step 3: fill sws cache
+                fillSwsCache()
+            }
+        }
+
         showBanner()
         log.info("Running SpaceUp startup")
         log.debug("OS: $os")
@@ -92,72 +113,51 @@ class StartupEventListener(
                     .yellow.bold.trimIndent())
             }
         }
-
-        // Step 1: check if spaceup was installed
-        val isInstalled = checkInstallation()
-
-        if(isInstalled) {
-            // Step 2: create directories if not exist
-            createDirectories()
-            runBlocking {
-                createExternalDirectories()
-            }
-
-            // Step 3: fill sws cache
-            fillSwsCache()
-        }
-
-        log.info("Finished SpaceUp startup")
     }
 
     private fun createDirectories() {
         log.info("Create local directories")
-
-        val spaceupHome = ".spaceup"
-        val spaceupTempDir = ".spaceup/tmp"
+        val spaceupTempDir = spaceupLocalPathConfig.temp
 
         if(os.lowercase().contains(Regex("(linux|mac)"))) {
             val home = ShellLocation.HOME
 
             shellRun(home) {
-                log.info("Create $home/$spaceupHome")
-                command("mkdir", listOf("-p", spaceupHome))
                 log.info("Create $home/$spaceupTempDir")
                 command("mkdir", listOf("-p", spaceupTempDir))
             }
             // Set properties for spaceup
-            System.setProperty("spaceup.home", "$home/$spaceupHome")
             System.setProperty("spaceup.tempdir", "$home/$spaceupTempDir")
         } else if (os.lowercase().contains("windows")) {
-            val home = System.getProperty("user.home")
+            //val home = System.getProperty("user.home")
 
-            log.info("Create $home\\$spaceupHome")
-            Path("$home/$spaceupHome").normalize().createDirectories()
-            System.setProperty("spaceup.home", "$home/$spaceupHome")
-            log.info("Create $home\\${spaceupTempDir.createNormalizedPath()}")
-            Path("$home/$spaceupTempDir").normalize().createDirectories()
-            System.setProperty("spaceup.tempdir", "$home/$spaceupTempDir")
+            log.info("Create ${spaceupTempDir.createNormalizedPath()}")
+            Path(spaceupTempDir).normalize().createDirectories()
+            System.setProperty("spaceup.tempdir", spaceupTempDir)
         }
     }
 
     private suspend fun createExternalDirectories() {
         log.info("Create external directories")
-        val cmd = Command(mutableListOf(
-            "mkdir", "-p", "~/.spaceup",
-            "mkdir", "-p", "~/.spaceup/tmp"
-        ))
-        val response = sshService.execute(cmd)
-        val feedback = response.toFeedback()
-        if(!feedback.isOk()) {
-            log.error(feedback.error)
+        val dirs = listOf(spaceupRemotePathConfig.temp)
+
+        dirs.forEach {
+            log.info("create $it")
+
+            val cmd = Command(mutableListOf("mkdir", "-p", it))
+            val response = sshService.execute(cmd)
+            val feedback = response.toFeedback()
+            if(!feedback.isOk()) {
+                log.error(feedback.error)
+            }
         }
     }
 
-    private fun checkInstallation(): Boolean {
+    private suspend fun checkInstallation(): Boolean {
         // Let's check if we are already installed properly
         val db = dbService.getDb()
         val serverRepo = db.getCollection<Server>()
-        val server = serverRepo.find().firstOrNull()
+        val server = serverRepo.find().asFlow().firstOrNull()
 
         var isInstalled = false
         if(server == null) {
@@ -167,7 +167,10 @@ class StartupEventListener(
                 log.info("Finish installation with API key: ${apiKey.yellow.bold}")
             }
             val serverDocument = Server(false, apiKey)
-            serverRepo.insertOne(serverDocument)
+            val result = serverRepo.insertOne(serverDocument).asFlow().first()
+            if(!result.wasAcknowledged()) {
+                log.error("Could not store Api-Key")
+            }
         } else {
             val installed = server.installed
             if(!installed) {
@@ -181,7 +184,7 @@ class StartupEventListener(
         return isInstalled
     }
 
-    private fun fillSwsCache() {
+    private suspend fun fillSwsCache() {
         log.info("Update SWS cache")
         swsService.updateCache()
     }
@@ -201,12 +204,4 @@ class StartupEventListener(
             println("\tSpaceUp Server (${spaceUpService.getSpaceUpVersion()})".cyan.bold)
         }
     }
-}
-
-fun String.createNormalizedPath(): Path {
-    return Path(this).normalize()
-}
-
-fun String.toFile(): File {
-    return this.createNormalizedPath().toFile()
 }

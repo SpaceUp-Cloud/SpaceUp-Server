@@ -70,6 +70,7 @@ class DomainService(
     init {
         // Cache domain list for faster access but delay on fresh data
         domainListRunner.subject().subscribe {
+            wsBroadcaster.broadcastSync(it, topic)
             domains = it
         }
 
@@ -129,7 +130,7 @@ class DomainService(
                     wsBroadcaster.broadcast(it, feedbackTopic)
                 },
                 onError = { t ->
-                    // Should not happened
+                    // Should not happen
                     log.error(t.message)
                     feedback = t.message?.let { it -> Feedback("", it) }!!
                     wsBroadcaster.broadcast(feedback, feedbackTopic)

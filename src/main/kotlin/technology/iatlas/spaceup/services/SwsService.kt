@@ -42,7 +42,7 @@
 
 package technology.iatlas.spaceup.services
 
-import com.mongodb.client.MongoCollection
+import com.mongodb.reactivestreams.client.MongoCollection
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MutableHttpResponse
@@ -50,19 +50,24 @@ import io.micronaut.http.simple.SimpleHttpResponseFactory
 import io.micronaut.tracing.annotation.NewSpan
 import io.micronaut.tracing.annotation.SpanTag
 import jakarta.inject.Singleton
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.runBlocking
+import org.litote.kmongo.coroutine.toList
 import org.litote.kmongo.eq
 import org.slf4j.LoggerFactory
-import technology.iatlas.spaceup.config.SpaceUpSftpConfig
-import technology.iatlas.spaceup.config.SpaceupPathConfig
+import technology.iatlas.spaceup.config.SpaceupLocalPathConfig
+import technology.iatlas.spaceup.config.SpaceupRemotePathConfig
 import technology.iatlas.spaceup.core.cmd.SshResponse
 import technology.iatlas.spaceup.core.cmd.toFeedback
-import technology.iatlas.spaceup.core.startup.toFile
 import technology.iatlas.spaceup.dto.Command
 import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.dto.SftpFile
 import technology.iatlas.spaceup.dto.db.Sws
 import technology.iatlas.spaceup.isOk
+import technology.iatlas.spaceup.util.createNormalizedPath
+import technology.iatlas.spaceup.util.toFile
 import technology.iatlas.sws.SWS
 import technology.iatlas.sws.objects.ParserException
 
@@ -70,13 +75,11 @@ import technology.iatlas.sws.objects.ParserException
 open class SwsService(
     private val dbService: DbService,
     private val sshService: SshService,
-    private val sftpConfig: SpaceUpSftpConfig,
-    private val spaceupPathConfig: SpaceupPathConfig
+    private val spaceupRemotePathConfig: SpaceupRemotePathConfig,
+    private val spaceupLocalPathConfig: SpaceupLocalPathConfig
 ) {
     private val log = LoggerFactory.getLogger(SwsService::class.java)
     private val swsCache = mutableListOf<SWS>()
-
-    private var tempDir = spaceupPathConfig.temp
 
     private fun validateSWS(sws: Sws, feedback: Feedback) {
         log.info("Validate sws")
@@ -121,22 +124,24 @@ open class SwsService(
         return checkAndExecute(sws, swsRepo, "create") { feedback, found ->
             val errorCase = "${sws.name} already exists!"
 
-            // Should not exit && validation was fine
-            if (!found && feedback.isOk()) {
-                val result = swsRepo.insertOne(sws)
-                if (result.wasAcknowledged()) {
-                    feedback.info = "Created ${sws.name} successfully"
-                    swsCache.add(sws.content.toSWS())
+            runBlocking {
+                // Should not exit && validation was fine
+                if (!found && feedback.isOk()) {
+                    val result = swsRepo.insertOne(sws).asFlow().first()
+                    if (result.wasAcknowledged()) {
+                        feedback.info = "Created ${sws.name} successfully"
+                        swsCache.add(sws.content.toSWS())
+                    } else {
+                        feedback.error = errorCase
+                    }
                 } else {
                     feedback.error = errorCase
                 }
-            } else {
-                feedback.error = errorCase
             }
         }
     }
 
-    fun getAll(): List<Sws> {
+    suspend fun getAll(): List<Sws> {
         log.info("Get all SWS configurations")
         val swsRepo = dbService.getRepo<Sws>()
 
@@ -152,15 +157,17 @@ open class SwsService(
         return checkAndExecute(sws, swsRepo, "update") { feedback, found ->
             val errorCase = "Could not update ${sws.name} as it does not exist!"
 
-            if(found && feedback.isOk()) {
-                val result = swsRepo.replaceOne(Sws::name eq sws.name, sws)
-                if(result.wasAcknowledged() && result.matchedCount > 0) {
-                    feedback.info = "updated ${sws.name} successfully"
+            runBlocking {
+                if(found && feedback.isOk()) {
+                    val result = swsRepo.replaceOne(Sws::name eq sws.name, sws).asFlow().first()
+                    if(result.wasAcknowledged() && result.matchedCount > 0) {
+                        feedback.info = "updated ${sws.name} successfully"
+                    } else {
+                        feedback.error = errorCase
+                    }
                 } else {
                     feedback.error = errorCase
                 }
-            } else {
-                feedback.error = errorCase
             }
         }
     }
@@ -171,19 +178,21 @@ open class SwsService(
         val errorCase = "Could not delete sws $name"
 
         val swsRepo = dbService.getRepo<Sws>()
-        val result = swsRepo.deleteOne(Sws::name eq name)
-        if(result.deletedCount == 1L && result.wasAcknowledged()) {
-            feedback.info = "Deleted $name successfully"
-        } else {
-            feedback.error = errorCase
+        runBlocking {
+            val result = swsRepo.deleteOne(Sws::name eq name).asFlow().first()
+            if(result.deletedCount == 1L && result.wasAcknowledged()) {
+                feedback.info = "Deleted $name successfully"
+            } else {
+                feedback.error = errorCase
+            }
         }
 
         return feedback
     }
 
-    fun updateCache() {
+    suspend fun updateCache() {
         val swsRepo = dbService.getRepo<Sws>()
-        swsRepo.find().forEach { sws ->
+        swsRepo.find().toList().forEach { sws ->
             try {
                 run {
                     log.debug("Add '${sws.name}' to cache")
@@ -240,7 +249,8 @@ open class SwsService(
         // /<sws name>/<custom endpoint>
         lateinit var swsDb: Sws
         try {
-            swsDb = dbService.getRepo<Sws>().find().first {
+            val flow = dbService.getRepo<Sws>().find().asFlow()
+            swsDb = flow.toList().first {
                 // Here we can look for the correct sws template with the right name, the name is unique
                 path.split("/")[1].replace("%20", " ").contains(it.name)
                         // and the correct http method request
@@ -254,7 +264,7 @@ open class SwsService(
 
         // Generate SWS
         var sws: SWS
-        val file = "$tempDir/${swsDb.name}.sws".toFile()
+        val file = "${spaceupLocalPathConfig.temp}/${swsDb.name}.sws".toFile()
         file.bufferedWriter().use {
             it.write(swsDb.content)
         }.apply {
@@ -272,10 +282,10 @@ open class SwsService(
         // Actual execution
         var response: SshResponse
         val scriptname = "${sws.name.replace(" ", "_")}.sh"
-        "$tempDir/$scriptname".toFile().apply {
+        "${spaceupLocalPathConfig.temp}/$scriptname".createNormalizedPath().toFile().apply {
             this.writeText(sws.serverScript)
 
-            val script = "${sftpConfig.remotedir}/$scriptname"
+            val script = "${spaceupRemotePathConfig.temp}/$scriptname"
             val cmd = mutableListOf(
                 // make script executable
                 "chmod", "+x", script, ";",

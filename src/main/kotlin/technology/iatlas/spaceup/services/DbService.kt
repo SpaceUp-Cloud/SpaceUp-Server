@@ -43,12 +43,13 @@
 
 package technology.iatlas.spaceup.services
 
-import com.mongodb.client.MongoCollection
-import com.mongodb.client.MongoDatabase
+import com.mongodb.reactivestreams.client.MongoCollection
+import com.mongodb.reactivestreams.client.MongoDatabase
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.annotation.Value
-import org.litote.kmongo.KMongo
-import org.litote.kmongo.getCollection
+import kotlinx.coroutines.reactive.awaitFirstOrNull
+import org.litote.kmongo.coroutine.*
+import org.litote.kmongo.reactivestreams.*
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.helper.colored
 import technology.iatlas.spaceup.dto.db.Server
@@ -98,13 +99,13 @@ class DbService(
         }*/
     }
 
-    fun isAppInstalled(): Boolean {
+    suspend fun isAppInstalled(): Boolean {
         val serverRepo = db.getCollection<Server>()
-        val server = serverRepo.find().firstOrNull()
+        val server = serverRepo.find().awaitFirstOrNull()
 
         var isInstalled = false
         if(server != null) {
-            isInstalled = server.installed!!
+            isInstalled = server.installed
         }
         return isInstalled
     }

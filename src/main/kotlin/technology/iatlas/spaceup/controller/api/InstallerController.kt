@@ -69,7 +69,7 @@ class InstallerController(private val installerService: InstallerService) {
      * @param User defines a user database object
      */
     @Post(uri = "/createUser", processes = [MediaType.APPLICATION_JSON])
-    fun createUser(@Body user: User, @Header("X-SpaceUp-Key") apiKey: String): HttpResponse<String> {
+    suspend fun createUser(@Body user: User, @Header("X-SpaceUp-Key") apiKey: String): HttpResponse<String> {
         if(installerService.getApiKey() != apiKey) {
             return HttpResponse.status(HttpStatus.EXPECTATION_FAILED, "API Key is not valid!")
         }
@@ -82,7 +82,7 @@ class InstallerController(private val installerService: InstallerService) {
      * @param SshUser defines ssh user database object
      */
     @Post(uri = "/createSshSetup", processes = [MediaType.APPLICATION_JSON])
-    fun createSshUser(@Body ssh: Ssh, @Header("X-SpaceUp-Key") apiKey: String): HttpResponse<String> {
+    suspend fun createSshUser(@Body ssh: Ssh, @Header("X-SpaceUp-Key") apiKey: String): HttpResponse<String> {
         if(installerService.getApiKey() != apiKey) {
             return HttpResponse.status(HttpStatus.EXPECTATION_FAILED, "API Key is not valid!")
         }

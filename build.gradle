@@ -5,11 +5,12 @@ plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
     id "org.sonarqube" version "3.3"
     id 'io.micronaut.application' version '3.6.2'
+    id 'project-report'
     id "application"
     id 'maven-publish'
 }
 
-version "0.26.0-SNAPSHOT"
+version "0.27.0"
 group "technology.iatlas.spaceup"
 
 repositories {
@@ -20,9 +21,22 @@ repositories {
     }
 }
 
+ext {
+    uploadUrl = "https://artifactory.iatlas.dev/releases/"
+}
+
+// for dependencies that are needed for development only
+if(project.hasProperty("gradleEnv") && project.getProperty("gradleEnv").toLowerCase().contains("dev")) {
+    print("Running dev configuration")
+    setVersion(getVersion() + "-SNAPSHOT")
+    project.ext.uploadUrl =  "https://artifactory.iatlas.dev/snapshots/"
+}
+
 configurations {
     // for dependencies that are needed for development only
     developmentOnly
+    println("Version: ${getVersion()}")
+    println("Upload url: ${project.ext.uploadUrl}")
 }
 
 dependencies {
@@ -61,8 +75,9 @@ dependencies {
     implementation('com.github.mwiede:jsch:0.2.4')
     // NoSQL
     implementation('io.micronaut.mongodb:micronaut-mongo-reactive:4.6.0')
-    implementation('org.litote.kmongo:kmongo:4.7.2')
-    implementation('org.litote.kmongo:kmongo-async:4.7.2')
+    //implementation('org.litote.kmongo:kmongo:4.7.2')
+    //implementation('org.litote.kmongo:kmongo-async:4.7.2')
+    implementation("org.litote.kmongo:kmongo-coroutine:4.7.2")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
@@ -76,7 +91,9 @@ dependencies {
     // My stuff
     implementation("technology.iatlas.sws:sws:1.4.1-SNAPSHOT")
 
-    runtimeOnly("ch.qos.logback:logback-classic")
+    implementation('ch.qos.logback:logback-classic:1.4.5')
+    implementation('org.slf4j:log4j-over-slf4j:2.0.4')
+    //runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly('com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1')
     runtimeOnly('io.netty:netty-tcnative:2.0.54.Final')
     runtimeOnly('io.netty:netty-tcnative-boringssl-static:2.0.54.Final')
@@ -125,7 +142,7 @@ kapt {
         arg("micronaut.processing.incremental", true)
         arg("micronaut.processing.annotations", "technology.iatlas.spaceup.*")
         arg("micronaut.processing.group", "technology.iatlas.spaceup")
-        arg("micronaut.processing.module", "SpaceUp")
+        arg("micronaut.processing.module", "SpaceUp-Server")
         arg("micronaut.openapi.views.spec",
                 "redoc.enabled=true,rapidoc.enabled=true," +
                         "swagger-ui.enabled=true,swagger-ui.theme=material")
@@ -155,6 +172,7 @@ tasks.register("generatedVersion") {
 
 processResources {
     dependsOn tasks.named("generatedVersion")
+    dependsOn tasks.named("projectReport")
     //dependsOn tasks.named("asciidoctor")
 }
 
@@ -195,7 +213,7 @@ publishing {
     repositories {
         maven {
             name "Maven"
-            url "https://artifactory.iatlas.dev/releases/"
+            url project.ext.uploadUrl
             credentials {
                 username "${nexusUsername}"
                 password "${nexusPassword}"

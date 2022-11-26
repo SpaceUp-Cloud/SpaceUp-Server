@@ -75,7 +75,7 @@ open class SystemController(
 
     @Secured(SecurityRule.IS_ANONYMOUS)
     @Get("/installed", produces = [MediaType.APPLICATION_JSON])
-    fun getInstalled(): String {
+    suspend fun getInstalled(): String {
         val isInstalled = systemService.getIsInstalled()
 
         val gson = Gson()

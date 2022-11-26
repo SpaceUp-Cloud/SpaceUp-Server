@@ -45,9 +45,11 @@ package technology.iatlas.spaceup.services
 import io.micronaut.context.annotation.Context
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.reactive.asFlow
 import org.litote.kmongo.eq
-import org.litote.kmongo.findOne
-import org.litote.kmongo.getCollection
+import org.litote.kmongo.reactivestreams.getCollection
 import org.litote.kmongo.setValue
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.exceptions.InstalledException
@@ -75,20 +77,20 @@ class InstallerService(
         return setupKey
     }
 
-    fun getApiKey(): String {
+    suspend fun getApiKey(): String {
         val db = dbService.getDb()
         val serverRepo = db.getCollection<Server>()
 
-        val servers = serverRepo.find().toList()
+        val servers = serverRepo.find().asFlow().toList()
         if (servers.size > 1) throw InstalledException("Multiple constrains found! $servers")
 
         return servers.first().apiKey
     }
 
-    fun createSshUser(ssh: Ssh): HttpResponse<String> {
+    suspend fun createSshUser(ssh: Ssh): HttpResponse<String> {
         val db = dbService.getDb()
         val sshRepo = db.getCollection<Ssh>()
-        val sshUser = sshRepo.findOne(Ssh::username eq ssh.username)
+        val sshUser = sshRepo.find(Ssh::username eq ssh.username)
 
         if(sshUser != null) {
             val errorExistingUser = "SSH ${ssh.username} already exists"
@@ -97,7 +99,7 @@ class InstallerService(
         } else {
             securityService.encrypt(ssh)
 
-            val result = sshRepo.insertOne(ssh)
+            val result = sshRepo.insertOne(ssh).asFlow().first()
             if(result.wasAcknowledged()) {
                 log.info("SSH User ${ssh.username} was created.")
                 return HttpResponse.ok("User successfully created!")
@@ -107,10 +109,10 @@ class InstallerService(
         }
     }
 
-    fun createUser(user: User): HttpResponse<String> {
+    suspend fun createUser(user: User): HttpResponse<String> {
         val db = dbService.getDb()
         val userRepo = db.getCollection<User>()
-        val findUser = userRepo.findOne(User::username eq user.username)
+        val findUser = userRepo.find(User::username eq user.username)
 
         if(findUser != null) {
             val errorExistingUser = "User ${user.username} exists already!"
@@ -119,7 +121,7 @@ class InstallerService(
         } else {
             securityService.encrypt(user)
 
-            val result = userRepo.insertOne(user)
+            val result = userRepo.insertOne(user).asFlow().first()
             if(result.wasAcknowledged()) {
                 log.info("User ${user.username} was created.")
                 return HttpResponse.ok("User successfully created!")
@@ -129,7 +131,7 @@ class InstallerService(
         }
     }
 
-    fun finalizeInstallation(): HttpResponse<String> {
+    suspend fun finalizeInstallation(): HttpResponse<String> {
         getAllSteps().map {
             val result = this.validateStep(it)
             if(!result) {
@@ -151,17 +153,17 @@ class InstallerService(
     /**
      * Validate if a necessary installation step was ran
      */
-    private fun validateStep(step: InstallSteps): Boolean {
+    private suspend fun validateStep(step: InstallSteps): Boolean {
         val db = dbService.getDb()
 
         return when (step) {
             InstallSteps.CREATE_USER -> {
                 val userRepo = db.getCollection<User>()
-                userRepo.findOne() != null
+                userRepo.find().first().asFlow().first() != null
             }
             InstallSteps.CREATE_SSHUSER -> {
                 val sshRepo = db.getCollection<Ssh>()
-                sshRepo.findOne() != null
+                sshRepo.find().first().asFlow().first() != null
             }
         }
     }

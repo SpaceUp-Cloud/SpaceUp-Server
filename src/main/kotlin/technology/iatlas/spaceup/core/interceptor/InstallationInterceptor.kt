@@ -48,7 +48,10 @@ import io.micronaut.aop.MethodInvocationContext
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import jakarta.inject.Singleton
-import org.litote.kmongo.getCollection
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.runBlocking
+import org.litote.kmongo.reactivestreams.getCollection
 import technology.iatlas.spaceup.core.annotations.Installation
 import technology.iatlas.spaceup.dto.db.Server
 import technology.iatlas.spaceup.services.DbService
@@ -63,12 +66,16 @@ class InstallationInterceptor(
         val db = dbService.getDb()
         val serverRepo = db.getCollection<Server>()
 
-        val server = serverRepo.find().first()!!
-        if(server.installed) {
-            /*throw InstalledException("App is already installed. " +
-                    "Remove spaceup.db and restart Server if you need to.")*/
+        runBlocking {
+            val server = serverRepo.find().asFlow().first()
+            if(server.installed) {
+                /*throw InstalledException("App is already installed. " +
+                        "Remove spaceup.db and restart Server if you need to.")*/
 
-            return HttpResponse.status<String>(HttpStatus.EXPECTATION_FAILED, "App is already installed!")
+                return@runBlocking HttpResponse.status<String>(HttpStatus.EXPECTATION_FAILED, "App is already installed!")
+            } else {
+                return@runBlocking false
+            }
         }
 
         return context?.proceed()

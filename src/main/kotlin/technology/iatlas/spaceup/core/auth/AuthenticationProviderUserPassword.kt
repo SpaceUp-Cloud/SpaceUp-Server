@@ -50,7 +50,10 @@ import io.micronaut.security.authentication.AuthenticationResponse
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableEmitter
-import org.litote.kmongo.getCollection
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.runBlocking
+import org.litote.kmongo.reactivestreams.getCollection
 import org.reactivestreams.Publisher
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.annotations.Installed
@@ -83,29 +86,31 @@ class AuthenticationProviderUserPassword(
         return Flowable.create({
             emitter: FlowableEmitter<AuthenticationResponse> ->
             if (authenticationRequest != null) {
-                val userFound = userRepo.find().find {
-                    var found = false
+                runBlocking {
+                    val userFound = userRepo.find().asFlow().toList().find {
+                        var found = false
 
-                    securityService.decrypt(it) {
-                        found = (authenticationRequest.identity == it.username &&
-                                authenticationRequest.secret == it.password)
+                        securityService.decrypt(it) {
+                            found = (authenticationRequest.identity == it.username &&
+                                    authenticationRequest.secret == it.password)
+                        }
+                        found
                     }
-                    found
-                }
 
-                if(userFound != null) {
-                    colored {
-                        log.info("User ${userFound.username} is authenticated!".green.bold)
+                    if(userFound != null) {
+                        colored {
+                            log.info("User ${userFound.username} is authenticated!".green.bold)
+                        }
+                        emitter.onNext(AuthenticationResponse.success(userFound.username))
+                        emitter.onComplete()
+                    } else {
+                        colored {
+                            log.error("User ${authenticationRequest.identity} not found!".red.bold)
+                        }
+                        emitter.onError(AuthenticationResponse.exception())
                     }
-                    emitter.onNext(AuthenticationResponse.success(userFound.username))
-                    emitter.onComplete()
-                } else {
-                    colored {
-                        log.error("User ${authenticationRequest.identity} not found!".red.bold)
-                    }
-                    emitter.onError(AuthenticationResponse.exception())
+                    logAccess()
                 }
-                logAccess()
             } else {
                 emitter.onError(AuthenticationResponse.exception())
             }
