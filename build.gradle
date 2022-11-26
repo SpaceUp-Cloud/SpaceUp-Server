@@ -27,7 +27,7 @@ ext {
 
 // for dependencies that are needed for development only
 if(project.hasProperty("gradleEnv") && project.getProperty("gradleEnv").toLowerCase().contains("dev")) {
-    print("Running dev configuration")
+    println("Running dev configuration")
     setVersion(getVersion() + "-SNAPSHOT")
     project.ext.uploadUrl =  "https://artifactory.iatlas.dev/snapshots/"
 }
