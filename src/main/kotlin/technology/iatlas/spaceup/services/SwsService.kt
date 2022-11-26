@@ -66,7 +66,6 @@ import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.dto.SftpFile
 import technology.iatlas.spaceup.dto.db.Sws
 import technology.iatlas.spaceup.isOk
-import technology.iatlas.spaceup.util.createNormalizedPath
 import technology.iatlas.spaceup.util.toFile
 import technology.iatlas.spaceup.util.toSWS
 import technology.iatlas.sws.SWS
@@ -283,7 +282,7 @@ open class SwsService(
         // Actual execution
         var response: SshResponse
         val scriptname = "${sws.name.replace(" ", "_")}.sh"
-        "${spaceupLocalPathConfig.temp}/$scriptname".createNormalizedPath().toFile().apply {
+        "${spaceupLocalPathConfig.temp}/$scriptname".toFile().apply {
             this.writeText(sws.serverScript)
 
             val script = "${spaceupRemotePathConfig.temp}/$scriptname"
