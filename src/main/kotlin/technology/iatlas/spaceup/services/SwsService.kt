@@ -68,6 +68,7 @@ import technology.iatlas.spaceup.dto.db.Sws
 import technology.iatlas.spaceup.isOk
 import technology.iatlas.spaceup.util.createNormalizedPath
 import technology.iatlas.spaceup.util.toFile
+import technology.iatlas.spaceup.util.toSWS
 import technology.iatlas.sws.SWS
 import technology.iatlas.sws.objects.ParserException
 
@@ -314,11 +315,3 @@ open class SwsService(
     }
 }
 
-fun String.toSWS(): SWS {
-    var sws: SWS
-    kotlin.io.path.createTempFile("sws-${(1..100).random()}.sws").normalize().toFile().apply {
-        this.writeText(this@toSWS)
-        sws = SWS.createAndParse(this)
-    }.delete()
-    return sws
-}

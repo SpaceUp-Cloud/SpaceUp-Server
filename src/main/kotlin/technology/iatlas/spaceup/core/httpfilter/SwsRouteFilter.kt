@@ -63,7 +63,7 @@ import technology.iatlas.spaceup.services.SwsService
 
 
 @Filter("/api/sws/exec/**")
-@Secured(SecurityRule.IS_AUTHENTICATED)
+@Secured(SecurityRule.IS_AUTHENTICATED) // Has currently no function
 open class SwsRouteFilter(
     private val swsService: SwsService,
     private val dbService: DbService,

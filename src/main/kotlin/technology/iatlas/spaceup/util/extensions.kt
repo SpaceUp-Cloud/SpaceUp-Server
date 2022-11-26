@@ -42,6 +42,7 @@
 
 package technology.iatlas.spaceup.util
 
+import technology.iatlas.sws.SWS
 import java.io.File
 import java.nio.file.Path
 import kotlin.io.path.Path
@@ -52,4 +53,13 @@ fun String.createNormalizedPath(): Path {
 
 fun String.toFile(): File {
     return this.createNormalizedPath().toFile()
+}
+
+fun String.toSWS(): SWS {
+    var sws: SWS
+    kotlin.io.path.createTempFile("sws-${(1..100).random()}.sws").normalize().toFile().apply {
+        this.writeText(this@toSWS)
+        sws = SWS.createAndParse(this)
+    }.delete()
+    return sws
 }

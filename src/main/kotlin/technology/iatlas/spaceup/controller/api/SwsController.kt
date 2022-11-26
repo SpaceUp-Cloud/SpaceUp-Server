@@ -53,8 +53,8 @@ import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.dto.db.Sws
 import technology.iatlas.spaceup.services.SwsService
-import technology.iatlas.spaceup.services.toSWS
 import technology.iatlas.spaceup.toHttpResponse
+import technology.iatlas.spaceup.util.toSWS
 
 @Installed
 @Secured(SecurityRule.IS_AUTHENTICATED)
