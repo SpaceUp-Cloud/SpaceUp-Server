@@ -43,6 +43,7 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
+import io.micronaut.tracing.annotation.NewSpan
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.cmd.Runner
@@ -66,11 +67,14 @@ class WebbackendService(
     private val webbackendCreateRunner = Runner<String>(sshService)
     private val webbackendDeleteRunner = Runner<String>(sshService)
 
+    @NewSpan("read-webbackends")
     suspend fun read(): List<WebbackendConfiguration> {
         val webbackendConfigurations = mutableListOf<WebbackendConfiguration>()
         webbackendReadRunner.subject().subscribe {
             wsBroadcaster.broadcast(it, topic)
-            webbackendConfigurations.addAll(it)
+            if(webbackendConfigurations.isEmpty()) {
+                webbackendConfigurations.addAll(it)
+            }
         }
 
         val readCmd: MutableList<String> = mutableListOf(baseCmd, "list")

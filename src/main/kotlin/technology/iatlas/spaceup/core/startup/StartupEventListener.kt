@@ -42,10 +42,14 @@
 
 package technology.iatlas.spaceup.core.startup
 
+import brave.Tracing
+import brave.context.log4j2.ThreadContextScopeDecorator
+import brave.propagation.ThreadLocalCurrentTraceContext
 import com.lordcodes.turtle.ShellLocation
 import com.lordcodes.turtle.shellRun
 import io.micronaut.context.event.StartupEvent
 import io.micronaut.runtime.event.annotation.EventListener
+import io.micronaut.tracing.annotation.NewSpan
 import jakarta.inject.Singleton
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -62,32 +66,36 @@ import technology.iatlas.spaceup.core.helper.colored
 import technology.iatlas.spaceup.dto.Command
 import technology.iatlas.spaceup.dto.db.Server
 import technology.iatlas.spaceup.isOk
-import technology.iatlas.spaceup.services.DbService
-import technology.iatlas.spaceup.services.InstallerService
-import technology.iatlas.spaceup.services.SpaceUpService
-import technology.iatlas.spaceup.services.SshService
-import technology.iatlas.spaceup.services.SwsService
+import technology.iatlas.spaceup.services.*
 import technology.iatlas.spaceup.util.createNormalizedPath
 import kotlin.io.path.Path
 import kotlin.io.path.createDirectories
 
 @Singleton
-class StartupEventListener(
+open class StartupEventListener(
     private val spaceupRemotePathConfig: SpaceupRemotePathConfig,
     private val spaceupLocalPathConfig: SpaceupLocalPathConfig,
-    private val dbService: DbService,
     private val installerService: InstallerService,
     private val spaceUpService: SpaceUpService,
     private val swsService: SwsService,
     private val sshService: SshService,
-) {
-    private val log = LoggerFactory.getLogger(StartupEventListener::class.java)
+    private val dbService: DbService
+): WsServiceInf {
+    override val topic: String = "startup"
 
+    private val log = LoggerFactory.getLogger(StartupEventListener::class.java)
     private val os = System.getProperty("os.name")
 
     @OptIn(DelicateCoroutinesApi::class)
     @EventListener
     internal fun onApplicationEvent(event: StartupEvent) {
+        Tracing.newBuilder()
+            .currentTraceContext(
+                ThreadLocalCurrentTraceContext.newBuilder()
+                .addScopeDecorator(ThreadContextScopeDecorator.get())
+                .build()
+            )
+
         // Execute long-running tasks first
         GlobalScope.launch {
             // Step 1: check if spaceup was installed
@@ -115,7 +123,8 @@ class StartupEventListener(
         }
     }
 
-    private fun createDirectories() {
+    @NewSpan("startup-create-local-directories")
+    open fun createDirectories() {
         log.info("Create local directories")
         val spaceupTempDir = spaceupLocalPathConfig.temp
 
@@ -137,7 +146,8 @@ class StartupEventListener(
         }
     }
 
-    private suspend fun createExternalDirectories() {
+    @NewSpan("startup-create-external-directories")
+    open suspend fun createExternalDirectories() {
         log.info("Create external directories")
         val dirs = listOf(spaceupRemotePathConfig.temp)
 
@@ -163,10 +173,8 @@ class StartupEventListener(
         if(server == null) {
             log.info("Seems to be first run. Set not installed!")
             val apiKey = installerService.generateAPIKey()
-            colored {
-                log.info("Finish installation with API key: ${apiKey.yellow.bold}")
-            }
             val serverDocument = Server(false, apiKey)
+            showApiKeyToLog(serverDocument)
             val result = serverRepo.insertOne(serverDocument).asFlow().first()
             if(!result.wasAcknowledged()) {
                 log.error("Could not store Api-Key")
@@ -174,9 +182,7 @@ class StartupEventListener(
         } else {
             val installed = server.installed
             if(!installed) {
-                colored {
-                    log.info("Finish installation with API key: ${server.apiKey.yellow.bold}")
-                }
+                showApiKeyToLog(server)
             }
             isInstalled = installed
         }
@@ -184,9 +190,18 @@ class StartupEventListener(
         return isInstalled
     }
 
-    private suspend fun fillSwsCache() {
+    @NewSpan("startup-sws-cache")
+    open suspend fun fillSwsCache() {
         log.info("Update SWS cache")
         swsService.updateCache()
+    }
+
+    private fun showApiKeyToLog(server: Server) {
+        colored {
+            log.info("#".repeat(20).yellow)
+            log.info("Finish installation with API key: ${server.apiKey.yellow.bold}")
+            log.info("#".repeat(20).yellow)
+        }
     }
 
     private fun showBanner() {

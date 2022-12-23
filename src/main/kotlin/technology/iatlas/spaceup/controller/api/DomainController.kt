@@ -47,6 +47,8 @@ import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
+import io.micronaut.tracing.annotation.ContinueSpan
+import io.micronaut.tracing.annotation.SpanTag
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.dto.Domain
@@ -65,8 +67,9 @@ class DomainController(private val domainService: DomainService) {
      *
      * @return Map<String, Feedback> - per domain a feedback
      */
+    @ContinueSpan
     @Post(uri = "/add", produces = [MediaType.APPLICATION_JSON])
-    suspend fun add(@Body domains: List<Domain>): HttpResponse<List<Feedback>> {
+    suspend fun add(@SpanTag("domains") @Body domains: List<Domain>): HttpResponse<List<Feedback>> {
         log.info("Received list to add: $domains")
 
         return HttpResponse.ok(domainService.add(domains))
@@ -76,8 +79,9 @@ class DomainController(private val domainService: DomainService) {
      * Delete a domain with the corresponded url
      * @return Feedback
      */
+    @ContinueSpan
     @Delete("/delete/{url}", produces = [MediaType.APPLICATION_JSON])
-    suspend fun delete(url: String): HttpResponse<Feedback> {
+    suspend fun delete(@SpanTag("url") url: String): HttpResponse<Feedback> {
         val domain = Domain(url)
         log.warn("Delete domain $domain")
 
@@ -88,8 +92,9 @@ class DomainController(private val domainService: DomainService) {
      * Get a list of domains
      * @return List<Domain> - list of domains
      */
+    @ContinueSpan
     @Get(uri = "/list{?cached}", produces = [MediaType.APPLICATION_JSON])
-    suspend fun list(cached: Optional<Boolean>): List<Domain> {
+    suspend fun list(@SpanTag cached: Optional<Boolean>): List<Domain> {
         log.debug("Get domain list.")
 
         if(!get(cached)) {

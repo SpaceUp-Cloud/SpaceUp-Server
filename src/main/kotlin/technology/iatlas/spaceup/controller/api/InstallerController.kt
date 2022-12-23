@@ -51,6 +51,8 @@ import io.micronaut.http.annotation.Header
 import io.micronaut.http.annotation.Post
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
+import io.micronaut.tracing.annotation.ContinueSpan
+import io.micronaut.tracing.annotation.SpanTag
 import technology.iatlas.spaceup.core.annotations.Installation
 import technology.iatlas.spaceup.dto.db.Ssh
 import technology.iatlas.spaceup.dto.db.User
@@ -68,8 +70,9 @@ class InstallerController(private val installerService: InstallerService) {
      * Create a new user for authentication on SpaceUp
      * @param User defines a user database object
      */
+    @ContinueSpan
     @Post(uri = "/createUser", processes = [MediaType.APPLICATION_JSON])
-    suspend fun createUser(@Body user: User, @Header("X-SpaceUp-Key") apiKey: String): HttpResponse<String> {
+    suspend fun createUser(@SpanTag @Body user: User, @Header("X-SpaceUp-Key") apiKey: String): HttpResponse<String> {
         if(installerService.getApiKey() != apiKey) {
             return HttpResponse.status(HttpStatus.EXPECTATION_FAILED, "API Key is not valid!")
         }
@@ -81,8 +84,9 @@ class InstallerController(private val installerService: InstallerService) {
      * Create the ssh user for authentication via SSH
      * @param SshUser defines ssh user database object
      */
+    @ContinueSpan
     @Post(uri = "/createSshSetup", processes = [MediaType.APPLICATION_JSON])
-    suspend fun createSshUser(@Body ssh: Ssh, @Header("X-SpaceUp-Key") apiKey: String): HttpResponse<String> {
+    suspend fun createSshUser(@SpanTag @Body ssh: Ssh, @Header("X-SpaceUp-Key") apiKey: String): HttpResponse<String> {
         if(installerService.getApiKey() != apiKey) {
             return HttpResponse.status(HttpStatus.EXPECTATION_FAILED, "API Key is not valid!")
         }
@@ -93,8 +97,9 @@ class InstallerController(private val installerService: InstallerService) {
     /**
      * This is the final step to finalize the installation. It needs to be run.
      */
+    @ContinueSpan
     @Post(uri = "/final")
-    suspend fun finalize(@Header("X-SpaceUp-Key") apiKey: String): HttpResponse<String>{
+    suspend fun finalize(@SpanTag @Header("X-SpaceUp-Key") apiKey: String): HttpResponse<String>{
         if(installerService.getApiKey() != apiKey) {
             return HttpResponse.status(HttpStatus.EXPECTATION_FAILED, "API Key is invalid")
         }

@@ -47,10 +47,18 @@ import java.io.File
 import java.nio.file.Path
 import kotlin.io.path.Path
 
+/**
+ * Creates a normalized path
+ * @return create a normalized path of a give path string
+ */
 fun String.createNormalizedPath(): Path {
     return Path(this).normalize()
 }
 
+/**
+ * Creates a file with normalized path of a string
+ * @return a file with normalized path
+ */
 fun String.toFile(): File {
     return this.createNormalizedPath().toFile()
 }

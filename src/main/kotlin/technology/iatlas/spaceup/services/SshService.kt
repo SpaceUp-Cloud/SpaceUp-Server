@@ -42,14 +42,10 @@
 
 package technology.iatlas.spaceup.services
 
-import com.jcraft.jsch.Channel
-import com.jcraft.jsch.ChannelExec
-import com.jcraft.jsch.ChannelSftp
-import com.jcraft.jsch.JSch
-import com.jcraft.jsch.JSchException
-import com.jcraft.jsch.Session
+import com.jcraft.jsch.*
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.annotation.Value
+import io.micronaut.tracing.annotation.ContinueSpan
 import io.micronaut.tracing.annotation.NewSpan
 import io.micronaut.tracing.annotation.SpanTag
 import kotlinx.coroutines.delay
@@ -68,7 +64,7 @@ import java.io.File
 
 @Installed
 @Context
-class SshService(
+open class SshService(
     private val sshConfig: SpaceUpSshConfig,
     private val spaceupRemotePathConfig: SpaceupRemotePathConfig,
     private val dbService: DbService,
@@ -80,9 +76,10 @@ class SshService(
     private lateinit var session: Session
 
     @Value("\${spaceup.dev.ssh.db-credentials}")
-    private lateinit var useDbCredentials: String
+    private var useDbCredentials: Boolean = false
 
     // Configure SSH
+    @ContinueSpan
     suspend fun initSSH() {
         val jsch = JSch()
 
@@ -90,7 +87,7 @@ class SshService(
         var password = ""
         var host = ""
 
-        if(spaceUpService.isDevMode() && useDbCredentials == "false") {
+        if(spaceUpService.isDevMode() && !useDbCredentials) {
             colored {
                 log.debug("Use configuration from parameters in dev mode.".yellow)
             }
@@ -121,19 +118,15 @@ class SshService(
             }
         }
 
-        if(sshConfig.port == null) {
-            log.error("Provide SSH port '-spaceup.ssh.port=22' to JAR.")
-        }
-
         val privatekey: String? = sshConfig.privatekey
         if (!privatekey.isNullOrEmpty()) {
             jsch.addIdentity(File(privatekey).normalize().path)
-            session = jsch.getSession(username, host, Integer.valueOf(sshConfig.port!!))
+            session = jsch.getSession(username, host, Integer.valueOf(sshConfig.port))
 
             log.info("Authenticate SSH via private key!")
         } else {
             session = jsch.getSession(
-                    username, host, Integer.valueOf(sshConfig.port!!))
+                    username, host, Integer.valueOf(sshConfig.port))
             session.setPassword(password)
 
             log.info("Authenticate SSH via password!")

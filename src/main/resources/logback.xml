@@ -46,8 +46,9 @@
         <!--withJansi>true</withJansi does not work with GraalVM-->
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <!--variable scope="context" name="trace" value="%replace([traceId: %X{traceId}]){'[a-z]+:( |$)', ''}"/-->
         <encoder>
-            <pattern>%cyan(%d{dd.MM.YYYY HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%logger{36}) - %msg%n</pattern>
+            <pattern>%cyan(%d{dd.MM.YYYY HH:mm:ss.SSS}) %gray([%thread{12}]) traceId:%X{traceId} %highlight(%-5level) %magenta(%logger{24}) - %msg%n</pattern>
         </encoder>
     </appender>
 

@@ -53,6 +53,8 @@ import jakarta.inject.Singleton
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.reactive.awaitFirst
+import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kotlinx.coroutines.runBlocking
 import org.litote.kmongo.coroutine.toList
 import org.litote.kmongo.eq
@@ -96,7 +98,7 @@ open class SwsService(
 
     }
 
-    private fun checkAndExecute(
+    private suspend fun checkAndExecute(
         sws: Sws,
         swsRepo: MongoCollection<Sws>,
         executionName: String,
@@ -109,7 +111,7 @@ open class SwsService(
             return feedback
         }
 
-        val found = swsRepo.find(Sws::name eq sws.name).first() != null
+        val found = swsRepo.find(Sws::name eq sws.name).awaitFirstOrNull() != null
         log.debug("${sws.name} found: $found")
         log.info("Will execute '$executionName' with server web script '${sws.name}'.")
         executeCallback(feedback, found)
@@ -117,7 +119,8 @@ open class SwsService(
         return feedback
     }
 
-    fun create(sws: Sws): Feedback {
+    @NewSpan("sws-create")
+    open suspend fun create(@SpanTag sws: Sws): Feedback {
         log.info("Check if sws '${sws.name}' already exists.")
         val swsRepo = dbService.getRepo<Sws>()
 
@@ -141,7 +144,8 @@ open class SwsService(
         }
     }
 
-    suspend fun getAll(): List<Sws> {
+    @NewSpan("sws-get-all")
+    open suspend fun getAll(): List<Sws> {
         log.info("Get all SWS configurations")
         val swsRepo = dbService.getRepo<Sws>()
 
@@ -150,7 +154,8 @@ open class SwsService(
         return allSws.toList()
     }
 
-    fun update(sws: Sws): Feedback {
+    @NewSpan("sws-update")
+    open suspend fun update(@SpanTag sws: Sws): Feedback {
         log.info("Update ${sws.name} on database")
         val swsRepo = dbService.getRepo<Sws>()
 
@@ -159,7 +164,7 @@ open class SwsService(
 
             runBlocking {
                 if(found && feedback.isOk()) {
-                    val result = swsRepo.replaceOne(Sws::name eq sws.name, sws).asFlow().first()
+                    val result = swsRepo.replaceOne(Sws::name eq sws.name, sws).awaitFirst()
                     if(result.wasAcknowledged() && result.matchedCount > 0) {
                         feedback.info = "updated ${sws.name} successfully"
                     } else {
@@ -172,7 +177,8 @@ open class SwsService(
         }
     }
 
-    fun delete(name: String): Feedback {
+    @NewSpan("sws-delete")
+    open fun delete(@SpanTag("sws-name") name: String): Feedback {
         log.info("Delete $name on database")
         val feedback = Feedback("", "")
         val errorCase = "Could not delete sws $name"
@@ -190,9 +196,12 @@ open class SwsService(
         return feedback
     }
 
-    suspend fun updateCache() {
+    @NewSpan("sws-update-cache")
+    open suspend fun updateCache() {
         val swsRepo = dbService.getRepo<Sws>()
-        swsRepo.find().toList().forEach { sws ->
+        val swsList = swsRepo.find().toList()
+        log.info("Found ${swsList.size} server web scripts.")
+        swsList.forEach { sws ->
             try {
                 run {
                     log.debug("Add '${sws.name}' to cache")

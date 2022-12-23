@@ -45,9 +45,13 @@ package technology.iatlas.spaceup.services
 import io.micronaut.context.annotation.Context
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
+import io.micronaut.tracing.annotation.NewSpan
+import io.micronaut.tracing.annotation.SpanTag
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.reactive.awaitFirst
+import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.litote.kmongo.eq
 import org.litote.kmongo.reactivestreams.getCollection
 import org.litote.kmongo.setValue
@@ -58,7 +62,7 @@ import technology.iatlas.spaceup.dto.db.Ssh
 import technology.iatlas.spaceup.dto.db.User
 
 @Context
-class InstallerService(
+open class InstallerService(
     private val dbService: DbService,
     private val securityService: SecurityService
 ) {
@@ -70,14 +74,15 @@ class InstallerService(
      */
     fun generateAPIKey(): String {
         // Create API Key to validate it is the correct user
-        val setupKey: String = List(8) {
+        val apiKey: String = List(8) {
             (('a'..'z') + ('A'..'Z') + ('0'..'9')).random()
         }.joinToString("")
 
-        return setupKey
+        return apiKey
     }
 
-    suspend fun getApiKey(): String {
+    @NewSpan("installer-key")
+    open suspend fun getApiKey(): String {
         val db = dbService.getDb()
         val serverRepo = db.getCollection<Server>()
 
@@ -87,10 +92,11 @@ class InstallerService(
         return servers.first().apiKey
     }
 
-    suspend fun createSshUser(ssh: Ssh): HttpResponse<String> {
+    @NewSpan("installer-create-ssh-user")
+    open suspend fun createSshUser(@SpanTag ssh: Ssh): HttpResponse<String> {
         val db = dbService.getDb()
         val sshRepo = db.getCollection<Ssh>()
-        val sshUser = sshRepo.find(Ssh::username eq ssh.username)
+        val sshUser = sshRepo.find(Ssh::username eq ssh.username).awaitFirstOrNull()
 
         if(sshUser != null) {
             val errorExistingUser = "SSH ${ssh.username} already exists"
@@ -109,10 +115,11 @@ class InstallerService(
         }
     }
 
-    suspend fun createUser(user: User): HttpResponse<String> {
+    @NewSpan("installer-create-user")
+    open suspend fun createUser(@SpanTag user: User): HttpResponse<String> {
         val db = dbService.getDb()
         val userRepo = db.getCollection<User>()
-        val findUser = userRepo.find(User::username eq user.username)
+        val findUser: User? = userRepo.find(User::username eq user.username).awaitFirstOrNull()
 
         if(findUser != null) {
             val errorExistingUser = "User ${user.username} exists already!"
@@ -131,7 +138,8 @@ class InstallerService(
         }
     }
 
-    suspend fun finalizeInstallation(): HttpResponse<String> {
+    @NewSpan("installer-finalize-installation")
+    open suspend fun finalizeInstallation(): HttpResponse<String> {
         getAllSteps().map {
             val result = this.validateStep(it)
             if(!result) {
@@ -143,7 +151,7 @@ class InstallerService(
         // Set installation to be done
         val db = dbService.getDb()
         val serverRepo = db.getCollection<Server>()
-        serverRepo.updateOne(Server::installed eq false, setValue(Server::installed, true))
+        serverRepo.updateOne(Server::installed eq false, setValue(Server::installed, true)).awaitFirst()
 
         val finishMsg = "Installation done. Set system to state 'installed'"
         log.info(finishMsg)
