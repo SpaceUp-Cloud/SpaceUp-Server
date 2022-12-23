@@ -138,8 +138,6 @@ open class StartupEventListener(
             // Set properties for spaceup
             System.setProperty("spaceup.tempdir", "$home/$spaceupTempDir")
         } else if (os.lowercase().contains("windows")) {
-            //val home = System.getProperty("user.home")
-
             log.info("Create ${spaceupTempDir.createNormalizedPath()}")
             Path(spaceupTempDir).normalize().createDirectories()
             System.setProperty("spaceup.tempdir", spaceupTempDir)
@@ -155,8 +153,7 @@ open class StartupEventListener(
             log.info("create $it")
 
             val cmd = Command(mutableListOf("mkdir", "-p", it))
-            val response = sshService.execute(cmd)
-            val feedback = response.toFeedback()
+            val feedback = sshService.execute(cmd).toFeedback()
             if(!feedback.isOk()) {
                 log.error(feedback.error)
             }

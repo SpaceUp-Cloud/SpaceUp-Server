@@ -48,7 +48,10 @@ import io.micronaut.context.annotation.Value
 import io.micronaut.tracing.annotation.ContinueSpan
 import io.micronaut.tracing.annotation.NewSpan
 import io.micronaut.tracing.annotation.SpanTag
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.reactive.awaitFirst
 import org.litote.kmongo.reactivestreams.getCollection
 import org.slf4j.LoggerFactory
@@ -58,6 +61,7 @@ import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.cmd.CommandInf
 import technology.iatlas.spaceup.core.cmd.SshResponse
 import technology.iatlas.spaceup.core.helper.colored
+import technology.iatlas.spaceup.dto.Command
 import technology.iatlas.spaceup.dto.db.Ssh
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -191,7 +195,6 @@ open class SshService(
 
             return sshResponse
         } finally {
-            //session.disconnect()
             executionChannel.disconnect()
         }
     }
@@ -200,6 +203,7 @@ open class SshService(
      * Upload a shell script via SFTP and execute it optionally
      *
      */
+    @OptIn(DelicateCoroutinesApi::class)
     @NewSpan
     suspend fun upload(@SpanTag("ssh-command") cmd: CommandInf): SshResponse {
         log.debug("Upload $cmd")
@@ -235,6 +239,13 @@ open class SshService(
 
             if(file.execute) {
                 sshResponse = execute(cmd)
+                // If set, we want to clear the file we have executed
+                if(cmd.shellScript.clearAfterExecution) {
+                    GlobalScope.launch {
+                        log.debug("Remove remote file: $remotefile")
+                        execute(Command(mutableListOf("rm", remotefile)))
+                    }
+                }
             }
 
             log.trace(sshResponse.toString())

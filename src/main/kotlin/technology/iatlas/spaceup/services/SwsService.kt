@@ -86,7 +86,7 @@ open class SwsService(
     private fun validateSWS(sws: Sws, feedback: Feedback) {
         log.info("Validate sws")
         // Create a temporary file
-        kotlin.io.path.createTempFile("${sws.name}.sws").normalize().toFile().apply {
+        val isDeleted = kotlin.io.path.createTempFile("${sws.name}.sws").normalize().toFile().apply {
             this.writeText(sws.content)
             try {
                 SWS.createAndParse(this)
@@ -95,7 +95,7 @@ open class SwsService(
                 feedback.error = "SWS content is corrupt! ${ex.message}"
             }
         }.delete()
-
+        log.trace("Is deleted: $isDeleted")
     }
 
     private suspend fun checkAndExecute(
@@ -181,7 +181,6 @@ open class SwsService(
     open fun delete(@SpanTag("sws-name") name: String): Feedback {
         log.info("Delete $name on database")
         val feedback = Feedback("", "")
-        val errorCase = "Could not delete sws $name"
 
         val swsRepo = dbService.getRepo<Sws>()
         runBlocking {
@@ -189,7 +188,7 @@ open class SwsService(
             if(result.deletedCount == 1L && result.wasAcknowledged()) {
                 feedback.info = "Deleted $name successfully"
             } else {
-                feedback.error = errorCase
+                feedback.error = "Could not delete sws $name"
             }
         }
 
@@ -281,17 +280,21 @@ open class SwsService(
         }
 
         // Check if the request url matches with end
-        if(!path.split(sws.name).first().replace("%20", " ").contains(sws.name)) {
-            feedback.error = "Your sws url needs to begin with ${sws.name}.\n"
-            feedback.error += "Example: /api/sws/exec/${sws.name}/<customendpoint>"
+        if((!path.contains(sws.name) ||
+            !path.split(sws.name).first().replace("%20", " ").contains(sws.name))  &&
+                    path.contains(sws.serverEndpoint.url)
+        ) {
+            feedback.error = "Your SWS url needs to begin with ${sws.name}.\n"
+            feedback.error += "Example: /api/sws/exec/${sws.name}/<custom endpoint>"
+            feedback.error += "Or: /api/sws/exec/${sws.name}?yourparams&..."
             log.error(feedback.error)
             return SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.BAD_REQUEST, feedback)
         }
 
         // Actual execution
         var response: SshResponse
-        val scriptname = "${sws.name.replace(" ", "_")}.sh"
-        "${spaceupLocalPathConfig.temp}/$scriptname".toFile().apply {
+        val scriptname = "SWS_${sws.name.replace(" ", "_")}.sh"
+        val isDeleted = "${spaceupLocalPathConfig.temp}/$scriptname".toFile().apply {
             this.writeText(sws.serverScript)
 
             val script = "${spaceupRemotePathConfig.temp}/$scriptname"
@@ -309,9 +312,8 @@ open class SwsService(
                 response = sshService.upload(
                     Command(cmd, SftpFile(scriptname, this@apply.toURI().toURL(),  true)))
             }
-        }
-
-        log.debug("Clear temporary files")
+        }.delete()
+        log.trace("Is deleted: $isDeleted")
 
         feedback = response.toFeedback()
         return if(feedback.isOk()) {

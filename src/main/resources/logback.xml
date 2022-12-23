@@ -39,18 +39,23 @@
   ~
   ~ Thanks, and we hope you enjoy using SpaceUp-Server and that it's everything you ever hoped it could be.
   -->
-
-<!--configuration scan="true" scanPeriod="15 seconds" does not work with GraalVM -->
 <configuration>
-    <appender name="root" class="ch.qos.logback.core.ConsoleAppender">
-        <!--withJansi>true</withJansi does not work with GraalVM-->
-        <!-- encoders are assigned the type
-             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
-        <!--variable scope="context" name="trace" value="%replace([traceId: %X{traceId}]){'[a-z]+:( |$)', ''}"/-->
-        <encoder>
-            <pattern>%cyan(%d{dd.MM.YYYY HH:mm:ss.SSS}) %gray([%thread{12}]) traceId:%X{traceId} %highlight(%-5level) %magenta(%logger{24}) - %msg%n</pattern>
-        </encoder>
-    </appender>
+    <if condition='isDefined("tracing.zipkin.enabled")'>
+        <then>
+            <appender name="root" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder>
+                    <pattern>%cyan(%d{dd.MM.YYYY HH:mm:ss.SSS}) %gray([%thread{12}]) traceId:%X{traceId} %highlight(%-5level) %magenta(%logger{24}) - %msg%n</pattern>
+                </encoder>
+            </appender>
+        </then>
+        <else>
+            <appender name="root" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder>
+                    <pattern>%cyan(%d{dd.MM.YYYY HH:mm:ss.SSS}) %gray([%thread{12}]) %highlight(%-5level) %magenta(%logger{24}) - %msg%n</pattern>
+                </encoder>
+            </appender>
+        </else>
+    </if>
 
     <logger name="technology.iatlas.sws" level="${sws.logging.level:-ERROR}"/>
     <logger name="technology.iatlas.spaceup" level="${spaceup.logging.level:-INFO}"/>

@@ -1,10 +1,11 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.7.20"
-    id "org.jetbrains.kotlin.kapt" version "1.7.20"
-    id "org.jetbrains.kotlin.plugin.allopen" version "1.7.20"
+    id "org.jetbrains.kotlin.jvm" version "${kotlinVersion}"
+    id "org.jetbrains.kotlin.kapt" version "${kotlinVersion}"
+    id "org.jetbrains.kotlin.plugin.allopen" version "${kotlinVersion}"
     id "com.github.johnrengelman.shadow" version "7.1.2"
-    id "org.sonarqube" version "3.3"
-    id 'io.micronaut.application' version '3.6.2'
+    id "org.sonarqube" version "3.5.0.2730"
+    id "io.micronaut.aot" version "3.6.5"
+    id 'io.micronaut.application' version '3.6.5'
     id 'project-report'
     id "application"
     id 'maven-publish'
@@ -44,7 +45,7 @@ dependencies {
     kapt('io.micronaut:micronaut-inject-java:3.7.4')
     kapt('io.micronaut:micronaut-validation:3.7.4')
     kapt("io.micronaut:micronaut-graal:$micronautVersion")
-    kapt('io.micronaut.openapi:micronaut-openapi:4.7.1')
+    kapt('io.micronaut.openapi:micronaut-openapi:4.8.0')
     kapt('io.micronaut.security:micronaut-security-annotations:3.8.3')
     compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     compileOnly('org.graalvm.nativeimage:svm:22.2.0')
@@ -69,7 +70,7 @@ dependencies {
     implementation 'io.zipkin.brave:brave-context-log4j2:5.14.1'
     runtimeOnly("io.zipkin.brave:brave-instrumentation-httpclient:5.14.1")
     runtimeOnly("io.zipkin.reporter:zipkin-reporter:1.1.2")
-    implementation("io.micronaut.security:micronaut-security:3.2.0")
+    implementation('io.micronaut.security:micronaut-security:3.8.3')
     implementation('io.micronaut.security:micronaut-security-jwt:3.8.3')
     implementation('io.micronaut.kotlin:micronaut-kotlin-extension-functions:3.2.2')
     implementation('com.google.code.gson:gson:2.10')
@@ -78,8 +79,7 @@ dependencies {
     // NoSQL
     implementation('io.micronaut.mongodb:micronaut-mongo-reactive:4.6.0')
     //implementation('org.litote.kmongo:kmongo:4.7.2')
-    //implementation('org.litote.kmongo:kmongo-async:4.7.2')
-    implementation("org.litote.kmongo:kmongo-coroutine:4.7.2")
+    implementation('org.litote.kmongo:kmongo-coroutine:4.8.0')
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
@@ -93,6 +93,7 @@ dependencies {
     // My stuff
     implementation("technology.iatlas.sws:sws:1.4.1-SNAPSHOT")
 
+    implementation("org.codehaus.janino:janino:3.1.9")
     implementation('ch.qos.logback:logback-classic:1.4.5')
     implementation('org.slf4j:log4j-over-slf4j:2.0.4')
     //runtimeOnly("ch.qos.logback:logback-classic")

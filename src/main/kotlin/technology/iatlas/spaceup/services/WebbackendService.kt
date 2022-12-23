@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2022 spaceup@iatlas.technology.
+ * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
  * You don't have to do anything special to accept the license and you don’t have to notify anyone which that you have made that decision.
@@ -10,7 +11,6 @@
  *
  * You should have received a copy of both licenses along with SpaceUp-Server
  * If not, see <http://www.gnu.org/licenses/>.
- *
  *
  * There is a strong belief within us that the license we have chosen provides not only the best solution for providing you with the essential freedom necessary to use SpaceUp-Server within your projects, but also for maintaining enough copyleft strength for us to feel confident and secure with releasing our hard work to the public. For your convenience we've included our own interpretation of the license we chose, which can be seen below.
  *
@@ -44,6 +44,7 @@ package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
 import io.micronaut.tracing.annotation.NewSpan
+import io.micronaut.tracing.annotation.SpanTag
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.cmd.Runner
@@ -55,7 +56,7 @@ import technology.iatlas.spaceup.dto.WebbackendCmd
 import technology.iatlas.spaceup.dto.WebbackendConfiguration
 
 @Context
-class WebbackendService(
+open class WebbackendService(
     sshService: SshService,
     private val wsBroadcaster: WsBroadcaster
 ): WsServiceInf {
@@ -68,7 +69,7 @@ class WebbackendService(
     private val webbackendDeleteRunner = Runner<String>(sshService)
 
     @NewSpan("read-webbackends")
-    suspend fun read(): List<WebbackendConfiguration> {
+    open suspend fun read(): List<WebbackendConfiguration> {
         val webbackendConfigurations = mutableListOf<WebbackendConfiguration>()
         webbackendReadRunner.subject().subscribe {
             wsBroadcaster.broadcast(it, topic)
@@ -83,7 +84,8 @@ class WebbackendService(
         return webbackendConfigurations
     }
 
-    suspend fun create(webbackendCmd: WebbackendCmd): Feedback {
+    @NewSpan("create-webbackends")
+    open suspend fun create(@SpanTag webbackendCmd: WebbackendCmd): Feedback {
         val feedback = Feedback("", "")
         webbackendCreateRunner.subject().subscribeBy(
             onNext = {
@@ -121,7 +123,8 @@ class WebbackendService(
         return feedback
     }
 
-    suspend fun delete(domain: String): Feedback {
+    @NewSpan("delete-webbackends")
+    open suspend fun delete(@SpanTag domain: String): Feedback {
         val feedback = Feedback("", "")
         webbackendDeleteRunner.subject().subscribe {
             // response: This backend does not exist. For more information ...
