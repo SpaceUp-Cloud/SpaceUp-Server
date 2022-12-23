@@ -47,6 +47,7 @@ import com.mongodb.reactivestreams.client.MongoCollection
 import com.mongodb.reactivestreams.client.MongoDatabase
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.annotation.Value
+import io.micronaut.tracing.annotation.ContinueSpan
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.litote.kmongo.coroutine.*
 import org.litote.kmongo.reactivestreams.*
@@ -55,7 +56,7 @@ import technology.iatlas.spaceup.core.helper.colored
 import technology.iatlas.spaceup.dto.db.Server
 
 @Context
-class DbService(
+open class DbService(
     spaceUpService: SpaceUpService,
     @Value("\${mongodb.uri}")
     mongoDbConnection: String
@@ -99,7 +100,8 @@ class DbService(
         }*/
     }
 
-    suspend fun isAppInstalled(): Boolean {
+    @ContinueSpan
+    open suspend fun isAppInstalled(): Boolean {
         val serverRepo = db.getCollection<Server>()
         val server = serverRepo.find().awaitFirstOrNull()
 

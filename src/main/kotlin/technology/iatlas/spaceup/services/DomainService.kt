@@ -43,6 +43,8 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
+import io.micronaut.tracing.annotation.NewSpan
+import io.micronaut.tracing.annotation.SpanTag
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.core.cmd.Runner
@@ -54,16 +56,13 @@ import technology.iatlas.spaceup.dto.Domain
 import technology.iatlas.spaceup.dto.Feedback
 
 @Context
-class DomainService(
+open class DomainService(
     private val sshService: SshService,
     private val wsBroadcaster: WsBroadcaster): WsServiceInf {
     private val log = LoggerFactory.getLogger(DomainService::class.java)
 
     private val domainListRunner = Runner<List<Domain>>(sshService)
     private var domains = listOf<Domain>()
-
-    private val addDomainRunner = Runner<Feedback>(sshService)
-    private val deleteDomainRunner = Runner<Feedback>(sshService)
 
     override val topic = "domains"
 
@@ -76,14 +75,16 @@ class DomainService(
 
     }
 
-    suspend fun updateDomainList() {
+    @NewSpan("domains-update")
+    open suspend fun updateDomainList() {
         val cmd: MutableList<String> = mutableListOf("uberspace", "web", "domain", "list")
         domainListRunner.execute(Command(cmd), DomainParser())
     }
 
-    suspend fun add(domains: List<Domain>): List<Feedback> {
+    @NewSpan("domains-add")
+    open suspend fun add(@SpanTag domains: List<Domain>): List<Feedback> {
         val feedbacks = linkedSetOf<Feedback>()
-
+        val addDomainRunner = Runner<Feedback>(sshService)
         addDomainRunner.subject()
             .distinct()
             .subscribeBy(
@@ -118,8 +119,10 @@ class DomainService(
         return feedbacks.toMutableList()
     }
 
-    suspend fun delete(domain: Domain): Feedback {
+    @NewSpan("domains-update")
+    open suspend fun delete(@SpanTag domain: Domain): Feedback {
         val cmd = mutableListOf("uberspace", "web", "domain", "del", domain.url)
+        val deleteDomainRunner = Runner<Feedback>(sshService)
 
         var feedback = Feedback("", "")
         deleteDomainRunner.subject()
@@ -141,10 +144,11 @@ class DomainService(
         return feedback
     }
 
+    @NewSpan("domains-getDomains")
     /**
      * Get all domains
      */
-    fun list(): List<Domain> {
+    open fun list(): List<Domain> {
         wsBroadcaster.broadcastSync(domains, topic)
         return domains
     }

@@ -1,6 +1,7 @@
 package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
+import io.micronaut.tracing.annotation.NewSpan
 import technology.iatlas.spaceup.core.cmd.Runner
 import technology.iatlas.spaceup.core.parser.NetworkListenerParser
 import technology.iatlas.spaceup.dto.Command
@@ -8,16 +9,16 @@ import technology.iatlas.spaceup.dto.NetworkProgram
 
 @Context
 class NetworkService(
-    sshService: SshService,
+    private val sshService: SshService,
     private val processService: ProcessService,
     private val wsBroadcaster: WsBroadcaster
 ): WsServiceInf {
 
     override val topic = "network"
 
-    private val networkReadRunner = Runner<List<NetworkProgram>>(sshService)
-
+    @NewSpan
     suspend fun readListeningPrograms(): MutableList<NetworkProgram> {
+        val networkReadRunner = Runner<List<NetworkProgram>>(sshService)
         val networkConnectionsCmd = mutableListOf("netstat", "-tlnp")
 
         val networkPrograms: MutableList<NetworkProgram> = mutableListOf()

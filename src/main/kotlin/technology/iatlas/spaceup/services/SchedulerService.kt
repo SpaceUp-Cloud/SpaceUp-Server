@@ -44,18 +44,20 @@ package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
 import io.micronaut.scheduling.annotation.Scheduled
+import io.micronaut.tracing.annotation.NewSpan
 import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 
 @Context
-class SchedulerService(
+open class SchedulerService(
     private val domainService: DomainService,
     private val dbService: DbService
-    ) {
+) {
     private val log = LoggerFactory.getLogger(SchedulerService::class.java)
 
+    @NewSpan("scheduler-domains-update")
     @Scheduled(fixedRate = "\${spaceup.scheduler.domains.update}", initialDelay = "\${spaceup.scheduler.delayed}")
-    fun updateDomainList() = runBlocking {
+    open fun updateDomainList() = runBlocking {
         if(dbService.isAppInstalled()) {
             log.debug("Update domain list")
             domainService.updateDomainList()
