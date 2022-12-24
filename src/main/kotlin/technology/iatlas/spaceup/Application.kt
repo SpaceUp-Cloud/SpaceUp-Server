@@ -145,14 +145,14 @@ fun String.decrypt(secret: String): String {
 
 fun Feedback.toHttpResponse(): HttpResponse<Feedback> {
     return if(this.isOk()) {
-        HttpResponse.created(this)
+        HttpResponse.ok(this)
     } else {
         HttpResponse.badRequest(this)
     }
 }
 
 fun Feedback.isOk(): Boolean {
-    return if((this.info.isNotEmpty() && this.error.isEmpty()) || this.error.isEmpty()) {
+    return if(this.info.isNotEmpty() && this.error.isEmpty() || (this.info.isEmpty() && this.error.isEmpty())) {
         true
     } else if (this.error.isNotEmpty()) {
         false
