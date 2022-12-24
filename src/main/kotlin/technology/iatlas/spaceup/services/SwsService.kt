@@ -166,7 +166,7 @@ open class SwsService(
                 if(found && feedback.isOk()) {
                     val result = swsRepo.replaceOne(Sws::name eq sws.name, sws).awaitFirst()
                     if(result.wasAcknowledged() && result.matchedCount > 0) {
-                        feedback.info = "updated ${sws.name} successfully"
+                        feedback.info = "Updated ${sws.name} successfully"
                     } else {
                         feedback.error = errorCase
                     }
