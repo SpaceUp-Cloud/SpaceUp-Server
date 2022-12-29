@@ -63,6 +63,10 @@ fun String.toFile(): File {
     return this.createNormalizedPath().toFile()
 }
 
+fun String.toTempFile(): File {
+    return kotlin.io.path.createTempFile("sws-${(1..100).random()}").normalize().toFile()
+}
+
 fun String.toSWS(): SWS {
     var sws: SWS
     kotlin.io.path.createTempFile("sws-${(1..100).random()}.sws").normalize().toFile().apply {

@@ -68,8 +68,8 @@ import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.dto.SftpFile
 import technology.iatlas.spaceup.dto.db.Sws
 import technology.iatlas.spaceup.isOk
-import technology.iatlas.spaceup.util.toFile
 import technology.iatlas.spaceup.util.toSWS
+import technology.iatlas.spaceup.util.toTempFile
 import technology.iatlas.sws.SWS
 import technology.iatlas.sws.objects.ParserException
 
@@ -86,7 +86,7 @@ open class SwsService(
     private fun validateSWS(sws: Sws, feedback: Feedback) {
         log.info("Validate sws")
         // Create a temporary file
-        val isDeleted = kotlin.io.path.createTempFile("${sws.name}.sws").normalize().toFile().apply {
+        val isDeleted = "${sws.name}.sws".toTempFile().apply {
             this.writeText(sws.content)
             try {
                 SWS.createAndParse(this)
@@ -272,12 +272,11 @@ open class SwsService(
 
         // Generate SWS
         var sws: SWS
-        val file = "${spaceupLocalPathConfig.temp}/${swsDb.name}.sws".toFile()
-        file.bufferedWriter().use {
-            it.write(swsDb.content)
-        }.apply {
-            sws = SWS.createAndParse(file, swsHttpParameters, body)
-        }
+        val file = "${spaceupLocalPathConfig.temp}/${swsDb.name}.sws".toTempFile()
+        file.apply {
+            this.writeText(swsDb.content)
+            sws = SWS.createAndParse(this, swsHttpParameters, body)
+        }.delete()
 
         // Check if the request url matches with end
         if((!path.contains(sws.name) ||
@@ -294,7 +293,7 @@ open class SwsService(
         // Actual execution
         var response: SshResponse
         val scriptname = "SWS_${sws.name.replace(" ", "_")}.sh"
-        val isDeleted = "${spaceupLocalPathConfig.temp}/$scriptname".toFile().apply {
+        val isDeleted = "${spaceupLocalPathConfig.temp}/$scriptname".toTempFile().apply {
             this.writeText(sws.serverScript)
 
             val script = "${spaceupRemotePathConfig.temp}/$scriptname"
