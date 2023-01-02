@@ -180,15 +180,19 @@ open class SshService(
             val stdout = String(responseStream.toByteArray())
             var stderr = String(errorResponseStream.toByteArray())
             if (stderr.isNotEmpty() && executionChannel.exitStatus != 0) {
-                stderr = """
+                val scriptErr = """
                         Script: ${command.shellScript}
                         Command: ${command.parameters.joinToString(" ")}
                         Script error: $stderr
                         terminated with exit code: ${executionChannel.exitStatus}
                     """.trimIndent()
                 colored {
-                    log.error(stderr.red)
+                    log.error(scriptErr.red)
                 }
+                stderr = """
+                        Script error: $stderr
+                        terminated with exit code: ${executionChannel.exitStatus}
+                    """.trimIndent()
             }
             val sshResponse = SshResponse(stdout, stderr)
             log.trace(sshResponse.toString())
