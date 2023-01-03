@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -42,6 +42,7 @@
 
 package technology.iatlas.spaceup.core.httpfilter
 
+import com.nimbusds.jwt.JWTParser
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MutableHttpResponse
@@ -50,16 +51,23 @@ import io.micronaut.http.filter.HttpServerFilter
 import io.micronaut.http.filter.ServerFilterChain
 import io.micronaut.http.simple.SimpleHttpResponseFactory
 import io.micronaut.security.annotation.Secured
+import io.micronaut.security.authentication.Authentication
 import io.micronaut.security.rules.SecurityRule
+import io.micronaut.security.token.jwt.validator.DefaultJwtAuthenticationFactory
 import io.micronaut.tracing.annotation.NewSpan
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.runBlocking
+import org.litote.kmongo.eq
 import org.reactivestreams.Publisher
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.scheduler.Schedulers
+import technology.iatlas.spaceup.dto.db.User
 import technology.iatlas.spaceup.services.DbService
 import technology.iatlas.spaceup.services.SpaceUpService
 import technology.iatlas.spaceup.services.SwsService
+import java.util.*
 
 
 @Filter("/api/sws/exec/**")
@@ -67,7 +75,8 @@ import technology.iatlas.spaceup.services.SwsService
 open class SwsRouteFilter(
     private val swsService: SwsService,
     private val dbService: DbService,
-    private val spaceUpService: SpaceUpService
+    private val spaceUpService: SpaceUpService,
+    private val jwt: DefaultJwtAuthenticationFactory
 ) : HttpServerFilter {
 
     @NewSpan("sws-http")
@@ -76,7 +85,7 @@ open class SwsRouteFilter(
         return Flux.from(Mono.fromCallable {
             runBlocking {
                 if(dbService.isAppInstalled() &&
-                    ((request.userPrincipal.isPresent && !spaceUpService.isDevMode()) || spaceUpService.isDevMode())) {
+                    ((isValidJWT(request) && !spaceUpService.isDevMode()) || spaceUpService.isDevMode())) {
                     swsService.execute(request)
                 } else {
                     SimpleHttpResponseFactory.INSTANCE.status<String>(
@@ -84,5 +93,26 @@ open class SwsRouteFilter(
                 }
             }
         }.subscribeOn(Schedulers.boundedElastic()).flux())
+    }
+
+    // That's somehow a workaround to validate if we are authenticated
+    private fun isValidJWT(request: HttpRequest<*>): Boolean {
+        val authHeader: String? = request.headers["authorization"]
+        var auth = Optional.empty<Authentication>()
+        if(authHeader != null && authHeader.contains("Bearer")) { // Needs to be a Bearer token
+            auth = jwt.createAuthentication(JWTParser.parse(authHeader.split(" ")[1]))
+        }
+
+        var userFound = false
+        if(auth.isPresent) {
+            // let's check the authentication name against db
+            val userRepo = dbService.getRepo<User>()
+            runBlocking {
+                userRepo.find(User::username eq auth.get().name).asFlow().first().apply {
+                    userFound =  this.username == auth.get().name
+                }
+            }
+        }
+        return userFound
     }
 }
