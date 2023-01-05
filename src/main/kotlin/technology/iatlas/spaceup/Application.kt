@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -152,7 +152,9 @@ fun Feedback.toHttpResponse(): HttpResponse<Feedback> {
 }
 
 fun Feedback.isOk(): Boolean {
-    return if(this.info.isNotEmpty() && this.error.isEmpty() || (this.info.isEmpty() && this.error.isEmpty())) {
+    return if((this.info.isNotEmpty() && this.error.isEmpty())
+        || (this.info.isEmpty() && this.error.isEmpty())
+        || (this.info.isNotEmpty() || this.error.isNotEmpty())) {
         true
     } else if (this.error.isNotEmpty()) {
         false
