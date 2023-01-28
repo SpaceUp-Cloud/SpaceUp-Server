@@ -124,7 +124,6 @@ object Api
 
 fun main(args: Array<String>) {
 	build()
-        .eagerInitSingletons(true)
 	    .args(*args)
 		.packages("technology.iatlas.spaceup")
         .defaultEnvironments("prod")
