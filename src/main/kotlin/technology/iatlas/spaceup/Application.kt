@@ -155,7 +155,7 @@ fun Feedback.isOk(): Boolean {
         || (this.info.isEmpty() && this.error.isEmpty())
         || (this.info.isNotEmpty() || this.error.isNotEmpty())) {
         true
-    } else if (this.error.isNotEmpty()) {
+    } else if (this.error.isNotEmpty() || this.info.isEmpty()) {
         false
     } else {
         false
