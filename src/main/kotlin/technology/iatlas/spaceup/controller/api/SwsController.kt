@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -95,5 +95,10 @@ class SwsController(
     suspend fun deleteSws(@PathVariable name: String): HttpResponse<Feedback> {
         log.info("Delete sws $name")
         return swsService.delete(name).toHttpResponse()
+    }
+
+    @Get("/template", produces = [MediaType.TEXT_PLAIN])
+    suspend fun getSwsTemplate(): HttpResponse<String> {
+        return HttpResponse.ok(swsService.getTemplate())
     }
 }

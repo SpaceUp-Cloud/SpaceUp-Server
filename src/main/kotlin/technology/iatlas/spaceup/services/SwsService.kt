@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -321,6 +321,10 @@ open class SwsService(
             SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.INTERNAL_SERVER_ERROR, feedback)
         }
 
+    }
+
+    fun getTemplate(): String {
+        return SWS.clientTemplate()
     }
 }
 
