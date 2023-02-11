@@ -81,7 +81,7 @@ open class SwsRouteFilter(
 
     @NewSpan("sws-http")
     override fun doFilter(
-        request: HttpRequest<*>, chain: ServerFilterChain?): Publisher<MutableHttpResponse<*>> {
+        request: HttpRequest<*>, chain: ServerFilterChain?): Publisher<MutableHttpResponse<*>>? {
         return Flux.from(Mono.fromCallable {
             runBlocking {
                 if(dbService.isAppInstalled() &&

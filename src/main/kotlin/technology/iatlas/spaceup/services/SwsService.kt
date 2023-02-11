@@ -68,6 +68,7 @@ import technology.iatlas.spaceup.dto.Feedback
 import technology.iatlas.spaceup.dto.SftpFile
 import technology.iatlas.spaceup.dto.db.Sws
 import technology.iatlas.spaceup.isOk
+import technology.iatlas.spaceup.toMutableHttpResponse
 import technology.iatlas.spaceup.util.toSWS
 import technology.iatlas.spaceup.util.toTempFile
 import technology.iatlas.sws.SWS
@@ -150,8 +151,7 @@ open class SwsService(
         val swsRepo = dbService.getRepo<Sws>()
 
         // Find all SWS configurations
-        val allSws = swsRepo.find()
-        return allSws.toList()
+        return swsRepo.find().toList()
     }
 
     @NewSpan("sws-update")
@@ -166,7 +166,7 @@ open class SwsService(
                 if(found && feedback.isOk()) {
                     val result = swsRepo.replaceOne(Sws::name eq sws.name, sws).awaitFirst()
                     if(result.wasAcknowledged() && result.matchedCount > 0) {
-                        feedback.info = "Updated ${sws.name} successfully"
+                        feedback.info = "Updated '${sws.name}' successfully"
                     } else {
                         feedback.error = errorCase
                     }
@@ -179,7 +179,7 @@ open class SwsService(
 
     @NewSpan("sws-delete")
     open fun delete(@SpanTag("sws-name") name: String): Feedback {
-        log.info("Delete $name on database")
+        log.info("Delete '$name' on database")
         val feedback = Feedback("", "")
 
         val swsRepo = dbService.getRepo<Sws>()
@@ -202,15 +202,14 @@ open class SwsService(
         log.info("Found ${swsList.size} server web scripts.")
         swsList.forEach { sws ->
             try {
-                run {
-                    log.debug("Add '${sws.name}' to cache")
-                    // If it throws an exception, the content is corrupt
-                    swsCache.add(sws.content.toSWS())
-                }
+                log.debug("Add '${sws.name}' to cache")
+                // If it throws an exception, the content is corrupt
+                swsCache.add(sws.content.toSWS())
             }catch (ex: ParserException) {
                 log.error(ex.message)
             }
         }
+        log.info("Added ${swsList.size} SWS to cache.")
     }
 
     @NewSpan("sws-execute")
@@ -233,7 +232,7 @@ open class SwsService(
                 // Values come always as String. We have to cast numbers to integers
                 swsHttpParameters[k] = Integer.valueOf(v[0])
             } catch (ex: NumberFormatException) {
-                swsHttpParameters[k] = v[0]
+                swsHttpParameters[k] = v[0] // If it is not an integer, we handle it like a string
             }
         }
 
@@ -253,7 +252,7 @@ open class SwsService(
         }
 
         // Validate request to sws
-        var feedback = Feedback("", "")
+        val feedback = Feedback("", "")
         // /<sws name>/<custom endpoint>
         lateinit var swsDb: Sws
         try {
@@ -291,7 +290,7 @@ open class SwsService(
         }
 
         // Actual execution
-        var response: SshResponse
+        var sshResponse: SshResponse
         val scriptname = "SWS_${sws.name.replace(" ", "_")}.sh"
         val isDeleted = "${spaceupLocalPathConfig.temp}/$scriptname".toTempFile().apply {
             this.writeText(sws.serverScript)
@@ -308,21 +307,19 @@ open class SwsService(
 
             // Upload + execute
             runBlocking {
-                response = sshService.upload(
+                sshResponse = sshService.upload(
                     Command(cmd, SftpFile(scriptname, this@apply.toURI().toURL(),  true)))
             }
         }.delete()
         log.trace("Is deleted: $isDeleted")
 
-        feedback = response.toFeedback()
-        return if(feedback.isOk()) {
-            SimpleHttpResponseFactory.INSTANCE.ok(feedback)
-        } else {
-            SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.INTERNAL_SERVER_ERROR, feedback)
-        }
-
+        return sshResponse.toFeedback().toMutableHttpResponse()
     }
 
+    /**
+     * Generate a SWS template for the client
+     * @return SWS template
+     */
     fun getTemplate(): String {
         return SWS.clientTemplate()
     }

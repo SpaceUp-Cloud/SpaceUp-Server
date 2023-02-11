@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -74,8 +74,8 @@ open class InstallerService(
      */
     fun generateAPIKey(): String {
         // Create API Key to validate it is the correct user
-        val apiKey: String = List(8) {
-            (('a'..'z') + ('A'..'Z') + ('0'..'9')).random()
+        val apiKey: String = List(30) { // 30 - To be more strict
+            (('a'..'z') + ('A'..'Z') + ('0'..'9')).random() // Test it!  + ('!' .. '#')
         }.joinToString("")
 
         return apiKey
