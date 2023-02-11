@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -67,8 +67,8 @@ open class DbService(
     init {
         val client = KMongo.createClient(mongoDbConnection)
         // sanitize credentials
-        val regex = Regex("://(.*:.*)@")
-        log.info("Created DB Connection to ${mongoDbConnection.replace(regex, "://[hidden]:[hidden]@")}")
+        log.info("Created DB Connection to ${mongoDbConnection.replace(
+            Regex("://(.*:.*)@"), "://[hidden]:[hidden]@")}")
         db = if(spaceUpService.isDevMode()) {
             colored {
                 log.info("Get development DB".yellow)
@@ -90,16 +90,6 @@ open class DbService(
         return getDb().getCollection()
     }
 
-    fun init() {
-        /*try {
-            db.createCollection("Server")
-            db.createCollection("User")
-            db.createCollection("SSH")
-        }catch (ex: MongoCommandException) {
-            log.warn("Collections already exist!")
-        }*/
-    }
-
     @ContinueSpan
     open suspend fun isAppInstalled(): Boolean {
         val serverRepo = db.getCollection<Server>()
@@ -109,6 +99,7 @@ open class DbService(
         if(server != null) {
             isInstalled = server.installed
         }
+        log.info("Server installed: $isInstalled")
         return isInstalled
     }
 

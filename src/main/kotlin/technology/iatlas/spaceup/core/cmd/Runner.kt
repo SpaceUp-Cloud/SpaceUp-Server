@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2022 spaceup@iatlas.technology.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
+ *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
  * You don't have to do anything special to accept the license and you don’t have to notify anyone which that you have made that decision.
@@ -10,7 +11,6 @@
  *
  * You should have received a copy of both licenses along with SpaceUp-Server
  * If not, see <http://www.gnu.org/licenses/>.
- *
  *
  * There is a strong belief within us that the license we have chosen provides not only the best solution for providing you with the essential freedom necessary to use SpaceUp-Server within your projects, but also for maintaining enough copyleft strength for us to feel confident and secure with releasing our hard work to the public. For your convenience we've included our own interpretation of the license we chose, which can be seen below.
  *
@@ -47,6 +47,7 @@ import io.micronaut.tracing.annotation.ContinueSpan
 import io.micronaut.tracing.annotation.SpanTag
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import technology.iatlas.spaceup.core.helper.colored
 import technology.iatlas.spaceup.services.SshService
 
 @Context
@@ -59,7 +60,7 @@ open class Runner<T>(
         log.debug("Actual cmd: {} ", cmd.parameters)
 
         val script = cmd.shellScript
-        val output = if(script.name == "") {
+        val output: T = if(script.name == "") {
             val res = sshService.execute(cmd)
             parser.parseSshOutput(res)
         } else {
@@ -67,7 +68,15 @@ open class Runner<T>(
             parser.parseSshOutput(res)
         }
 
-        log.trace("Parsed output: $output")
-        subject.onNext(output)
+        if(output != null) {
+            log.trace("Parsed output: $output")
+            subject.onNext(output)
+        } else {
+            val fatalError = "SSH output is null! This should not be able!"
+            colored {
+                log.error(fatalError.red.bold)
+                throw Exception(fatalError)
+            }
+        }
     }
 }

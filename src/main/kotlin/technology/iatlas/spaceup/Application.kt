@@ -57,6 +57,9 @@ import com.jcraft.jsch.jce.SHA256
 import com.jcraft.jsch.jce.SignatureRSASHA512
 import io.micronaut.core.annotation.TypeHint
 import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.MutableHttpResponse
+import io.micronaut.http.simple.SimpleHttpResponseFactory
 import io.micronaut.runtime.Micronaut.build
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.info.Contact
@@ -147,6 +150,14 @@ fun Feedback.toHttpResponse(): HttpResponse<Feedback> {
         HttpResponse.ok(this)
     } else {
         HttpResponse.badRequest(this)
+    }
+}
+
+fun Feedback.toMutableHttpResponse(): MutableHttpResponse<Feedback> {
+    return if(this.isOk()) {
+        SimpleHttpResponseFactory.INSTANCE.ok(this)
+    } else {
+        SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.BAD_REQUEST, this)
     }
 }
 
