@@ -76,7 +76,7 @@ dependencies {
     implementation 'io.micronaut.security:micronaut-security:3.8.3'
     implementation 'io.micronaut.security:micronaut-security-jwt:3.8.3'
     implementation 'io.micronaut.kotlin:micronaut-kotlin-extension-functions:3.2.2'
-    implementation 'com.google.code.gson:gson:2.10'
+    implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
     implementation 'com.github.mwiede:jsch:0.2.4'
     // NoSQL
