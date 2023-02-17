@@ -57,7 +57,7 @@ dependencies {
     implementation "io.swagger.core.v3:swagger-annotations"
     implementation "io.micronaut:micronaut-inject:$micronautVersion"
     implementation "io.micronaut:micronaut-validation:$micronautVersion"
-    implementation 'io.micronaut.rxjava3:micronaut-rxjava3:2.3.0'
+    implementation 'io.micronaut.rxjava3:micronaut-rxjava3:2.4.0'
     implementation "io.reactivex.rxjava3:rxkotlin:3.0.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
     implementation "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
