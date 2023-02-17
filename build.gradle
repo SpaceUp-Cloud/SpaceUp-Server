@@ -53,7 +53,7 @@ dependencies {
     compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     compileOnly 'org.graalvm.nativeimage:svm:22.2.0'
     implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    implementation 'io.micronaut:micronaut-management:3.7.4'
+    implementation 'io.micronaut:micronaut-management:3.8.5'
     implementation "io.swagger.core.v3:swagger-annotations"
     implementation "io.micronaut:micronaut-inject:$micronautVersion"
     implementation "io.micronaut:micronaut-validation:$micronautVersion"
