@@ -102,7 +102,7 @@ dependencies {
     //runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1'
     runtimeOnly 'io.netty:netty-tcnative:2.0.54.Final'
-    runtimeOnly 'io.netty:netty-tcnative-boringssl-static:2.0.54.Final'
+    runtimeOnly 'io.netty:netty-tcnative-boringssl-static:2.0.59.Final'
     implementation "org.reflections:reflections:0.10.2"
     kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     kaptTest "io.micronaut:micronaut-inject-java:$micronautVersion"
