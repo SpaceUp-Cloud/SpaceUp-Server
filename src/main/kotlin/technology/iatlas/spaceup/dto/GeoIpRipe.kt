@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -40,67 +40,25 @@
  * Thanks, and we hope you enjoy using SpaceUp-Server and that it's everything you ever hoped it could be.
  */
 
+package technology.iatlas.spaceup.dto
 
-package technology.iatlas.spaceup.services
+import io.micronaut.serde.annotation.Serdeable
 
-import com.mongodb.reactivestreams.client.MongoCollection
-import com.mongodb.reactivestreams.client.MongoDatabase
-import io.micronaut.context.annotation.Context
-import io.micronaut.context.annotation.Value
-import io.micronaut.tracing.annotation.ContinueSpan
-import kotlinx.coroutines.reactive.awaitFirstOrNull
-import org.litote.kmongo.coroutine.*
-import org.litote.kmongo.reactivestreams.*
-import org.slf4j.LoggerFactory
-import technology.iatlas.spaceup.core.helper.colored
-import technology.iatlas.spaceup.dto.db.Server
+// https://stat.ripe.net/data/whois/data.json?resource=
 
-@Context
-open class DbService(
-    spaceUpService: SpaceUpService,
-    @Value("\${mongodb.uri}")
-    mongoDbConnection: String
-) {
-    private val log = LoggerFactory.getLogger(DbService::class.java)
-    private var db: MongoDatabase
+@Serdeable
+data class GeoIpRipe(
+    val data: Data // DE
+)
 
-    init {
-        val client = KMongo.createClient(mongoDbConnection)
-        // sanitize credentials
-        log.info("Created DB Connection to ${mongoDbConnection.replace(
-            Regex("://(.*:.*)@"), "://[hidden]:[hidden]@")}")
-        db = if(spaceUpService.isDevMode()) {
-            colored {
-                log.info("Get development DB".yellow)
-            }
-            client.getDatabase("SpaceUp_Dev")
-        } else {
-            client.getDatabase("SpaceUp")
-        }
-    }
+@Serdeable
+data class Data(
+    val records: List<List<Records>>
+)
 
-    fun getDb(): MongoDatabase {
-        return db
-    }
-
-    /**
-     * Simplified access to mongodb collection
-     */
-    inline fun <reified T : Any> getRepo(): MongoCollection<T> {
-        return getDb().getCollection()
-    }
-
-    @ContinueSpan
-    open suspend fun isAppInstalled(): Boolean {
-        val serverRepo = db.getCollection<Server>()
-        val server = serverRepo.find().awaitFirstOrNull()
-
-        var isInstalled = false
-        if(server != null) {
-            isInstalled = server.installed
-        }
-        log.trace("Server installed: $isInstalled")
-        return isInstalled
-    }
-
- }
+@Serdeable
+data class Records(
+    // country
+    val key: String,
+    val value: String,
+)

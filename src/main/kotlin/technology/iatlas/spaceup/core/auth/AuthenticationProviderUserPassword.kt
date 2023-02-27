@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -43,7 +43,9 @@
 package technology.iatlas.spaceup.core.auth
 
 import io.micronaut.context.annotation.Context
+import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpRequest
+import io.micronaut.http.client.HttpClient
 import io.micronaut.security.authentication.AuthenticationProvider
 import io.micronaut.security.authentication.AuthenticationRequest
 import io.micronaut.security.authentication.AuthenticationResponse
@@ -56,8 +58,12 @@ import kotlinx.coroutines.runBlocking
 import org.litote.kmongo.reactivestreams.getCollection
 import org.reactivestreams.Publisher
 import org.slf4j.LoggerFactory
+import reactor.core.publisher.Mono
 import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.helper.colored
+import technology.iatlas.spaceup.dto.Data
+import technology.iatlas.spaceup.dto.GeoIpRipe
+import technology.iatlas.spaceup.dto.Records
 import technology.iatlas.spaceup.dto.db.User
 import technology.iatlas.spaceup.services.DbService
 import technology.iatlas.spaceup.services.SecurityService
@@ -66,8 +72,9 @@ import technology.iatlas.spaceup.services.SecurityService
 @Context
 class AuthenticationProviderUserPassword(
     private val dbService: DbService,
-    private val securityService: SecurityService
-): AuthenticationProvider  {
+    private val securityService: SecurityService,
+    private val httpClient: HttpClient
+) : AuthenticationProvider {
     private val log = LoggerFactory.getLogger(AuthenticationProviderUserPassword::class.java)
 
     private var ip: String = ""
@@ -76,16 +83,35 @@ class AuthenticationProviderUserPassword(
         httpRequest: HttpRequest<*>?,
         authenticationRequest: AuthenticationRequest<*, *>?
     ): Publisher<AuthenticationResponse>? {
-        val db = dbService.getDb()
-        val userRepo = db.getCollection<User>()
+        val errorAuth = Flowable.create({ emitter: FlowableEmitter<AuthenticationResponse> ->
+            emitter.onError(AuthenticationResponse.exception())
+        }, BackpressureStrategy.LATEST)
 
-        validateIp(httpRequest)
-        tryAccess()
-        // TODO use an IP database or API to block foreign countries if wished.
+        var response: Flowable<AuthenticationResponse> = errorAuth // Default error!
+        return if (httpRequest != null) {
+            validateIp(httpRequest).subscribe { geoip ->
+                val country: Records = geoip.data.records.first().find { it.key == "country" } ?: Records("country", "")
+                if (country.value == "DE") {
+                    response = authenticateUser(authenticationRequest, errorAuth)
+                } else {
+                    log.warn("Blocked authentication from country ${country.value} with ip $ip.")
+                }
+            }
+            response
+        } else {
+            response
+        }
+    }
 
-        return Flowable.create({
-            emitter: FlowableEmitter<AuthenticationResponse> ->
+    private fun authenticateUser(
+        authenticationRequest: AuthenticationRequest<*, *>?,
+        errorAuth: Flowable<AuthenticationResponse>
+    ): Flowable<AuthenticationResponse> {
+        return Flowable.create({ emitter: FlowableEmitter<AuthenticationResponse> ->
             if (authenticationRequest != null) {
+                val db = dbService.getDb()
+                val userRepo = db.getCollection<User>()
+
                 runBlocking {
                     val userFound = userRepo.find().asFlow().toList().find {
                         var found = false
@@ -97,9 +123,9 @@ class AuthenticationProviderUserPassword(
                         found
                     }
 
-                    if(userFound != null) {
+                    if (userFound != null) {
                         colored {
-                            log.info("User ${userFound.username} is authenticated!".green.bold)
+                            log.info("User ${userFound.username} is authenticated from IP $ip".green.bold)
                         }
                         emitter.onNext(AuthenticationResponse.success(userFound.username))
                         emitter.onComplete()
@@ -107,30 +133,34 @@ class AuthenticationProviderUserPassword(
                         colored {
                             log.error("User ${authenticationRequest.identity} not found!".red.bold)
                         }
-                        emitter.onError(AuthenticationResponse.exception())
+                        errorAuth
                     }
-                    logAccess()
                 }
             } else {
-                emitter.onError(AuthenticationResponse.exception())
+                errorAuth
             }
         }, BackpressureStrategy.ERROR)
     }
 
-    private fun logAccess() {
-        // Get remote address who tried to access SpaceUp. Might be malicious. >:(
-        log.info("Authenticated from $ip")
-    }
+    private fun validateIp(httpRequest: HttpRequest<*>): Mono<GeoIpRipe> {
+        ip = httpRequest.headers.get("X-Forwarded-For") ?: httpRequest.remoteAddress.address.hostAddress
+        log.debug("Possible authentication from $ip with headers ${httpRequest.headers.asMap()}")
 
-    private fun tryAccess() {
-        log.warn("Possible authentication from $ip")
-    }
-
-    private fun validateIp(httpRequest: HttpRequest<*>?) {
-        ip = if(httpRequest != null) {
-            httpRequest.headers.get("X-Forwarded-For") ?: httpRequest.remoteAddress.address.hostAddress
+        // Make it work for local development / requests
+        return if (ip == "localhost" || ip == "127.0.0.1" || ip == "0:0:0:0:0:0:0:1") {
+            Mono.just(
+                GeoIpRipe(
+                    Data(
+                        listOf(listOf(Records("country", "DE")))
+                    )
+                )
+            )
         } else {
-            "<Unknown IP-Address>"
+            val request: HttpRequest<*> =
+                // TODO for future: Move API url to configuration
+                HttpRequest.GET<Any>("https://stat.ripe.net/data/whois/data.json?resource=$ip")
+                    .accept("application/json")
+            Mono.from(httpClient.retrieve(request, Argument.of(GeoIpRipe::class.java)))
         }
     }
 }
