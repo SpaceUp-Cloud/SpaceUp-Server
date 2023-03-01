@@ -46,7 +46,7 @@ configurations {
 dependencies {
     kapt(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     kapt 'io.micronaut:micronaut-inject-java:3.8.6'
-    kapt 'io.micronaut:micronaut-validation:3.8.5'
+    kapt 'io.micronaut:micronaut-validation:3.8.6'
     kapt "io.micronaut:micronaut-graal:$micronautVersion"
     kapt 'io.micronaut.openapi:micronaut-openapi:4.8.2'
     kapt 'io.micronaut.security:micronaut-security-annotations:3.9.2'
