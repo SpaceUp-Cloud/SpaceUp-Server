@@ -73,7 +73,7 @@ dependencies {
     implementation 'io.zipkin.brave:brave-context-log4j2:5.14.1'
     runtimeOnly "io.zipkin.brave:brave-instrumentation-httpclient:5.15.0"
     runtimeOnly "io.zipkin.reporter:zipkin-reporter:1.1.2"
-    implementation 'io.micronaut.security:micronaut-security:3.9.2'
+    implementation 'io.micronaut.security:micronaut-security:3.10.0'
     implementation 'io.micronaut.security:micronaut-security-jwt:3.10.0'
     implementation 'io.micronaut.kotlin:micronaut-kotlin-extension-functions:3.2.2'
     implementation 'com.google.code.gson:gson:2.10.1'
