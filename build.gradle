@@ -49,7 +49,7 @@ dependencies {
     kapt 'io.micronaut:micronaut-validation:3.8.6'
     kapt "io.micronaut:micronaut-graal:$micronautVersion"
     kapt 'io.micronaut.openapi:micronaut-openapi:4.8.2'
-    kapt 'io.micronaut.security:micronaut-security-annotations:3.9.2'
+    kapt 'io.micronaut.security:micronaut-security-annotations:3.10.0'
     compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     compileOnly 'org.graalvm.nativeimage:svm:22.3.1'
     implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
