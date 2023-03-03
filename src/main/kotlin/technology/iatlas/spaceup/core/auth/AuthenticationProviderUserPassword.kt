@@ -52,9 +52,11 @@ import io.micronaut.security.authentication.AuthenticationResponse
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableEmitter
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.litote.kmongo.reactivestreams.getCollection
 import org.reactivestreams.Publisher
 import org.slf4j.LoggerFactory
@@ -67,6 +69,7 @@ import technology.iatlas.spaceup.dto.Records
 import technology.iatlas.spaceup.dto.db.User
 import technology.iatlas.spaceup.services.DbService
 import technology.iatlas.spaceup.services.SecurityService
+import java.time.Duration
 
 @Installed
 @Context
@@ -82,30 +85,32 @@ class AuthenticationProviderUserPassword(
     override fun authenticate(
         httpRequest: HttpRequest<*>?,
         authenticationRequest: AuthenticationRequest<*, *>?
-    ): Publisher<AuthenticationResponse>? {
-        val errorAuth = Flowable.create({ emitter: FlowableEmitter<AuthenticationResponse> ->
-            emitter.onError(AuthenticationResponse.exception())
-        }, BackpressureStrategy.LATEST)
-
-        var response: Flowable<AuthenticationResponse> = errorAuth // Default error!
-        return if (httpRequest != null) {
-            validateIp(httpRequest).subscribe { geoip ->
-                val country: Records = geoip.data.records.first().find { it.key == "country" } ?: Records("country", "")
-                if (country.value == "DE") {
-                    response = authenticateUser(authenticationRequest, errorAuth)
-                } else {
-                    log.warn("Blocked authentication from country ${country.value} with ip $ip.")
+    ): Publisher<AuthenticationResponse> {
+        val authPublisher = Flowable.create({ emitter: FlowableEmitter<AuthenticationResponse> ->
+            runBlocking {
+                if (httpRequest != null) {
+                    val geoip = withContext(Dispatchers.IO) {
+                        validateIp(httpRequest).block(Duration.ofMillis(5000))
+                    }
+                    val country: Records =
+                        geoip.data.records.first().find { it.key == "country" } ?: Records("country", "")
+                    if (country.value == "DE") {
+                        // authenticateUser(authenticationRequest)
+                        val response = authenticateUser(authenticationRequest).blockingFirst()
+                        emitter.onNext(response)
+                        emitter.onComplete()
+                    } else {
+                        log.warn("Blocked authentication from country ${country.value} with ip $ip.")
+                        emitter.onError(AuthenticationResponse.exception())
+                    }
                 }
             }
-            response
-        } else {
-            response
-        }
+        }, BackpressureStrategy.LATEST)
+        return authPublisher
     }
 
     private fun authenticateUser(
-        authenticationRequest: AuthenticationRequest<*, *>?,
-        errorAuth: Flowable<AuthenticationResponse>
+        authenticationRequest: AuthenticationRequest<*, *>?
     ): Flowable<AuthenticationResponse> {
         return Flowable.create({ emitter: FlowableEmitter<AuthenticationResponse> ->
             if (authenticationRequest != null) {
@@ -133,11 +138,8 @@ class AuthenticationProviderUserPassword(
                         colored {
                             log.error("User ${authenticationRequest.identity} not found!".red.bold)
                         }
-                        errorAuth
                     }
                 }
-            } else {
-                errorAuth
             }
         }, BackpressureStrategy.ERROR)
     }

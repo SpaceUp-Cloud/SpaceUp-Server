@@ -132,11 +132,11 @@ open class StartupEventListener(
             val home = ShellLocation.HOME
 
             shellRun(home) {
-                log.info("Create $home/$spaceupTempDir")
+                log.info("Create $spaceupTempDir")
                 command("mkdir", listOf("-p", spaceupTempDir))
             }
             // Set properties for spaceup
-            System.setProperty("spaceup.tempdir", "$home/$spaceupTempDir")
+            System.setProperty("spaceup.tempdir", spaceupTempDir)
         } else if (os.lowercase().contains("windows")) {
             log.info("Create ${spaceupTempDir.createNormalizedPath()}")
             Path(spaceupTempDir).normalize().createDirectories()
