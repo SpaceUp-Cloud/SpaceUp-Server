@@ -4,7 +4,7 @@ plugins {
     id "org.jetbrains.kotlin.plugin.allopen" version "${kotlinVersion}"
     id "com.github.johnrengelman.shadow" version "7.1.2"
     id "org.sonarqube" version "4.0.0.2929"
-    id "nebula.lint" version "17.8.0" // 18.0.0 works only with Gradle 8.x
+    id "nebula.lint" version "18.0.3" // 18.0.0 works only with Gradle 8.x
     //id "io.micronaut.aot" version "3.6.5"
     id 'io.micronaut.application' version '3.7.5'
     id 'project-report'
