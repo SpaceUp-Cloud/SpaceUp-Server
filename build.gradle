@@ -4,9 +4,9 @@ plugins {
     id "org.jetbrains.kotlin.plugin.allopen" version "${kotlinVersion}"
     id "com.github.johnrengelman.shadow" version "7.1.2"
     id "org.sonarqube" version "4.0.0.2929"
-    id "nebula.lint" version "17.8.0" // 18.0.0 works only with Gradle 8.x
+    id "nebula.lint" version "18.0.3" // 18.0.0 works only with Gradle 8.x
     //id "io.micronaut.aot" version "3.6.5"
-    id 'io.micronaut.application' version '3.7.4'
+    id 'io.micronaut.application' version '3.7.5'
     id 'project-report'
     id "application"
     id 'maven-publish'
@@ -45,19 +45,19 @@ configurations {
 
 dependencies {
     kapt(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    kapt 'io.micronaut:micronaut-inject-java:3.8.6'
-    kapt 'io.micronaut:micronaut-validation:3.8.6'
+    kapt 'io.micronaut:micronaut-inject-java:3.8.7'
+    kapt 'io.micronaut:micronaut-validation:3.8.7'
     kapt "io.micronaut:micronaut-graal:$micronautVersion"
-    kapt 'io.micronaut.openapi:micronaut-openapi:4.8.2'
+    kapt 'io.micronaut.openapi:micronaut-openapi:4.8.5'
     kapt 'io.micronaut.security:micronaut-security-annotations:3.10.0'
     compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     compileOnly 'org.graalvm.nativeimage:svm:22.3.1'
     implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    implementation 'io.micronaut:micronaut-management:3.8.6'
+    implementation 'io.micronaut:micronaut-management:3.8.7'
     implementation "io.swagger.core.v3:swagger-annotations"
     implementation "io.micronaut:micronaut-inject:$micronautVersion"
     implementation "io.micronaut:micronaut-validation:$micronautVersion"
-    implementation 'io.micronaut.rxjava3:micronaut-rxjava3:2.4.0'
+    implementation 'io.micronaut.rxjava3:micronaut-rxjava3:2.4.1'
     implementation "io.reactivex.rxjava3:rxkotlin:3.0.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
     implementation "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
