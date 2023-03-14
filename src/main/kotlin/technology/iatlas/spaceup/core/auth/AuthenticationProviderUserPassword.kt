@@ -53,6 +53,7 @@ import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableEmitter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.runBlocking
@@ -69,7 +70,6 @@ import technology.iatlas.spaceup.dto.Records
 import technology.iatlas.spaceup.dto.db.User
 import technology.iatlas.spaceup.services.DbService
 import technology.iatlas.spaceup.services.SecurityService
-import java.time.Duration
 
 @Installed
 @Context
@@ -90,7 +90,7 @@ class AuthenticationProviderUserPassword(
             runBlocking {
                 if (httpRequest != null) {
                     val geoip = withContext(Dispatchers.IO) {
-                        validateIp(httpRequest).block(Duration.ofMillis(5000))
+                        validateIp(httpRequest).asFlow().first()
                     }
                     val country: Records =
                         geoip.data.records.first().find { it.key == "country" } ?: Records("country", "")
