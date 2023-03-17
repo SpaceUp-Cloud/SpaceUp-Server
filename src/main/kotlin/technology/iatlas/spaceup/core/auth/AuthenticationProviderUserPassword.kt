@@ -52,6 +52,7 @@ import io.micronaut.security.authentication.AuthenticationResponse
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableEmitter
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
@@ -70,15 +71,18 @@ import technology.iatlas.spaceup.dto.Records
 import technology.iatlas.spaceup.dto.db.User
 import technology.iatlas.spaceup.services.DbService
 import technology.iatlas.spaceup.services.SecurityService
+import technology.iatlas.spaceup.services.SpaceUpService
 
 @Installed
 @Context
 class AuthenticationProviderUserPassword(
     private val dbService: DbService,
     private val securityService: SecurityService,
-    private val httpClient: HttpClient
+    private val httpClient: HttpClient,
+    private val spaceUpService: SpaceUpService
 ) : AuthenticationProvider {
     private val log = LoggerFactory.getLogger(AuthenticationProviderUserPassword::class.java)
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 
     private var ip: String = ""
 
@@ -89,14 +93,14 @@ class AuthenticationProviderUserPassword(
         val authPublisher = Flowable.create({ emitter: FlowableEmitter<AuthenticationResponse> ->
             runBlocking {
                 if (httpRequest != null) {
-                    val geoip = withContext(Dispatchers.IO) {
+                    val geoip = withContext(dispatcher) {
                         validateIp(httpRequest).asFlow().first()
                     }
                     val country: Records =
                         geoip.data.records.first().find { it.key == "country" } ?: Records("country", "")
                     if (country.value == "DE") {
                         // authenticateUser(authenticationRequest)
-                        val response = authenticateUser(authenticationRequest).blockingFirst()
+                        val response = authenticateUser(authenticationRequest).asFlow().first()
                         emitter.onNext(response)
                         emitter.onComplete()
                     } else {
@@ -149,7 +153,7 @@ class AuthenticationProviderUserPassword(
         log.debug("Possible authentication from $ip with headers ${httpRequest.headers.asMap()}")
 
         // Make it work for local development / requests
-        return if (ip == "localhost" || ip == "127.0.0.1" || ip == "0:0:0:0:0:0:0:1") {
+        return if (ip == "localhost" || ip == "127.0.0.1" || ip == "0:0:0:0:0:0:0:1" || spaceUpService.isDevMode()) {
             Mono.just(
                 GeoIpRipe(
                     Data(
