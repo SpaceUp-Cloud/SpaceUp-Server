@@ -111,7 +111,7 @@ dependencies {
     testImplementation "io.micronaut.test:micronaut-test-junit5:$micronautVersion"
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
     // Docker Testcontainer
-    testImplementation 'org.testcontainers:testcontainers:1.17.6'
+    testImplementation 'org.testcontainers:testcontainers:1.18.0'
 }
 
 test.classpath += configurations.developmentOnly
