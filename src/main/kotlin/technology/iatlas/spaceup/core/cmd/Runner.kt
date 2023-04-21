@@ -57,7 +57,7 @@ open class Runner<T>(
 
     @ContinueSpan
     override suspend fun execute(@SpanTag("ssh.runner") cmd: CommandInf, parser: ParserInf<T>) {
-        log.debug("Actual cmd: {} ", cmd.parameters)
+        log.debug("Actual cmd: '{}' ", cmd.parameters.joinToString(" "))
 
         val script = cmd.shellScript
         val output: T = if(script.name == "") {
@@ -69,7 +69,7 @@ open class Runner<T>(
         }
 
         if(output != null) {
-            log.trace("Parsed output: $output")
+            log.trace("Parsed output: {}", output)
             subject.onNext(output)
         } else {
             val fatalError = "SSH output is null! This should not be able!"

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -203,14 +203,16 @@ open class StartupEventListener(
 
     private fun showBanner() {
         colored {
-            println("""   ▄████████    ▄███████▄    ▄████████  ▄████████    ▄████████ ███    █▄     ▄███████▄ 
-  ███    ███   ███    ███   ███    ███ ███    ███   ███    ███ ███    ███   ███    ███ 
-  ███    █▀    ███    ███   ███    ███ ███    █▀    ███    █▀  ███    ███   ███    ███ 
-  ███          ███    ███   ███    ███ ███         ▄███▄▄▄     ███    ███   ███    ███ 
-▀███████████ ▀█████████▀  ▀███████████ ███        ▀▀███▀▀▀     ███    ███ ▀█████████▀  
-         ███   ███          ███    ███ ███    █▄    ███    █▄  ███    ███   ███        
-   ▄█    ███   ███          ███    ███ ███    ███   ███    ███ ███    ███   ███        
- ▄████████▀   ▄████▀        ███    █▀  ████████▀    ██████████ ████████▀   ▄████▀      """.cyan.bold.trimIndent())
+            println(
+                """   _____                                 _    _         
+  / ____|                               | |  | |        
+ | (___    _ __     __ _    ___    ___  | |  | |  _ __  
+  \___ \  | '_ \   / _` |  / __|  / _ \ | |  | | | '_ \ 
+  ____) | | |_) | | (_| | | (__  |  __/ | |__| | | |_) |
+ |_____/  | .__/   \__,_|  \___|  \___|  \____/  | .__/ 
+          | |                                    | |    
+          |_|                                    |_|    """.bold.trimIndent()
+            )
         }
         colored {
             println("\tSpaceUp Server (${spaceUpService.getSpaceUpVersion()})".cyan.bold)
