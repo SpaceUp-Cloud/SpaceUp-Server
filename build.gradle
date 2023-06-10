@@ -78,7 +78,7 @@ dependencies {
     implementation 'io.micronaut.kotlin:micronaut-kotlin-extension-functions:3.2.2'
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1'
-    implementation 'com.github.mwiede:jsch:0.2.8'
+    implementation 'com.github.mwiede:jsch:0.2.9'
     // NoSQL
     implementation 'io.micronaut.mongodb:micronaut-mongo-reactive:4.6.0'
     //implementation('org.litote.kmongo:kmongo:4.7.2')
