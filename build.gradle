@@ -100,7 +100,7 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.4.7'
     implementation 'org.slf4j:log4j-over-slf4j:2.0.7'
     //runtimeOnly("ch.qos.logback:logback-classic")
-    runtimeOnly 'com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2'
+    runtimeOnly 'com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2'
     runtimeOnly 'io.netty:netty-tcnative:2.0.61.Final'
     runtimeOnly 'io.netty:netty-tcnative-boringssl-static:2.0.59.Final'
     implementation "org.reflections:reflections:0.10.2"
