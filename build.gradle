@@ -70,7 +70,7 @@ dependencies {
     implementation 'io.micronaut:micronaut-tracing'
     implementation "io.opentracing.brave:brave-opentracing:1.0.0"
     // https://mvnrepository.com/artifact/io.zipkin.brave/brave-context-log4j2
-    implementation 'io.zipkin.brave:brave-context-log4j2:5.15.1'
+    implementation 'io.zipkin.brave:brave-context-log4j2:5.16.0'
     runtimeOnly "io.zipkin.brave:brave-instrumentation-httpclient:5.16.0"
     runtimeOnly "io.zipkin.reporter:zipkin-reporter:1.1.2"
     implementation 'io.micronaut.security:micronaut-security:3.11.0'
