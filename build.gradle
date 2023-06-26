@@ -48,7 +48,7 @@ dependencies {
     kapt 'io.micronaut:micronaut-inject-java:3.9.3'
     kapt 'io.micronaut:micronaut-validation:3.9.3'
     kapt "io.micronaut:micronaut-graal:$micronautVersion"
-    kapt 'io.micronaut.openapi:micronaut-openapi:4.8.7'
+    kapt 'io.micronaut.openapi:micronaut-openapi:4.9.2'
     kapt 'io.micronaut.security:micronaut-security-annotations:3.11.1'
     compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     compileOnly 'org.graalvm.nativeimage:svm:23.0.0'
