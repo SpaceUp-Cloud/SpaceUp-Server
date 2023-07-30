@@ -51,7 +51,7 @@ dependencies {
     kapt 'io.micronaut.openapi:micronaut-openapi:4.9.2'
     kapt 'io.micronaut.security:micronaut-security-annotations:3.11.1'
     compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    compileOnly 'org.graalvm.nativeimage:svm:23.0.0'
+    compileOnly 'org.graalvm.nativeimage:svm:23.0.1'
     implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     implementation 'io.micronaut:micronaut-management:3.9.4'
     implementation "io.swagger.core.v3:swagger-annotations"
