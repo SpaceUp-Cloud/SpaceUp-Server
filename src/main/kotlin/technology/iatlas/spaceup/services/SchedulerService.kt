@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -42,22 +42,21 @@
 
 package technology.iatlas.spaceup.services
 
-import io.micronaut.context.annotation.Context
 import io.micronaut.scheduling.annotation.Scheduled
-import io.micronaut.tracing.annotation.NewSpan
+import jakarta.inject.Singleton
 import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 
-@Context
-open class SchedulerService(
+@Singleton
+class SchedulerService(
     private val domainService: DomainService,
     private val dbService: DbService
 ) {
     private val log = LoggerFactory.getLogger(SchedulerService::class.java)
 
-    @NewSpan("scheduler-domains-update")
+    //@NewSpan("scheduler-domains-update")
     @Scheduled(fixedRate = "\${spaceup.scheduler.domains.update}", initialDelay = "\${spaceup.scheduler.delayed}")
-    open fun updateDomainList() = runBlocking {
+    internal fun updateDomainList() = runBlocking {
         if(dbService.isAppInstalled()) {
             log.debug("Update domain list")
             domainService.updateDomainList()
