@@ -66,7 +66,12 @@ import technology.iatlas.spaceup.core.helper.colored
 import technology.iatlas.spaceup.dto.Command
 import technology.iatlas.spaceup.dto.db.Server
 import technology.iatlas.spaceup.isOk
-import technology.iatlas.spaceup.services.*
+import technology.iatlas.spaceup.services.DbService
+import technology.iatlas.spaceup.services.InstallerService
+import technology.iatlas.spaceup.services.SpaceUpService
+import technology.iatlas.spaceup.services.SshService
+import technology.iatlas.spaceup.services.SwsService
+import technology.iatlas.spaceup.services.WsServiceInf
 import technology.iatlas.spaceup.util.createNormalizedPath
 import kotlin.io.path.Path
 import kotlin.io.path.createDirectories
@@ -150,7 +155,7 @@ open class StartupEventListener(
         val dirs = listOf(spaceupRemotePathConfig.temp)
 
         dirs.forEach {
-            log.info("create $it")
+            log.info("Create $it")
 
             val cmd = Command(mutableListOf("mkdir", "-p", it))
             val feedback = sshService.execute(cmd).toFeedback()

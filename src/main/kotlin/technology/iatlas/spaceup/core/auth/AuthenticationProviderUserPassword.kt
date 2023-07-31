@@ -43,6 +43,7 @@
 package technology.iatlas.spaceup.core.auth
 
 import io.micronaut.context.annotation.Context
+import io.micronaut.core.annotation.Nullable
 import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.client.HttpClient
@@ -75,21 +76,21 @@ import technology.iatlas.spaceup.services.SpaceUpService
 
 @Installed
 @Context
-class AuthenticationProviderUserPassword(
+class AuthenticationProviderUserPassword<T>(
     private val dbService: DbService,
     private val securityService: SecurityService,
     private val httpClient: HttpClient,
     private val spaceUpService: SpaceUpService
-) : AuthenticationProvider {
+) : AuthenticationProvider<T> {
     private val log = LoggerFactory.getLogger(AuthenticationProviderUserPassword::class.java)
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 
     private var ip: String = ""
 
     override fun authenticate(
-        httpRequest: HttpRequest<*>?,
+        @Nullable httpRequest: @Nullable T,
         authenticationRequest: AuthenticationRequest<*, *>?
-    ): Publisher<AuthenticationResponse> {
+    ): Publisher<AuthenticationResponse>? {
         val authPublisher = Flowable.create({ emitter: FlowableEmitter<AuthenticationResponse> ->
             runBlocking {
                 if (httpRequest != null) {
@@ -148,9 +149,10 @@ class AuthenticationProviderUserPassword(
         }, BackpressureStrategy.ERROR)
     }
 
-    private fun validateIp(httpRequest: HttpRequest<*>): Mono<GeoIpRipe> {
-        ip = httpRequest.headers.get("X-Forwarded-For") ?: httpRequest.remoteAddress.address.hostAddress
-        log.debug("Possible authentication from $ip with headers ${httpRequest.headers.asMap()}")
+    private fun validateIp(httpRequest: T): Mono<GeoIpRipe> {
+        val incomingRequest = httpRequest as HttpRequest<*>
+        ip = incomingRequest.headers["X-Forwarded-For"] ?: incomingRequest.remoteAddress.address.hostAddress
+        log.debug("Possible authentication from {} with headers {}", ip, incomingRequest.headers.asMap())
 
         // Make it work for local development / requests
         return if (ip == "localhost" || ip == "127.0.0.1" || ip == "0:0:0:0:0:0:0:1" || spaceUpService.isDevMode()) {
