@@ -52,7 +52,6 @@ FULLPATH="$SERVICEPATH$SERVICENAME.ini"
 
 if [ -e "$FULLPATH" ]; then
   echo "Remove $FULLPATH"
-  cd "$SERVICEPATH" || return 2
   rm "$FULLPATH"
   supervisorctl update
 else
