@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -42,7 +42,11 @@
 
 package technology.iatlas.spaceup.controller.api
 
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
+import io.micronaut.http.MutableHttpResponse
+import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Delete
 import io.micronaut.http.annotation.Get
@@ -50,28 +54,32 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import org.slf4j.LoggerFactory
-import technology.iatlas.spaceup.config.SpaceupRemotePathConfig
 import technology.iatlas.spaceup.core.annotations.Installed
-import technology.iatlas.spaceup.dto.*
+import technology.iatlas.spaceup.dto.Feedback
+import technology.iatlas.spaceup.dto.Logfile
+import technology.iatlas.spaceup.dto.Logtype
+import technology.iatlas.spaceup.dto.Service
+import technology.iatlas.spaceup.dto.ServiceOption
 import technology.iatlas.spaceup.services.ServiceService
+import technology.iatlas.spaceup.toHttpResponse
+import technology.iatlas.spaceup.toMutableHttpResponse
 import java.util.*
 
 @Installed
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/service")
-class ServiceController(private val serviceService: ServiceService,
-                        private val config: SpaceupRemotePathConfig) {
+class ServiceController(private val serviceService: ServiceService) {
     private val log = LoggerFactory.getLogger(ServiceController::class.java)
 
     /**
      * Execute an operation change to a Service
      */
     @Post("/execute/{servicename}/{option}")
-    suspend fun execute(servicename: String, option: ServiceOption): Feedback {
-        log.debug("Execute $servicename: $option")
+    suspend fun execute(servicename: String, option: ServiceOption): HttpResponse<Feedback> {
+        log.debug("Execute {}: {}", servicename, option)
 
         val serviceName = Service(servicename, null, null)
-        return serviceService.execute(serviceName, option)
+        return serviceService.execute(serviceName, option).toHttpResponse()
     }
 
     /**
@@ -83,9 +91,21 @@ class ServiceController(private val serviceService: ServiceService,
     }
 
     @Delete("/delete/{servicename}")
-    suspend fun deleteService(servicename: String): Feedback {
+    suspend fun deleteService(servicename: String): HttpResponse<Feedback> {
         log.warn("Delete service: $servicename")
-        return serviceService.deleteService(servicename, config.services)
+        return serviceService.delete(servicename).toHttpResponse()
+    }
+
+    @Post("/add-or-update/{servicename}", consumes = [MediaType.TEXT_PLAIN])
+    suspend fun addService(@Body servicecontent: String, servicename: String): HttpResponse<Feedback> {
+        log.debug("Add service $servicename content: \n$servicecontent")
+        return serviceService.addOrUpdate(servicecontent, servicename).toHttpResponse()
+    }
+
+    @Get("/{servicename}")
+    suspend fun getService(servicename: String): MutableHttpResponse<Feedback> {
+        return serviceService.getService(servicename.lowercase())
+            .toMutableHttpResponse(Optional.of(HttpStatus.NOT_FOUND))
     }
 
     /**

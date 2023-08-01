@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -42,7 +42,12 @@
 
 package technology.iatlas.spaceup.services
 
-import com.jcraft.jsch.*
+import com.jcraft.jsch.Channel
+import com.jcraft.jsch.ChannelExec
+import com.jcraft.jsch.ChannelSftp
+import com.jcraft.jsch.JSch
+import com.jcraft.jsch.JSchException
+import com.jcraft.jsch.Session
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.annotation.Value
 import io.micronaut.tracing.annotation.ContinueSpan
@@ -145,7 +150,7 @@ open class SshService(
 
     @NewSpan
     suspend fun execute(@SpanTag("ssh-command")command: CommandInf): SshResponse {
-        log.trace("Execute $command")
+        log.trace("Execute {}", command)
         if(!this::session.isInitialized || !session.isConnected) {
             initSSH()
         }
@@ -177,22 +182,25 @@ open class SshService(
                 delay(20)
             }
 
-            val stdout = String(responseStream.toByteArray())
-            var stderr = String(errorResponseStream.toByteArray())
+            val stdout = String(responseStream.toByteArray()).trim()
+            var stderr = String(errorResponseStream.toByteArray()).trim()
+            if (stdout.isNotEmpty()) {
+                log.trace("Stdout: $stdout")
+            }
             if (stderr.isNotEmpty() && executionChannel.exitStatus != 0) {
-                val scriptErr = """
-                        Script: ${command.shellScript}
+                val scriptErr =
+                    """${if (command.shellScript.name.isNotEmpty()) "Script: ${command.shellScript}" else ""}
                         Command: ${command.parameters.joinToString(" ")}
                         Script error: $stderr
                         terminated with exit code: ${executionChannel.exitStatus}
-                    """.trimIndent()
+                    """.trim()
                 colored {
                     log.error(scriptErr.red)
                 }
                 stderr = """
                         Script error: $stderr
                         terminated with exit code: ${executionChannel.exitStatus}
-                    """.trimIndent()
+                    """.trim()
             }
             val sshResponse = SshResponse(stdout, stderr)
             log.trace(sshResponse.toString())
@@ -200,6 +208,38 @@ open class SshService(
             return sshResponse
         } finally {
             executionChannel.disconnect()
+        }
+    }
+
+    /**
+     * Simple upload from to
+     */
+    suspend fun upload(from: File, to: String) {
+        if (!session.isConnected) {
+            initSSH()
+        }
+
+        val sshRepo = dbService.getDb().getCollection<Ssh>()
+        val ssh = sshRepo.find().awaitFirst()
+        val normalizedTo = to.replace("~", "/home/${ssh.username}")
+
+        val sftpChannel: Channel = session.openChannel("sftp") as Channel
+        try {
+            if (!sftpChannel.isConnected) {
+                sftpChannel.connect()
+            }
+
+            val sftp = sftpChannel as ChannelSftp
+            log.debug("Upload file {} to {}", from, normalizedTo)
+
+            val os = System.getProperty("os.name")
+            if (os.lowercase().contains("windows")) {
+                sftp.put(from.canonicalPath, normalizedTo, ChannelSftp.OVERWRITE)
+            } else {
+                sftp.put(from.toURI().toURL().openStream(), to, ChannelSftp.OVERWRITE)
+            }
+        } finally {
+            sftpChannel.disconnect()
         }
     }
 
@@ -215,8 +255,7 @@ open class SshService(
             initSSH()
         }
 
-        val db = dbService.getDb()
-        val sshRepo = db.getCollection<Ssh>()
+        val sshRepo = dbService.getDb().getCollection<Ssh>()
         val ssh = sshRepo.find().awaitFirst()
 
         val file = cmd.shellScript
@@ -231,7 +270,7 @@ open class SshService(
             }
 
             val sftp = sftpChannel as ChannelSftp
-            log.debug("Upload script ${file.name} to $remotefile")
+            log.debug("Upload file ${file.name} to $remotefile")
 
             val os = System.getProperty("os.name")
             if(os.lowercase().contains("windows")) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -63,8 +63,17 @@ fun String.toFile(): File {
     return this.createNormalizedPath().toFile()
 }
 
+fun String.toRandomTempFile(): File {
+    val filename = if (this.contains("/")) this.split("/").last().split(".").first()
+    else this.split(".").first()
+    val suffix = if (this.contains("/")) "." + this.split("/").last().split(".").last()
+    else ""
+    return kotlin.io.path.createTempDirectory().resolve("$filename$suffix").toFile()
+}
+
 fun String.toTempFile(): File {
-    return kotlin.io.path.createTempFile("sws-${(1..100).random()}").normalize().toFile()
+    val path = kotlin.io.path.createTempDirectory()
+    return path.resolve(File(this).path).toFile()
 }
 
 fun String.toSWS(): SWS {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -44,9 +44,11 @@ package technology.iatlas.spaceup.services
 
 import io.micronaut.context.annotation.Context
 import io.micronaut.core.io.ResourceLoader
+import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.config.SpaceupRemotePathConfig
 import technology.iatlas.spaceup.core.cmd.Runner
+import technology.iatlas.spaceup.core.cmd.toFeedback
 import technology.iatlas.spaceup.core.parser.EchoParser
 import technology.iatlas.spaceup.core.parser.LogsParser
 import technology.iatlas.spaceup.core.parser.ServiceParser
@@ -58,10 +60,11 @@ import technology.iatlas.spaceup.dto.Logtype
 import technology.iatlas.spaceup.dto.Service
 import technology.iatlas.spaceup.dto.ServiceOption
 import technology.iatlas.spaceup.dto.SftpFile
+import technology.iatlas.spaceup.util.toTempFile
 
 @Context
 class ServiceService(
-    sshService: SshService,
+    private val sshService: SshService,
     private val config: SpaceupRemotePathConfig,
     private val spaceupRemotePathConfig: SpaceupRemotePathConfig,
     private val wsBroadcaster: WsBroadcaster,
@@ -150,8 +153,9 @@ class ServiceService(
     }
 
     suspend fun getLogs(servicename: String, type: Logtype, limits: Int, isReversed: Boolean): Logfile {
-        val logsScript = resourceLoader.getResource("commands/getLogs.sh")
-        val remotefile = spaceupRemotePathConfig.temp + "/getLogs.sh"
+        val scriptname = "getLogs.sh"
+        val logsScript = resourceLoader.getResource("commands/$scriptname")
+        val remotefile = spaceupRemotePathConfig.temp + "/$scriptname"
 
         val reversed = if (isReversed)  "--reversed" else ""
         val cmd: MutableList<String> = mutableListOf(
@@ -162,20 +166,46 @@ class ServiceService(
             "-l", limits.toString(),
             reversed,
         )
-        val sftpFile = SftpFile("getLogs.sh", logsScript.get(), execute = true)
+        val sftpFile = SftpFile(scriptname, logsScript.get(), execute = true)
         serviceLogRunner.execute(Command(cmd, sftpFile), LogsParser())
 
         return Logfile(currentLogs)
     }
+
     /**
-     * TODO: Finish implementation of deleting service
+     * Delete a supervisorctl service by name
+     * @param servicename a supervisorctl service ini file
      */
-    suspend fun deleteService(servicename: String, servicePath: String): Feedback {
-        val deleteScript = resourceLoader.getResource("/commands/deleteService.sh")
-        val cmd: MutableList<String> = mutableListOf("bash", deleteScript.get().file, servicePath, servicename)
+    suspend fun delete(servicename: String): Feedback {
+        val scriptname = "deleteService.sh"
+        val deleteScript = resourceLoader.getResource("commands/$scriptname")
+        val remotefile = spaceupRemotePathConfig.temp + "/$scriptname"
 
-        serviceDeleteRunner.execute(Command(cmd), EchoParser())
+        val cmd: MutableList<String> = mutableListOf("bash", remotefile, config.services, servicename)
 
-        return Feedback(cmd.toString(), "Not implemented yet")
+        val sftpFile = SftpFile(scriptname, deleteScript.get(), execute = true, clearAfterExecution = true)
+        serviceDeleteRunner.execute(Command(cmd, sftpFile), EchoParser())
+        return deleteServiceFeedback
+    }
+
+    suspend fun addOrUpdate(servicecontent: String, servicename: String): Feedback {
+        val serviceFile = "${config.services}$servicename.ini"
+        val tempFile = "$servicename.ini".toTempFile()
+        tempFile.writeText(servicecontent)
+
+        var feedback: Feedback = Feedback("", "")
+        runBlocking {
+            sshService.upload(tempFile, serviceFile).runCatching {
+                tempFile.delete()
+            }
+            // Update supervisor to make the service visible or update it
+            feedback = sshService.execute(Command(mutableListOf("supervisorctl", "update"))).toFeedback()
+        }
+
+        return feedback
+    }
+
+    suspend fun getService(servicename: String): Feedback {
+        return sshService.execute(Command(mutableListOf("cat", "${config.services}/$servicename.ini"))).toFeedback()
     }
 }
