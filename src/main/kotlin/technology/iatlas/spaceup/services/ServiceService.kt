@@ -206,6 +206,6 @@ class ServiceService(
     }
 
     suspend fun getService(servicename: String): Feedback {
-        return sshService.execute(Command(mutableListOf("cat", "${config.services}/$servicename.ini"))).toFeedback()
+        return sshService.execute(Command(mutableListOf("cat", "${config.services}$servicename.ini"))).toFeedback()
     }
 }

@@ -167,17 +167,6 @@ fun Feedback.toMutableHttpResponse(mutatedStatusOnError: Optional<HttpStatus> = 
 }
 
 fun Feedback.isOk(): Boolean {
-    return if (
-        (this.info.isNotEmpty() && this.error.isEmpty()) ||
-        (this.info.isEmpty() && this.error.isEmpty())
-    ) {
-        true
-    } else if (
-        (this.error.isNotEmpty() || this.info.isEmpty()) ||
-        (this.error.isNotEmpty() && this.info.isNotEmpty())
-    ) {
-        false
-    } else {
-        false
-    }
+    return (this.info.isNotEmpty() && this.error.isEmpty()) ||
+            (this.info.isEmpty() && this.error.isEmpty())
 }
