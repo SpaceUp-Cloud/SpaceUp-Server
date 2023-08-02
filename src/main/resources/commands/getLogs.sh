@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #
-# Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+# Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
 #
 # SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
 #   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -50,12 +50,12 @@
 
 error() {
   echo "$@" 1>&2
+  exit 2
 }
 
 check_param() {
   if [ -z "$2" ]; then
     error "$1 cannot be empty!"
-    exit 2
   fi
 }
 
@@ -117,7 +117,6 @@ while [ -n "$1" ]; do
         logtype=$lower
       else
         error "Unknown log type! $2"
-        exit 2
       fi
       shift
       ;;
@@ -132,7 +131,6 @@ while [ -n "$1" ]; do
       ;;
     *)
       error "Unknown option $1"
-      exit 2
       ;;
   esac
   shift

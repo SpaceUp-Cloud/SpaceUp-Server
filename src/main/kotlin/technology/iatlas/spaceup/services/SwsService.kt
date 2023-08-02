@@ -69,8 +69,8 @@ import technology.iatlas.spaceup.dto.SftpFile
 import technology.iatlas.spaceup.dto.db.Sws
 import technology.iatlas.spaceup.isOk
 import technology.iatlas.spaceup.toMutableHttpResponse
+import technology.iatlas.spaceup.util.toRandomTempFile
 import technology.iatlas.spaceup.util.toSWS
-import technology.iatlas.spaceup.util.toTempFile
 import technology.iatlas.sws.SWS
 import technology.iatlas.sws.objects.ParserException
 
@@ -87,7 +87,7 @@ open class SwsService(
     private fun validateSWS(sws: Sws, feedback: Feedback) {
         log.info("Validate sws")
         // Create a temporary file
-        val isDeleted = "${sws.name}.sws".toTempFile().apply {
+        val isDeleted = "${sws.name}.sws".toRandomTempFile().apply {
             this.writeText(sws.content)
             try {
                 SWS.createAndParse(this)
@@ -271,7 +271,8 @@ open class SwsService(
 
         // Generate SWS
         var sws: SWS
-        val file = "${spaceupLocalPathConfig.temp}/${swsDb.name}.sws".toTempFile()
+        val file = "${spaceupLocalPathConfig.temp}/${swsDb.name}.sws".toRandomTempFile()
+        log.debug("SWS file: ${file.path}")
         file.apply {
             this.writeText(swsDb.content)
             sws = SWS.createAndParse(this, swsHttpParameters, body)
@@ -292,7 +293,7 @@ open class SwsService(
         // Actual execution
         var sshResponse: SshResponse
         val scriptname = "SWS_${sws.name.replace(" ", "_")}.sh"
-        val isDeleted = "${spaceupLocalPathConfig.temp}/$scriptname".toTempFile().apply {
+        val isDeleted = "${spaceupLocalPathConfig.temp}/$scriptname".toRandomTempFile().apply {
             this.writeText(sws.serverScript)
 
             val script = "${spaceupRemotePathConfig.temp}/$scriptname"

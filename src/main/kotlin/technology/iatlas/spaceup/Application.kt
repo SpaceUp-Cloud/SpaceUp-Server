@@ -71,6 +71,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import technology.iatlas.spaceup.dto.Feedback
 import java.text.Normalizer.Form
+import java.util.*
 import java.text.Normalizer as jNormalizer
 
 
@@ -153,22 +154,19 @@ fun Feedback.toHttpResponse(): HttpResponse<Feedback> {
     }
 }
 
-fun Feedback.toMutableHttpResponse(): MutableHttpResponse<Feedback> {
+fun Feedback.toMutableHttpResponse(mutatedStatusOnError: Optional<HttpStatus> = Optional.empty()): MutableHttpResponse<Feedback> {
     return if(this.isOk()) {
         SimpleHttpResponseFactory.INSTANCE.ok(this)
     } else {
-        SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.BAD_REQUEST, this)
+        if (mutatedStatusOnError.isPresent) {
+            SimpleHttpResponseFactory.INSTANCE.status(mutatedStatusOnError.get(), this)
+        } else {
+            SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.BAD_REQUEST, this)
+        }
     }
 }
 
 fun Feedback.isOk(): Boolean {
-    return if((this.info.isNotEmpty() && this.error.isEmpty())
-        || (this.info.isEmpty() && this.error.isEmpty())
-        || (this.info.isNotEmpty() || this.error.isNotEmpty())) {
-        true
-    } else if (this.error.isNotEmpty() || this.info.isEmpty()) {
-        false
-    } else {
-        false
-    }
+    return (this.info.isNotEmpty() && this.error.isEmpty()) ||
+            (this.info.isEmpty() && this.error.isEmpty())
 }
