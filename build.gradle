@@ -55,8 +55,8 @@ dependencies {
     compileOnly 'org.graalvm.nativeimage:svm:23.0.1'
 
     implementation(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
-    implementation("io.micronaut:micronaut-management:$micronautVersion")
-    implementation("io.micronaut:micronaut-jackson-databind")
+    implementation "io.micronaut:micronaut-management:$micronautVersion"
+    implementation "io.micronaut:micronaut-jackson-databind"
     implementation "io.swagger.core.v3:swagger-annotations"
     implementation "io.micronaut:micronaut-inject:$micronautVersion"
     //implementation "io.micronaut:micronaut-validation:3.9.4"
@@ -66,19 +66,19 @@ dependencies {
     implementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
     implementation "io.micronaut:micronaut-http-client:$micronautVersion"
     implementation "io.micronaut.reactor:micronaut-reactor"
-    implementation("io.micronaut.tracing:micronaut-tracing-annotation:5.0.1")
+    implementation "io.micronaut.tracing:micronaut-tracing-annotation:5.0.1"
     implementation 'io.micronaut.security:micronaut-security:4.0.2'
     implementation 'io.micronaut.security:micronaut-security-jwt:4.0.2'
     implementation 'io.micronaut.kotlin:micronaut-kotlin-extension-functions:4.0.1'
     implementation 'io.micronaut.mongodb:micronaut-mongo-reactive:5.0.1'
-    implementation("io.micronaut:micronaut-websocket")
+    implementation "io.micronaut:micronaut-websocket"
 
-    developmentOnly("io.micronaut.controlpanel:micronaut-control-panel-ui")
-    developmentOnly("io.micronaut.controlpanel:micronaut-control-panel-management")
+    developmentOnly "io.micronaut.controlpanel:micronaut-control-panel-ui"
+    developmentOnly "io.micronaut.controlpanel:micronaut-control-panel-management"
     //runtimeOnly("io.micronaut.:micronaut-management")
 
-    annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
-    implementation("io.micronaut.validation:micronaut-validation")
+    annotationProcessor "io.micronaut.validation:micronaut-validation-processor"
+    implementation "io.micronaut.validation:micronaut-validation"
 
     implementation "io.reactivex.rxjava3:rxkotlin:3.0.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
