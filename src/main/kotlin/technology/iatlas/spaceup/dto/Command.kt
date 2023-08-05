@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -44,5 +44,11 @@ package technology.iatlas.spaceup.dto
 
 import technology.iatlas.spaceup.core.cmd.CommandInf
 
+/**
+ * Command reflects a shell command
+ * @param parameters a grouped shell command
+ * @param shellScript optionally a file which can be uploaded
+ * @see SftpFile
+ */
 data class Command(override val parameters: MutableList<String>,
                    override val shellScript: SftpFile = SftpFile("", null)) : CommandInf

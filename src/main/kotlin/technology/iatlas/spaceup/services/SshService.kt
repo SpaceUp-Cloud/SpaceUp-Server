@@ -148,6 +148,11 @@ open class SshService(
         }
     }
 
+    /**
+     * Execute commands via SSH
+     * @param command Represents shell commands
+     * @see Command
+     */
     @NewSpan
     suspend fun execute(@SpanTag("ssh-command")command: CommandInf): SshResponse {
         log.trace("Execute {}", command)
@@ -213,15 +218,16 @@ open class SshService(
 
     /**
      * Simple upload from to
+     * @param from from where the file is taken
+     * @param to the path where the file will be uploaded
+     * @see File
      */
     suspend fun upload(from: File, to: String) {
         if (!session.isConnected) {
             initSSH()
         }
 
-        val sshRepo = dbService.getDb().getCollection<Ssh>()
-        val ssh = sshRepo.find().awaitFirst()
-        val normalizedTo = to.replace("~", "/home/${ssh.username}")
+        val normalizedTo = normalizeRemotePath(to)
 
         val sftpChannel: Channel = session.openChannel("sftp") as Channel
         try {
@@ -230,13 +236,13 @@ open class SshService(
             }
 
             val sftp = sftpChannel as ChannelSftp
-            log.debug("Upload file {} to {}", from, normalizedTo)
+            log.debug("Upload file $from to $to")
 
             val os = System.getProperty("os.name")
             if (os.lowercase().contains("windows")) {
                 sftp.put(from.canonicalPath, normalizedTo, ChannelSftp.OVERWRITE)
             } else {
-                sftp.put(from.toURI().toURL().openStream(), to, ChannelSftp.OVERWRITE)
+                sftp.put(from.toURI().toURL().openStream(), normalizedTo, ChannelSftp.OVERWRITE)
             }
         } finally {
             sftpChannel.disconnect()
@@ -244,8 +250,9 @@ open class SshService(
     }
 
     /**
-     * Upload a shell script via SFTP and execute it optionally
-     *
+     * Upload a shell script via SFTP to SpaceUp temp directory and execute it optionally
+     * @param cmd Contains a shell command and optionally a sftp file which can be executed
+     * @see Command
      */
     @OptIn(DelicateCoroutinesApi::class)
     @NewSpan
@@ -255,12 +262,8 @@ open class SshService(
             initSSH()
         }
 
-        val sshRepo = dbService.getDb().getCollection<Ssh>()
-        val ssh = sshRepo.find().awaitFirst()
-
         val file = cmd.shellScript
-        val remotefile =
-            spaceupRemotePathConfig.temp.replace("~", "/home/${ssh.username}") + "/${file.name}"
+        val remotefile = normalizeRemoteTempPath(file.name)
 
         val sftpChannel: Channel = session.openChannel("sftp") as Channel
         var sshResponse = SshResponse("", "")
@@ -296,5 +299,21 @@ open class SshService(
         } finally {
             sftpChannel.disconnect()
         }
+    }
+
+    /**
+     * normalize the remote file path with actual remote path, according to SSH user
+     * @param filename where the remote file will be located
+     */
+    private suspend fun normalizeRemoteTempPath(filename: String): String {
+        val sshRepo = dbService.getDb().getCollection<Ssh>()
+        val ssh = sshRepo.find().awaitFirst()
+        return spaceupRemotePathConfig.temp.replace("~", "/home/${ssh.username}") + "/$filename"
+    }
+
+    private suspend fun normalizeRemotePath(filepath: String): String {
+        val sshRepo = dbService.getDb().getCollection<Ssh>()
+        val ssh = sshRepo.find().awaitFirst()
+        return filepath.replace("~", "/home/${ssh.username}")
     }
 }

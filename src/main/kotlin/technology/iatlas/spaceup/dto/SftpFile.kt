@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Thraax Session <spaceup@iatlas.technology>.
+ * Copyright (c) 2022-2023 Thraax Session <spaceup@iatlas.technology>.
  *
  * SpaceUp-Server is free software; You can redistribute it and/or modify it under the terms of:
  *   - the GNU Affero General Public License version 3 as published by the Free Software Foundation.
@@ -44,6 +44,13 @@ package technology.iatlas.spaceup.dto
 
 import java.net.URL
 
+/**
+ * SftpFile represents (normally) a shell script which can be uploaded and executed
+ * @param name how the file is saved
+ * @param scriptPath from where the script will be uploaded
+ * @param execute optionally executed it
+ * @param clearAfterExecution delete the file after execution
+ */
 data class SftpFile(
     val name: String,
     val scriptPath: URL?,
