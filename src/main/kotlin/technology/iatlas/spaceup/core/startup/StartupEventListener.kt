@@ -75,6 +75,7 @@ import technology.iatlas.spaceup.services.WsServiceInf
 import technology.iatlas.spaceup.util.createNormalizedPath
 import kotlin.io.path.Path
 import kotlin.io.path.createDirectories
+import kotlin.io.path.exists
 
 @Singleton
 open class StartupEventListener(
@@ -130,22 +131,25 @@ open class StartupEventListener(
 
     @NewSpan("startup-create-local-directories")
     open fun createDirectories() {
-        log.info("Create local directories")
         val spaceupTempDir = spaceupLocalPathConfig.temp
+        val exists = Path(spaceupTempDir).exists()
 
-        if(os.lowercase().contains(Regex("(linux|mac)"))) {
-            val home = ShellLocation.HOME
+        if (!exists) {
+            log.info("Create local directories")
+            if (os.lowercase().contains(Regex("(linux|mac)"))) {
+                val home = ShellLocation.HOME
 
-            shellRun(home) {
-                log.info("Create $spaceupTempDir")
-                command("mkdir", listOf("-p", spaceupTempDir))
+                shellRun(home) {
+                    log.info("Create $spaceupTempDir")
+                    command("mkdir", listOf("-p", spaceupTempDir))
+                }
+                // Set properties for spaceup
+                System.setProperty("spaceup.tempdir", spaceupTempDir)
+            } else if (os.lowercase().contains("windows")) {
+                log.info("Create ${spaceupTempDir.createNormalizedPath()}")
+                Path(spaceupTempDir).normalize().createDirectories()
+                System.setProperty("spaceup.tempdir", spaceupTempDir)
             }
-            // Set properties for spaceup
-            System.setProperty("spaceup.tempdir", spaceupTempDir)
-        } else if (os.lowercase().contains("windows")) {
-            log.info("Create ${spaceupTempDir.createNormalizedPath()}")
-            Path(spaceupTempDir).normalize().createDirectories()
-            System.setProperty("spaceup.tempdir", spaceupTempDir)
         }
     }
 
@@ -155,7 +159,7 @@ open class StartupEventListener(
         val dirs = listOf(spaceupRemotePathConfig.temp)
 
         dirs.forEach {
-            log.info("Create $it")
+            log.info("Create external directory: $it")
 
             val cmd = Command(mutableListOf("mkdir", "-p", it))
             val feedback = sshService.execute(cmd).toFeedback()
