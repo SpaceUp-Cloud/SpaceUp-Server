@@ -193,16 +193,13 @@ class ServiceService(
         val tempFile = "$servicename.ini".toTempFile()
         tempFile.writeText(servicecontent)
 
-        var feedback: Feedback = Feedback("", "")
-        runBlocking {
+        return runBlocking {
             sshService.upload(tempFile, serviceFile).runCatching {
                 tempFile.delete()
             }
             // Update supervisor to make the service visible or update it
-            feedback = sshService.execute(Command(mutableListOf("supervisorctl", "update"))).toFeedback()
+            return@runBlocking sshService.execute(Command(mutableListOf("supervisorctl", "update"))).toFeedback()
         }
-
-        return feedback
     }
 
     suspend fun getService(servicename: String): Feedback {
