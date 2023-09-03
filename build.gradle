@@ -48,7 +48,7 @@ dependencies {
     kapt "io.micronaut:micronaut-inject-java:$micronautVersion"
     //kapt "io.micronaut:micronaut-validation:3.9.4"
     kapt "io.micronaut:micronaut-graal:$micronautVersion"
-    kapt 'io.micronaut.openapi:micronaut-openapi:5.1.0'
+    kapt 'io.micronaut.openapi:micronaut-openapi:5.1.1'
     kapt 'io.micronaut.security:micronaut-security-annotations:4.1.0'
 
     compileOnly(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
