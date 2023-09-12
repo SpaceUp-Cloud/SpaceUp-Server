@@ -69,7 +69,7 @@ dependencies {
     implementation "io.micronaut.tracing:micronaut-tracing-annotation:5.0.2"
     implementation 'io.micronaut.security:micronaut-security:4.0.4'
     implementation 'io.micronaut.security:micronaut-security-jwt:4.1.0'
-    implementation 'io.micronaut.kotlin:micronaut-kotlin-extension-functions:4.0.1'
+    implementation 'io.micronaut.kotlin:micronaut-kotlin-extension-functions:4.0.2'
     implementation 'io.micronaut.mongodb:micronaut-mongo-reactive:5.0.1'
     implementation "io.micronaut:micronaut-websocket"
 
