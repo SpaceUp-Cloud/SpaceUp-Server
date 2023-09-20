@@ -6,7 +6,7 @@ plugins {
     id "org.sonarqube" version "4.3.1.3277"
     id "nebula.lint" version "18.1.0" // 18.0.0 works only with Gradle 8.x
     //id "io.micronaut.aot" version "3.6.5"
-    id 'io.micronaut.application' version '4.0.3'
+    id 'io.micronaut.application' version '4.1.1'
     id 'project-report'
     id "application"
     id 'maven-publish'
@@ -48,11 +48,11 @@ dependencies {
     kapt "io.micronaut:micronaut-inject-java:$micronautVersion"
     //kapt "io.micronaut:micronaut-validation:3.9.4"
     kapt "io.micronaut:micronaut-graal:$micronautVersion"
-    kapt 'io.micronaut.openapi:micronaut-openapi:5.1.0'
+    kapt 'io.micronaut.openapi:micronaut-openapi:5.1.1'
     kapt 'io.micronaut.security:micronaut-security-annotations:4.1.0'
 
     compileOnly(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
-    compileOnly 'org.graalvm.nativeimage:svm:23.0.1'
+    compileOnly 'org.graalvm.nativeimage:svm:23.1.0'
 
     implementation(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
     implementation "io.micronaut:micronaut-management:$micronautVersion"
@@ -67,9 +67,9 @@ dependencies {
     implementation "io.micronaut:micronaut-http-client:$micronautVersion"
     implementation "io.micronaut.reactor:micronaut-reactor"
     implementation "io.micronaut.tracing:micronaut-tracing-annotation:5.0.2"
-    implementation 'io.micronaut.security:micronaut-security:4.0.4'
+    implementation 'io.micronaut.security:micronaut-security:4.1.0'
     implementation 'io.micronaut.security:micronaut-security-jwt:4.1.0'
-    implementation 'io.micronaut.kotlin:micronaut-kotlin-extension-functions:4.0.1'
+    implementation 'io.micronaut.kotlin:micronaut-kotlin-extension-functions:4.0.2'
     implementation 'io.micronaut.mongodb:micronaut-mongo-reactive:5.0.1'
     implementation "io.micronaut:micronaut-websocket"
 
@@ -111,7 +111,7 @@ dependencies {
 
     implementation "org.codehaus.janino:janino:3.1.10"
     implementation 'ch.qos.logback:logback-classic:1.4.11'
-    implementation 'org.slf4j:log4j-over-slf4j:2.0.7'
+    implementation 'org.slf4j:log4j-over-slf4j:2.0.9'
     //runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly 'com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2'
     runtimeOnly 'io.netty:netty-tcnative:2.0.61.Final'
@@ -121,7 +121,7 @@ dependencies {
     kaptTest "io.micronaut:micronaut-inject-java:$micronautVersion"
     testImplementation(enforcedPlatform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
-    testImplementation "io.micronaut.test:micronaut-test-junit5:4.0.1"
+    testImplementation "io.micronaut.test:micronaut-test-junit5:4.0.2"
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
     // Docker Testcontainer
     testImplementation 'org.testcontainers:testcontainers:1.19.0'
