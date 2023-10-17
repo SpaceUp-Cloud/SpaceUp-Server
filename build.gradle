@@ -66,7 +66,7 @@ dependencies {
     implementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
     implementation "io.micronaut:micronaut-http-client:$micronautVersion"
     implementation "io.micronaut.reactor:micronaut-reactor"
-    implementation "io.micronaut.tracing:micronaut-tracing-annotation:5.0.2"
+    implementation "io.micronaut.tracing:micronaut-tracing-annotation:6.0.0"
     implementation 'io.micronaut.security:micronaut-security:4.1.0'
     implementation 'io.micronaut.security:micronaut-security-jwt:4.1.0'
     implementation 'io.micronaut.kotlin:micronaut-kotlin-extension-functions:4.0.2'
