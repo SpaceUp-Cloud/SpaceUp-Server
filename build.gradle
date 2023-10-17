@@ -60,7 +60,7 @@ dependencies {
     implementation "io.swagger.core.v3:swagger-annotations"
     implementation "io.micronaut:micronaut-inject:$micronautVersion"
     //implementation "io.micronaut:micronaut-validation:3.9.4"
-    implementation 'io.micronaut.rxjava3:micronaut-rxjava3:3.0.1'
+    implementation 'io.micronaut.rxjava3:micronaut-rxjava3:3.1.0'
     implementation 'io.micronaut.kotlin:micronaut-kotlin-runtime:3.2.2'
     implementation "io.micronaut:micronaut-runtime:$micronautVersion"
     implementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
