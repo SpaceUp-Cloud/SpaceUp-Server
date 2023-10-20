@@ -52,7 +52,7 @@ dependencies {
     kapt 'io.micronaut.security:micronaut-security-annotations:4.1.0'
 
     compileOnly(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
-    compileOnly 'org.graalvm.nativeimage:svm:23.1.0'
+    compileOnly 'org.graalvm.nativeimage:svm:23.1.1'
 
     implementation(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
     implementation "io.micronaut:micronaut-management:$micronautVersion"
