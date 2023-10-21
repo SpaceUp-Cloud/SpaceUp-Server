@@ -1,4 +1,11 @@
 version: 25
+properties:
+- name: nexusUsername
+  value: admin
+  archived: false
+- name: nexusPassword
+  value: geUJX2vylvrY51PzA6n/JH8sW1+SlpRxPo7js0WGaHC2t1GR+Id5qFq2aPOkRWok
+  archived: false
 jobs:
 - name: Run Tests
   steps:
