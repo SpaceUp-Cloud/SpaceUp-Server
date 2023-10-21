@@ -1,7 +1,48 @@
 version: 25
 jobs:
-- name: Build
+- name: Run Tests
+  steps:
+  - !CheckoutStep
+    name: checkout
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: detect build version
+    runInContainer: true
+    image: '@script:builtin:gradle:determine-docker-image@'
+    interpreter: !DefaultInterpreter
+      commands:
+      - echo "Detecting project version (may require some time while downloading gradle dependencies)..."
+      - 'echo $(gradle properties | grep ^version: | grep -v unspecified | cut -c10-) > buildVersion'
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !SetBuildVersionStep
+    name: set build version
+    buildVersion: '@file:buildVersion@'
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: run test
+    runInContainer: true
+    image: '@script:builtin:gradle:determine-docker-image@'
+    interpreter: !DefaultInterpreter
+      commands:
+      - gradle test
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !PublishJUnitReportStep
+    name: publish unit test report
+    reportName: Unit Test
+    filePatterns: '**/TEST-*.xml'
+    condition: ALWAYS
+  triggers:
+  - !BranchUpdateTrigger {}
+  - !PullRequestUpdateTrigger {}
   retryCondition: never
   maxRetries: 3
   retryDelay: 30
+  caches:
+  - key: gradle-cache
+    path: /home/gradle/.gradle
   timeout: 3600
