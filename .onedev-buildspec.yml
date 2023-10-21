@@ -1,0 +1,7 @@
+version: 25
+jobs:
+- name: Build
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 3600
