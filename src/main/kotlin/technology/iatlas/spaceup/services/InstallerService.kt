@@ -53,6 +53,7 @@ import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.litote.kmongo.eq
+import org.litote.kmongo.ne
 import org.litote.kmongo.reactivestreams.getCollection
 import org.litote.kmongo.setValue
 import org.slf4j.LoggerFactory
@@ -152,6 +153,8 @@ open class InstallerService(
         val db = dbService.getDb()
         val serverRepo = db.getCollection<Server>()
         serverRepo.updateOne(Server::installed eq false, setValue(Server::installed, true)).awaitFirst()
+        // Clear API key
+        serverRepo.updateOne(Server::apiKey ne "", setValue(Server::apiKey, "")).awaitFirst()
 
         val finishMsg = "Installation done. Set system to state 'installed'"
         log.info(finishMsg)
@@ -177,7 +180,7 @@ open class InstallerService(
     }
 
     private fun getAllSteps(): List<InstallSteps> {
-        return InstallSteps.values().toList()
+        return InstallSteps.entries
     }
 }
 

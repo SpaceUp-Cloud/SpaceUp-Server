@@ -42,17 +42,18 @@
 
 package technology.iatlas.spaceup.core.auth
 
-import io.micronaut.context.annotation.Context
 import io.micronaut.core.annotation.Nullable
 import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.client.HttpClient
+import io.micronaut.scheduling.annotation.Scheduled
 import io.micronaut.security.authentication.AuthenticationProvider
 import io.micronaut.security.authentication.AuthenticationRequest
 import io.micronaut.security.authentication.AuthenticationResponse
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableEmitter
+import jakarta.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -66,16 +67,14 @@ import org.slf4j.LoggerFactory
 import reactor.core.publisher.Mono
 import technology.iatlas.spaceup.core.annotations.Installed
 import technology.iatlas.spaceup.core.helper.colored
-import technology.iatlas.spaceup.dto.Data
-import technology.iatlas.spaceup.dto.GeoIpRipe
-import technology.iatlas.spaceup.dto.Records
+import technology.iatlas.spaceup.dto.IpApi
 import technology.iatlas.spaceup.dto.db.User
 import technology.iatlas.spaceup.services.DbService
 import technology.iatlas.spaceup.services.SecurityService
 import technology.iatlas.spaceup.services.SpaceUpService
 
 @Installed
-@Context
+@Singleton
 class AuthenticationProviderUserPassword<T>(
     private val dbService: DbService,
     private val securityService: SecurityService,
@@ -83,9 +82,9 @@ class AuthenticationProviderUserPassword<T>(
     private val spaceUpService: SpaceUpService
 ) : AuthenticationProvider<T> {
     private val log = LoggerFactory.getLogger(AuthenticationProviderUserPassword::class.java)
-    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
-    private var ip: String = ""
+    val iplist = mutableListOf<IpRequest>()
 
     override fun authenticate(
         @Nullable httpRequest: @Nullable T,
@@ -94,18 +93,38 @@ class AuthenticationProviderUserPassword<T>(
         val authPublisher = Flowable.create({ emitter: FlowableEmitter<AuthenticationResponse> ->
             runBlocking {
                 if (httpRequest != null) {
-                    val geoip = withContext(dispatcher) {
-                        validateIp(httpRequest).asFlow().first()
+                    val incomingRequest = httpRequest as HttpRequest<*>
+                    val requestIp =
+                        incomingRequest.headers["X-Forwarded-For"] ?: incomingRequest.remoteAddress.address.hostAddress
+
+                    var localGeoIp: IpRequest? = iplist.find { it.ip == requestIp }
+
+                    log.debug("Cache: {}", iplist)
+                    // Check if request is cached, else we need to validated IP address
+                    localGeoIp = if (localGeoIp == null) {
+                        log.info("Validating IP address $requestIp")
+                        withContext(dispatcher) {
+                            validateIp(httpRequest).asFlow().first()
+                        }
+                    } else {
+                        // We already validated this IP address, so we can use the cached version
+                        log.info("Using cached IP address $requestIp")
+                        iplist.find { it.ip == requestIp }!!
                     }
-                    val country: Records =
-                        geoip.data.records.first().find { it.key == "country" } ?: Records("country", "")
-                    if (country.value == "DE") {
-                        // authenticateUser(authenticationRequest)
+
+                    // Check if request is from Germany
+                    if (localGeoIp!!.countryCode == "DE") {
                         val response = authenticateUser(authenticationRequest).asFlow().first()
+                        if (response.isAuthenticated) {
+                            log.info(
+                                "Authenticated user ${authenticationRequest?.identity} " +
+                                        "from country ${localGeoIp!!.countryCode} with ip $requestIp."
+                            )
+                        }
                         emitter.onNext(response)
                         emitter.onComplete()
                     } else {
-                        log.warn("Blocked authentication from country ${country.value} with ip $ip.")
+                        log.warn("Blocked authentication from country ${localGeoIp.countryCode} with ip $requestIp.")
                         emitter.onError(AuthenticationResponse.exception())
                     }
                 }
@@ -134,41 +153,57 @@ class AuthenticationProviderUserPassword<T>(
                     }
 
                     if (userFound != null) {
-                        colored {
-                            log.info("User ${userFound.username} is authenticated from IP $ip".green.bold)
-                        }
                         emitter.onNext(AuthenticationResponse.success(userFound.username))
                         emitter.onComplete()
                     } else {
                         colored {
-                            log.error("User ${authenticationRequest.identity} not found!".red.bold)
+                            log.error("User ${authenticationRequest.identity} or password is not correct!".red.bold)
                         }
+                        emitter.onError(AuthenticationResponse.exception())
+                        emitter.onComplete()
                     }
                 }
             }
         }, BackpressureStrategy.ERROR)
     }
 
-    private fun validateIp(httpRequest: T): Mono<GeoIpRipe> {
+    suspend fun validateIp(httpRequest: T): Mono<IpRequest> {
         val incomingRequest = httpRequest as HttpRequest<*>
-        ip = incomingRequest.headers["X-Forwarded-For"] ?: incomingRequest.remoteAddress.address.hostAddress
+        val ip = incomingRequest.headers["X-Forwarded-For"] ?: incomingRequest.remoteAddress.address.hostAddress
         log.debug("Possible authentication from {} with headers {}", ip, incomingRequest.headers.asMap())
+
+        val ipRequest = IpRequest("", "")
+        ipRequest.ip = ip
 
         // Make it work for local development / requests
         return if (ip == "localhost" || ip == "127.0.0.1" || ip == "0:0:0:0:0:0:0:1" || spaceUpService.isDevMode()) {
+            ipRequest.countryCode = "DE"
+            iplist.add(ipRequest)
             Mono.just(
-                GeoIpRipe(
-                    Data(
-                        listOf(listOf(Records("country", "DE")))
-                    )
-                )
+                ipRequest
             )
+
         } else {
             val request: HttpRequest<*> =
                 // TODO for future: Move API url to configuration
-                HttpRequest.GET<Any>("https://stat.ripe.net/data/whois/data.json?resource=$ip")
-                    .accept("application/json")
-            Mono.from(httpClient.retrieve(request, Argument.of(GeoIpRipe::class.java)))
+                HttpRequest.GET<Any>("http://ip-api.com/json/$ip")
+            val response = httpClient.retrieve(request, Argument.of(IpApi::class.java))
+            ipRequest.countryCode = response.asFlow().first().countryCode
+            iplist.add(ipRequest)
+            Mono.just(
+                ipRequest
+            )
         }
     }
+
+    @Scheduled(fixedDelay = "1h")
+    fun clearCacheScheduler() {
+        log.info("Clearing IP cache")
+        iplist.clear()
+    }
 }
+
+data class IpRequest(
+    var ip: String,
+    var countryCode: String
+)

@@ -12,7 +12,7 @@ plugins {
     id 'maven-publish'
 }
 
-version "0.31.1"
+version "0.31.2"
 group "technology.iatlas.spaceup"
 
 repositories {
@@ -72,6 +72,8 @@ dependencies {
     implementation 'io.micronaut.kotlin:micronaut-kotlin-extension-functions'
     implementation 'io.micronaut.mongodb:micronaut-mongo-reactive'
     implementation "io.micronaut:micronaut-websocket"
+    implementation "io.micronaut.cache:micronaut-cache-core"
+    implementation "io.micronaut.cache:micronaut-cache-caffeine"
 
     developmentOnly "io.micronaut.controlpanel:micronaut-control-panel-ui"
     developmentOnly "io.micronaut.controlpanel:micronaut-control-panel-management"
@@ -85,7 +87,7 @@ dependencies {
 
     //implementation 'javax.annotation:javax.annotation-api:1.3.2'
 
-    implementation("io.micronaut.tracing:micronaut-tracing-jaeger")
+    implementation "io.micronaut.tracing:micronaut-tracing-jaeger"
     implementation "io.opentracing.brave:brave-opentracing:1.0.0"
     implementation 'io.zipkin.brave:brave-context-log4j2:5.16.0'
     runtimeOnly "io.zipkin.brave:brave-instrumentation-httpclient:5.16.0"
