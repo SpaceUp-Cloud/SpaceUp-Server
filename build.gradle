@@ -97,7 +97,7 @@ dependencies {
     implementation 'com.github.mwiede:jsch:0.2.12'
 
     //implementation('org.litote.kmongo:kmongo:4.7.2')
-    implementation 'org.litote.kmongo:kmongo-coroutine:4.10.0'
+    implementation 'org.litote.kmongo:kmongo-coroutine:4.11.0'
 
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8"
