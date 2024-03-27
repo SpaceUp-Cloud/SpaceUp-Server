@@ -111,7 +111,7 @@ dependencies {
     // My stuff
     implementation "technology.iatlas.sws:sws:1.5.1-SNAPSHOT"
 
-    implementation "org.codehaus.janino:janino:3.1.10"
+    implementation "org.codehaus.janino:janino:3.1.12"
     implementation 'ch.qos.logback:logback-classic:1.4.14'
     implementation 'org.slf4j:log4j-over-slf4j:2.0.9'
     //runtimeOnly("ch.qos.logback:logback-classic")
