@@ -124,7 +124,7 @@ dependencies {
     testImplementation(enforcedPlatform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
     testImplementation "io.micronaut.test:micronaut-test-junit5:4.1.0"
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
     // Docker Testcontainer
     testImplementation 'org.testcontainers:testcontainers:1.19.3'
 }
