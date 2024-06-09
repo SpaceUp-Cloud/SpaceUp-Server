@@ -130,7 +130,7 @@ dependencies {
     //implementation 'javax.annotation:javax.annotation-api:1.3.2'
 
     implementation "io.micronaut.tracing:micronaut-tracing-jaeger"
-    implementation "io.opentracing.brave:brave-opentracing:1.0.0"
+    implementation "io.opentracing.brave:brave-opentracing:1.0.1"
     implementation 'io.zipkin.brave:brave-context-log4j2:5.16.0'
     runtimeOnly "io.zipkin.brave:brave-instrumentation-httpclient:5.16.0"
     runtimeOnly "io.zipkin.reporter:zipkin-reporter:1.1.2"
